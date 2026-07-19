@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-fraunces: "Fraunces", Georgia, serif;
+  --font-inter: "Inter", system-ui, sans-serif;
+}
+
+body {
+  @apply bg-ivory text-ink font-body antialiased;
+}
+
+.eyebrow {
+  @apply text-[11px] uppercase tracking-widest2 text-champagne font-medium;
+}
+
+.btn-primary {
+  @apply bg-emerald text-ivory px-8 py-3 text-sm tracking-wide uppercase hover:bg-emerald-dark transition-colors duration-300;
+}
+
+.btn-outline {
+  @apply border border-emerald text-emerald px-8 py-3 text-sm tracking-wide uppercase hover:bg-emerald hover:text-ivory transition-colors duration-300;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
