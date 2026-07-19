@@ -1,0 +1,291 @@
+// Aryora Jewellery — Database Schema
+// Run: npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum LeadSource {
+  REGISTER
+  NEWSLETTER
+  ENQUIRY
+  APPOINTMENT
+  CART
+  CHECKOUT
+  ORDER
+}
+
+enum LeadStatus {
+  NEW
+  SYNCED
+  FAILED
+}
+
+enum MetalType {
+  YELLOW_GOLD
+  WHITE_GOLD
+  ROSE_GOLD
+  CHAMPAGNE_GOLD
+  SILVER_925
+}
+
+model User {
+  id            String    @id @default(cuid())
+  fullName      String
+  email         String    @unique
+  phone         String?   @unique
+  passwordHash  String
+  role          Role      @default(CUSTOMER)
+  dateOfBirth   DateTime?
+  anniversary   DateTime?
+  isVerified    Boolean   @default(false)
+  otpCode       String?
+  otpExpiresAt  DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  addresses     Address[]
+  orders        Order[]
+  cartItems     CartItem[]
+  wishlist      WishlistItem[]
+  reviews       Review[]
+  leads         Lead[]
+
+  @@map("users")
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label      String   @default("Home")
+  line1      String
+  line2      String?
+  city       String
+  state      String
+  pinCode    String
+  country    String   @default("India")
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  orders     Order[]
+
+  @@map("addresses")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  products    Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  name            String
+  slug            String      @unique
+  productCode     String      @unique
+  description     String
+  shortDescription String?
+  price           Decimal     @db.Decimal(10, 2)
+  compareAtPrice  Decimal?    @db.Decimal(10, 2)
+  metalType       MetalType
+  categoryId      String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  images          ProductImage[]
+  stockQuantity   Int         @default(0)
+  sku             String      @unique
+  isActive        Boolean     @default(true)
+  isFeatured      Boolean     @default(false)
+  gramWeight      Decimal?    @db.Decimal(6, 2)
+  diamondCarat    Decimal?    @db.Decimal(6, 2)
+  certification   String?
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  reviews         Review[]
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  wishlistItems   WishlistItem[]
+
+  @@index([categoryId])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  altText   String?
+  position  Int     @default(0)
+
+  @@map("product_images")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating    Int
+  title     String?
+  comment   String
+  isApproved Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("reviews")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int      @default(1)
+  metalType MetalType?
+  ringSize  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId, metalType, ringSize])
+  @@map("cart_items")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@map("wishlist_items")
+}
+
+model Coupon {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  description     String?
+  discountPercent Int?
+  discountFlat    Decimal? @db.Decimal(10, 2)
+  minOrderValue   Decimal? @db.Decimal(10, 2)
+  maxUses         Int?
+  usedCount       Int      @default(0)
+  isActive        Boolean  @default(true)
+  expiresAt       DateTime?
+  createdAt       DateTime @default(now())
+
+  orders          Order[]
+
+  @@map("coupons")
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  orderNumber     String        @unique
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  addressId       String
+  address         Address       @relation(fields: [addressId], references: [id])
+  items           OrderItem[]
+  subtotal        Decimal       @db.Decimal(10, 2)
+  discount        Decimal       @default(0) @db.Decimal(10, 2)
+  shippingFee     Decimal       @default(0) @db.Decimal(10, 2)
+  total           Decimal       @db.Decimal(10, 2)
+  couponId        String?
+  coupon          Coupon?       @relation(fields: [couponId], references: [id])
+  status          OrderStatus   @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  paymentRef      String?
+  trackingNumber  String?
+  customerNotes   String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  productName String
+  productCode String
+  quantity    Int
+  unitPrice   Decimal  @db.Decimal(10, 2)
+  metalType   MetalType?
+  ringSize    String?
+
+  @@map("order_items")
+}
+
+// Every row here mirrors a row appended to the cloud Excel workbook (see excel-integration/).
+model Lead {
+  id             String     @id @default(cuid())
+  customerId     String?    // human-readable Customer ID e.g. ARY-000123
+  userId         String?
+  user           User?      @relation(fields: [userId], references: [id])
+  fullName       String?
+  mobileNumber   String?
+  emailId        String?
+  dateOfBirth    DateTime?
+  anniversary    DateTime?
+  productName    String?
+  productCode    String?
+  quantity       Int?
+  cartValue      Decimal?   @db.Decimal(10, 2)
+  orderId        String?
+  address        String?
+  city           String?
+  state          String?
+  pinCode        String?
+  leadSource     LeadSource
+  status         LeadStatus @default(NEW)
+  customerNotes  String?
+  syncAttempts   Int        @default(0)
+  lastSyncError  String?
+  createdAt      DateTime   @default(now())
+  syncedAt       DateTime?
+
+  @@map("leads")
+}
