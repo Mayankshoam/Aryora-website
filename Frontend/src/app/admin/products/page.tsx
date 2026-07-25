@@ -42,7 +42,7 @@ export default function AdminProductsPage() {
       description: p.description, shortDescription: p.shortDescription || "",
       price: p.price, metalType: p.metalType, categoryId: p.categoryId,
       stockQuantity: String(p.stockQuantity), isFeatured: p.isFeatured,
-      imageUrl: p.images?.[0]?.url || "",
+      imageUrls: p.images?.length ? p.images.map((img) => img.url) : [""],
     });
     setShowForm(true);
   }
@@ -73,8 +73,11 @@ export default function AdminProductsPage() {
         productId = res.product.id;
       }
 
-      if (form.imageUrl && productId) {
-        await api.post(`/admin/products/${productId}/images`, { url: form.imageUrl, position: 0 });
+     const validUrls = form.imageUrls.filter((u) => u.trim());
+      if (validUrls.length && productId) {
+        for (let i = 0; i < validUrls.length; i++) {
+          await api.post(`/admin/products/${productId}/images`, { url: validUrls[i], position: i });
+        }
       }
 
       setShowForm(false);
@@ -130,9 +133,40 @@ export default function AdminProductsPage() {
           <input placeholder="Short Description" value={form.shortDescription} onChange={(e) => setForm({ ...form, shortDescription: e.target.value })} className="md:col-span-2 border border-black/10 px-3 py-2 text-sm" />
           <textarea required placeholder="Full Description" rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="md:col-span-2 border border-black/10 px-3 py-2 text-sm" />
 
-          <input placeholder="Image path (e.g. /images/products/ring-2.jpg)" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} className="md:col-span-2 border border-black/10 px-3 py-2 text-sm" />
-          <p className="md:col-span-2 text-xs text-ink/40 -mt-2">Upload the image file to Frontend/public/images/products/ via GitHub first, then paste its path here.</p>
-
+<div className="md:col-span-2">
+            <label className="block text-sm mb-2">Product Images (first one is the main image)</label>
+            {form.imageUrls.map((url, i) => (
+              <div key={i} className="flex gap-2 mb-2">
+                <input
+                  placeholder={`/images/products/ring-2-photo${i + 1}.jpg`}
+                  value={url}
+                  onChange={(e) => {
+                    const updated = [...form.imageUrls];
+                    updated[i] = e.target.value;
+                    setForm({ ...form, imageUrls: updated });
+                  }}
+                  className="flex-1 border border-black/10 px-3 py-2 text-sm"
+                />
+                {form.imageUrls.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, imageUrls: form.imageUrls.filter((_, idx) => idx !== i) })}
+                    className="text-xs text-red-600 underline px-2"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, imageUrls: [...form.imageUrls, ""] })}
+              className="text-xs underline text-emerald"
+            >
+              + Add another image
+            </button>
+            <p className="text-xs text-ink/40 mt-2">Upload each image file to Frontend/public/images/products/ via GitHub first, then paste its path here.</p>
+          </div>
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })} />
             Show on homepage (Featured)
