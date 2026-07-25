@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import Link from "next/link";
 
 interface Summary {
   totalOrders: number; totalRevenue: number; totalCustomers: number; lowStockCount: number;
@@ -23,7 +24,10 @@ export default function AdminDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
-      <h1 className="font-display text-3xl mb-10">Admin Dashboard</h1>
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="font-display text-3xl">Admin Dashboard</h1>
+        <Link href="/admin/products" className="btn-primary">Manage Products</Link>
+      </div>
 
       {summary && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
