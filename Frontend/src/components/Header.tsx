@@ -6,6 +6,7 @@ import { useState } from "react";
 const NAV = [
   { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections" },
+  { label: "Customize", href: "/customize" },
   { label: "Bridal", href: "/bridal" },
   { label: "About", href: "/about" },
   { label: "Sustainability", href: "/sustainability" },
