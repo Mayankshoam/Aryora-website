@@ -17,7 +17,7 @@ const METALS = ["YELLOW_GOLD", "WHITE_GOLD", "ROSE_GOLD", "CHAMPAGNE_GOLD", "SIL
 const emptyForm = {
   name: "", slug: "", productCode: "", sku: "", description: "", shortDescription: "",
   price: "", metalType: "YELLOW_GOLD", categoryId: "", stockQuantity: "0",
-  isFeatured: false, imageUrl: "",
+  isFeatured: false, imageUrls: [""],
 };
 
 export default function AdminProductsPage() {
