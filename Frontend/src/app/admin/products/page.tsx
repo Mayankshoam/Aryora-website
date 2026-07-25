@@ -73,7 +73,7 @@ export default function AdminProductsPage() {
         productId = res.product.id;
       }
 
-     const validUrls = form.imageUrls.filter((u) => u.trim());
+      const validUrls = form.imageUrls.filter((u) => u.trim());
       if (validUrls.length && productId) {
         for (let i = 0; i < validUrls.length; i++) {
           await api.post(`/admin/products/${productId}/images`, { url: validUrls[i], position: i });
@@ -133,7 +133,7 @@ export default function AdminProductsPage() {
           <input placeholder="Short Description" value={form.shortDescription} onChange={(e) => setForm({ ...form, shortDescription: e.target.value })} className="md:col-span-2 border border-black/10 px-3 py-2 text-sm" />
           <textarea required placeholder="Full Description" rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="md:col-span-2 border border-black/10 px-3 py-2 text-sm" />
 
-<div className="md:col-span-2">
+          <div className="md:col-span-2">
             <label className="block text-sm mb-2">Product Images (first one is the main image)</label>
             {form.imageUrls.map((url, i) => (
               <div key={i} className="flex gap-2 mb-2">
@@ -167,6 +167,7 @@ export default function AdminProductsPage() {
             </button>
             <p className="text-xs text-ink/40 mt-2">Upload each image file to Frontend/public/images/products/ via GitHub first, then paste its path here.</p>
           </div>
+
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })} />
             Show on homepage (Featured)
