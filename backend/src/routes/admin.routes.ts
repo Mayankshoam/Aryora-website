@@ -6,6 +6,11 @@ import { AppError } from "../middleware/errorHandler";
 const router = Router();
 router.use(requireAuth, requireAdmin);
 
+// ---- Categories ----
+router.get("/categories", async (req, res) => {
+  const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
+  res.json({ success: true, categories });
+});
 // ---- Products ----
 router.get("/products", async (req, res) => {
   const items = await prisma.product.findMany({
