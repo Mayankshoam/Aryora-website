@@ -235,7 +235,7 @@ export default function CustomizePage() {
 
         <div className="lg:sticky lg:top-24 h-fit">
           <h3 className="font-display text-sm uppercase tracking-widest2 text-ink/50 mb-4">Live Preview</h3>
-          <RingPreview metal={metal || "YELLOW_GOLD"} carat={carat || "0.5ct – 1ct"} shape={shape || "Round Brilliant"} />
+          <RingPreview metal={metal || "YELLOW_GOLD"} carat={carat || "0.5ct – 1ct"} shape={shape || "Round Brilliant"} styles={styles} />
         </div>
       </div>
     </div>
