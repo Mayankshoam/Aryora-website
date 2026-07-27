@@ -10,6 +10,7 @@ const NAV = [
   { label: "FAQ", href: "/faq" },
   { label: "Bridal", href: "/bridal" },
   { label: "About", href: "/about" },
+  { label: "World of LGD", href: "/world-of-lgd" },
   { label: "Sustainability", href: "/sustainability" },
 ];
 
