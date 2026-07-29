@@ -7,6 +7,7 @@ const NAV = [
   { label: "Shop", href: "/shop" },
   { label: "Collections", href: "/collections" },
   { label: "Customize", href: "/customize" },
+  { label: "Size Guide", href: "/size-guide" },
   { label: "FAQ", href: "/faq" },
   { label: "Bridal", href: "/bridal" },
   { label: "About", href: "/about" },
