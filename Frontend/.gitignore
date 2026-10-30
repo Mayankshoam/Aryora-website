@@ -12,6 +12,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# TypeScript
+*.tsbuildinfo
+
 # OS
 .DS_Store
 Thumbs.db

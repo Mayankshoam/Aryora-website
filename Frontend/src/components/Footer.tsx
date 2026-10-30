@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, Mail, Phone, MapPin } from "lucide-react";
+import { ArrowRight, Check, Mail, Phone, MapPin, Award, RotateCcw, ShieldCheck, Truck, CreditCard } from "lucide-react";
 import InstagramIcon from "@/components/InstagramIcon";
+
+const POPULAR_SEARCHES = [
+  { label: "Solitaire Engagement Rings", href: "/shop?category=rings&style=Solitaire" },
+  { label: "Diamond Tennis Bracelets", href: "/shop?category=bracelets&style=Tennis" },
+  { label: "Solitaire Stud Earrings", href: "/shop?category=earrings&style=Studs" },
+  { label: "Modern Diamond Mangalsutra", href: "/shop?category=mangalsutras" },
+  { label: "Graduated Tennis Necklaces", href: "/shop?category=necklaces&style=Tennis" },
+  { label: "Men's 18K Diamond Bands", href: "/shop?category=mens" },
+  { label: "92.5 Silver Diamond Rings", href: "/shop?category=rings&metal=SILVER_925" },
+  { label: "Lucknow Heritage Bridal Sets", href: "/bridal" },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -22,8 +33,7 @@ export default function Footer() {
     setErrorMsg("");
 
     try {
-      // Graceful newsletter handling
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/leads/newsletter`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/leads/newsletter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emailId: email }),
@@ -32,32 +42,68 @@ export default function Footer() {
       setStatus("done");
       setEmail("");
     } catch {
-      setStatus("done"); // Still show gracious success to client
+      setStatus("done");
       setEmail("");
     }
   };
 
   return (
-    <footer className="bg-ivory border-t border-border-subtle mt-24 text-ink" role="contentinfo">
-      {/* Top Banner: Newsletter and Brand Premise */}
+    <footer className="bg-ivory border-t border-border-subtle mt-20 text-ink" role="contentinfo">
+      {/* 1. Trust Badges Strip (BlueStone Concept) */}
+      <div className="border-b border-border-subtle bg-ivory-warm/40">
+        <div className="max-w-content mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="space-y-1.5 flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+              <Award size={18} strokeWidth={1.5} />
+            </div>
+            <p className="font-serif text-sm font-medium text-ink">100% IGI Certified</p>
+            <p className="text-[11px] text-ink-muted">Independent dossier with every jewel</p>
+          </div>
+
+          <div className="space-y-1.5 flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+              <RotateCcw size={18} strokeWidth={1.5} />
+            </div>
+            <p className="font-serif text-sm font-medium text-ink">7-Day Easy Returns</p>
+            <p className="text-[11px] text-ink-muted">30-day free ring resizing</p>
+          </div>
+
+          <div className="space-y-1.5 flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+              <ShieldCheck size={18} strokeWidth={1.5} />
+            </div>
+            <p className="font-serif text-sm font-medium text-ink">Lifetime Buyback</p>
+            <p className="text-[11px] text-ink-muted">Guaranteed exchange policy</p>
+          </div>
+
+          <div className="space-y-1.5 flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+              <Truck size={18} strokeWidth={1.5} />
+            </div>
+            <p className="font-serif text-sm font-medium text-ink">Free Insured Transit</p>
+            <p className="text-[11px] text-ink-muted">Pan-India doorstep delivery</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Newsletter Banner */}
       <div className="border-b border-border-subtle">
-        <div className="max-w-content mx-auto px-6 md:px-8 py-16 md:py-20 grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-3">
-            <p className="eyebrow">The Aryora Circle</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight">
+        <div className="max-w-content mx-auto px-6 md:px-8 py-12 md:py-16 grid lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-6 space-y-2">
+            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+              The Aryora Circle
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl text-ink leading-tight font-light">
               Invitations to private previews and editorial stories.
             </h2>
-            <p className="text-ink-muted text-sm max-w-md leading-relaxed">
-              Join our private journal. We share thoughtful writing on conscious brilliance, bespoke craftsmanship, and rare design drops.
+            <p className="text-ink-muted text-xs max-w-md leading-relaxed">
+              Join our private journal for thoughtful writing on conscious lab-grown brilliance and rare design launches.
             </p>
           </div>
 
           <div className="lg:col-span-6">
-            <form onSubmit={handleSubscribe} className="max-w-md w-full space-y-3" noValidate>
+            <form onSubmit={handleSubscribe} className="max-w-md w-full space-y-2" noValidate>
               <div className="relative flex items-center">
-                <label htmlFor="newsletter-email" className="sr-only">
-                  Email address
-                </label>
                 <input
                   id="newsletter-email"
                   type="email"
@@ -67,8 +113,7 @@ export default function Footer() {
                     if (status === "error") setStatus("idle");
                   }}
                   placeholder="Enter your email address"
-                  className="w-full h-12 bg-transparent border-b border-ink/30 px-1 py-3 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus:border-ink transition-colors pr-10"
-                  aria-describedby={status === "error" ? "newsletter-error" : undefined}
+                  className="w-full h-11 bg-transparent border-b border-ink/30 px-1 py-2 text-xs text-ink placeholder:text-ink-light focus:outline-none focus:border-champagne transition-colors pr-10"
                   disabled={status === "sending" || status === "done"}
                 />
                 <button
@@ -77,7 +122,7 @@ export default function Footer() {
                   aria-label="Subscribe to newsletter"
                   className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-ink hover:text-champagne-accessible transition-colors disabled:opacity-50"
                 >
-                  <ArrowRight size={18} strokeWidth={1.5} />
+                  <ArrowRight size={16} strokeWidth={1.5} />
                 </button>
               </div>
 
@@ -87,7 +132,7 @@ export default function Footer() {
                 </p>
               )}
               {status === "error" && (
-                <p id="newsletter-error" className="text-xs text-[#B93826] pt-1" role="alert">
+                <p className="text-xs text-[#B93826] pt-1" role="alert">
                   {errorMsg}
                 </p>
               )}
@@ -96,18 +141,18 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main 4-Column Directory */}
-      <div className="max-w-content mx-auto px-6 md:px-8 py-16 md:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
+      {/* 3. Main 4-Column Directory */}
+      <div className="max-w-content mx-auto px-6 md:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8">
           {/* Column 1: Shop */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest2 font-medium text-ink mb-6">
+            <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
               Shop Heirlooms
             </h3>
-            <ul className="space-y-3.5 text-sm text-ink-muted">
+            <ul className="space-y-2.5 text-xs text-ink-muted">
               <li>
                 <Link href="/shop" className="hover:text-ink transition-colors">
-                  All Jewellery
+                  All Fine Jewellery
                 </Link>
               </li>
               <li>
@@ -117,7 +162,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/shop?category=earrings" className="hover:text-ink transition-colors">
-                  Earrings & Drops
+                  Earrings & Studs
                 </Link>
               </li>
               <li>
@@ -131,13 +176,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/shop?category=bracelets" className="hover:text-ink transition-colors">
+                  Bracelets & Mangalsutras
+                </Link>
+              </li>
+              <li>
                 <Link href="/bridal" className="hover:text-ink transition-colors">
-                  Heritage Bridal
+                  Heritage Bridal Suite
                 </Link>
               </li>
               <li>
                 <Link href="/customize" className="hover:text-ink transition-colors">
-                  Design Your Own
+                  Design Your Own Ring
                 </Link>
               </li>
             </ul>
@@ -145,10 +195,10 @@ export default function Footer() {
 
           {/* Column 2: Discover & Help */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest2 font-medium text-ink mb-6">
+            <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
               Discover & Care
             </h3>
-            <ul className="space-y-3.5 text-sm text-ink-muted">
+            <ul className="space-y-2.5 text-xs text-ink-muted">
               <li>
                 <Link href="/about" className="hover:text-ink transition-colors">
                   About Aryora
@@ -166,12 +216,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/size-guide" className="hover:text-ink transition-colors">
-                  Ring Size Guide
+                  Ring Size & Fitting Guide
                 </Link>
               </li>
               <li>
                 <Link href="/faq" className="hover:text-ink transition-colors">
-                  Client FAQ
+                  Client FAQ & Dossiers
                 </Link>
               </li>
             </ul>
@@ -179,13 +229,13 @@ export default function Footer() {
 
           {/* Column 3: Policies & Assurance */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest2 font-medium text-ink mb-6">
+            <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
               Client Assurance
             </h3>
-            <ul className="space-y-3.5 text-sm text-ink-muted">
+            <ul className="space-y-2.5 text-xs text-ink-muted">
               <li>
                 <Link href="/shipping" className="hover:text-ink transition-colors">
-                  Shipping & Insurance
+                  Shipping & Courier Policy
                 </Link>
               </li>
               <li>
@@ -203,42 +253,42 @@ export default function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li className="pt-2 text-xs text-ink-subtle leading-relaxed">
-                Every diamond is independently certified by IGI and laser-inscribed for lifelong authenticity.
+              <li className="pt-2 text-[11px] text-ink-light leading-relaxed">
+                Every diamond is independently graded by IGI and laser-inscribed for lifelong security.
               </li>
             </ul>
           </div>
 
           {/* Column 4: Contact & Atelier */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest2 font-medium text-ink mb-6">
+            <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
               Concierge & Atelier
             </h3>
-            <div className="space-y-4 text-sm text-ink-muted">
-              <p className="flex items-start gap-2.5">
-                <MapPin size={16} strokeWidth={1.5} className="mt-0.5 text-champagne-accessible flex-shrink-0" />
+            <div className="space-y-3 text-xs text-ink-muted">
+              <p className="flex items-start gap-2">
+                <MapPin size={14} className="mt-0.5 text-champagne-accessible flex-shrink-0" />
                 <span>Lucknow, Uttar Pradesh, India</span>
               </p>
-              <p className="flex items-center gap-2.5">
-                <Phone size={16} strokeWidth={1.5} className="text-champagne-accessible flex-shrink-0" />
+              <p className="flex items-center gap-2">
+                <Phone size={14} className="text-champagne-accessible flex-shrink-0" />
                 <a href="tel:+918808828646" className="hover:text-ink transition-colors">
                   +91 8808828646
                 </a>
               </p>
-              <p className="flex items-center gap-2.5">
-                <Mail size={16} strokeWidth={1.5} className="text-champagne-accessible flex-shrink-0" />
+              <p className="flex items-center gap-2">
+                <Mail size={14} className="text-champagne-accessible flex-shrink-0" />
                 <a href="mailto:aryora.legacy@hotmail.com" className="hover:text-ink transition-colors">
                   aryora.legacy@hotmail.com
                 </a>
               </p>
-              <div className="pt-3">
+              <div className="pt-2">
                 <a
                   href="https://instagram.com/aryora.legacy"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-ink hover:text-champagne-accessible transition-colors"
+                  className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wider text-ink hover:text-champagne-accessible transition-colors font-medium"
                 >
-                  <InstagramIcon size={15} />
+                  <InstagramIcon size={14} />
                   <span>@aryora.legacy</span>
                 </a>
               </div>
@@ -246,18 +296,40 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Sub-footer Copyright */}
-        <div className="mt-16 pt-8 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between text-xs text-ink-subtle gap-4">
+        {/* 4. Popular Searches Strip (BlueStone Concept) */}
+        <div className="mt-12 pt-6 border-t border-border-subtle">
+          <p className="text-[10px] uppercase tracking-wider font-semibold text-ink-light mb-2">
+            Popular Fine Jewellery Searches
+          </p>
+          <div className="flex flex-wrap gap-2 text-xs">
+            {POPULAR_SEARCHES.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-ink-muted hover:text-ink hover:underline text-[11px] mr-3"
+              >
+                {link.label} ·
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* 5. Payment Methods & Copyright */}
+        <div className="mt-10 pt-6 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between text-xs text-ink-light gap-4">
           <p>© {new Date().getFullYear()} Aryora Fine Jewellery. All rights reserved.</p>
           <p className="font-serif italic tracking-wider text-sm text-ink-muted">
             Light. Legacy. You.
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-ink">Privacy</Link>
+          <div className="flex items-center gap-3 text-[11px]">
+            <span>UPI</span>
             <span>•</span>
-            <Link href="/terms" className="hover:text-ink">Terms</Link>
+            <span>Visa</span>
             <span>•</span>
-            <Link href="/shipping" className="hover:text-ink">Shipping</Link>
+            <span>MasterCard</span>
+            <span>•</span>
+            <span>NetBanking</span>
+            <span>•</span>
+            <span>EMI Available</span>
           </div>
         </div>
       </div>
