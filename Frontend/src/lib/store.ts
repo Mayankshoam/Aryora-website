@@ -25,6 +25,10 @@ interface AryoraStore {
   toggleWishlist: (slug: string) => void;
   isInWishlist: (slug: string) => boolean;
 
+  // Recently Viewed
+  recentlyViewed: string[]; // array of product slugs
+  addRecentlyViewed: (slug: string) => void;
+
   // Modals & Drawers
   isCartOpen: boolean;
   openCart: () => void;
@@ -44,6 +48,7 @@ export const useAryoraStore = create<AryoraStore>()(
     (set, get) => ({
       cart: [],
       wishlist: [],
+      recentlyViewed: [],
       isCartOpen: false,
       isSearchOpen: false,
       isSizeGuideOpen: false,
@@ -115,6 +120,15 @@ export const useAryoraStore = create<AryoraStore>()(
         return get().wishlist.includes(slug);
       },
 
+      addRecentlyViewed: (slug) => {
+        set((state) => {
+          const filtered = state.recentlyViewed.filter((s) => s !== slug);
+          return {
+            recentlyViewed: [slug, ...filtered].slice(0, 10),
+          };
+        });
+      },
+
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
 
@@ -125,10 +139,11 @@ export const useAryoraStore = create<AryoraStore>()(
       closeSizeGuide: () => set({ isSizeGuideOpen: false }),
     }),
     {
-      name: "aryora_store_v1",
+      name: "aryora_store_v2",
       partialize: (state) => ({
         cart: state.cart,
         wishlist: state.wishlist,
+        recentlyViewed: state.recentlyViewed,
       }),
     }
   )
