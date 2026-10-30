@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { ChevronDown, MessageCircle, Phone, Mail } from "lucide-react";
 
 interface QA {
   q: string;
@@ -17,50 +19,29 @@ const CATEGORIES: Category[] = [
     title: "Lab-Grown Diamonds",
     items: [
       {
-        q: "Are lab-grown diamonds real diamonds?",
-        a: "Yes. Lab-grown diamonds share the same chemical, physical, and optical properties as mined diamonds — the only difference is where they're created. Aryora's diamonds are grown in a controlled lab environment rather than extracted from the earth.",
+        q: "Are lab-grown diamonds chemically and physically real diamonds?",
+        a: "Yes. Lab-grown diamonds share the identical chemical (100% crystalline carbon), physical, and optical characteristics as mined diamonds. They display the identical refractive index (2.42), thermal conductivity, and hardness (10 on the Mohs scale). The only difference is their point of creation above ground rather than deep beneath the earth.",
       },
       {
-        q: "Can you tell the difference between a lab-grown and a mined diamond?",
-        a: "No — not even with the naked eye or standard jeweller's tools. Specialised equipment is needed to identify the origin, and every Aryora diamond is laser-inscribed and certified so its origin is always transparent to you.",
+        q: "Can a jeweler tell the difference between a mined and lab diamond?",
+        a: "Not with the naked eye, loupe, or standard gemological microscope. Advanced spectroscopic laboratory machinery is required to read microscopic growth characteristics. Every Aryora diamond is certified by IGI and laser-inscribed on the girdle with its unique certification number for total transparency.",
       },
       {
-        q: "Are lab-grown diamonds cheaper than mined diamonds?",
-        a: "Yes, typically 30-50% less for a comparable cut, colour, and clarity — since lab-grown diamonds skip the environmental and supply-chain cost of mining.",
-      },
-      {
-        q: "Are lab-grown diamonds eco-friendly and conflict-free?",
-        a: "Yes. Aryora's diamonds are created without mining, making them a more sustainable and entirely conflict-free choice.",
+        q: "Why are lab-grown diamonds more accessible in price?",
+        a: "By growing diamonds under controlled conditions, we bypass hundreds of feet of heavy earth excavation, lengthy cartels, and multi-tier intermediary brokerage markups. That efficiency passes directly to you, typically 30% to 50% more accessible for comparable carat, cut, color, and clarity.",
       },
     ],
   },
   {
-    title: "Certification & Quality",
+    title: "Certification & Authenticity",
     items: [
       {
-        q: "Are Aryora's diamonds certified?",
-        a: "Yes, every diamond is IGI certified, with documentation covering cut, colour, clarity, and carat weight — included with your piece at delivery.",
+        q: "Are all Aryora stones certified by independent gemological laboratories?",
+        a: "Yes. Every center stone is independently certified by the International Gemological Institute (IGI). Your piece ships in a sealed heirloom presentation box containing the official laminated IGI dossier specifying precise 4Cs grading.",
       },
       {
-        q: "What quality checks does each piece go through?",
-        a: "Every Aryora piece is inspected for stone setting, metal finish, and structural integrity before it leaves our studio, in addition to the independent certification on the diamond itself.",
-      },
-    ],
-  },
-  {
-    title: "Orders & Payment",
-    items: [
-      {
-        q: "What payment methods do you accept?",
-        a: "We accept cash, card, and UPI. All listed prices are inclusive of applicable taxes.",
-      },
-      {
-        q: "When is my order confirmed?",
-        a: "Your order is confirmed once payment is received. You'll get a confirmation email with your order details right after.",
-      },
-      {
-        q: "Can I cancel my order?",
-        a: "Yes, cancellations are accepted any time before the order is dispatched. Once dispatched, our standard return policy applies instead.",
+        q: "What metal hallmark standards does Aryora use?",
+        a: "Our yellow, white, and rose gold pieces are crafted in certified 18K (750 hallmark) or 14K gold. Our silver jewelry is crafted in authentic 92.5 sterling silver with tarnish-resistant rhodium plating.",
       },
     ],
   },
@@ -68,59 +49,38 @@ const CATEGORIES: Category[] = [
     title: "Shipping & Delivery",
     items: [
       {
-        q: "Do you ship across India?",
-        a: "Yes, with fully insured shipping. Delivery timelines vary slightly by location — you'll see an estimated delivery date at checkout.",
+        q: "How is my jewelry shipped, and is it insured during transit?",
+        a: "Every Aryora order includes complimentary 100% insured courier delivery across India via premier security logistics partners (BlueDart Apex / BVC Logistics). Your parcel is sealed in tamper-evident packaging and requires signature verification upon delivery.",
       },
       {
-        q: "How is my jewellery packaged?",
-        a: "Every piece ships in tamper-proof, secure packaging. Please inspect your parcel carefully before signing for delivery.",
-      },
-    ],
-  },
-  {
-    title: "Returns, Exchange & Warranty",
-    items: [
-      {
-        q: "What is Aryora's return policy?",
-        a: "Returns are accepted within 7 days of delivery, provided the piece is unused and in its original condition. Custom or made-to-order pieces are not eligible for return.",
-      },
-      {
-        q: "How long do refunds take?",
-        a: "Refunds are processed after the returned item is inspected, and typically take 7-10 working days.",
-      },
-      {
-        q: "Is there a warranty on Aryora jewellery?",
-        a: "Yes, every piece carries a 6-month warranty against manufacturing defects. Damage caused by misuse or normal wear is not covered.",
-      },
-      {
-        q: "Do you offer resizing?",
-        a: "Yes, one complimentary resizing is available within 30 days of delivery for most ring designs. Contact our concierge team before shipping a piece back for resizing.",
+        q: "What is the standard delivery timeline?",
+        a: "Ready-to-ship heirlooms dispatch within 2-4 business days and deliver within 4-7 business days across major Indian metros. Bespoke bridal and custom CAD pieces dispatch within 3-4 weeks from final design approval.",
       },
     ],
   },
   {
-    title: "Customization",
+    title: "Returns, Resizing & Warranty",
     items: [
       {
-        q: "Can I design my own piece?",
-        a: "Yes — visit our Build Your Ring page to choose a setting style, metal, and diamond shape. Our design concierge will follow up with a personalised quote.",
+        q: "What is Aryora's return and exchange policy?",
+        a: "We offer a 7-day hassle-free return policy on standard unworn catalogue items in their original presentation packaging. Bespoke engraved or custom-fabricated pieces are not eligible for direct return, but carry our lifetime exchange and transparent buyback guarantee.",
       },
       {
-        q: "How long does a custom piece take to make?",
-        a: "Custom timelines vary by design complexity; our concierge team will confirm an estimated timeline when you submit your design.",
+        q: "Do you offer complimentary ring resizing?",
+        a: "Yes. Every ring includes one complimentary resizing within 30 days of delivery. Simply reach out to our concierge team and we will coordinate return collection.",
+      },
+      {
+        q: "What does the 6-Month Manufacturing Warranty cover?",
+        a: "Our warranty covers manufacturing defects, loose prongs, and stone setting integrity. Wear and tear or accidental structural deformation is repaired at nominal atelier raw-material cost.",
       },
     ],
   },
   {
-    title: "Care & Maintenance",
+    title: "Custom Orders & Bridal",
     items: [
       {
-        q: "How do I clean my jewellery at home?",
-        a: "Use a soft brush with mild soapy water, rinse, and pat dry with a lint-free cloth. Avoid harsh chemicals, chlorine, and ultrasonic cleaners unless recommended by our team for your specific piece.",
-      },
-      {
-        q: "Do you offer cleaning or repair services?",
-        a: "Yes — reach out to our concierge team at aryora.legacy@hotmail.com or +91 8808828646 to arrange cleaning, repair, or resizing.",
+        q: "Can I commission a bespoke design or alter an existing piece?",
+        a: "Absolutely. Our 'Design Your Own' atelier allows you to pick your dream diamond shape, carat, setting style, and gold alloy. Our 3D CAD team works closely with you to finalize every millimeter.",
       },
     ],
   },
@@ -130,67 +90,122 @@ export default function FaqPage() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  // FAQPage JSON-LD schema for rich search results
+  const allQuestions = CATEGORIES.flatMap((c) => c.items);
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allQuestions.map((qa) => ({
+      "@type": "Question",
+      name: qa.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: qa.a,
+      },
+    })),
+  };
+
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
-      <p className="eyebrow mb-3">Support</p>
-      <h1 className="font-display text-4xl mb-4">Frequently Asked Questions</h1>
-      <p className="text-ink/70 leading-relaxed mb-14 max-w-2xl">
-        Answers to the questions we hear most, from how our lab-grown diamonds are made to
-        shipping, returns, and care. Can't find what you're looking for?{" "}
-        <Link href="/contact" className="underline text-emerald">Reach our concierge team</Link>.
-      </p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
-      <div className="grid md:grid-cols-[220px_1fr] gap-12">
-        {/* Category nav */}
-        <nav className="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
-          {CATEGORIES.map((cat, i) => (
-            <button
-              key={cat.title}
-              onClick={() => {
-                setActiveCategory(i);
-                setOpenIndex(0);
-              }}
-              className={`text-left whitespace-nowrap px-4 py-3 text-sm border-l-2 transition-colors ${
-                activeCategory === i
-                  ? "border-emerald text-emerald font-medium bg-emerald/5"
-                  : "border-transparent text-ink/60 hover:text-ink"
-              }`}
-            >
-              {cat.title}
-            </button>
-          ))}
-        </nav>
+      <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
+        <Breadcrumbs items={[{ label: "Frequently Asked Questions" }]} />
 
-        {/* Accordion */}
-        <div>
-          <h2 className="font-display text-xl mb-6">{CATEGORIES[activeCategory].title}</h2>
-          <div className="divide-y divide-black/10 border-t border-b border-black/10">
-            {CATEGORIES[activeCategory].items.map((item, i) => (
-              <div key={item.q}>
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="w-full flex justify-between items-center gap-4 py-5 text-left"
-                >
-                  <span className="font-display text-base">{item.q}</span>
-                  <span className="text-champagne text-xl flex-shrink-0">{openIndex === i ? "−" : "+"}</span>
-                </button>
-                {openIndex === i && (
-                  <p className="pb-5 text-sm text-ink/70 leading-relaxed pr-8">{item.a}</p>
-                )}
-              </div>
+        <div className="max-w-2xl my-8 space-y-3">
+          <p className="eyebrow">Client Support & Clarifications</p>
+          <h1 className="font-serif text-3xl md:text-5xl text-ink">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-sm text-ink-muted leading-relaxed">
+            Everything you need to know about our IGI-certified lab-grown diamonds, shipping insurance, resizing, and craftsmanship standards.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-10 md:gap-14 pt-6">
+          {/* Category Tabs */}
+          <nav className="lg:col-span-4 space-y-1.5" aria-label="FAQ Categories">
+            {CATEGORIES.map((cat, idx) => (
+              <button
+                key={cat.title}
+                onClick={() => {
+                  setActiveCategory(idx);
+                  setOpenIndex(0);
+                }}
+                className={`w-full text-left px-5 py-3.5 text-xs uppercase tracking-wider font-medium border transition-all ${
+                  activeCategory === idx
+                    ? "border-ink bg-ivory-pure text-ink shadow-sm"
+                    : "border-transparent text-ink-muted hover:text-ink hover:bg-ivory-muted/40"
+                }`}
+              >
+                {cat.title}
+              </button>
             ))}
+          </nav>
+
+          {/* Accordion List */}
+          <div className="lg:col-span-8">
+            <h2 className="font-serif text-2xl text-ink mb-6 pb-2 border-b border-border-subtle">
+              {CATEGORIES[activeCategory].title}
+            </h2>
+
+            <div className="divide-y divide-border-subtle border-b border-border-subtle">
+              {CATEGORIES[activeCategory].items.map((item, i) => {
+                const isOpen = openIndex === i;
+                return (
+                  <div key={item.q} className="py-4">
+                    <button
+                      onClick={() => setOpenIndex(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between text-left gap-4 py-2 text-sm md:text-base font-serif text-ink hover:text-champagne-accessible transition-colors"
+                      aria-expanded={isOpen}
+                    >
+                      <span>{item.q}</span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-ink-subtle flex-shrink-0 transition-transform ${
+                          isOpen ? "rotate-180 text-champagne-accessible" : ""
+                        }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <p className="pt-2 pb-3 text-xs md:text-sm text-ink-muted leading-relaxed pr-6">
+                        {item.a}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Direct Concierge Prompt */}
+            <div className="mt-12 p-6 border border-border-subtle bg-ivory-pure space-y-3">
+              <h3 className="font-serif text-lg text-ink">Have a specific question?</h3>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                Our Lucknow atelier concierge is available 7 days a week to answer gemstone specifications, quote custom orders, or assist with orders.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <a
+                  href="https://wa.me/918808828646"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary text-xs flex items-center gap-2"
+                >
+                  <MessageCircle size={15} /> WhatsApp +91 8808828646
+                </a>
+                <a
+                  href="mailto:aryora.legacy@hotmail.com"
+                  className="btn-outline text-xs flex items-center gap-2"
+                >
+                  <Mail size={15} /> Email Concierge
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="mt-20 border-t border-black/10 pt-10 text-center">
-        <p className="eyebrow mb-2">Still have questions?</p>
-        <h3 className="font-display text-2xl mb-6">Talk to our concierge team</h3>
-        <div className="flex justify-center gap-4 flex-wrap">
-          <Link href="/contact" className="btn-primary">Book a Consultation</Link>
-          <a href="tel:+918808828646" className="btn-outline">Call +91 8808828646</a>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

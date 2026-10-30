@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { Check, Phone, ShieldCheck, Ruler } from "lucide-react";
 
-// Indian ring sizes with diameter — matches industry-standard charts.
 const SIZES = [
   { size: 4, mm: 14.01 },
   { size: 5, mm: 14.33 },
@@ -14,7 +16,7 @@ const SIZES = [
   { size: 11, mm: 16.24 },
   { size: 12, mm: 16.56 },
   { size: 13, mm: 16.88 },
-  { size: 14, mm: 17.2 },
+  { size: 14, mm: 17.20 },
   { size: 15, mm: 17.52 },
   { size: 16, mm: 17.83 },
   { size: 17, mm: 18.15 },
@@ -23,156 +25,135 @@ const SIZES = [
   { size: 20, mm: 19.11 },
   { size: 21, mm: 19.43 },
   { size: 22, mm: 19.75 },
-  { size: 23, mm: 20.0 },
+  { size: 23, mm: 20.00 },
   { size: 24, mm: 20.36 },
-  { size: 25, mm: 20.6 },
+  { size: 25, mm: 20.60 },
   { size: 26, mm: 21.02 },
   { size: 27, mm: 21.34 },
-  { size: 28, mm: 21.6 },
+  { size: 28, mm: 21.60 },
 ];
-
-// A handful of reference circles for the visual scale strip (not to exact print scale on screen).
-const SCALE_SAMPLES = [8, 12, 16, 20, 24];
 
 const TIPS = [
   {
-    img: "/images/size-guide/tip-time.jpg",
     title: "Time of Day",
-    text: "Finger size is typically largest in the evening. For the most accurate measurement, size your finger then.",
+    text: "Finger size expands slightly towards evening. For maximum accuracy, measure your finger at the end of the day.",
   },
   {
-    img: "/images/size-guide/tip-temperature.jpg",
     title: "Temperature Effects",
-    text: "Fingers contract in cold and expand in heat. Avoid measuring when your hands are unusually cold or warm.",
+    text: "Fingers contract in cold weather and expand in summer heat. Avoid measuring immediately after hot baths or cold exposure.",
   },
   {
-    img: "/images/size-guide/tip-factors.jpg",
-    title: "Other Factors",
-    text: "Exercise, pregnancy, water retention, and ageing can cause fingers to swell. Weight loss and cold weather may reduce size.",
-  },
-  {
-    img: "/images/size-guide/tip-bands.jpg",
     title: "Thicker Bands",
-    text: "For bands wider than 6mm, we recommend choosing half to one size larger for a comfortable, everyday fit.",
+    text: "For rings wider than 4mm, we suggest choosing half to one size larger so the band slides comfortably over the knuckle.",
+  },
+  {
+    title: "Complimentary Resizing",
+    text: "Every Aryora ring includes one free resizing within 30 days of delivery, giving you total peace of mind.",
   },
 ];
 
 export default function RingSizeGuidePage() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="relative h-[50vh] min-h-[360px] w-full overflow-hidden">
-        <Image src="/images/size-guide/hero-ring-sizing.jpg" alt="Finding your ring size" fill priority className="object-cover" />
-        <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-ivory px-6">
-          <p className="eyebrow text-ivory/80 mb-3">Client Care</p>
-          <h1 className="font-display text-4xl md:text-5xl">The Ring Size Guide</h1>
-          <p className="mt-4 max-w-xl text-ivory/80 text-sm leading-relaxed">
-            Choosing the correct size ensures comfort, minimises the risk of loss, and lets every
-            piece sit exactly as it was designed to.
+    <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
+      <Breadcrumbs items={[{ label: "Size Guide" }]} />
+
+      <div className="max-w-2xl my-8 space-y-3">
+        <p className="eyebrow">Client Care & Fit</p>
+        <h1 className="font-serif text-3xl md:text-5xl text-ink">
+          The Ring Size Guide
+        </h1>
+        <p className="text-sm text-ink-muted leading-relaxed">
+          A properly sized ring ensures supreme comfort, stays centered, and lets the brilliance of your stone sit proudly.
+        </p>
+      </div>
+
+      {/* Measurement Methods */}
+      <div className="grid md:grid-cols-2 gap-8 my-12">
+        <div className="border border-border-subtle bg-ivory-pure p-8 space-y-4">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-ink">
+            <Ruler size={16} className="text-champagne-accessible" />
+            <span>Method 1: Measure an Existing Ring</span>
+          </div>
+          <p className="text-xs text-ink-muted leading-relaxed">
+            Take a ring that fits your intended finger comfortably. Place it on a flat surface and measure the internal diameter in millimeters straight across the widest point, edge-to-edge.
+          </p>
+          <p className="text-xs text-ink-muted leading-relaxed">
+            Match that measurement with the Indian Ring Size Chart below. If your measurement falls between two sizes, choose the larger size.
           </p>
         </div>
-      </section>
 
-      <div className="max-w-5xl mx-auto px-6 py-20">
-        {/* Visual scale strip */}
-        <section className="mb-20">
-          <p className="eyebrow mb-2 text-center">Relative Scale</p>
-          <h2 className="font-display text-2xl text-center mb-10">A Visual Sense of Size</h2>
-          <div className="flex items-end justify-center gap-8 flex-wrap">
-            {SCALE_SAMPLES.map((sizeNum) => {
-              const entry = SIZES.find((s) => s.size === sizeNum)!;
-              const px = entry.mm * 4; // purely relative, not print-accurate on screen
-              return (
-                <div key={sizeNum} className="flex flex-col items-center gap-3">
-                  <svg width={px + 20} height={px + 20} viewBox={`0 0 ${px + 20} ${px + 20}`}>
-                    <circle
-                      cx={(px + 20) / 2}
-                      cy={(px + 20) / 2}
-                      r={px / 2}
-                      fill="none"
-                      stroke="#0B3D2E"
-                      strokeWidth={2}
-                    />
-                  </svg>
-                  <p className="text-sm font-display">Size {sizeNum}</p>
-                  <p className="text-xs text-ink/50">{entry.mm}mm</p>
-                </div>
-              );
-            })}
+        <div className="border border-border-subtle bg-ivory-pure p-8 space-y-4">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-ink">
+            <Phone size={16} className="text-champagne-accessible" />
+            <span>Method 2: Virtual Concierge Sizing</span>
           </div>
-          <p className="text-xs text-ink/40 text-center mt-8 max-w-lg mx-auto">
-            These circles show relative scale between sizes only — screen sizes vary, so this is
-            not a print-accurate measuring tool. For precision, visit an Aryora boutique or compare
-            against a ring you already own using the chart below.
+          <p className="text-xs text-ink-muted leading-relaxed">
+            Our atelier specialists can guide you through sizing over a private WhatsApp video consultation, or dispatch a physical ring sizing tool directly to your doorstep in India.
           </p>
-        </section>
-
-        {/* How to measure */}
-        <section className="mb-20 grid md:grid-cols-2 gap-12">
-          <div>
-            <p className="eyebrow mb-2">Method One</p>
-            <h2 className="font-display text-xl mb-4">Using a Ring You Already Own</h2>
-            <ol className="space-y-3 text-sm text-ink/70 leading-relaxed">
-              <li><span className="font-display text-champagne mr-2">01</span>Take a ring that already fits the intended finger.</li>
-              <li><span className="font-display text-champagne mr-2">02</span>Measure its inner diameter in millimetres, edge to edge.</li>
-              <li><span className="font-display text-champagne mr-2">03</span>Match that measurement to the closest size in the chart below.</li>
-              <li><span className="font-display text-champagne mr-2">04</span>If you're between two sizes, we recommend sizing up for comfort.</li>
-            </ol>
+          <div className="pt-2">
+            <a
+              href="https://wa.me/918808828646?text=Hello%20Aryora%2C%20I%20need%20help%20determining%20my%20ring%20size."
+              target="_blank"
+              rel="noreferrer"
+              className="btn-outline text-xs"
+            >
+              Consult Our Concierge
+            </a>
           </div>
-          <div>
-            <p className="eyebrow mb-2">Method Two</p>
-            <h2 className="font-display text-xl mb-4">Visit an Aryora Boutique</h2>
-            <p className="text-sm text-ink/70 leading-relaxed mb-4">
-              For the most accurate fit, our concierge team can size your finger in person at our
-              Lucknow boutique, or guide you through the process over a call.
-            </p>
-            <a href="/contact" className="btn-outline inline-block text-xs">Book a Consultation</a>
-          </div>
-        </section>
+        </div>
+      </div>
 
-        {/* Size chart table */}
-        <section className="mb-20">
-          <p className="eyebrow mb-2 text-center">Reference Chart</p>
-          <h2 className="font-display text-2xl text-center mb-10">Indian Ring Size Chart</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-black/10 text-left text-ink/50 uppercase text-xs tracking-widest2">
-                  <th className="py-3 pr-4">Ring Size</th>
-                  <th className="py-3 pr-4">Diameter (mm)</th>
-                  <th className="py-3">Diameter (inches)</th>
+      {/* Indian Ring Size Chart Table */}
+      <div className="my-16 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="font-serif text-2xl text-ink">Standard Indian Ring Size Chart</h2>
+          <span className="text-xs text-ink-subtle">All dimensions in millimeters</span>
+        </div>
+
+        <div className="overflow-x-auto border border-border-subtle bg-ivory-pure">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-ivory-muted border-b border-border-subtle uppercase tracking-wider text-ink-muted">
+              <tr>
+                <th className="py-3 px-4 font-medium">Indian Size</th>
+                <th className="py-3 px-4 font-medium">Diameter (mm)</th>
+                <th className="py-3 px-4 font-medium">Circumference (mm)</th>
+                <th className="py-3 px-4 font-medium">US Size Equivalent</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-subtle">
+              {SIZES.map((s) => (
+                <tr key={s.size} className="hover:bg-ivory-muted/40 transition-colors">
+                  <td className="py-2.5 px-4 font-serif text-sm font-medium text-ink">
+                    Size {s.size}
+                  </td>
+                  <td className="py-2.5 px-4 text-ink-muted">{s.mm.toFixed(2)} mm</td>
+                  <td className="py-2.5 px-4 text-ink-muted">
+                    {(s.mm * Math.PI).toFixed(2)} mm
+                  </td>
+                  <td className="py-2.5 px-4 text-ink-muted">
+                    US {(s.size / 2 - 0.5).toFixed(1)}
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-black/5">
-                {SIZES.map((s) => (
-                  <tr key={s.size}>
-                    <td className="py-2.5 pr-4 font-display">{s.size}</td>
-                    <td className="py-2.5 pr-4 text-ink/70">{s.mm.toFixed(2)} mm</td>
-                    <td className="py-2.5 text-ink/70">{(s.mm / 25.4).toFixed(2)}&quot;</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-        {/* Tips */}
-        <section>
-          <p className="eyebrow mb-2 text-center">Good to Know</p>
-          <h2 className="font-display text-2xl text-center mb-10">Additional Sizing Tips</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {TIPS.map((tip) => (
-              <div key={tip.title}>
-                <div className="relative aspect-square mb-3 bg-black/5">
-                  <Image src={tip.img} alt={tip.title} fill className="object-cover" />
-                </div>
-                <h3 className="font-display text-sm mb-1">{tip.title}</h3>
-                <p className="text-xs text-ink/60 leading-relaxed">{tip.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* Sizing Tips Grid */}
+      <div className="my-16 space-y-6">
+        <h2 className="font-serif text-2xl text-ink">Essential Sizing Principles</h2>
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {TIPS.map((tip) => (
+            <div
+              key={tip.title}
+              className="border border-border-subtle p-5 bg-ivory-pure space-y-2"
+            >
+              <h3 className="font-serif text-base text-ink font-medium">{tip.title}</h3>
+              <p className="text-xs text-ink-muted leading-relaxed">{tip.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
