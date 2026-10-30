@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -15,6 +15,8 @@ import {
   Check,
   ChevronRight,
   Gem,
+  Play,
+  Pause,
 } from "lucide-react";
 import InstagramIcon from "@/components/InstagramIcon";
 import ProductCard from "@/components/ProductCard";
@@ -177,12 +179,50 @@ export default function HomePage() {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
 
+  // Video state management
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const bestsellers = getBestsellers();
 
   const filteredBestsellers =
     bestsellerTab === "all"
       ? bestsellers.slice(0, 4)
       : bestsellers.filter((p) => p.category === bestsellerTab).slice(0, 4);
+
+  // Check prefers-reduced-motion and Save-Data header
+  useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const navWithConn = typeof navigator !== "undefined" ? (navigator as Navigator & { connection?: { saveData?: boolean } }) : null;
+    const isSaveData = Boolean(navWithConn?.connection?.saveData);
+
+    const checkReducedMotion = () => {
+      if (motionQuery.matches || isSaveData) {
+        setPrefersReducedMotion(true);
+      } else {
+        setPrefersReducedMotion(false);
+      }
+    };
+
+    checkReducedMotion();
+    if (motionQuery.addEventListener) {
+      motionQuery.addEventListener("change", checkReducedMotion);
+      return () => motionQuery.removeEventListener("change", checkReducedMotion);
+    }
+  }, []);
+
+  const toggleVideoPlay = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,35 +235,63 @@ export default function HomePage() {
   return (
     <div className="space-y-16 md:space-y-24 bg-ivory">
       {/* ========================================================= */}
-      {/* 1. HERO BANNER (One message, two buttons)                 */}
+      {/* 1. HERO BANNER: RESPONSIVE LOOPING BACKGROUND VIDEO       */}
       {/* ========================================================= */}
-      <section className="relative h-[85vh] min-h-[560px] max-h-[800px] w-full flex items-center overflow-hidden">
-        <Image
-          src="/images/hero-emerald.jpg"
-          alt="Aryora Heritage Lab-Grown Emerald and Diamond High Jewellery"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        {/* Soft Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
+      <section className="relative h-[100svh] md:h-[90vh] min-h-[580px] w-full flex items-center overflow-hidden bg-ivory">
+        {/* Background Video / Poster Fallback */}
+        {prefersReducedMotion ? (
+          <Image
+            src="/images/hero-poster.jpg"
+            alt="Aryora Fine Jewellery - Light. Legacy. You."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/images/hero-poster.jpg"
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none scale-[1.02]"
+          >
+            <source
+              src="/videos/hero-mobile.mp4"
+              type="video/mp4"
+              media="(max-width: 767px)"
+            />
+            <source
+              src="/videos/hero-desktop.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support HTML5 video.
+          </video>
+        )}
 
-        <div className="relative max-w-content mx-auto px-6 md:px-12 w-full text-ivory space-y-6">
-          <div className="space-y-3 max-w-xl">
-            <span className="inline-block text-[11px] uppercase tracking-[0.26em] text-champagne font-semibold">
+        {/* High-Contrast Soft Gradient Overlays (Guarantees >= 4.5:1 WCAG contrast) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/30 pointer-events-none" />
+
+        {/* Headline & Call to Actions with Safe Screen Padding */}
+        <div className="relative max-w-content mx-auto px-6 sm:px-8 md:px-12 w-full text-ivory space-y-6 pt-16 md:pt-0">
+          <div className="space-y-3.5 max-w-xl">
+            <span className="inline-block text-[11px] uppercase tracking-[0.28em] text-champagne font-semibold drop-shadow-sm">
               Light. Legacy. You.
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-wide text-ivory leading-[1.15]">
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light tracking-wide text-ivory leading-[1.15] drop-shadow-md">
               Modern Lab-Grown Fine Jewellery for India
             </h1>
-            <p className="text-sm md:text-base text-ivory/80 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-ivory/85 font-light leading-relaxed max-w-lg drop-shadow-sm">
               Ethically cultivated diamonds of exceptional chemical purity, hand-set in hallmarked 18K gold and 92.5 sterling silver in our Lucknow atelier.
             </p>
           </div>
 
-          {/* Two Prominent Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+          {/* Two Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
             <Link
               href="/shop"
               className="px-8 py-3.5 bg-ivory text-ink text-xs uppercase tracking-widest font-semibold hover:bg-champagne hover:text-ivory transition-all text-center shadow-lg"
@@ -232,12 +300,29 @@ export default function HomePage() {
             </Link>
             <Link
               href="/customize"
-              className="px-8 py-3.5 border border-ivory/80 text-ivory text-xs uppercase tracking-widest font-semibold hover:bg-ivory/10 hover:border-ivory transition-all text-center backdrop-blur-sm"
+              className="px-8 py-3.5 border border-ivory/80 text-ivory text-xs uppercase tracking-widest font-semibold hover:bg-ivory/15 hover:border-ivory transition-all text-center backdrop-blur-sm shadow-md"
             >
               Custom Atelier Studio
             </Link>
           </div>
         </div>
+
+        {/* Accessible Play/Pause Button */}
+        {!prefersReducedMotion && (
+          <button
+            type="button"
+            onClick={toggleVideoPlay}
+            aria-label={isPlaying ? "Pause background video" : "Play background video"}
+            className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 w-10 h-10 rounded-full bg-ivory-pure/85 hover:bg-ivory text-ink backdrop-blur-md border border-border-subtle shadow-lg flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-champagne"
+            title={isPlaying ? "Pause background video" : "Play background video"}
+          >
+            {isPlaying ? (
+              <Pause size={15} strokeWidth={2} />
+            ) : (
+              <Play size={15} strokeWidth={2} className="ml-0.5" />
+            )}
+          </button>
+        )}
       </section>
 
       {/* ========================================================= */}
