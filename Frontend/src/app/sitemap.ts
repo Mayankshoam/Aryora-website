@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
-import { PRODUCTS } from "@/lib/products";
+import { getAllProducts } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://aryora-website-d3sv.vercel.app";
+  const products = getAllProducts();
 
   const staticRoutes = [
     "",
@@ -31,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: r === "" ? 1.0 : r === "/shop" || r === "/bridal" ? 0.9 : 0.7,
   }));
 
-  const productEntries = PRODUCTS.map((p) => ({
+  const productEntries = products.map((p) => ({
     url: `${base}/product/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

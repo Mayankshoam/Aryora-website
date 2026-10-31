@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductCard from "@/components/ProductCard";
-import { PRODUCTS } from "@/lib/products";
+import { getAllProducts, Product } from "@/lib/data";
 import {
   ShieldCheck,
   Calendar,
@@ -118,24 +118,24 @@ export default function BridalPage() {
     );
 
   // Filter curated bridal products
-  const bridalProducts = PRODUCTS.filter((product) => {
+  const allProducts = getAllProducts();
+  const bridalProducts = allProducts.filter((product) => {
     if (selectedTab === "all") {
       return (
-        product.collection === "bridal" ||
-        product.category === "bridal" ||
-        product.category === "mangalsutras" ||
-        product.slug === "luminary-graduated-tennis-necklace" ||
-        product.slug === "classic-solitaire-diamond-studs"
+        product.category === "Bridal" ||
+        product.category === "Solitaires" ||
+        product.subcategory === "Mangalsutras" ||
+        product.occasion === "Wedding"
       );
     }
     if (selectedTab === "suites") {
-      return product.category === "bridal" || product.category === "necklaces";
+      return product.category === "Bridal" || product.category === "Necklaces";
     }
     if (selectedTab === "solitaires") {
-      return product.category === "rings";
+      return product.category === "Solitaires" || product.style === "Solitaire";
     }
     if (selectedTab === "mangalsutras") {
-      return product.category === "mangalsutras";
+      return product.subcategory === "Mangalsutras";
     }
     return true;
   });
@@ -210,14 +210,14 @@ export default function BridalPage() {
         </div>
 
         <div className="lg:col-span-5 relative">
-          <div className="relative aspect-[4/5] bg-ivory-muted border border-border-subtle shadow-lg overflow-hidden group">
+          <div className="relative aspect-[4/5] bg-ivory-warm border border-border-subtle shadow-lg overflow-hidden group p-8 flex items-center justify-center">
             <Image
-              src="/images/collection-bridal.jpg"
-              alt="Aryora Noor Heritage Bridal Suite in 18K Gold and Certified Lab-Grown Diamonds"
+              src="/site/cat-bridal.svg"
+              alt="Aryora Heritage Bridal Suite in 18K Gold and Certified Lab-Grown Diamonds"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              className="object-contain group-hover:scale-105 transition-transform duration-700 ease-out p-6"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-80" />
             <div className="absolute bottom-4 left-4 right-4 p-4 bg-ivory-pure/90 backdrop-blur-md border border-border-subtle text-ink space-y-1">

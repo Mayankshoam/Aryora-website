@@ -237,7 +237,10 @@ export default function CheckoutPage() {
                 <div key={item.product.id} className="py-3 flex items-center justify-between gap-3 text-xs">
                   <div>
                     <p className="font-serif text-sm font-medium text-ink">{item.product.name}</p>
-                    <p className="text-[11px] text-ink-subtle">{item.product.specs.metal} • Qty {item.quantity}</p>
+                    <p className="text-[11px] text-ink-subtle">
+                      {item.selectedMetal || item.product.metal} ({item.product.purity})
+                      {item.size ? ` • Size: ${item.size}` : ""} • Qty {item.quantity}
+                    </p>
                   </div>
                   <span className="font-medium text-ink">
                     ₹{(item.product.price * item.quantity).toLocaleString("en-IN")}

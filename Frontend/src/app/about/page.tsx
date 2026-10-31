@@ -27,14 +27,14 @@ export default function AboutPage() {
 
       {/* Main Image Grid */}
       <div className="grid md:grid-cols-12 gap-8 items-center">
-        <div className="md:col-span-7 relative aspect-[4/3] bg-ivory-muted border border-border-subtle overflow-hidden">
+        <div className="md:col-span-7 relative aspect-[4/3] bg-ivory-warm border border-border-subtle overflow-hidden flex items-center justify-center p-6">
           <Image
-            src="/images/craft-hands.jpg"
+            src="/site/hero-poster.svg"
             alt="Master artisan hand-setting diamonds at Aryora atelier"
             fill
             priority
             sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
 
