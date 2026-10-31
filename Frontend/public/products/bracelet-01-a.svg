@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#FAF8F4"/>
+      <stop offset="100%" stop-color="#F2EDE4"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#B89B5E"/>
+      <stop offset="100%" stop-color="#7A5E20"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="800" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Framing Grid -->
+  <rect x="30" y="30" width="740" height="740" fill="none" stroke="#E8E5DF" stroke-width="1"/>
+  <rect x="40" y="40" width="720" height="720" fill="none" stroke="#B89B5E" stroke-width="0.5" stroke-dasharray="4,6" opacity="0.4"/>
+  
+  <!-- Corner Floral / Geometric Accents -->
+  <path d="M40 56 L56 40 M760 56 L744 40 M40 744 L56 760 M760 744 L744 760" stroke="#B89B5E" stroke-width="1" opacity="0.6"/>
+
+  <!-- Jewelry Illustration -->
+  <g transform="translate(0, -20)">
+    
+      <!-- Tennis Bracelet Loop -->
+      <ellipse cx="400" cy="400" rx="160" ry="110" fill="none" stroke="#B89B5E" stroke-width="12" stroke-dasharray="14,6" opacity="0.9" />
+      <ellipse cx="400" cy="400" rx="160" ry="110" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="6,14" />
+      <circle cx="560" cy="400" r="8" fill="#B89B5E" />
+    
+  </g>
+
+  <!-- Product Labels & Watermark -->
+  <text x="400" y="650" font-family="'Georgia', serif" font-size="20" fill="#1A1A1A" font-weight="400" text-anchor="middle" letter-spacing="1">
+    Sample Bracelet 01
+  </text>
+  <text x="400" y="680" font-family="system-ui, sans-serif" font-size="11" fill="#7A5E20" font-weight="600" text-anchor="middle" letter-spacing="3" text-transform="uppercase">
+    BRACELETS · 18K BIS HALLMARKED
+  </text>
+  <text x="400" y="705" font-family="system-ui, sans-serif" font-size="9" fill="#8A8680" text-anchor="middle" letter-spacing="2" text-transform="uppercase">
+    ARYORA · IGI CERTIFIED LAB DIAMONDS · 18K GOLD
+  </text>
+</svg>

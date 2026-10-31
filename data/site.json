@@ -1,0 +1,203 @@
+{
+  "brand": {
+    "name": "Aryora",
+    "tagline": "Light. Legacy. You.",
+    "city": "Lucknow, Uttar Pradesh, India",
+    "phone": "+91 8808828646",
+    "whatsapp": "+91 8808828646",
+    "email": "aryora.legacy@hotmail.com",
+    "address": "Aryora Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
+    "instagram": "https://instagram.com/aryora.legacy",
+    "instagramHandle": "@aryora.legacy"
+  },
+  "hero": {
+    "eyebrow": "Awadhi Royal Atelier · Lab-Grown Fine Joaillerie",
+    "title": "Made for you, not for your locker.",
+    "subtitle": "Conscious lab-grown diamonds of extraordinary chemical purity, handcrafted in Lucknow in BIS-hallmarked 18K gold. Born to be celebrated daily.",
+    "ctaPrimary": {
+      "label": "Explore Collection",
+      "href": "/shop"
+    },
+    "ctaSecondary": {
+      "label": "Book Atelier Consultation",
+      "href": "/bridal"
+    },
+    "videoDesktop": "/videos/hero-desktop.mp4",
+    "videoMobile": "/videos/hero-mobile.mp4",
+    "poster": "/site/hero-poster.svg"
+  },
+  "trustStrip": [
+    {
+      "title": "15 Days Easy Return",
+      "desc": "30-day complimentary ring resizing",
+      "badge": "15 Days",
+      "icon": "RotateCcw"
+    },
+    {
+      "title": "IGI Certified Diamonds",
+      "desc": "Microscopic laser-inscribed dossier",
+      "badge": "100% IGI",
+      "icon": "Award"
+    },
+    {
+      "title": "Lifetime Exchange & Buyback",
+      "desc": "Guaranteed 100% diamond exchange value",
+      "badge": "Lifetime",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Hallmarked Gold",
+      "desc": "Govt of India BIS 750 (18K) HUID",
+      "badge": "BIS 750",
+      "icon": "CheckCircle"
+    }
+  ],
+  "categoryTiles": [
+    {
+      "name": "Rings",
+      "href": "/shop?category=Rings",
+      "image": "/site/cat-rings.svg",
+      "count": "Solitaires & Bands"
+    },
+    {
+      "name": "Earrings",
+      "href": "/shop?category=Earrings",
+      "image": "/site/cat-earrings.svg",
+      "count": "Studs & Drops"
+    },
+    {
+      "name": "Pendants",
+      "href": "/shop?category=Pendants",
+      "image": "/site/cat-pendants.svg",
+      "count": "Solitaire Bezels"
+    },
+    {
+      "name": "Necklaces",
+      "href": "/shop?category=Necklaces",
+      "image": "/site/cat-necklaces.svg",
+      "count": "Tennis & Chokers"
+    },
+    {
+      "name": "Bracelets",
+      "href": "/shop?category=Bracelets",
+      "image": "/site/cat-bracelets.svg",
+      "count": "Tennis Cuffs"
+    },
+    {
+      "name": "Solitaires",
+      "href": "/shop?category=Solitaires",
+      "image": "/site/cat-solitaires.svg",
+      "count": "IGI 0.5ct to 3ct"
+    },
+    {
+      "name": "Bridal",
+      "href": "/bridal",
+      "image": "/site/cat-bridal.svg",
+      "count": "Wedding Suites"
+    },
+    {
+      "name": "Mangalsutras",
+      "href": "/shop?category=Bridal&subcategory=Mangalsutras",
+      "image": "/site/cat-mangalsutras.svg",
+      "count": "Diamond Bars"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "100% IGI Certified",
+      "desc": "Every diamond centerpiece is graded by International Gemological Institute with unique laser inscription.",
+      "image": "/images/certifications/igi-certified.png"
+    },
+    {
+      "title": "BIS Hallmark 750",
+      "desc": "Bureau of Indian Standards authenticated 18K solid gold purity with tamper-evident 6-digit HUID code.",
+      "image": "/images/certifications/bis-hallmark.png"
+    }
+  ],
+  "whyAryora": [
+    {
+      "title": "Zero Earth Mining",
+      "desc": "Grown above ground with renewable solar energy. Optically, physically, and chemically identical to mined diamonds."
+    },
+    {
+      "title": "Transparent Indian Pricing",
+      "desc": "Component-level breakdown: exact gold weight, diamond carat cost, making charges, and 3% GST."
+    },
+    {
+      "title": "Awadhi Royal Craft",
+      "desc": "Generational master artisans in Lucknow hand-forging heirlooms built to last generations."
+    },
+    {
+      "title": "Complimentary Insured Courier",
+      "desc": "Doorstep delivery across all Indian pin codes via BlueDart Apex and BVC Logistics."
+    }
+  ],
+  "footerLinks": {
+    "shop": [
+      {
+        "label": "All Fine Jewellery",
+        "href": "/shop"
+      },
+      {
+        "label": "Solitaire Engagement Rings",
+        "href": "/shop?category=Solitaires"
+      },
+      {
+        "label": "Diamond Tennis Bracelets",
+        "href": "/shop?category=Bracelets&style=Tennis"
+      },
+      {
+        "label": "Solitaire Stud Earrings",
+        "href": "/shop?category=Earrings"
+      },
+      {
+        "label": "Modern Mangalsutras",
+        "href": "/shop?category=Bridal&subcategory=Mangalsutras"
+      },
+      {
+        "label": "Royal Bridal Suites",
+        "href": "/bridal"
+      }
+    ],
+    "discover": [
+      {
+        "label": "About Aryora",
+        "href": "/about"
+      },
+      {
+        "label": "The World of Lab Diamonds",
+        "href": "/world-of-lgd"
+      },
+      {
+        "label": "Ethical & Sustainable Craft",
+        "href": "/sustainability"
+      },
+      {
+        "label": "Ring Size & Fitting Guide",
+        "href": "/size-guide"
+      },
+      {
+        "label": "Client FAQ & Dossiers",
+        "href": "/faq"
+      }
+    ],
+    "assurance": [
+      {
+        "label": "15-Day Easy Returns & Buyback",
+        "href": "/returns"
+      },
+      {
+        "label": "Free Insured Shipping Policy",
+        "href": "/shipping"
+      },
+      {
+        "label": "Terms & Lifetime Warranty",
+        "href": "/terms"
+      },
+      {
+        "label": "Privacy Policy",
+        "href": "/privacy"
+      }
+    ]
+  }
+}

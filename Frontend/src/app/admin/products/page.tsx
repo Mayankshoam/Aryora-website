@@ -165,7 +165,7 @@ export default function AdminProductsPage() {
             >
               + Add another image
             </button>
-            <p className="text-xs text-ink/40 mt-2">Upload each image file to Frontend/public/images/products/ via GitHub first, then paste its path here.</p>
+            <p className="text-xs text-ink/40 mt-2">Upload each image file to public/products/ via GitHub first, then paste its path here (e.g. /products/ring-01-a.svg).</p>
           </div>
 
           <label className="flex items-center gap-2 text-sm">

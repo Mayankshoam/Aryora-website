@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { PRODUCTS } from "@/lib/products";
+import ProductCard from "@/components/ProductCard";
+import { getAllProducts } from "@/lib/data";
 
 interface Props {
   params: { slug: string };
@@ -9,25 +10,28 @@ interface Props {
 
 const COLLECTION_META: Record<
   string,
-  { title: string; subtitle: string; desc: string; heroImage: string }
+  { title: string; subtitle: string; desc: string; heroImage: string; category: string }
 > = {
   solitaire: {
     title: "Solitaire Collection",
     subtitle: "Timeless Brilliance",
     desc: "Single-stone lab-grown diamonds cut to supreme mathematical proportions. From classic round brilliants to architectural emerald cuts.",
-    heroImage: "/images/collection-solitaire.jpg",
+    heroImage: "/site/cat-solitaires.svg",
+    category: "Solitaires",
   },
   everyday: {
     title: "Everyday Luxury",
     subtitle: "Conscious Daily Radiance",
-    desc: "Whisper-light pendants, fluid tennis necklaces, and sleek pavé bands designed to elevate everyday rituals.",
-    heroImage: "/images/collection-everyday.jpg",
+    desc: "Whisper-light pendants, fluid tennis bracelets, and sleek pavé bands designed to elevate everyday rituals.",
+    heroImage: "/site/cat-bracelets.svg",
+    category: "Bracelets",
   },
   bridal: {
     title: "Heritage Bridal",
     subtitle: "Awadhi Royal Heirloom",
     desc: "Regal chokers, layered diamond necklaces, and bespoke bridal suites paying homage to the Nawabi aesthetic of Lucknow.",
-    heroImage: "/images/collection-bridal.jpg",
+    heroImage: "/site/cat-bridal.svg",
+    category: "Bridal",
   },
 };
 
@@ -48,17 +52,22 @@ export default function CollectionDetailPage({ params }: Props) {
     title: slug.charAt(0).toUpperCase() + slug.slice(1) + " Collection",
     subtitle: "Curated Edition",
     desc: "Handcrafted lab-grown diamond heirlooms by Aryora.",
-    heroImage: "/images/hero-emerald.jpg",
+    heroImage: "/site/hero-poster.svg",
+    category: "Rings",
   };
 
-  const collectionProducts = PRODUCTS.filter(
-    (p) => p.collection === slug || p.category === slug
+  const allProducts = getAllProducts();
+  const collectionProducts = allProducts.filter(
+    (p) =>
+      p.category.toLowerCase() === meta.category.toLowerCase() ||
+      p.tags?.some((t) => t.toLowerCase() === slug.toLowerCase()) ||
+      p.occasion.toLowerCase() === slug.toLowerCase()
   );
 
-  const displayProducts = collectionProducts.length > 0 ? collectionProducts : PRODUCTS.slice(0, 4);
+  const displayProducts = collectionProducts.length > 0 ? collectionProducts : allProducts.slice(0, 4);
 
   return (
-    <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
+    <div className="max-w-content mx-auto px-4 md:px-8 py-6 md:py-12 space-y-8">
       <Breadcrumbs
         items={[
           { label: "Collections", href: "/collections" },
@@ -66,64 +75,47 @@ export default function CollectionDetailPage({ params }: Props) {
         ]}
       />
 
-      <div className="relative aspect-[21/9] min-h-[260px] md:min-h-[380px] bg-ivory-muted border border-border-subtle overflow-hidden my-8 flex items-end">
-        <Image
-          src={meta.heroImage}
-          alt={meta.title}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/20 to-transparent" />
-        <div className="relative z-10 p-6 md:p-12 text-ivory max-w-xl space-y-2">
-          <p className="eyebrow text-champagne-light">{meta.subtitle}</p>
-          <h1 className="font-serif text-3xl md:text-5xl text-ivory">{meta.title}</h1>
-          <p className="text-xs md:text-sm text-ivory/85 leading-relaxed font-light">
+      {/* Banner */}
+      <div className="relative min-h-[220px] md:min-h-[300px] bg-[#FAF8F4] border border-border-subtle overflow-hidden p-6 md:p-10 flex items-center justify-between">
+        <div className="max-w-xl space-y-3 relative z-10">
+          <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+            {meta.subtitle}
+          </p>
+          <h1 className="font-serif text-3xl md:text-5xl text-ink font-light">
+            {meta.title}
+          </h1>
+          <p className="text-xs md:text-sm text-ink-muted leading-relaxed font-light">
             {meta.desc}
           </p>
         </div>
+
+        <div className="relative w-40 h-40 md:w-56 md:h-56 flex-shrink-0 hidden sm:block p-4">
+          <Image
+            src={meta.heroImage}
+            alt={meta.title}
+            fill
+            className="object-contain"
+          />
+        </div>
       </div>
 
-      <div className="pt-8">
-        <div className="flex items-center justify-between pb-4 border-b border-border-subtle mb-8">
-          <p className="eyebrow text-[11px]">{displayProducts.length} Heirlooms in this Edition</p>
+      {/* Products Grid */}
+      <div className="space-y-4 pt-4">
+        <div className="flex justify-between items-center text-xs text-ink-muted border-b border-border-subtle pb-3">
+          <span>
+            Showing <strong>{displayProducts.length}</strong> creations in this edition
+          </span>
           <Link
             href="/shop"
-            className="text-xs uppercase tracking-wider text-ink hover:text-champagne-accessible underline font-medium"
+            className="text-champagne-accessible font-semibold hover:underline"
           >
-            Browse All Heirlooms →
+            Explore Full Catalogue &rarr;
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
           {displayProducts.map((p) => (
-            <Link
-              key={p.id}
-              href={`/product/${p.slug}`}
-              className="group block border border-border-subtle bg-ivory-pure hover:border-border-medium transition-colors"
-            >
-              <div className="relative aspect-square bg-ivory-muted overflow-hidden">
-                <Image
-                  src={p.images[0]?.url || "/images/hero-emerald.jpg"}
-                  alt={p.name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover img-zoom"
-                />
-              </div>
-              <div className="p-4">
-                <p className="text-[11px] text-ink-subtle uppercase tracking-wider">
-                  {p.specs.metal}
-                </p>
-                <h3 className="font-serif text-base text-ink group-hover:text-champagne-accessible transition-colors truncate mt-1">
-                  {p.name}
-                </h3>
-                <p className="text-sm font-medium text-ink mt-2">
-                  ₹{p.price.toLocaleString("en-IN")}
-                </p>
-              </div>
-            </Link>
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </div>

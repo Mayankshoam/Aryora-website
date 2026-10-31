@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B3B30"/>
+      <stop offset="40%" stop-color="#142B23"/>
+      <stop offset="100%" stop-color="#0B1A15"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="65%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B89B5E" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1B3B30" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#heroGrad)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+
+  <!-- Shimmering Diamond Polygon Illustration -->
+  <g transform="translate(1150, 480) scale(1.6)">
+    <!-- Solitaire Diamond Crown -->
+    <polygon points="0,-160 160,-60 0,60 -160,-60" fill="none" stroke="#D4AF37" stroke-width="3" opacity="0.9"/>
+    <polygon points="0,-160 0,60 -70,-60" fill="#FFFFFF" fill-opacity="0.12"/>
+    <polygon points="0,-160 0,60 70,-60" fill="#B89B5E" fill-opacity="0.18"/>
+    <!-- Pavilion & Girdle -->
+    <polygon points="-160,-60 160,-60 0,160" fill="none" stroke="#B89B5E" stroke-width="3" opacity="0.85"/>
+    <polygon points="0,160 0,-60 -70,-60" fill="#EADFC7" fill-opacity="0.15"/>
+    <polygon points="0,160 0,-60 70,-60" fill="#FFFFFF" fill-opacity="0.25"/>
+    <!-- Radiance Sparkles -->
+    <circle cx="160" cy="-60" r="5" fill="#FFFFFF"/>
+    <circle cx="-160" cy="-60" r="5" fill="#FFFFFF"/>
+    <circle cx="0" cy="-160" r="6" fill="#D4AF37"/>
+    <line x1="0" y1="-190" x2="0" y2="-130" stroke="#D4AF37" stroke-width="2"/>
+    <line x1="-30" y1="-160" x2="30" y2="-160" stroke="#D4AF37" stroke-width="2"/>
+  </g>
+
+  <!-- Editorial Typography Left -->
+  <g transform="translate(160, 440)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="14" fill="#B89B5E" font-weight="600" letter-spacing="6" text-transform="uppercase">
+      AWADHI ROYAL ATELIER · 100% IGI CERTIFIED
+    </text>
+    <text x="0" y="70" font-family="'Georgia', serif" font-size="64" fill="#FAF8F4" font-weight="300" letter-spacing="1">
+      Made for you, not for your locker.
+    </text>
+    <text x="0" y="125" font-family="system-ui, sans-serif" font-size="20" fill="#C5C2BA" font-weight="300" max-width="600">
+      Conscious lab-grown diamonds set in 18K gold. Born to be celebrated daily.
+    </text>
+    <text x="0" y="180" font-family="'Georgia', serif" font-size="18" fill="#B89B5E" font-style="italic" letter-spacing="4">
+      Light. Legacy. You.
+    </text>
+  </g>
+</svg>

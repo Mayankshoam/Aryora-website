@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "Aryora Heritage Bridal Haute Joaillerie",
     description:
       "Royal Awadhi craftsmanship meets modern conscious brilliance. Bespoke IGI-certified lab-grown diamond wedding suites.",
-    images: ["/images/collection-bridal.jpg"],
+    images: ["/site/cat-bridal.svg"],
   },
 };
 

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import SearchModal from "@/components/SearchModal";
 import SizeGuideModal from "@/components/SizeGuideModal";
+import StoreLocatorModal from "@/components/StoreLocatorModal";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const viewport: Viewport = {
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hero-emerald.jpg",
+        url: "/site/hero-poster.svg",
         width: 1200,
         height: 630,
         alt: "Aryora Fine Jewellery Collection",
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     title: "Aryora — Light. Legacy. You.",
     description:
       "IGI-certified lab-grown diamond & fine gold jewellery for modern India.",
-    images: ["/images/hero-emerald.jpg"],
+    images: ["/site/hero-poster.svg"],
   },
   robots: {
     index: true,
@@ -83,7 +84,7 @@ export default function RootLayout({
     "@type": "JewelryStore",
     name: "Aryora",
     url: "https://aryora-website-d3sv.vercel.app",
-    logo: "https://aryora-website-d3sv.vercel.app/images/hero-emerald.jpg",
+    logo: "https://aryora-website-d3sv.vercel.app/site/brand-emblem.svg",
     description:
       "Lucknow-based fine jewellery house crafting IGI-certified lab-grown diamond, 18K gold and 92.5 silver pieces.",
     telephone: "+91-8808828646",
@@ -146,6 +147,7 @@ export default function RootLayout({
         <CartDrawer />
         <SearchModal />
         <SizeGuideModal />
+        <StoreLocatorModal />
         <WhatsAppButton />
       </body>
     </html>

@@ -1,0 +1,945 @@
+[
+  {
+    "id": "ary-rng-001",
+    "slug": "sample-solitaire-ring-01",
+    "name": "Sample Solitaire Ring 01",
+    "category": "Rings",
+    "subcategory": "Solitaire Rings",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.05,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589201",
+    "weightGrams": 3.4,
+    "sizes": [
+      "10",
+      "12",
+      "14",
+      "16",
+      "18"
+    ],
+    "occasion": "Engagement",
+    "gender": "Women",
+    "style": "Solitaire",
+    "price": 68500,
+    "discountPercent": 10,
+    "stock": 12,
+    "images": [
+      "/products/ring-01-a.svg",
+      "/products/ring-01-b.svg"
+    ],
+    "description": "Architectural four-prong solitaire set in 18K hallmarked yellow gold, showcasing a brilliant D VVS1 lab diamond.",
+    "tags": [
+      "solitaire",
+      "engagement",
+      "bestseller",
+      "yellow gold"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-rng-002",
+    "slug": "sample-eternity-band-02",
+    "name": "Sample Eternity Band 02",
+    "category": "Rings",
+    "subcategory": "Eternity Bands",
+    "metal": "Rose Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.95,
+    "shape": "Round",
+    "color": "E",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589202",
+    "weightGrams": 3.8,
+    "sizes": [
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Classic",
+    "price": 49500,
+    "discountPercent": 15,
+    "stock": 8,
+    "images": [
+      "/products/ring-02-a.svg",
+      "/products/ring-02-b.svg"
+    ],
+    "description": "Full pavé brilliance encircling an 18K rose gold contour, designed for effortless daily layering.",
+    "tags": [
+      "band",
+      "eternity",
+      "rose gold",
+      "daily wear"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-rng-003",
+    "slug": "sample-halo-cushion-ring-03",
+    "name": "Sample Halo Cushion Ring 03",
+    "category": "Rings",
+    "subcategory": "Halo Rings",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.5,
+    "shape": "Cushion",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589203",
+    "weightGrams": 4.6,
+    "sizes": [
+      "12",
+      "14",
+      "16",
+      "18"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Halo",
+    "price": 115000,
+    "discountPercent": 8,
+    "stock": 6,
+    "images": [
+      "/products/ring-03-a.svg",
+      "/products/ring-03-b.svg"
+    ],
+    "description": "A cushion-cut center stone encircled by a micro-pavé halo in crisp 18K white gold.",
+    "tags": [
+      "halo",
+      "cushion",
+      "white gold",
+      "wedding"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-rng-004",
+    "slug": "sample-minimal-stacking-ring-04",
+    "name": "Sample Minimal Stacking Ring 04",
+    "category": "Rings",
+    "subcategory": "Stackable Rings",
+    "metal": "Yellow Gold",
+    "purity": "14kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.35,
+    "shape": "Round",
+    "color": "F",
+    "clarity": "VS1",
+    "certificate": "IGI Certified #LG-589204",
+    "weightGrams": 2.2,
+    "sizes": [
+      "8",
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Modern",
+    "price": 24500,
+    "discountPercent": 0,
+    "stock": 15,
+    "images": [
+      "/products/ring-04-a.svg",
+      "/products/ring-04-b.svg"
+    ],
+    "description": "Ultra-slim 14K gold band accented with bezel-set lab diamonds for chic everyday styling.",
+    "tags": [
+      "stacking",
+      "minimal",
+      "yellow gold",
+      "affordable"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-rng-005",
+    "slug": "sample-mens-signet-ring-05",
+    "name": "Sample Men's Signet Ring 05",
+    "category": "Rings",
+    "subcategory": "Men's Bands",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.8,
+    "shape": "Princess",
+    "color": "F",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589205",
+    "weightGrams": 7.2,
+    "sizes": [
+      "18",
+      "20",
+      "22",
+      "24"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Men",
+    "style": "Modern",
+    "price": 78000,
+    "discountPercent": 10,
+    "stock": 5,
+    "images": [
+      "/products/ring-05-a.svg",
+      "/products/ring-05-b.svg"
+    ],
+    "description": "Sleek brushed 18K white gold signet ring embedded with an architectural princess-cut diamond.",
+    "tags": [
+      "mens",
+      "signet",
+      "white gold",
+      "princess"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  },
+  {
+    "id": "ary-ear-006",
+    "slug": "sample-solitaire-studs-01",
+    "name": "Sample Solitaire Studs 01",
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589206",
+    "weightGrams": 2.8,
+    "sizes": [
+      "One Size"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Classic",
+    "price": 58000,
+    "discountPercent": 12,
+    "stock": 14,
+    "images": [
+      "/products/earring-01-a.svg",
+      "/products/earring-01-b.svg"
+    ],
+    "description": "Classic screw-back solitaire diamond studs engineered for supreme comfort and pure radiance.",
+    "tags": [
+      "studs",
+      "classic",
+      "white gold",
+      "bestseller"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-ear-007",
+    "slug": "sample-luminary-drop-earrings-02",
+    "name": "Sample Luminary Drop Earrings 02",
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.6,
+    "shape": "Pear",
+    "color": "E",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589207",
+    "weightGrams": 5.2,
+    "sizes": [
+      "One Size"
+    ],
+    "occasion": "Festive",
+    "gender": "Women",
+    "style": "Vintage",
+    "price": 94000,
+    "discountPercent": 10,
+    "stock": 7,
+    "images": [
+      "/products/earring-02-a.svg",
+      "/products/earring-02-b.svg"
+    ],
+    "description": "Gracefully articulated pear drops suspended from an 18K yellow gold diamond-accented motif.",
+    "tags": [
+      "drops",
+      "pear",
+      "yellow gold",
+      "festive"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-ear-008",
+    "slug": "sample-diamond-huggie-hoops-03",
+    "name": "Sample Diamond Huggie Hoops 03",
+    "category": "Earrings",
+    "subcategory": "Hoops",
+    "metal": "Rose Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.6,
+    "shape": "Round",
+    "color": "F",
+    "clarity": "VS1",
+    "certificate": "IGI Certified #LG-589208",
+    "weightGrams": 3.5,
+    "sizes": [
+      "One Size"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Modern",
+    "price": 36000,
+    "discountPercent": 0,
+    "stock": 18,
+    "images": [
+      "/products/earring-03-a.svg",
+      "/products/earring-03-b.svg"
+    ],
+    "description": "Subtle everyday huggies pavé-set with luminous lab diamonds in 18K warm rose gold.",
+    "tags": [
+      "huggies",
+      "hoops",
+      "rose gold",
+      "daily wear"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-ear-009",
+    "slug": "sample-emerald-cut-chandelier-04",
+    "name": "Sample Emerald-Cut Chandelier 04",
+    "category": "Earrings",
+    "subcategory": "Chandeliers",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Emerald & Diamond",
+    "carat": 2.4,
+    "shape": "Emerald",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589209",
+    "weightGrams": 7.8,
+    "sizes": [
+      "One Size"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Halo",
+    "price": 148000,
+    "discountPercent": 10,
+    "stock": 4,
+    "images": [
+      "/products/earring-04-a.svg",
+      "/products/earring-04-b.svg"
+    ],
+    "description": "Tiered architectural chandeliers pairing Zambian-grade emeralds with brilliant lab diamonds.",
+    "tags": [
+      "chandeliers",
+      "emerald",
+      "wedding",
+      "luxury"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-pen-010",
+    "slug": "sample-solitaire-bezel-pendant-01",
+    "name": "Sample Solitaire Bezel Pendant 01",
+    "category": "Pendants",
+    "subcategory": "Solitaires",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.75,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589210",
+    "weightGrams": 3.1,
+    "sizes": [
+      "16-18 inch Chain"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Minimal",
+    "price": 42000,
+    "discountPercent": 10,
+    "stock": 16,
+    "images": [
+      "/products/pendant-01-a.svg",
+      "/products/pendant-01-b.svg"
+    ],
+    "description": "Modern bezel-encased solitaire floating along a delicate 18K yellow gold adjustable cable chain.",
+    "tags": [
+      "pendant",
+      "solitaire",
+      "bezel",
+      "bestseller"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-pen-011",
+    "slug": "sample-teardrop-halo-pendant-02",
+    "name": "Sample Teardrop Halo Pendant 02",
+    "category": "Pendants",
+    "subcategory": "Halo Pendants",
+    "metal": "Rose Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.1,
+    "shape": "Pear",
+    "color": "E",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589211",
+    "weightGrams": 3.9,
+    "sizes": [
+      "18 inch Chain"
+    ],
+    "occasion": "Gifting",
+    "gender": "Women",
+    "style": "Halo",
+    "price": 64000,
+    "discountPercent": 15,
+    "stock": 9,
+    "images": [
+      "/products/pendant-02-a.svg",
+      "/products/pendant-02-b.svg"
+    ],
+    "description": "An elegant pear-shaped centerpiece magnified by a shimmering micro-halo in warm 18K rose gold.",
+    "tags": [
+      "teardrop",
+      "pear",
+      "rose gold",
+      "gifting"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-pen-012",
+    "slug": "sample-geometric-bar-pendant-03",
+    "name": "Sample Geometric Bar Pendant 03",
+    "category": "Pendants",
+    "subcategory": "Geometric",
+    "metal": "White Gold",
+    "purity": "14kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.45,
+    "shape": "Princess",
+    "color": "F",
+    "clarity": "VS1",
+    "certificate": "IGI Certified #LG-589212",
+    "weightGrams": 2.8,
+    "sizes": [
+      "16-18 inch Chain"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Unisex",
+    "style": "Modern",
+    "price": 28500,
+    "discountPercent": 0,
+    "stock": 12,
+    "images": [
+      "/products/pendant-03-a.svg",
+      "/products/pendant-03-b.svg"
+    ],
+    "description": "Linear architectural bar set with 5 princess-cut diamonds in rhodium-finished 14K white gold.",
+    "tags": [
+      "bar",
+      "geometric",
+      "white gold",
+      "unisex"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  },
+  {
+    "id": "ary-nck-013",
+    "slug": "sample-graduated-tennis-necklace-01",
+    "name": "Sample Graduated Tennis Necklace 01",
+    "category": "Necklaces",
+    "subcategory": "Tennis",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 6.5,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589213",
+    "weightGrams": 22.4,
+    "sizes": [
+      "16 inch"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Tennis",
+    "price": 285000,
+    "discountPercent": 8,
+    "stock": 3,
+    "images": [
+      "/products/necklace-01-a.svg",
+      "/products/necklace-01-b.svg"
+    ],
+    "description": "A continuous cascade of graduated Type IIa brilliant-cut diamonds handcrafted in solid 18K white gold.",
+    "tags": [
+      "tennis",
+      "necklace",
+      "white gold",
+      "high luxury"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-nck-014",
+    "slug": "sample-heritage-choker-necklace-02",
+    "name": "Sample Heritage Choker Necklace 02",
+    "category": "Necklaces",
+    "subcategory": "Chokers",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Emerald & Diamond",
+    "carat": 5.2,
+    "shape": "Emerald",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589214",
+    "weightGrams": 28.5,
+    "sizes": [
+      "Adjustable Dori / Clasp"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Vintage",
+    "price": 345000,
+    "discountPercent": 5,
+    "stock": 2,
+    "images": [
+      "/products/necklace-02-a.svg",
+      "/products/necklace-02-b.svg"
+    ],
+    "description": "Royal Awadhi heritage choker combining certified emeralds with brilliant lab diamonds in 18K gold.",
+    "tags": [
+      "choker",
+      "heritage",
+      "emerald",
+      "awadh"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-nck-015",
+    "slug": "sample-floating-solitaire-choker-03",
+    "name": "Sample Floating Solitaire Choker 03",
+    "category": "Necklaces",
+    "subcategory": "Solitaires",
+    "metal": "Rose Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.25,
+    "shape": "Round",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589215",
+    "weightGrams": 6.2,
+    "sizes": [
+      "15-17 inch"
+    ],
+    "occasion": "Festive",
+    "gender": "Women",
+    "style": "Modern",
+    "price": 88000,
+    "discountPercent": 12,
+    "stock": 8,
+    "images": [
+      "/products/necklace-03-a.svg",
+      "/products/necklace-03-b.svg"
+    ],
+    "description": "Minimalist collar choker holding a single 1.25ct solitaire diamond with hidden bail design.",
+    "tags": [
+      "floating",
+      "solitaire",
+      "rose gold",
+      "festive"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  },
+  {
+    "id": "ary-brc-016",
+    "slug": "sample-classic-tennis-bracelet-01",
+    "name": "Sample Classic Tennis Bracelet 01",
+    "category": "Bracelets",
+    "subcategory": "Tennis",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 4,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589216",
+    "weightGrams": 12.8,
+    "sizes": [
+      "6.5 inch",
+      "7.0 inch",
+      "7.5 inch"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Unisex",
+    "style": "Tennis",
+    "price": 165000,
+    "discountPercent": 10,
+    "stock": 7,
+    "images": [
+      "/products/bracelet-01-a.svg",
+      "/products/bracelet-01-b.svg"
+    ],
+    "description": "Four-prong classic tennis line with secure box-catch safety clasp, individually articulated in 18K gold.",
+    "tags": [
+      "tennis",
+      "bracelet",
+      "white gold",
+      "bestseller"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-brc-017",
+    "slug": "sample-open-cuff-bangle-02",
+    "name": "Sample Open Cuff Bangle 02",
+    "category": "Bracelets",
+    "subcategory": "Bangles",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.8,
+    "shape": "Pear",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589217",
+    "weightGrams": 14.5,
+    "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+    ],
+    "occasion": "Festive",
+    "gender": "Women",
+    "style": "Modern",
+    "price": 118000,
+    "discountPercent": 15,
+    "stock": 5,
+    "images": [
+      "/products/bracelet-02-a.svg",
+      "/products/bracelet-02-b.svg"
+    ],
+    "description": "Solid 18K yellow gold bypass bangle terminated by two radiant pear-shaped lab diamonds.",
+    "tags": [
+      "cuff",
+      "bangle",
+      "yellow gold",
+      "festive"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-brc-018",
+    "slug": "sample-minimal-chain-bracelet-03",
+    "name": "Sample Minimal Chain Bracelet 03",
+    "category": "Bracelets",
+    "subcategory": "Chain Bracelets",
+    "metal": "Rose Gold",
+    "purity": "14kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 0.5,
+    "shape": "Round",
+    "color": "F",
+    "clarity": "VS1",
+    "certificate": "IGI Certified #LG-589218",
+    "weightGrams": 3.2,
+    "sizes": [
+      "6.5-7.5 inch"
+    ],
+    "occasion": "Daily Wear",
+    "gender": "Women",
+    "style": "Minimal",
+    "price": 32000,
+    "discountPercent": 0,
+    "stock": 14,
+    "images": [
+      "/products/bracelet-03-a.svg",
+      "/products/bracelet-03-b.svg"
+    ],
+    "description": "Delicate paperclip chain adorned with 3 bezel-set solitaire diamonds for understated elegance.",
+    "tags": [
+      "chain",
+      "rose gold",
+      "minimal",
+      "daily wear"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  },
+  {
+    "id": "ary-sol-019",
+    "slug": "sample-certified-solitaire-ring-2ct-01",
+    "name": "Sample Certified Solitaire Ring 2ct 01",
+    "category": "Solitaires",
+    "subcategory": "Solitaire Rings",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Solitaire Diamond",
+    "carat": 2.02,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589219",
+    "weightGrams": 4.8,
+    "sizes": [
+      "10",
+      "12",
+      "14",
+      "16",
+      "18"
+    ],
+    "occasion": "Engagement",
+    "gender": "Women",
+    "style": "Solitaire",
+    "price": 198000,
+    "discountPercent": 12,
+    "stock": 4,
+    "images": [
+      "/products/solitaire-01-a.svg",
+      "/products/solitaire-01-b.svg"
+    ],
+    "description": "A monumental 2.02 carat Hearts & Arrows D VVS1 diamond mounted in cathedral prongs of 18K yellow gold.",
+    "tags": [
+      "solitaire",
+      "2 carat",
+      "engagement",
+      "luxury"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-sol-020",
+    "slug": "sample-oval-solitaire-ring-1-5ct-02",
+    "name": "Sample Oval Solitaire Ring 1.5ct 02",
+    "category": "Solitaires",
+    "subcategory": "Solitaire Rings",
+    "metal": "Rose Gold",
+    "purity": "18kt",
+    "stone": "Solitaire Diamond",
+    "carat": 1.51,
+    "shape": "Oval",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589220",
+    "weightGrams": 4.1,
+    "sizes": [
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "occasion": "Engagement",
+    "gender": "Women",
+    "style": "Solitaire",
+    "price": 138000,
+    "discountPercent": 8,
+    "stock": 6,
+    "images": [
+      "/products/solitaire-02-a.svg",
+      "/products/solitaire-02-b.svg"
+    ],
+    "description": "Elongated oval lab diamond featuring optical ratio 1.45, held by six delicate claws in 18K rose gold.",
+    "tags": [
+      "oval",
+      "solitaire",
+      "rose gold",
+      "engagement"
+    ],
+    "isBestseller": false,
+    "isNew": true
+  },
+  {
+    "id": "ary-sol-021",
+    "slug": "sample-emerald-cut-solitaire-1ct-03",
+    "name": "Sample Emerald-Cut Solitaire 1ct 03",
+    "category": "Solitaires",
+    "subcategory": "Solitaire Rings",
+    "metal": "White Gold",
+    "purity": "18kt",
+    "stone": "Solitaire Diamond",
+    "carat": 1.01,
+    "shape": "Emerald",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589221",
+    "weightGrams": 3.9,
+    "sizes": [
+      "12",
+      "14",
+      "16",
+      "18"
+    ],
+    "occasion": "Engagement",
+    "gender": "Women",
+    "style": "Solitaire",
+    "price": 92000,
+    "discountPercent": 10,
+    "stock": 9,
+    "images": [
+      "/products/solitaire-03-a.svg",
+      "/products/solitaire-03-b.svg"
+    ],
+    "description": "Hall-of-mirrors step-cut emerald lab diamond set in a minimalist 18K white gold compass setting.",
+    "tags": [
+      "emerald cut",
+      "solitaire",
+      "white gold",
+      "classic"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  },
+  {
+    "id": "ary-brd-022",
+    "slug": "sample-royal-bridal-necklace-suite-01",
+    "name": "Sample Royal Bridal Necklace Suite 01",
+    "category": "Bridal",
+    "subcategory": "Bridal Sets",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 8.5,
+    "shape": "Round",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589222",
+    "weightGrams": 48,
+    "sizes": [
+      "Complete Set"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Vintage",
+    "price": 485000,
+    "discountPercent": 5,
+    "stock": 2,
+    "images": [
+      "/products/bridal-01-a.svg",
+      "/products/bridal-01-b.svg"
+    ],
+    "description": "A monumental bridal heirloom suite comprising ceremonial necklace, matching chandelier earrings, and maang tikka.",
+    "tags": [
+      "bridal",
+      "wedding suite",
+      "awadh",
+      "heirloom"
+    ],
+    "isBestseller": true,
+    "isNew": false
+  },
+  {
+    "id": "ary-brd-023",
+    "slug": "sample-modern-diamond-mangalsutra-02",
+    "name": "Sample Modern Diamond Mangalsutra 02",
+    "category": "Bridal",
+    "subcategory": "Mangalsutras",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Lab-Grown Diamond",
+    "carat": 1.15,
+    "shape": "Round",
+    "color": "E",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified #LG-589223",
+    "weightGrams": 5.6,
+    "sizes": [
+      "16-18 inch"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Modern",
+    "price": 78500,
+    "discountPercent": 10,
+    "stock": 11,
+    "images": [
+      "/products/bridal-02-a.svg",
+      "/products/bridal-02-b.svg"
+    ],
+    "description": "Contemporary sacred mangalsutra uniting auspicious black beads with a floating geometric diamond bar in 18K gold.",
+    "tags": [
+      "mangalsutra",
+      "bridal",
+      "yellow gold",
+      "bestseller"
+    ],
+    "isBestseller": true,
+    "isNew": true
+  },
+  {
+    "id": "ary-brd-024",
+    "slug": "sample-bridal-emerald-choker-set-03",
+    "name": "Sample Bridal Emerald Choker Set 03",
+    "category": "Bridal",
+    "subcategory": "Bridal Sets",
+    "metal": "Yellow Gold",
+    "purity": "18kt",
+    "stone": "Emerald & Diamond",
+    "carat": 6.8,
+    "shape": "Emerald",
+    "color": "E",
+    "clarity": "VVS1",
+    "certificate": "IGI Certified #LG-589224",
+    "weightGrams": 42.5,
+    "sizes": [
+      "Complete Set"
+    ],
+    "occasion": "Wedding",
+    "gender": "Women",
+    "style": "Vintage",
+    "price": 395000,
+    "discountPercent": 8,
+    "stock": 3,
+    "images": [
+      "/products/bridal-03-a.svg",
+      "/products/bridal-03-b.svg"
+    ],
+    "description": "Tribute to Awadhi royal courts: deep green emerald centerpieces framed by scintillating lab diamond halos.",
+    "tags": [
+      "bridal",
+      "emerald",
+      "choker",
+      "luxury"
+    ],
+    "isBestseller": false,
+    "isNew": false
+  }
+]

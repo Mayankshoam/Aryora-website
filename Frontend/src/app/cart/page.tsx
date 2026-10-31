@@ -47,7 +47,11 @@ export default function CartPage() {
                   <div className="flex gap-4 items-center">
                     <div className="relative w-24 h-28 bg-ivory-muted border border-border-subtle flex-shrink-0 overflow-hidden">
                       <Image
-                        src={item.product.images[0]?.url || "/images/hero-emerald.jpg"}
+                        src={
+                          typeof item.product.images?.[0] === "string"
+                            ? item.product.images[0]
+                            : "/products/ring-01-a.svg"
+                        }
                         alt={item.product.name}
                         fill
                         className="object-cover"
@@ -55,7 +59,7 @@ export default function CartPage() {
                       />
                     </div>
                     <div>
-                      <span className="eyebrow text-[10px]">{item.product.productCode}</span>
+                      <span className="eyebrow text-[10px]">{item.product.id}</span>
                       <Link
                         href={`/product/${item.product.slug}`}
                         className="block font-serif text-lg text-ink hover:text-champagne-accessible transition-colors leading-snug"
@@ -63,7 +67,7 @@ export default function CartPage() {
                         {item.product.name}
                       </Link>
                       <p className="text-xs text-ink-subtle mt-1">
-                        {item.product.specs.metal}
+                        {item.selectedMetal || item.product.metal} ({item.product.purity})
                         {item.size ? ` • Size: ${item.size}` : ""}
                       </p>
                       <p className="text-xs font-semibold text-ink mt-2">

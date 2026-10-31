@@ -1,0 +1,12 @@
+# Enforce LF line endings across all platforms and Vercel Linux builds
+* text=auto eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.svg text eol=lf
+*.csv text eol=lf

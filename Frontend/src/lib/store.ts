@@ -2,18 +2,19 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ProductItem } from "./products";
+import { Product } from "./data";
 
 export interface CartItem {
-  product: ProductItem;
+  product: Product;
   quantity: number;
   size?: string;
+  selectedMetal?: string;
 }
 
 interface AryoraStore {
   // Cart
   cart: CartItem[];
-  addToCart: (product: ProductItem, quantity?: number, size?: string) => void;
+  addToCart: (product: Product, quantity?: number, size?: string, selectedMetal?: string) => void;
   removeFromCart: (productId: string, size?: string) => void;
   updateQuantity: (productId: string, quantity: number, size?: string) => void;
   clearCart: () => void;
@@ -41,6 +42,10 @@ interface AryoraStore {
   isSizeGuideOpen: boolean;
   openSizeGuide: () => void;
   closeSizeGuide: () => void;
+
+  isStoreLocatorOpen: boolean;
+  openStoreLocator: () => void;
+  closeStoreLocator: () => void;
 }
 
 export const useAryoraStore = create<AryoraStore>()(
@@ -52,11 +57,13 @@ export const useAryoraStore = create<AryoraStore>()(
       isCartOpen: false,
       isSearchOpen: false,
       isSizeGuideOpen: false,
+      isStoreLocatorOpen: false,
 
-      addToCart: (product, quantity = 1, size) => {
+      addToCart: (product, quantity = 1, size, selectedMetal) => {
         set((state) => {
+          const metal = selectedMetal || product.metal;
           const existingIndex = state.cart.findIndex(
-            (item) => item.product.id === product.id && item.size === size
+            (item) => item.product.id === product.id && item.size === size && item.selectedMetal === metal
           );
           if (existingIndex > -1) {
             const nextCart = [...state.cart];
@@ -64,7 +71,7 @@ export const useAryoraStore = create<AryoraStore>()(
             return { cart: nextCart, isCartOpen: true };
           }
           return {
-            cart: [...state.cart, { product, quantity, size }],
+            cart: [...state.cart, { product, quantity, size, selectedMetal: metal }],
             isCartOpen: true,
           };
         });
@@ -137,9 +144,12 @@ export const useAryoraStore = create<AryoraStore>()(
 
       openSizeGuide: () => set({ isSizeGuideOpen: true }),
       closeSizeGuide: () => set({ isSizeGuideOpen: false }),
+
+      openStoreLocator: () => set({ isStoreLocatorOpen: true }),
+      closeStoreLocator: () => set({ isStoreLocatorOpen: false }),
     }),
     {
-      name: "aryora_store_v2",
+      name: "aryora_store_v3",
       partialize: (state) => ({
         cart: state.cart,
         wishlist: state.wishlist,
