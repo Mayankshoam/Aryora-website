@@ -7,13 +7,13 @@ import { ArrowRight, Check, Mail, Phone, MapPin, Award, RotateCcw, ShieldCheck, 
 import InstagramIcon from "@/components/InstagramIcon";
 
 const POPULAR_SEARCHES = [
-  { label: "Solitaire Engagement Rings", href: "/shop?category=rings&style=Solitaire" },
-  { label: "Diamond Tennis Bracelets", href: "/shop?category=bracelets&style=Tennis" },
-  { label: "Solitaire Stud Earrings", href: "/shop?category=earrings&style=Studs" },
-  { label: "Modern Diamond Mangalsutra", href: "/shop?category=mangalsutras" },
-  { label: "Graduated Tennis Necklaces", href: "/shop?category=necklaces&style=Tennis" },
-  { label: "Men's 18K Diamond Bands", href: "/shop?category=mens" },
-  { label: "92.5 Silver Diamond Rings", href: "/shop?category=rings&metal=SILVER_925" },
+  { label: "Solitaire Engagement Rings", href: "/shop?category=Solitaires" },
+  { label: "Diamond Tennis Bracelets", href: "/shop?category=Bracelets&style=Tennis" },
+  { label: "Solitaire Stud Earrings", href: "/shop?category=Earrings" },
+  { label: "Modern Diamond Mangalsutra", href: "/shop?category=Bridal" },
+  { label: "Graduated Tennis Necklaces", href: "/shop?category=Necklaces&style=Tennis" },
+  { label: "Men's 18K Diamond Bands", href: "/shop?category=Rings&gender=Men" },
+  { label: "18kt Yellow Gold Jewellery", href: "/shop?metal=Yellow+Gold" },
   { label: "Lucknow Heritage Bridal Sets", href: "/bridal" },
 ];
 
@@ -188,28 +188,33 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=rings" className="hover:text-ink transition-colors">
+                <Link href="/shop?category=Rings" className="hover:text-ink transition-colors">
                   Solitaire Rings
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=earrings" className="hover:text-ink transition-colors">
+                <Link href="/shop?category=Earrings" className="hover:text-ink transition-colors">
                   Earrings & Studs
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=pendants" className="hover:text-ink transition-colors">
+                <Link href="/shop?category=Pendants" className="hover:text-ink transition-colors">
                   Pendants
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=necklaces" className="hover:text-ink transition-colors">
+                <Link href="/shop?category=Necklaces" className="hover:text-ink transition-colors">
                   Tennis Necklaces
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=bracelets" className="hover:text-ink transition-colors">
-                  Bracelets & Mangalsutras
+                <Link href="/shop?category=Bracelets" className="hover:text-ink transition-colors">
+                  Bracelets & Bangles
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop?category=Solitaires" className="hover:text-ink transition-colors">
+                  Certified Solitaires
                 </Link>
               </li>
               <li>
