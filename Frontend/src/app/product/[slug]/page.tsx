@@ -621,6 +621,41 @@ export default function ProductDetailPage() {
                           )}
                         </tbody>
                       </table>
+
+                      {/* Official Certification Seals */}
+                      <div className="mt-4 pt-3 border-t border-border-subtle grid sm:grid-cols-2 gap-3 p-3 bg-ivory-warm/40 border border-border-subtle/60">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-full bg-white p-1 flex items-center justify-center border border-border-subtle flex-shrink-0">
+                            <Image
+                              src="/images/certifications/igi-certified.png"
+                              alt="IGI Certified Lab Grown Diamonds"
+                              width={24}
+                              height={24}
+                              className="object-contain"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-semibold text-ink leading-tight">IGI Certified Diamond</p>
+                            <p className="text-[10px] text-ink-muted leading-tight">Physical report & laser inscribed serial</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2.5 sm:border-l sm:border-border-subtle sm:pl-3">
+                          <div className="w-8 h-8 rounded-full bg-white p-1 flex items-center justify-center border border-border-subtle flex-shrink-0">
+                            <Image
+                              src="/images/certifications/bis-hallmark.png"
+                              alt="BIS Hallmark 750 (18K) Gold Hallmark"
+                              width={28}
+                              height={16}
+                              className="object-contain"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-semibold text-ink leading-tight">BIS Hallmark 750</p>
+                            <p className="text-[10px] text-ink-muted leading-tight">18K gold purity with govt HUID</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

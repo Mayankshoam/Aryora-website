@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Check, Mail, Phone, MapPin, Award, RotateCcw, ShieldCheck, Truck, CreditCard } from "lucide-react";
 import InstagramIcon from "@/components/InstagramIcon";
 
@@ -82,6 +83,37 @@ export default function Footer() {
             </div>
             <p className="font-serif text-sm font-medium text-ink">Free Insured Transit</p>
             <p className="text-[11px] text-ink-muted">Pan-India doorstep delivery</p>
+          </div>
+        </div>
+
+        {/* Accreditation Seal Bar */}
+        <div className="border-t border-border-subtle/70 py-3 bg-ivory/80">
+          <div className="max-w-content mx-auto px-4 md:px-8 flex flex-wrap items-center justify-center gap-6 md:gap-10 text-[11px] text-ink-muted">
+            <div className="flex items-center gap-2">
+              <Image
+                src="/images/certifications/igi-certified.png"
+                alt="100% IGI Certified Lab Grown Diamonds"
+                width={22}
+                height={22}
+                className="object-contain"
+              />
+              <span className="font-medium text-ink">100% IGI Certified</span>
+              <span className="text-ink-light hidden sm:inline">· Laser-inscribed diamonds</span>
+            </div>
+            <span className="hidden sm:inline text-border-medium">•</span>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/images/certifications/bis-hallmark.png"
+                alt="BIS Hallmark 750 (18K) Gold Hallmark"
+                width={32}
+                height={18}
+                className="object-contain"
+              />
+              <span className="font-medium text-ink">BIS Hallmark 750 (18K)</span>
+              <span className="text-ink-light hidden sm:inline">· Govt authenticated HUID</span>
+            </div>
+            <span className="hidden sm:inline text-border-medium">•</span>
+            <span className="text-ink-light">Zero Earth Mining · Ethical & Conflict Free</span>
           </div>
         </div>
       </div>

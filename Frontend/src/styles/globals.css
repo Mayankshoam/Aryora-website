@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --font-cormorant: "Cormorant Garamond", Georgia, serif;
+    --font-inter: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --bg-ivory: #FAF8F4;
     --text-ink: #1A1A1A;
     --accent-champagne: #B89B5E;

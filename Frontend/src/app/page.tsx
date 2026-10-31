@@ -717,6 +717,43 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Official Accreditation Badges */}
+          <div className="bg-ivory-pure border border-border-subtle p-6 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-white p-2 border border-border-subtle shadow-sm flex items-center justify-center flex-shrink-0">
+                <Image
+                  src="/images/certifications/igi-certified.png"
+                  alt="100% IGI Certified Lab Grown Diamonds"
+                  width={44}
+                  height={44}
+                  className="object-contain"
+                />
+              </div>
+              <div className="space-y-0.5">
+                <p className="font-serif text-sm font-semibold text-ink">100% IGI Certified</p>
+                <p className="text-xs text-ink-muted leading-tight">Every diamond laser-inscribed with verifiable report ID</p>
+              </div>
+            </div>
+
+            <div className="hidden sm:block h-10 w-px bg-border-subtle" />
+
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-white p-2 border border-border-subtle shadow-sm flex items-center justify-center flex-shrink-0">
+                <Image
+                  src="/images/certifications/bis-hallmark.png"
+                  alt="BIS Hallmark 750 (18K) Gold Purity"
+                  width={48}
+                  height={28}
+                  className="object-contain"
+                />
+              </div>
+              <div className="space-y-0.5">
+                <p className="font-serif text-sm font-semibold text-ink">Govt BIS Hallmark 750</p>
+                <p className="text-xs text-ink-muted leading-tight">Authentic 18K gold hallmarked with 6-digit HUID</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
