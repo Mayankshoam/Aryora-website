@@ -894,3 +894,4 @@ fs.writeFileSync(path.join(FRONTEND_DATA, 'site.json'), siteJsonStr, 'utf8');
 fs.writeFileSync(path.join(ROOT_DATA, 'site.json'), siteJsonStr, 'utf8');
 
 console.log("Successfully generated products.json, products.csv, and site.json in both Frontend/data and data/");
+

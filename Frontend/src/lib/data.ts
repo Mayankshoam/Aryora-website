@@ -172,3 +172,4 @@ export function getFilterFacets(products: Product[]) {
     genders: Array.from(genders.entries()).map(([value, count]) => ({ value, count })),
   };
 }
+

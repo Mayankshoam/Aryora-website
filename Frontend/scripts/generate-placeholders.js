@@ -263,3 +263,4 @@ TILE_CATEGORIES.forEach(cat => {
 });
 
 console.log(`Generated site assets in ${SITE_DIR}`);
+
