@@ -56,49 +56,49 @@
     {
       "name": "Rings",
       "href": "/shop?category=Rings",
-      "image": "/site/cat-rings.svg",
+      "image": "/site/cat-rings.jpg",
       "count": "Solitaires & Bands"
     },
     {
       "name": "Earrings",
       "href": "/shop?category=Earrings",
-      "image": "/site/cat-earrings.svg",
+      "image": "/site/cat-earrings.jpg",
       "count": "Studs & Drops"
     },
     {
       "name": "Pendants",
       "href": "/shop?category=Pendants",
-      "image": "/site/cat-pendants.svg",
+      "image": "/site/cat-pendants.jpg",
       "count": "Solitaire Bezels"
     },
     {
       "name": "Necklaces",
       "href": "/shop?category=Necklaces",
-      "image": "/site/cat-necklaces.svg",
+      "image": "/site/cat-necklaces.jpg",
       "count": "Tennis & Chokers"
     },
     {
       "name": "Bracelets",
       "href": "/shop?category=Bracelets",
-      "image": "/site/cat-bracelets.svg",
+      "image": "/site/cat-bracelets.jpg",
       "count": "Tennis Cuffs"
     },
     {
       "name": "Solitaires",
       "href": "/shop?category=Solitaires",
-      "image": "/site/cat-solitaires.svg",
+      "image": "/site/cat-solitaires.jpg",
       "count": "IGI 0.5ct to 3ct"
     },
     {
       "name": "Bridal",
       "href": "/bridal",
-      "image": "/site/cat-bridal.svg",
+      "image": "/site/cat-bridal.jpg",
       "count": "Wedding Suites"
     },
     {
       "name": "Mangalsutras",
       "href": "/shop?category=Bridal&subcategory=Mangalsutras",
-      "image": "/site/cat-mangalsutras.svg",
+      "image": "/site/cat-mangalsutras.jpg",
       "count": "Diamond Bars"
     }
   ],

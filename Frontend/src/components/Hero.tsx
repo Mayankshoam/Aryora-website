@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Play, Pause, ArrowRight, Calendar } from "lucide-react";
 import { getSiteConfig } from "@/lib/data";
 
@@ -11,73 +10,67 @@ export default function Hero() {
   const heroData = siteConfig.hero;
 
   const [isPlaying, setIsPlaying] = useState(true);
-  const [videoError, setVideoError] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Check viewport size for responsive video source
+  // Auto-play muted video safely on mount and respect prefers-reduced-motion
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+    const video = videoRef.current;
+    if (!video) return;
 
-  // Respect prefers-reduced-motion
-  useEffect(() => {
+    // React muted property fix: explicitly set on DOM element
+    video.muted = true;
+    video.defaultMuted = true;
+
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches && videoRef.current) {
-      videoRef.current.pause();
+    if (mediaQuery.matches) {
+      video.pause();
       setIsPlaying(false);
+      return;
+    }
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          // If auto-play was blocked, try again on user interaction
+          setIsPlaying(false);
+        });
     }
   }, []);
 
   const togglePlay = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
     if (isPlaying) {
-      videoRef.current.pause();
+      video.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play().catch(() => null);
+      video.muted = true;
+      video.play().catch(() => null);
       setIsPlaying(true);
     }
   };
 
-  const videoSrc = isMobile ? heroData.videoMobile : heroData.videoDesktop;
-
   return (
     <section className="relative w-full min-h-[580px] md:min-h-[680px] lg:min-h-[760px] flex items-center bg-[#1B3B30] overflow-hidden">
-      {/* Background Video / Poster Fallback */}
-      <div className="absolute inset-0 z-0">
-        {!videoError ? (
-          <video
-            ref={videoRef}
-            key={videoSrc}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster={heroData.poster}
-            onError={() => setVideoError(true)}
-            className="w-full h-full object-cover object-center"
-          >
-            <source src={videoSrc} type="video/mp4" />
-          </video>
-        ) : (
-          <Image
-            src={heroData.poster}
-            alt="Aryora Luxury Lab-Grown Fine Diamond Jewellery"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        )}
+      {/* Background Loop Video */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster={heroData.poster}
+          className="w-full h-full object-cover object-center scale-[1.01]"
+        >
+          <source src={heroData.videoDesktop} type="video/mp4" />
+          <source src={heroData.videoMobile} type="video/mp4" />
+        </video>
 
-        {/* Sophisticated gradient overlay for readability */}
+        {/* Sophisticated gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent md:to-ink/10" />
       </div>
 
@@ -117,16 +110,14 @@ export default function Hero() {
       </div>
 
       {/* Video Control Play/Pause Toggle */}
-      {!videoError && (
-        <button
-          type="button"
-          onClick={togglePlay}
-          aria-label={isPlaying ? "Pause background video" : "Play background video"}
-          className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-ink/60 hover:bg-ink/80 text-ivory flex items-center justify-center backdrop-blur-sm transition-colors border border-ivory/20"
-        >
-          {isPlaying ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={togglePlay}
+        aria-label={isPlaying ? "Pause background video" : "Play background video"}
+        className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-ink/60 hover:bg-ink/80 text-ivory flex items-center justify-center backdrop-blur-sm transition-colors border border-ivory/20"
+      >
+        {isPlaying ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
+      </button>
     </section>
   );
 }

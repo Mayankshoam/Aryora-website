@@ -28,8 +28,8 @@
     "discountPercent": 10,
     "stock": 12,
     "images": [
-      "/products/ring-01-a.svg",
-      "/products/ring-01-b.svg"
+      "/products/ary-rng-001-a.jpg",
+      "/products/ary-rng-001-b.jpg"
     ],
     "description": "Architectural four-prong solitaire set in 18K hallmarked yellow gold, showcasing a brilliant D VVS1 lab diamond.",
     "tags": [
@@ -69,8 +69,8 @@
     "discountPercent": 15,
     "stock": 8,
     "images": [
-      "/products/ring-02-a.svg",
-      "/products/ring-02-b.svg"
+      "/products/ary-rng-002-a.jpg",
+      "/products/ary-rng-002-b.jpg"
     ],
     "description": "Full pavé brilliance encircling an 18K rose gold contour, designed for effortless daily layering.",
     "tags": [
@@ -110,8 +110,8 @@
     "discountPercent": 8,
     "stock": 6,
     "images": [
-      "/products/ring-03-a.svg",
-      "/products/ring-03-b.svg"
+      "/products/ary-rng-003-a.jpg",
+      "/products/ary-rng-003-b.jpg"
     ],
     "description": "A cushion-cut center stone encircled by a micro-pavé halo in crisp 18K white gold.",
     "tags": [
@@ -152,8 +152,8 @@
     "discountPercent": 0,
     "stock": 15,
     "images": [
-      "/products/ring-04-a.svg",
-      "/products/ring-04-b.svg"
+      "/products/ary-rng-004-a.jpg",
+      "/products/ary-rng-004-b.jpg"
     ],
     "description": "Ultra-slim 14K gold band accented with bezel-set lab diamonds for chic everyday styling.",
     "tags": [
@@ -193,8 +193,8 @@
     "discountPercent": 10,
     "stock": 5,
     "images": [
-      "/products/ring-05-a.svg",
-      "/products/ring-05-b.svg"
+      "/products/ary-rng-005-a.jpg",
+      "/products/ary-rng-005-b.jpg"
     ],
     "description": "Sleek brushed 18K white gold signet ring embedded with an architectural princess-cut diamond.",
     "tags": [
@@ -231,8 +231,8 @@
     "discountPercent": 12,
     "stock": 14,
     "images": [
-      "/products/earring-01-a.svg",
-      "/products/earring-01-b.svg"
+      "/products/ary-ear-006-a.jpg",
+      "/products/ary-ear-006-b.jpg"
     ],
     "description": "Classic screw-back solitaire diamond studs engineered for supreme comfort and pure radiance.",
     "tags": [
@@ -269,8 +269,8 @@
     "discountPercent": 10,
     "stock": 7,
     "images": [
-      "/products/earring-02-a.svg",
-      "/products/earring-02-b.svg"
+      "/products/ary-ear-007-a.jpg",
+      "/products/ary-ear-007-b.jpg"
     ],
     "description": "Gracefully articulated pear drops suspended from an 18K yellow gold diamond-accented motif.",
     "tags": [
@@ -307,8 +307,8 @@
     "discountPercent": 0,
     "stock": 18,
     "images": [
-      "/products/earring-03-a.svg",
-      "/products/earring-03-b.svg"
+      "/products/ary-ear-008-a.jpg",
+      "/products/ary-ear-008-b.jpg"
     ],
     "description": "Subtle everyday huggies pavé-set with luminous lab diamonds in 18K warm rose gold.",
     "tags": [
@@ -345,8 +345,8 @@
     "discountPercent": 10,
     "stock": 4,
     "images": [
-      "/products/earring-04-a.svg",
-      "/products/earring-04-b.svg"
+      "/products/ary-ear-009-a.jpg",
+      "/products/ary-ear-009-b.jpg"
     ],
     "description": "Tiered architectural chandeliers pairing Zambian-grade emeralds with brilliant lab diamonds.",
     "tags": [
@@ -383,8 +383,8 @@
     "discountPercent": 10,
     "stock": 16,
     "images": [
-      "/products/pendant-01-a.svg",
-      "/products/pendant-01-b.svg"
+      "/products/ary-pen-010-a.jpg",
+      "/products/ary-pen-010-b.jpg"
     ],
     "description": "Modern bezel-encased solitaire floating along a delicate 18K yellow gold adjustable cable chain.",
     "tags": [
@@ -421,8 +421,8 @@
     "discountPercent": 15,
     "stock": 9,
     "images": [
-      "/products/pendant-02-a.svg",
-      "/products/pendant-02-b.svg"
+      "/products/ary-pen-011-a.jpg",
+      "/products/ary-pen-011-b.jpg"
     ],
     "description": "An elegant pear-shaped centerpiece magnified by a shimmering micro-halo in warm 18K rose gold.",
     "tags": [
@@ -459,8 +459,8 @@
     "discountPercent": 0,
     "stock": 12,
     "images": [
-      "/products/pendant-03-a.svg",
-      "/products/pendant-03-b.svg"
+      "/products/ary-pen-012-a.jpg",
+      "/products/ary-pen-012-b.jpg"
     ],
     "description": "Linear architectural bar set with 5 princess-cut diamonds in rhodium-finished 14K white gold.",
     "tags": [
@@ -497,8 +497,8 @@
     "discountPercent": 8,
     "stock": 3,
     "images": [
-      "/products/necklace-01-a.svg",
-      "/products/necklace-01-b.svg"
+      "/products/ary-nck-013-a.jpg",
+      "/products/ary-nck-013-b.jpg"
     ],
     "description": "A continuous cascade of graduated Type IIa brilliant-cut diamonds handcrafted in solid 18K white gold.",
     "tags": [
@@ -535,8 +535,8 @@
     "discountPercent": 5,
     "stock": 2,
     "images": [
-      "/products/necklace-02-a.svg",
-      "/products/necklace-02-b.svg"
+      "/products/ary-nck-014-a.jpg",
+      "/products/ary-nck-014-b.jpg"
     ],
     "description": "Royal Awadhi heritage choker combining certified emeralds with brilliant lab diamonds in 18K gold.",
     "tags": [
@@ -573,8 +573,8 @@
     "discountPercent": 12,
     "stock": 8,
     "images": [
-      "/products/necklace-03-a.svg",
-      "/products/necklace-03-b.svg"
+      "/products/ary-nck-015-a.jpg",
+      "/products/ary-nck-015-b.jpg"
     ],
     "description": "Minimalist collar choker holding a single 1.25ct solitaire diamond with hidden bail design.",
     "tags": [
@@ -613,8 +613,8 @@
     "discountPercent": 10,
     "stock": 7,
     "images": [
-      "/products/bracelet-01-a.svg",
-      "/products/bracelet-01-b.svg"
+      "/products/ary-brc-016-a.jpg",
+      "/products/ary-brc-016-b.jpg"
     ],
     "description": "Four-prong classic tennis line with secure box-catch safety clasp, individually articulated in 18K gold.",
     "tags": [
@@ -653,8 +653,8 @@
     "discountPercent": 15,
     "stock": 5,
     "images": [
-      "/products/bracelet-02-a.svg",
-      "/products/bracelet-02-b.svg"
+      "/products/ary-brc-017-a.jpg",
+      "/products/ary-brc-017-b.jpg"
     ],
     "description": "Solid 18K yellow gold bypass bangle terminated by two radiant pear-shaped lab diamonds.",
     "tags": [
@@ -691,8 +691,8 @@
     "discountPercent": 0,
     "stock": 14,
     "images": [
-      "/products/bracelet-03-a.svg",
-      "/products/bracelet-03-b.svg"
+      "/products/ary-brc-018-a.jpg",
+      "/products/ary-brc-018-b.jpg"
     ],
     "description": "Delicate paperclip chain adorned with 3 bezel-set solitaire diamonds for understated elegance.",
     "tags": [
@@ -733,8 +733,8 @@
     "discountPercent": 12,
     "stock": 4,
     "images": [
-      "/products/solitaire-01-a.svg",
-      "/products/solitaire-01-b.svg"
+      "/products/ary-sol-019-a.jpg",
+      "/products/ary-sol-019-b.jpg"
     ],
     "description": "A monumental 2.02 carat Hearts & Arrows D VVS1 diamond mounted in cathedral prongs of 18K yellow gold.",
     "tags": [
@@ -774,8 +774,8 @@
     "discountPercent": 8,
     "stock": 6,
     "images": [
-      "/products/solitaire-02-a.svg",
-      "/products/solitaire-02-b.svg"
+      "/products/ary-sol-020-a.jpg",
+      "/products/ary-sol-020-b.jpg"
     ],
     "description": "Elongated oval lab diamond featuring optical ratio 1.45, held by six delicate claws in 18K rose gold.",
     "tags": [
@@ -815,8 +815,8 @@
     "discountPercent": 10,
     "stock": 9,
     "images": [
-      "/products/solitaire-03-a.svg",
-      "/products/solitaire-03-b.svg"
+      "/products/ary-sol-021-a.jpg",
+      "/products/ary-sol-021-b.jpg"
     ],
     "description": "Hall-of-mirrors step-cut emerald lab diamond set in a minimalist 18K white gold compass setting.",
     "tags": [
@@ -853,8 +853,8 @@
     "discountPercent": 5,
     "stock": 2,
     "images": [
-      "/products/bridal-01-a.svg",
-      "/products/bridal-01-b.svg"
+      "/products/ary-brd-022-a.jpg",
+      "/products/ary-brd-022-b.jpg"
     ],
     "description": "A monumental bridal heirloom suite comprising ceremonial necklace, matching chandelier earrings, and maang tikka.",
     "tags": [
@@ -891,8 +891,8 @@
     "discountPercent": 10,
     "stock": 11,
     "images": [
-      "/products/bridal-02-a.svg",
-      "/products/bridal-02-b.svg"
+      "/products/ary-brd-023-a.jpg",
+      "/products/ary-brd-023-b.jpg"
     ],
     "description": "Contemporary sacred mangalsutra uniting auspicious black beads with a floating geometric diamond bar in 18K gold.",
     "tags": [
@@ -929,8 +929,8 @@
     "discountPercent": 8,
     "stock": 3,
     "images": [
-      "/products/bridal-03-a.svg",
-      "/products/bridal-03-b.svg"
+      "/products/ary-brd-024-a.jpg",
+      "/products/ary-brd-024-b.jpg"
     ],
     "description": "Tribute to Awadhi royal courts: deep green emerald centerpieces framed by scintillating lab diamond halos.",
     "tags": [
