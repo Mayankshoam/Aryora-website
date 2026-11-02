@@ -16,7 +16,7 @@ export default function TrustStrip() {
 
   return (
     <section
-      aria-label="Aryora Client Assurances"
+      aria-label="Ayor Client Assurances"
       className="bg-[#F5F0EA] border-y border-[#DDD8D0]"
     >
       <div className="max-w-content mx-auto px-4 md:px-8 py-5 md:py-6 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 divide-y md:divide-y-0 md:divide-x divide-[#DDD8D0]">

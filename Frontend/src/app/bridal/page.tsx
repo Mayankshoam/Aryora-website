@@ -58,11 +58,11 @@ const BRIDAL_FAQS = [
     a: "We advise initiating your consultation 4 to 6 weeks prior to the wedding or sangeet festivities. This provides ample time for 3D CAD revisions, stone selection, meticulous handcrafting, BIS hallmarking, and complimentary final sizing.",
   },
   {
-    q: "Can Aryora customize designs to complement my bridal lehenga or saree?",
+    q: "Can Ayor customize designs to complement my bridal lehenga or saree?",
     a: "Absolutely. During your consultation, share photos of your wedding attire, neckline, and color palette. Our designers will calibrate stone drop lengths, choker curvature, and metal tones (yellow, rose, or white gold) to create a harmonious silhouette.",
   },
   {
-    q: "What certifications accompany Aryora bridal suites?",
+    q: "What certifications accompany Ayor bridal suites?",
     a: "Every diamond centerpiece is accompanied by an authentic physical IGI (International Gemological Institute) laboratory report with matching microscopic laser inscription. Every gold creation is certified with BIS Hallmark 750 (18K) carrying the official government HUID.",
   },
   {
@@ -71,7 +71,7 @@ const BRIDAL_FAQS = [
   },
   {
     q: "What is your resizing and lifetime buyback policy on bridal heirlooms?",
-    a: "We provide 30-day complimentary ring and choker adjustments. All Aryora fine jewellery is protected by our transparent lifetime buyback and exchange policy based on prevailing market gold valuations and 100% diamond exchange credit.",
+    a: "We provide 30-day complimentary ring and choker adjustments. All Ayor fine jewellery is protected by our transparent lifetime buyback and exchange policy based on prevailing market gold valuations and 100% diamond exchange credit.",
   },
 ];
 
@@ -114,7 +114,7 @@ export default function BridalPage() {
   const whatsappBridalUrl =
     "https://wa.me/918808828646?text=" +
     encodeURIComponent(
-      "Hello Aryora Concierge, I would like to book a private consultation for bridal heirloom jewellery."
+      "Hello Ayor Concierge, I would like to book a private consultation for bridal heirloom jewellery."
     );
 
   // Filter curated bridal products
@@ -156,7 +156,7 @@ export default function BridalPage() {
               Heritage Bridal Heirlooms For Modern Royalty
             </h1>
             <p className="text-sm md:text-base text-ink-muted leading-relaxed max-w-xl">
-              Crafted in homage to the majestic royal courts of Awadh, Aryora creates
+              Crafted in homage to the majestic royal courts of Awadh, Ayor creates
               one-of-a-kind wedding suites and regal solitaire heirlooms. Hand-set with
               flawless D-F VVS lab-grown diamonds, royal emeralds, and solid 18K
               BIS-hallmarked gold—born to be treasured for generations.
@@ -213,7 +213,7 @@ export default function BridalPage() {
           <div className="relative aspect-[4/5] bg-ivory-warm border border-border-subtle shadow-lg overflow-hidden group p-8 flex items-center justify-center">
             <Image
               src="/site/cat-bridal.svg"
-              alt="Aryora Heritage Bridal Suite in 18K Gold and Certified Lab-Grown Diamonds"
+              alt="Ayor Heritage Bridal Suite in 18K Gold and Certified Lab-Grown Diamonds"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 45vw"
@@ -370,7 +370,7 @@ export default function BridalPage() {
                 <Check size={16} className="text-champagne-accessible mt-0.5 flex-shrink-0" />
                 <span>
                   <strong>Lifetime Buyback & Exchange:</strong> Guaranteed upgrade policy on all
-                  Aryora diamond and gold components at prevailing market values.
+                  Ayor diamond and gold components at prevailing market values.
                 </span>
               </li>
             </ul>
@@ -617,7 +617,7 @@ export default function BridalPage() {
                 <div className="p-4 bg-ivory-pure border border-border-subtle space-y-1.5 text-xs text-ink">
                   <p className="font-semibold">Atelier Visit Location</p>
                   <p className="text-ink-muted text-[11px] leading-relaxed">
-                    Aryora Haute Joaillerie Atelier, Lucknow, Uttar Pradesh, India.
+                    Ayor Haute Joaillerie Atelier, Lucknow, Uttar Pradesh, India.
                     By prior appointment only.
                   </p>
                 </div>

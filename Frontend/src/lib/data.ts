@@ -72,7 +72,7 @@ export interface SiteConfig {
     desc: string;
     image: string;
   }>;
-  whyAryora: Array<{
+  whyAyor: Array<{
     title: string;
     desc: string;
   }>;

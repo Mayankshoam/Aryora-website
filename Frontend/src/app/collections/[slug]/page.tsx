@@ -38,10 +38,10 @@ const COLLECTION_META: Record<
 export async function generateMetadata({ params }: Props) {
   const meta = COLLECTION_META[params.slug] || {
     title: "Curated Collection",
-    desc: "Discover Aryora curated fine jewellery.",
+    desc: "Discover Ayor curated fine jewellery.",
   };
   return {
-    title: `${meta.title} | Aryora`,
+    title: `${meta.title} | Ayor`,
     description: meta.desc,
   };
 }
@@ -51,7 +51,7 @@ export default function CollectionDetailPage({ params }: Props) {
   const meta = COLLECTION_META[slug] || {
     title: slug.charAt(0).toUpperCase() + slug.slice(1) + " Collection",
     subtitle: "Curated Edition",
-    desc: "Handcrafted lab-grown diamond heirlooms by Aryora.",
+    desc: "Handcrafted lab-grown diamond heirlooms by Ayor.",
     heroImage: "/site/hero-poster.svg",
     category: "Rings",
   };

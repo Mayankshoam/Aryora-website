@@ -67,7 +67,7 @@ export default function SearchModal() {
       className="fixed inset-0 z-50 flex flex-col justify-start"
       role="dialog"
       aria-modal="true"
-      aria-label="Search Aryora Collection"
+      aria-label="Search Ayor Collection"
     >
       {/* Backdrop */}
       <div

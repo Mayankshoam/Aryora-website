@@ -92,7 +92,7 @@ const CATEGORIES_MENU = [
 ];
 
 const MORE_MENU = [
-  { label: "About Aryora Atelier", href: "/about", desc: "Heritage craft born in Lucknow" },
+  { label: "About Ayor Atelier", href: "/about", desc: "Heritage craft born in Lucknow" },
   { label: "The World of Lab Diamonds", href: "/world-of-lgd", desc: "Chemical, physical & optical equivalence" },
   { label: "Ethical & Sustainable Craft", href: "/sustainability", desc: "Zero earth mining & solar brilliance" },
   { label: "Ring Size & Fitting Guide", href: "/size-guide", desc: "Accurate Indian standard measurements" },
@@ -299,7 +299,7 @@ export default function Header() {
               <div className="relative w-7 h-7 flex-shrink-0">
                 <Image
                   src="/site/brand-emblem.svg"
-                  alt="Aryora Fine Jewellery Emblem"
+                  alt="Ayor Fine Jewellery Emblem"
                   width={28}
                   height={28}
                   className="object-contain group-hover:rotate-45 transition-transform duration-500"
@@ -307,7 +307,7 @@ export default function Header() {
               </div>
               <div className="text-left">
                 <span className="font-serif text-2xl md:text-3xl tracking-[0.22em] text-ink font-medium leading-none block">
-                  ARYORA
+                  AYOR
                 </span>
                 <span className="text-[8px] uppercase tracking-[0.3em] text-champagne-accessible font-semibold block pt-0.5">
                   Light. Legacy. You.
@@ -332,7 +332,7 @@ export default function Header() {
             <button
               type="button"
               onClick={openStoreLocator}
-              aria-label="Find Aryora Lucknow Boutique"
+              aria-label="Find Ayor Lucknow Boutique"
               title="Lucknow Boutique Atelier"
               className="p-2 text-ink hover:text-champagne-accessible transition-colors hidden sm:inline-flex"
             >
@@ -392,7 +392,7 @@ export default function Header() {
           >
             <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
               <span className="font-serif text-xl tracking-widest text-ink font-semibold">
-                ARYORA
+                AYOR
               </span>
               <button
                 type="button"
@@ -457,7 +457,7 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-ink-muted hover:text-ink"
                 >
-                  About Aryora
+                  About Ayor
                 </Link>
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function Header() {
             <div className="pt-6 border-t border-border-subtle text-xs text-ink-muted space-y-1">
               <p className="font-semibold text-ink">Client Concierge</p>
               <p>+91 8808828646</p>
-              <p>aryora.legacy@hotmail.com</p>
+              <p>ayor.legacy@hotmail.com</p>
             </div>
           </div>
         </div>

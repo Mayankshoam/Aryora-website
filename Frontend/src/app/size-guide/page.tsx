@@ -48,7 +48,7 @@ const TIPS = [
   },
   {
     title: "Complimentary Resizing",
-    text: "Every Aryora ring includes one free resizing within 30 days of delivery, giving you total peace of mind.",
+    text: "Every Ayor ring includes one free resizing within 30 days of delivery, giving you total peace of mind.",
   },
 ];
 
@@ -92,7 +92,7 @@ export default function RingSizeGuidePage() {
           </p>
           <div className="pt-2">
             <a
-              href="https://wa.me/918808828646?text=Hello%20Aryora%2C%20I%20need%20help%20determining%20my%20ring%20size."
+              href="https://wa.me/918808828646?text=Hello%20Ayor%2C%20I%20need%20help%20determining%20my%20ring%20size."
               target="_blank"
               rel="noreferrer"
               className="btn-outline text-xs"

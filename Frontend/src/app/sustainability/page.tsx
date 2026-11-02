@@ -5,14 +5,14 @@ import { Earth, Sparkles, ShieldCheck, RefreshCw } from "lucide-react";
 export const metadata = {
   title: "Sustainability & Ethics",
   description:
-    "Learn about Aryora's commitment to zero-mining diamonds, recycled gold, conflict-free sourcing, and heirloom sustainability.",
+    "Learn about Ayor's commitment to zero-mining diamonds, recycled gold, conflict-free sourcing, and heirloom sustainability.",
 };
 
 const PILLARS = [
   {
     icon: Earth,
     title: "Zero Earth Mining",
-    desc: "Traditional diamond mining displaces over 250 tons of earth per single carat. By creating diamonds in high-efficiency reactors, Aryora eliminates habitat disruption and groundwater contamination entirely.",
+    desc: "Traditional diamond mining displaces over 250 tons of earth per single carat. By creating diamonds in high-efficiency reactors, Ayor eliminates habitat disruption and groundwater contamination entirely.",
   },
   {
     icon: RefreshCw,
@@ -22,7 +22,7 @@ const PILLARS = [
   {
     icon: ShieldCheck,
     title: "100% Conflict-Free Supply Chain",
-    desc: "Every diamond grown for Aryora can be pinpointed to its growing chamber and master lapidary, ensuring human rights dignity and completely transparent provenance.",
+    desc: "Every diamond grown for Ayor can be pinpointed to its growing chamber and master lapidary, ensuring human rights dignity and completely transparent provenance.",
   },
   {
     icon: Sparkles,
@@ -42,7 +42,7 @@ export default function SustainabilityPage() {
           Conscious by Design
         </h1>
         <p className="text-base md:text-lg text-ink-muted leading-relaxed font-light">
-          True luxury should leave an enduring legacy of beauty, not environmental debt. Here is how Aryora crafts heirlooms with reverence for modern India and the earth.
+          True luxury should leave an enduring legacy of beauty, not environmental debt. Here is how Ayor crafts heirlooms with reverence for modern India and the earth.
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export default function SustainabilityPage() {
         <p className="eyebrow">A Promise to Future Generations</p>
         <h3 className="font-serif text-3xl text-ink">Wear Your Values with Pride</h3>
         <p className="text-xs text-ink-muted leading-relaxed">
-          When you wear an Aryora piece, you hold a symbol of human ingenuity that honors traditions without repeating the environmental costs of the past.
+          When you wear an Ayor piece, you hold a symbol of human ingenuity that honors traditions without repeating the environmental costs of the past.
         </p>
         <div className="pt-2">
           <Link href="/shop" className="btn-primary text-xs">

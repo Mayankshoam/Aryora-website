@@ -41,7 +41,7 @@ export default function ContactPage() {
 
       <div className="max-w-xl my-6 space-y-2">
         <p className="eyebrow">Client Support & Concierge</p>
-        <h1 className="font-serif text-3xl md:text-5xl text-ink">Connect with Aryora</h1>
+        <h1 className="font-serif text-3xl md:text-5xl text-ink">Connect with Ayor</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
           Whether inquiring about a bespoke bridal commission, IGI grading verification, or boutique visit, our Lucknow atelier is at your service.
         </p>
@@ -78,8 +78,8 @@ export default function ContactPage() {
                 <Mail size={18} className="text-champagne-accessible flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-ink">Email Correspondence</p>
-                  <a href="mailto:aryora.legacy@hotmail.com" className="hover:text-ink underline">
-                    aryora.legacy@hotmail.com
+                  <a href="mailto:ayor.legacy@hotmail.com" className="hover:text-ink underline">
+                    ayor.legacy@hotmail.com
                   </a>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function ContactPage() {
 
             <div className="pt-4 border-t border-border-subtle">
               <a
-                href="https://wa.me/918808828646?text=Hello%20Aryora%2C%20I%20would%20like%20to%20speak%20with%20your%20design%20concierge."
+                href="https://wa.me/918808828646?text=Hello%20Ayor%2C%20I%20would%20like%20to%20speak%20with%20your%20design%20concierge."
                 target="_blank"
                 rel="noreferrer"
                 className="btn-primary w-full text-xs flex items-center justify-center gap-2"

@@ -2,7 +2,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const metadata = {
   title: "Privacy Policy",
-  description: "How Aryora protects and manages your personal client data.",
+  description: "How Ayor protects and manages your personal client data.",
 };
 
 export default function PrivacyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         <p className="eyebrow">Client Confidentiality</p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink">Privacy Policy</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
-          Aryora respects the absolute privacy of our patrons. Here is how your personal information is protected.
+          Ayor respects the absolute privacy of our patrons. Here is how your personal information is protected.
         </p>
       </div>
 
@@ -22,7 +22,7 @@ export default function PrivacyPage() {
         <section className="space-y-2">
           <h2 className="font-serif text-xl text-ink">1. Information We Collect</h2>
           <p>
-            When you commission a custom design, book a bridal consultation, or acquire a piece from Aryora, we collect essential details such as your name, contact telephone, delivery address, and payment confirmation details.
+            When you commission a custom design, book a bridal consultation, or acquire a piece from Ayor, we collect essential details such as your name, contact telephone, delivery address, and payment confirmation details.
           </p>
         </section>
 
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         <section className="space-y-2">
           <h2 className="font-serif text-xl text-ink">3. Secure Payment Processing</h2>
           <p>
-            Payment transactions are routed through bank-grade, PCI-DSS compliant gateways (such as Razorpay). Aryora never stores credit/debit card numbers or confidential bank passwords on our servers.
+            Payment transactions are routed through bank-grade, PCI-DSS compliant gateways (such as Razorpay). Ayor never stores credit/debit card numbers or confidential bank passwords on our servers.
           </p>
         </section>
 
@@ -44,8 +44,8 @@ export default function PrivacyPage() {
           <h2 className="font-serif text-xl text-ink">4. Concierge Data Requests</h2>
           <p>
             You may request an update or deletion of your personal contact records at any time by contacting our atelier concierge at{" "}
-            <a href="mailto:aryora.legacy@hotmail.com" className="text-ink underline">
-              aryora.legacy@hotmail.com
+            <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
+              ayor.legacy@hotmail.com
             </a>{" "}
             or +91 8808828646.
           </p>

@@ -86,7 +86,7 @@ export default function WorldOfLgdPage() {
             <thead className="bg-ivory-muted uppercase tracking-wider text-ink-muted border-b border-border-subtle">
               <tr>
                 <th className="py-3 px-4 font-medium">Property</th>
-                <th className="py-3 px-4 font-medium text-ink">Aryora Lab-Grown</th>
+                <th className="py-3 px-4 font-medium text-ink">Ayor Lab-Grown</th>
                 <th className="py-3 px-4 font-medium">Traditional Mined</th>
               </tr>
             </thead>

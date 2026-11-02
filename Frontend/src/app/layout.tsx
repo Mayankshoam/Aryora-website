@@ -17,11 +17,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Aryora — Light. Legacy. You. | Fine Lab-Grown Jewellery",
-    template: "%s | Aryora",
+    default: "Ayor — Light. Legacy. You. | Fine Lab-Grown Jewellery",
+    template: "%s | Ayor",
   },
   description:
-    "Aryora is a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, 18K gold and 92.5 silver pieces for modern India. Light. Legacy. You.",
+    "Ayor is a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, 18K gold and 92.5 silver pieces for modern India. Light. Legacy. You.",
   metadataBase: new URL("https://aryora-website-d3sv.vercel.app"),
   alternates: {
     canonical: "/",
@@ -32,17 +32,17 @@ export const metadata: Metadata = {
     "custom engagement rings India",
     "ethical gold jewellery",
     "92.5 sterling silver diamond jewellery",
-    "Aryora legacy",
+    "Ayor legacy",
   ],
-  authors: [{ name: "Aryora Fine Jewellery" }],
-  creator: "Aryora",
-  publisher: "Aryora",
+  authors: [{ name: "Ayor Fine Jewellery" }],
+  creator: "Ayor",
+  publisher: "Ayor",
   openGraph: {
-    title: "Aryora — Light. Legacy. You.",
+    title: "Ayor — Light. Legacy. You.",
     description:
       "IGI-certified lab-grown diamonds, 18K gold and 92.5 silver heirlooms crafted for modern India.",
     url: "https://aryora-website-d3sv.vercel.app",
-    siteName: "Aryora",
+    siteName: "Ayor",
     locale: "en_IN",
     type: "website",
     images: [
@@ -50,13 +50,13 @@ export const metadata: Metadata = {
         url: "/site/hero-poster.svg",
         width: 1200,
         height: 630,
-        alt: "Aryora Fine Jewellery Collection",
+        alt: "Ayor Fine Jewellery Collection",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aryora — Light. Legacy. You.",
+    title: "Ayor — Light. Legacy. You.",
     description:
       "IGI-certified lab-grown diamond & fine gold jewellery for modern India.",
     images: ["/site/hero-poster.svg"],
@@ -82,20 +82,20 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "JewelryStore",
-    name: "Aryora",
+    name: "Ayor",
     url: "https://aryora-website-d3sv.vercel.app",
     logo: "https://aryora-website-d3sv.vercel.app/site/brand-emblem.svg",
     description:
       "Lucknow-based fine jewellery house crafting IGI-certified lab-grown diamond, 18K gold and 92.5 silver pieces.",
     telephone: "+91-8808828646",
-    email: "aryora.legacy@hotmail.com",
+    email: "ayor.legacy@hotmail.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Lucknow",
       addressRegion: "Uttar Pradesh",
       addressCountry: "IN",
     },
-    sameAs: ["https://instagram.com/aryora.legacy"],
+    sameAs: ["https://instagram.com/ayor.legacy"],
     priceRange: "₹₹₹",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

@@ -94,7 +94,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-xs text-center text-ink-muted mt-6 pt-6 border-t border-border-subtle">
-          New to Aryora?{" "}
+          New to Ayor?{" "}
           <Link href="/register" className="text-ink underline font-medium hover:text-champagne-accessible">
             Create an Account
           </Link>

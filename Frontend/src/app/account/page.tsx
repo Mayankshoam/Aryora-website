@@ -28,7 +28,7 @@ export default function AccountPage() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between my-8 pb-6 border-b border-border-subtle gap-4">
         <div>
           <p className="eyebrow">Client Portal</p>
-          <h1 className="font-serif text-3xl md:text-5xl text-ink">My Aryora Atelier</h1>
+          <h1 className="font-serif text-3xl md:text-5xl text-ink">My Ayor Atelier</h1>
         </div>
 
         {token && (
@@ -113,7 +113,7 @@ export default function AccountPage() {
                 <div className="flex items-center justify-between pt-2 text-xs text-ink-muted">
                   <span>Estimated Doorstep Delivery: <strong>4 Nov 2026</strong></span>
                   <a
-                    href="https://wa.me/918808828646?text=Hello%20Aryora%2C%20checking%20status%20for%20order%20ARY-729104"
+                    href="https://wa.me/918808828646?text=Hello%20Ayor%2C%20checking%20status%20for%20order%20ARY-729104"
                     target="_blank"
                     rel="noreferrer"
                     className="text-champagne-accessible underline font-medium"
@@ -125,7 +125,7 @@ export default function AccountPage() {
 
               {!token && (
                 <div className="border border-border-subtle bg-ivory-pure p-6 text-center space-y-2">
-                  <p className="font-serif text-lg text-ink">Have an existing Aryora account?</p>
+                  <p className="font-serif text-lg text-ink">Have an existing Ayor account?</p>
                   <p className="text-xs text-ink-muted">
                     Sign in to see past orders across all devices and manage delivery addresses.
                   </p>
@@ -147,7 +147,7 @@ export default function AccountPage() {
               <div className="grid sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label className="block text-ink-subtle uppercase tracking-wider mb-1">Full Name</label>
-                  <p className="font-medium text-ink">Aryora Private Client</p>
+                  <p className="font-medium text-ink">Ayor Private Client</p>
                 </div>
                 <div>
                   <label className="block text-ink-subtle uppercase tracking-wider mb-1">Contact Email</label>

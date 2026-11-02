@@ -24,7 +24,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Can a jeweler tell the difference between a mined and lab diamond?",
-        a: "Not with the naked eye, loupe, or standard gemological microscope. Advanced spectroscopic laboratory machinery is required to read microscopic growth characteristics. Every Aryora diamond is certified by IGI and laser-inscribed on the girdle with its unique certification number for total transparency.",
+        a: "Not with the naked eye, loupe, or standard gemological microscope. Advanced spectroscopic laboratory machinery is required to read microscopic growth characteristics. Every Ayor diamond is certified by IGI and laser-inscribed on the girdle with its unique certification number for total transparency.",
       },
       {
         q: "Why are lab-grown diamonds more accessible in price?",
@@ -36,11 +36,11 @@ const CATEGORIES: Category[] = [
     title: "Certification & Authenticity",
     items: [
       {
-        q: "Are all Aryora stones certified by independent gemological laboratories?",
+        q: "Are all Ayor stones certified by independent gemological laboratories?",
         a: "Yes. Every center stone is independently certified by the International Gemological Institute (IGI). Your piece ships in a sealed heirloom presentation box containing the official laminated IGI dossier specifying precise 4Cs grading.",
       },
       {
-        q: "What metal hallmark standards does Aryora use?",
+        q: "What metal hallmark standards does Ayor use?",
         a: "Our yellow, white, and rose gold pieces are crafted in certified 18K (750 hallmark) or 14K gold. Our silver jewelry is crafted in authentic 92.5 sterling silver with tarnish-resistant rhodium plating.",
       },
     ],
@@ -50,7 +50,7 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: "How is my jewelry shipped, and is it insured during transit?",
-        a: "Every Aryora order includes complimentary 100% insured courier delivery across India via premier security logistics partners (BlueDart Apex / BVC Logistics). Your parcel is sealed in tamper-evident packaging and requires signature verification upon delivery.",
+        a: "Every Ayor order includes complimentary 100% insured courier delivery across India via premier security logistics partners (BlueDart Apex / BVC Logistics). Your parcel is sealed in tamper-evident packaging and requires signature verification upon delivery.",
       },
       {
         q: "What is the standard delivery timeline?",
@@ -62,7 +62,7 @@ const CATEGORIES: Category[] = [
     title: "Returns, Resizing & Warranty",
     items: [
       {
-        q: "What is Aryora's return and exchange policy?",
+        q: "What is Ayor's return and exchange policy?",
         a: "We offer a 7-day hassle-free return policy on standard unworn catalogue items in their original presentation packaging. Bespoke engraved or custom-fabricated pieces are not eligible for direct return, but carry our lifetime exchange and transparent buyback guarantee.",
       },
       {
@@ -196,7 +196,7 @@ export default function FaqPage() {
                   <MessageCircle size={15} /> WhatsApp +91 8808828646
                 </a>
                 <a
-                  href="mailto:aryora.legacy@hotmail.com"
+                  href="mailto:ayor.legacy@hotmail.com"
                   className="btn-outline text-xs flex items-center gap-2"
                 >
                   <Mail size={15} /> Email Concierge

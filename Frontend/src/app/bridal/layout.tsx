@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Explore bespoke bridal jewellery suites, IGI-certified lab-grown diamond chokers, engagement solitaires, and 18K BIS-hallmarked gold heirlooms handcrafted in Lucknow. Book your private bridal consultation.",
   openGraph: {
-    title: "Aryora Heritage Bridal Haute Joaillerie",
+    title: "Ayor Heritage Bridal Haute Joaillerie",
     description:
       "Royal Awadhi craftsmanship meets modern conscious brilliance. Bespoke IGI-certified lab-grown diamond wedding suites.",
     images: ["/site/cat-bridal.svg"],

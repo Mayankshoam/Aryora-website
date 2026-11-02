@@ -123,7 +123,7 @@ export default function Footer() {
         <div className="max-w-content mx-auto px-6 md:px-8 py-12 md:py-16 grid lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 space-y-2">
             <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#C09981]">
-              The Aryora Circle
+              The Ayor Circle
             </p>
             <h2 className="font-serif text-2xl md:text-3xl text-ink leading-tight font-light">
               Invitations to private previews and editorial stories.
@@ -238,7 +238,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs text-ink-muted">
               <li>
                 <Link href="/about" className="hover:text-ink transition-colors">
-                  About Aryora
+                  About Ayor
                 </Link>
               </li>
               <li>
@@ -314,19 +314,19 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <Mail size={14} className="text-champagne-accessible flex-shrink-0" />
-                <a href="mailto:aryora.legacy@hotmail.com" className="hover:text-ink transition-colors">
-                  aryora.legacy@hotmail.com
+                <a href="mailto:ayor.legacy@hotmail.com" className="hover:text-ink transition-colors">
+                  ayor.legacy@hotmail.com
                 </a>
               </p>
               <div className="pt-2">
                 <a
-                  href="https://instagram.com/aryora.legacy"
+                  href="https://instagram.com/ayor.legacy"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wider text-ink hover:text-champagne-accessible transition-colors font-medium"
                 >
                   <InstagramIcon size={14} />
-                  <span>@aryora.legacy</span>
+                  <span>@ayor.legacy</span>
                 </a>
               </div>
             </div>
@@ -353,7 +353,7 @@ export default function Footer() {
 
         {/* 5. Payment Methods & Copyright */}
         <div className="mt-10 pt-6 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between text-xs text-ink-light gap-4">
-          <p>© {new Date().getFullYear()} Aryora Fine Jewellery. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Ayor Fine Jewellery. All rights reserved.</p>
           <p className="font-serif italic tracking-wider text-sm text-ink-muted">
             Light. Legacy. You.
           </p>
