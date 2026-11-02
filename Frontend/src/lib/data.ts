@@ -88,7 +88,8 @@ export function getAllProducts(): Product[] {
 }
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return (productsData as Product[]).find((p) => p.slug === slug);
+  const norm = slug.toLowerCase();
+  return (productsData as Product[]).find((p) => p.slug.toLowerCase() === norm || p.id.toLowerCase() === norm);
 }
 
 export function getProductsByCategory(category: string): Product[] {
