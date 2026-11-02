@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -32,12 +32,6 @@ import {
 } from "@/lib/data";
 import { useAryoraStore } from "@/lib/store";
 
-const METAL_SWATCHES: Record<string, { bg: string; label: string }> = {
-  "Yellow Gold": { bg: "#D4AF37", label: "18K Yellow Gold" },
-  "Rose Gold": { bg: "#C98A7D", label: "18K Rose Gold" },
-  "White Gold": { bg: "#D9D9D9", label: "18K White Gold" },
-};
-
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
@@ -49,18 +43,80 @@ export default function ProductDetailPage() {
     .filter((p) => p.id !== product.id)
     .slice(0, 4);
 
+  const isSilver =
+    product.metal.toLowerCase().includes("silver") ||
+    product.purity.toLowerCase().includes("silver");
+
+  // Multi-image list (guaranteed 4 images)
+  const productImages = useMemo(() => {
+    if (product.images && product.images.length > 0) {
+      return product.images;
+    }
+    return [
+      "/products/ring-01-a.jpg",
+      "/products/ring-01-b.jpg",
+      "/products/ring-01-c.jpg",
+      "/products/ring-01-d.jpg",
+    ];
+  }, [product.images]);
+
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedMetal, setSelectedMetal] = useState<string>(product.metal || "Yellow Gold");
-  const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] || "12");
+
+  // Platings options (Miss Jo style: GOLD, RHODIUM, ROSE GOLD for Silver/CZ)
+  const platings = useMemo(() => {
+    if (product.platings && product.platings.length > 0) {
+      return product.platings;
+    }
+    return isSilver
+      ? ["GOLD", "RHODIUM", "ROSE GOLD"]
+      : ["18K YELLOW GOLD", "18K ROSE GOLD", "18K WHITE GOLD"];
+  }, [product.platings, isSilver]);
+
+  const [selectedPlating, setSelectedPlating] = useState<string>(platings[0]);
+
+  // Carat size options (Miss Jo style: 0.84 CT, 1.5 CT, 2 CT, 3.87 CT)
+  const caratOptions = useMemo(() => {
+    if (product.caratOptions && product.caratOptions.length > 0) {
+      return product.caratOptions;
+    }
+    return [product.carat || 1];
+  }, [product.caratOptions, product.carat]);
+
+  const [selectedCarat, setSelectedCarat] = useState<number>(
+    caratOptions[0] || product.carat || 1
+  );
+
+  // Dynamic pricing based on carat selection
+  const currentPrice = useMemo(() => {
+    const basePrice = product.price;
+    const baseCarat = product.carat || 1;
+    if (selectedCarat && baseCarat && selectedCarat !== baseCarat) {
+      const scaled = Math.round(
+        (basePrice * Math.pow(selectedCarat / baseCarat, 0.72)) / 100
+      ) * 100 - 1;
+      return Math.max(2499, scaled);
+    }
+    return basePrice;
+  }, [product.price, product.carat, selectedCarat]);
+
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState<string>(
+    product.sizes?.[0] || "12"
+  );
   const [pincode, setPincode] = useState("");
-  const [pincodeStatus, setPincodeStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle");
+  const [pincodeStatus, setPincodeStatus] = useState<
+    "idle" | "checking" | "valid" | "invalid"
+  >("idle");
   const [deliveryDate, setDeliveryDate] = useState("");
-  const [activeAccordion, setActiveAccordion] = useState<string | null>("price-breakup");
+  const [activeAccordion, setActiveAccordion] = useState<string | null>(
+    "price-breakup"
+  );
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
 
   const {
     addToCart,
+    openCart,
     toggleWishlist,
     isInWishlist,
     openSizeGuide,
@@ -69,6 +125,14 @@ export default function ProductDetailPage() {
   } = useAryoraStore();
 
   const inWishlist = isInWishlist(product.slug);
+
+  // Reset selected options when product slug changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+    if (platings.length > 0) setSelectedPlating(platings[0]);
+    if (caratOptions.length > 0) setSelectedCarat(caratOptions[0]);
+    setQuantity(1);
+  }, [product.slug, platings, caratOptions]);
 
   // Track recently viewed
   useEffect(() => {
@@ -83,10 +147,11 @@ export default function ProductDetailPage() {
     .filter((p): p is Product => Boolean(p))
     .slice(0, 4);
 
-  const priceBreakup = calculatePriceBreakup(product);
+  const priceBreakup = calculatePriceBreakup(product, currentPrice);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
     setZoomPos({ x, y });
@@ -114,37 +179,46 @@ export default function ProductDetailPage() {
 
   const handleWhatsAppEnquiry = () => {
     const text = encodeURIComponent(
-      `Hello Aryora Concierge, I would like to enquire about ${product.name} (ID: ${product.id}, Metal: ${selectedMetal}). Please share details and customization options.`
+      `Hello Aryora Concierge, I would like to enquire about ${product.name} (SKU: ${product.sku || product.id}, Plating: ${selectedPlating}, Carat: ${selectedCarat}ct). Please share details and customization options.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
 
   const handleVideoConsultation = () => {
     const text = encodeURIComponent(
-      `Hello Aryora Concierge, I would like to book a WhatsApp Video Consultation to view ${product.name} (ID: ${product.id}) live.`
+      `Hello Aryora Concierge, I would like to book a WhatsApp Video Consultation to view ${product.name} (SKU: ${product.sku || product.id}) live.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
 
-  const productImages = product.images && product.images.length > 0
-    ? product.images
-    : ["/products/ring-01-a.svg", "/products/ring-01-b.svg"];
+  const handleAddToCart = () => {
+    const customizedProduct = {
+      ...product,
+      price: currentPrice,
+      carat: selectedCarat,
+    };
+    addToCart(customizedProduct, quantity, selectedSize, selectedPlating);
+    openCart();
+  };
 
   const currentImage = productImages[activeImageIndex] || productImages[0];
 
-  const originalPrice = product.discountPercent > 0
-    ? Math.round(product.price / (1 - product.discountPercent / 100))
-    : null;
+  const originalPrice =
+    product.discountPercent > 0
+      ? Math.round(currentPrice / (1 - product.discountPercent / 100))
+      : null;
 
   // JSON-LD structured data
   const productJsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
     name: product.name,
-    image: productImages.map((img) => `https://aryora-website-d3sv.vercel.app${img}`),
+    image: productImages.map(
+      (img) => `https://aryora-website-d3sv.vercel.app${img}`
+    ),
     description: product.description,
-    sku: product.id,
-    mpn: product.id,
+    sku: product.sku || product.id,
+    mpn: product.sku || product.id,
     brand: {
       "@type": "Brand",
       name: "Aryora",
@@ -153,12 +227,15 @@ export default function ProductDetailPage() {
       "@type": "Offer",
       url: `https://aryora-website-d3sv.vercel.app/product/${product.slug}`,
       priceCurrency: "INR",
-      price: product.price,
+      price: currentPrice,
       itemCondition: "https://schema.org/NewCondition",
-      availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "Aryora Fine Jewellery",
+        name: "Aryora Fine Joaillerie",
       },
     },
   };
@@ -171,40 +248,47 @@ export default function ProductDetailPage() {
       />
 
       <div className="max-w-content mx-auto px-4 md:px-8 py-6 md:py-10">
-        {/* Breadcrumbs */}
-        <Breadcrumbs
-          items={[
-            { label: "Shop", href: "/shop" },
-            { label: product.category, href: `/shop?category=${encodeURIComponent(product.category)}` },
-            { label: product.name },
-          ]}
-        />
+        {/* Miss Jo Style Breadcrumbs */}
+        <div className="text-xs text-[#7A7A7A] mb-6 font-light">
+          <Link href="/" className="hover:text-[#1A1A1A] transition-colors">
+            Home
+          </Link>
+          <span className="mx-2 text-[#DDD8D0]">&gt;</span>
+          <Link
+            href={`/shop?category=${encodeURIComponent(product.category)}`}
+            className="hover:text-[#1A1A1A] transition-colors"
+          >
+            {product.category}
+          </Link>
+          <span className="mx-2 text-[#DDD8D0]">&gt;</span>
+          <span className="text-[#1A1A1A] font-normal">{product.name}</span>
+        </div>
 
         {/* Main Product Grid */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 my-6">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 my-4">
           {/* ========================================================= */}
-          {/* LEFT: GALLERY SECTION (Sticky Desktop, Thumbnails, Zoom) */}
+          {/* LEFT: 4-IMAGE VERTICAL THUMBNAIL RAIL & INTERACTIVE ZOOM  */}
           {/* ========================================================= */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex flex-col-reverse md:flex-row gap-4">
-              {/* Thumbnail Strip */}
-              <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+          <div className="lg:col-span-7">
+            <div className="flex flex-col-reverse md:flex-row gap-4 items-start">
+              {/* Vertical Thumbnail Rail (Miss Jo Style) */}
+              <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible pb-2 md:pb-0 w-full md:w-20 flex-shrink-0">
                 {productImages.map((img, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative w-16 h-16 md:w-20 md:h-20 bg-ivory-warm border flex-shrink-0 overflow-hidden transition-all p-1 ${
+                    className={`relative w-16 h-16 md:w-20 md:h-20 bg-white border flex-shrink-0 overflow-hidden transition-all ${
                       activeImageIndex === idx
-                        ? "border-ink ring-1 ring-ink"
-                        : "border-border-subtle opacity-70 hover:opacity-100"
+                        ? "border-[#1A1A1A] ring-1 ring-[#1A1A1A]"
+                        : "border-[#DDD8D0] opacity-80 hover:opacity-100"
                     }`}
                   >
                     <Image
                       src={img}
-                      alt={`${product.name} thumbnail ${idx + 1}`}
+                      alt={`${product.name} view ${idx + 1}`}
                       fill
-                      className="object-contain"
+                      className="object-cover"
                     />
                   </button>
                 ))}
@@ -212,7 +296,7 @@ export default function ProductDetailPage() {
 
               {/* Main Interactive Zoom Stage */}
               <div
-                className="relative flex-1 aspect-square bg-ivory border border-border-subtle overflow-hidden cursor-crosshair group shadow-sm"
+                className="relative flex-1 aspect-square bg-[#FDFBF9] border border-[#DDD8D0] overflow-hidden cursor-crosshair group shadow-sm w-full"
                 onMouseEnter={() => setIsZoomed(true)}
                 onMouseLeave={() => setIsZoomed(false)}
                 onMouseMove={handleMouseMove}
@@ -235,7 +319,7 @@ export default function ProductDetailPage() {
                   }
                 />
 
-                {/* Overlaid Badges (Miss Jo Palette) */}
+                {/* Overlaid Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start pointer-events-none">
                   {product.isBestseller && (
                     <span className="bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
@@ -250,7 +334,7 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div className="absolute bottom-4 left-4 pointer-events-none">
-                  <span className="bg-white/95 backdrop-blur-sm px-3 py-1 text-xs uppercase tracking-wider text-ink font-medium border border-[#DDD8D0] flex items-center gap-1.5 shadow-sm">
+                  <span className="bg-white/95 backdrop-blur-sm px-3 py-1 text-xs uppercase tracking-wider text-[#1A1A1A] font-medium border border-[#DDD8D0] flex items-center gap-1.5 shadow-sm">
                     <Award size={14} className="text-[#108474]" />
                     <span>{product.certificate}</span>
                   </span>
@@ -263,90 +347,118 @@ export default function ProductDetailPage() {
           {/* RIGHT: BUYING PANEL (Miss Jo Luxury Editorial Layout)     */}
           {/* ========================================================= */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Header info */}
+            {/* Header info matching Miss Jo */}
             <div className="space-y-2 border-b border-[#DDD8D0] pb-5">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
-                  {product.category} · {product.subcategory}
-                </span>
-                <span className="text-xs text-ink-subtle">SKU: {product.id}</span>
-              </div>
+              <span className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
+                {product.category} · {product.subcategory}
+              </span>
 
-              <h1 className="font-serif text-2xl md:text-3xl text-ink font-light leading-snug">
+              <h1 className="font-serif text-2xl md:text-3xl text-[#1A1A1A] font-light leading-snug">
                 {product.name}
               </h1>
 
-              <p className="text-xs text-ink-muted leading-relaxed font-light">
-                {product.description}
-              </p>
-            </div>
-
-            {/* Price Block */}
-            <div className="space-y-2 bg-[#F5F0EA] p-4 border border-[#DDD8D0]">
-              <div className="flex items-baseline space-x-3">
-                <span className="font-serif text-3xl font-medium text-ink">
-                  {formatPriceINR(product.price)}
-                </span>
-                {originalPrice && (
-                  <span className="text-sm text-ink-light line-through">
-                    {formatPriceINR(originalPrice)}
-                  </span>
-                )}
-                {product.discountPercent > 0 && (
-                  <span className="text-xs text-[#108474] font-semibold">
-                    Save {formatPriceINR(originalPrice! - product.price)} ({product.discountPercent}% OFF)
-                  </span>
-                )}
+              <div className="text-xs text-[#7A7A7A] tracking-wider pt-0.5">
+                SKU: {product.sku || product.id.toUpperCase()}
               </div>
-              <p className="text-[11px] text-ink-subtle">
-                Price inclusive of all taxes (3% GST) · Transparent making charges
-              </p>
+
+              {/* Price Block matching Miss Jo PDP */}
+              <div className="pt-3 space-y-1">
+                <div className="flex items-baseline space-x-3">
+                  <span className="font-serif text-2xl md:text-3xl font-normal text-[#1A1A1A]">
+                    MRP {formatPriceINR(currentPrice)}
+                  </span>
+                  {originalPrice && (
+                    <span className="text-sm text-[#9A9A9A] line-through">
+                      {formatPriceINR(originalPrice)}
+                    </span>
+                  )}
+                  {product.discountPercent > 0 && (
+                    <span className="text-xs text-[#108474] font-semibold">
+                      ({product.discountPercent}% OFF)
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-[#7A7A7A] font-light">
+                  Price inclusive of all taxes.
+                </p>
+              </div>
+
+              {/* Stone & Purity Badges */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F5F0EA] border border-[#DDD8D0] text-[11px] font-medium text-[#1A1A1A] rounded-full">
+                  <Gem size={12} className="text-[#C09981]" />
+                  <span>{product.stone}</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#DDD8D0] text-[11px] font-medium text-[#108474] rounded-full">
+                  <Award size={12} />
+                  <span>{product.purity}</span>
+                </span>
+              </div>
             </div>
 
-            {/* Metal Selection */}
+            {/* PLATING Selection (Matching user Miss Jo screenshot) */}
             <div className="space-y-2.5">
-              <div className="flex justify-between items-center text-xs">
-                <span className="uppercase tracking-wider font-medium text-ink">
-                  Selected Metal: <strong className="font-semibold text-champagne-accessible">{selectedMetal} ({product.purity})</strong>
-                </span>
+              <div className="text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]">
+                PLATING:
               </div>
-              <div className="flex items-center gap-3">
-                {["Yellow Gold", "Rose Gold", "White Gold"].map((metal) => {
-                  const meta = METAL_SWATCHES[metal] || { bg: "#D4AF37", label: metal };
-                  const isSelected = selectedMetal === metal;
+              <div className="flex flex-wrap gap-2.5">
+                {platings.map((plating) => {
+                  const isSelected = selectedPlating === plating;
                   return (
                     <button
-                      key={metal}
+                      key={plating}
                       type="button"
-                      onClick={() => setSelectedMetal(metal)}
-                      className={`flex items-center gap-2 px-3 py-2 border text-xs transition-all ${
+                      onClick={() => setSelectedPlating(plating)}
+                      className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
                         isSelected
-                          ? "border-ink bg-ivory-pure font-semibold shadow-sm"
-                          : "border-border-subtle hover:border-ink/60 bg-ivory"
+                          ? "bg-[#1A1A1A] text-white border border-[#1A1A1A] shadow-sm"
+                          : "bg-white text-[#1A1A1A] border border-[#DDD8D0] hover:border-[#1A1A1A]"
                       }`}
                     >
-                      <span
-                        className="w-3.5 h-3.5 rounded-full border border-black/10"
-                        style={{ backgroundColor: meta.bg }}
-                      />
-                      <span>{metal}</span>
+                      {plating}
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Size Selection (if sizes available) */}
-            {product.sizes && product.sizes.length > 0 && (
+            {/* CARAT SIZE Selection (Matching user Miss Jo screenshot) */}
+            <div className="space-y-2.5">
+              <div className="text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]">
+                CARAT SIZE:
+              </div>
+              <div className="flex flex-wrap gap-2.5">
+                {caratOptions.map((ct) => {
+                  const isSelected = selectedCarat === ct;
+                  return (
+                    <button
+                      key={ct}
+                      type="button"
+                      onClick={() => setSelectedCarat(ct)}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                        isSelected
+                          ? "bg-[#1A1A1A] text-white border border-[#1A1A1A] shadow-sm"
+                          : "bg-white text-[#1A1A1A] border border-[#DDD8D0] hover:border-[#1A1A1A]"
+                      }`}
+                    >
+                      {ct} CT
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Size Selection (for rings) */}
+            {product.sizes && product.sizes.length > 0 && product.sizes[0] !== "One Size" && (
               <div className="space-y-2.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="uppercase tracking-wider font-medium text-ink">
-                    Select Size: <strong>{selectedSize}</strong>
+                  <span className="uppercase tracking-wider font-semibold text-[#1A1A1A]">
+                    RING SIZE: <strong>{selectedSize}</strong>
                   </span>
                   <button
                     type="button"
                     onClick={openSizeGuide}
-                    className="text-champagne-accessible font-semibold hover:underline text-[11px]"
+                    className="text-[#C09981] font-semibold hover:underline text-[11px]"
                   >
                     Size Guide
                   </button>
@@ -357,10 +469,10 @@ export default function ProductDetailPage() {
                       key={size}
                       type="button"
                       onClick={() => setSelectedSize(size)}
-                      className={`px-3.5 py-1.5 text-xs border transition-colors ${
+                      className={`px-3.5 py-1.5 text-xs border rounded-sm transition-colors ${
                         selectedSize === size
-                          ? "border-ink bg-ink text-ivory font-semibold"
-                          : "border-border-subtle bg-ivory text-ink hover:border-ink"
+                          ? "border-[#1A1A1A] bg-[#1A1A1A] text-white font-semibold"
+                          : "border-[#DDD8D0] bg-white text-[#1A1A1A] hover:border-[#1A1A1A]"
                       }`}
                     >
                       {size}
@@ -370,9 +482,91 @@ export default function ProductDetailPage() {
               </div>
             )}
 
+            {/* Quantity Stepper + ADD TO BAG + WISHLIST (Matching user screenshot) */}
+            <div className="pt-2 space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                {/* Quantity Stepper */}
+                <div className="flex items-center border border-[#DDD8D0] bg-white h-12 w-32 justify-between px-3 flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    aria-label="Decrease quantity"
+                    className="text-lg text-[#1A1A1A] px-2 hover:opacity-70 font-light select-none"
+                  >
+                    –
+                  </button>
+                  <span className="text-xs font-semibold text-[#1A1A1A]">
+                    {quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity(quantity + 1)}
+                    aria-label="Increase quantity"
+                    className="text-lg text-[#1A1A1A] px-2 hover:opacity-70 font-light select-none"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* ADD TO BAG Button */}
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  className="flex-1 h-12 bg-[#1A1A1A] text-white hover:bg-black font-semibold uppercase tracking-widest text-xs flex items-center justify-center transition-colors shadow-sm"
+                >
+                  ADD TO BAG · {formatPriceINR(currentPrice * quantity)}
+                </button>
+
+                {/* WISHLIST Button */}
+                <button
+                  type="button"
+                  onClick={() => toggleWishlist(product.slug)}
+                  aria-label={
+                    inWishlist ? "Remove from wishlist" : "Add to wishlist"
+                  }
+                  className={`h-12 px-6 border font-semibold uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-colors flex-shrink-0 ${
+                    inWishlist
+                      ? "border-[#C09981] bg-[#C09981] text-white shadow-sm"
+                      : "border-[#1A1A1A] bg-white text-[#1A1A1A] hover:bg-[#F5F0EA]"
+                  }`}
+                >
+                  <Heart
+                    size={16}
+                    fill={inWishlist ? "currentColor" : "none"}
+                    strokeWidth={1.5}
+                  />
+                  <span>WISHLIST</span>
+                </button>
+              </div>
+
+              {/* Concierge & Video Call Triggers */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={handleWhatsAppEnquiry}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <MessageCircle size={15} />
+                  <span>WhatsApp Concierge</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleVideoConsultation}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-[#F5F0EA] text-[#1A1A1A] hover:border-[#1A1A1A] text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
+                >
+                  <Video size={15} className="text-[#C09981]" />
+                  <span>Live Video Call</span>
+                </button>
+              </div>
+            </div>
+
             {/* Pincode Delivery Estimator */}
-            <div className="space-y-2 pt-2 border-t border-border-subtle">
-              <label htmlFor="pincode-input" className="block text-xs uppercase tracking-wider font-medium text-ink">
+            <div className="space-y-2 pt-2 border-t border-[#DDD8D0]">
+              <label
+                htmlFor="pincode-input"
+                className="block text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
+              >
                 Check Delivery Date & Services
               </label>
               <form onSubmit={handleCheckPincode} className="flex gap-2">
@@ -386,11 +580,11 @@ export default function ProductDetailPage() {
                     if (pincodeStatus !== "idle") setPincodeStatus("idle");
                   }}
                   placeholder="Enter 6-digit PIN code"
-                  className="flex-1 px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink"
+                  className="flex-1 px-3.5 py-2.5 text-xs border border-[#DDD8D0] bg-white focus:outline-none focus:border-[#1A1A1A]"
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-ink text-ivory text-xs uppercase tracking-wider font-semibold hover:bg-ink/80 transition-colors"
+                  className="px-5 py-2.5 bg-[#1A1A1A] text-white text-xs uppercase tracking-wider font-semibold hover:bg-black transition-colors"
                 >
                   {pincodeStatus === "checking" ? "Checking..." : "Check"}
                 </button>
@@ -398,7 +592,10 @@ export default function ProductDetailPage() {
               {pincodeStatus === "valid" && (
                 <div className="flex items-center gap-1.5 text-xs text-[#108474] pt-1">
                   <Check size={14} />
-                  <span>Complimentary insured transit to {pincode}. Estimated delivery: <strong>{deliveryDate}</strong>.</span>
+                  <span>
+                    Complimentary insured transit to {pincode}. Estimated delivery:{" "}
+                    <strong>{deliveryDate}</strong>.
+                  </span>
                 </div>
               )}
               {pincodeStatus === "invalid" && (
@@ -408,124 +605,94 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Primary Action CTAs */}
-            <div className="space-y-3 pt-3">
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => addToCart(product, 1, selectedSize, selectedMetal)}
-                  className="btn-primary flex-1 py-4 text-xs font-semibold uppercase tracking-wider text-center shadow-sm"
-                >
-                  Add to Bag · {formatPriceINR(product.price)}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => toggleWishlist(product.slug)}
-                  aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                  className={`p-4 border transition-colors ${
-                    inWishlist
-                      ? "border-[#C09981] bg-[#C09981] text-white shadow-sm"
-                      : "border-[#DDD8D0] bg-white text-ink hover:border-ink shadow-sm"
-                  }`}
-                >
-                  <Heart size={18} fill={inWishlist ? "currentColor" : "none"} strokeWidth={1.5} />
-                </button>
-              </div>
-
-              {/* Concierge & Video Call Triggers */}
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleWhatsAppEnquiry}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-ink text-ink hover:bg-ink hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
-                >
-                  <MessageCircle size={15} />
-                  <span>WhatsApp Concierge</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleVideoConsultation}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-[#F5F0EA] text-ink hover:border-ink text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
-                >
-                  <Video size={15} className="text-[#C09981]" />
-                  <span>Live Video Call</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Miss Jo / Ethera Trust Strip */}
-            <div className="grid grid-cols-4 gap-2 py-4 border-y border-[#DDD8D0] text-center text-[10px] text-ink-muted">
+            {/* Miss Jo / Aryora 4-Pillar Trust Strip */}
+            <div className="grid grid-cols-4 gap-2 py-4 border-y border-[#DDD8D0] text-center text-[10px] text-[#7A7A7A]">
               <div className="space-y-1">
                 <Award size={18} className="mx-auto text-[#108474]" />
-                <p className="font-semibold text-ink">100% IGI</p>
+                <p className="font-semibold text-[#1A1A1A]">
+                  {isSilver ? "925 BIS" : "100% IGI"}
+                </p>
                 <p className="text-[9px]">Certified</p>
               </div>
               <div className="space-y-1">
                 <RotateCcw size={18} className="mx-auto text-[#108474]" />
-                <p className="font-semibold text-ink">15-Day</p>
+                <p className="font-semibold text-[#1A1A1A]">15-Day</p>
                 <p className="text-[9px]">Easy Return</p>
               </div>
               <div className="space-y-1">
                 <ShieldCheck size={18} className="mx-auto text-[#108474]" />
-                <p className="font-semibold text-ink">Lifetime</p>
-                <p className="text-[9px]">Buyback</p>
+                <p className="font-semibold text-[#1A1A1A]">Lifetime</p>
+                <p className="text-[9px]">
+                  {isSilver ? "Plating Warranty" : "Buyback"}
+                </p>
               </div>
               <div className="space-y-1">
                 <Truck size={18} className="mx-auto text-[#108474]" />
-                <p className="font-semibold text-ink">Insured</p>
+                <p className="font-semibold text-[#1A1A1A]">Insured</p>
                 <p className="text-[9px]">Pan-India Transit</p>
               </div>
             </div>
 
-            {/* Accordions */}
-            <div className="divide-y divide-border-subtle border-b border-border-subtle">
+            {/* Collapsible Accordions */}
+            <div className="divide-y divide-[#DDD8D0] border-b border-[#DDD8D0]">
               {/* Accordion 1: Transparent Price Breakup */}
               <div>
                 <button
                   type="button"
-                  onClick={() => setActiveAccordion(activeAccordion === "price-breakup" ? null : "price-breakup")}
-                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-ink"
+                  onClick={() =>
+                    setActiveAccordion(
+                      activeAccordion === "price-breakup"
+                        ? null
+                        : "price-breakup"
+                    )
+                  }
+                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
                 >
                   <span>Transparent Price Breakup</span>
                   <ChevronDown
                     size={16}
-                    className={`transition-transform ${activeAccordion === "price-breakup" ? "rotate-180" : ""}`}
+                    className={`transition-transform ${
+                      activeAccordion === "price-breakup" ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
                 {activeAccordion === "price-breakup" && (
-                  <div className="pb-4 space-y-2 text-xs text-ink-muted">
+                  <div className="pb-4 space-y-2 text-xs text-[#7A7A7A]">
                     <table className="w-full text-xs">
-                      <tbody className="divide-y divide-border-subtle/50">
+                      <tbody className="divide-y divide-[#DDD8D0]/50">
                         <tr>
-                          <td className="py-2 text-ink-muted">
-                            Gold Component ({product.purity} · {priceBreakup.goldWeight}g)
+                          <td className="py-2 text-[#7A7A7A]">
+                            {priceBreakup.metalLabel} ({product.purity} · {priceBreakup.metalWeight}g)
                           </td>
-                          <td className="py-2 text-right font-medium text-ink">
-                            {formatPriceINR(priceBreakup.goldValue)}
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {formatPriceINR(priceBreakup.metalValue)}
                           </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">
-                            Diamond Component ({priceBreakup.diamondCarat}ct {product.stone})
+                          <td className="py-2 text-[#7A7A7A]">
+                            {priceBreakup.stoneLabel} ({selectedCarat} CT)
                           </td>
-                          <td className="py-2 text-right font-medium text-ink">
-                            {formatPriceINR(priceBreakup.diamondValue)}
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {formatPriceINR(priceBreakup.stoneValue)}
                           </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">Making & Crafting Charges</td>
-                          <td className="py-2 text-right font-medium text-ink">
+                          <td className="py-2 text-[#7A7A7A]">
+                            Artisan Crafting & Finish Charges
+                          </td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
                             {formatPriceINR(priceBreakup.makingCharges)}
                           </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">Applicable GST (3%)</td>
-                          <td className="py-2 text-right font-medium text-ink">
+                          <td className="py-2 text-[#7A7A7A]">
+                            Applicable GST (3%)
+                          </td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
                             {formatPriceINR(priceBreakup.gst)}
                           </td>
                         </tr>
-                        <tr className="border-t border-ink/20 font-semibold text-ink">
+                        <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
                           <td className="py-2.5">Total Amount Payable</td>
                           <td className="py-2.5 text-right font-serif text-sm">
                             {formatPriceINR(priceBreakup.total)}
@@ -541,84 +708,75 @@ export default function ProductDetailPage() {
               <div>
                 <button
                   type="button"
-                  onClick={() => setActiveAccordion(activeAccordion === "specs" ? null : "specs")}
-                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-ink"
+                  onClick={() =>
+                    setActiveAccordion(
+                      activeAccordion === "specs" ? null : "specs"
+                    )
+                  }
+                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
                 >
                   <span>Product Details & Specifications</span>
                   <ChevronDown
                     size={16}
-                    className={`transition-transform ${activeAccordion === "specs" ? "rotate-180" : ""}`}
+                    className={`transition-transform ${
+                      activeAccordion === "specs" ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
                 {activeAccordion === "specs" && (
-                  <div className="pb-4 space-y-3 text-xs text-ink-muted">
+                  <div className="pb-4 space-y-3 text-xs text-[#7A7A7A]">
                     <table className="w-full text-xs">
-                      <tbody className="divide-y divide-border-subtle/50">
+                      <tbody className="divide-y divide-[#DDD8D0]/50">
                         <tr>
-                          <td className="py-2 text-ink-muted">Precious Metal</td>
-                          <td className="py-2 text-right font-medium text-ink">
-                            {selectedMetal} ({product.purity})
+                          <td className="py-2 text-[#7A7A7A]">SKU Reference</td>
+                          <td className="py-2 text-right font-mono font-medium text-[#1A1A1A]">
+                            {product.sku || product.id.toUpperCase()}
                           </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">Stone Variety</td>
-                          <td className="py-2 text-right font-medium text-ink">{product.stone}</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-ink-muted">Stone Shape</td>
-                          <td className="py-2 text-right font-medium text-ink">{product.shape}</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-ink-muted">Diamond Color & Clarity</td>
-                          <td className="py-2 text-right font-medium text-ink">
-                            Color {product.color} · Clarity {product.clarity}
+                          <td className="py-2 text-[#7A7A7A]">Base Metal</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {product.metal} ({product.purity})
                           </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">Laboratory Certification</td>
-                          <td className="py-2 text-right font-medium text-ink">{product.certificate}</td>
+                          <td className="py-2 text-[#7A7A7A]">Selected Plating</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {selectedPlating}
+                          </td>
                         </tr>
                         <tr>
-                          <td className="py-2 text-ink-muted">Gross Approx. Weight</td>
-                          <td className="py-2 text-right font-medium text-ink">{product.weightGrams}g</td>
+                          <td className="py-2 text-[#7A7A7A]">Stone Variety</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {product.stone}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-[#7A7A7A]">Carat Weight</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {selectedCarat} CT
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-[#7A7A7A]">Stone Shape</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {product.shape} Brilliant Cut
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-[#7A7A7A]">Certification</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {product.certificate}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
+                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                            {product.weightGrams}g
+                          </td>
                         </tr>
                       </tbody>
                     </table>
-
-                    {/* Official Certification Seals */}
-                    <div className="mt-4 pt-3 border-t border-border-subtle grid sm:grid-cols-2 gap-3 p-3 bg-ivory-warm/40 border border-border-subtle/60">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-white p-1 flex items-center justify-center border border-border-subtle flex-shrink-0">
-                          <Image
-                            src="/images/certifications/igi-certified.png"
-                            alt="IGI Certified Lab Grown Diamonds"
-                            width={24}
-                            height={24}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-[11px] font-semibold text-ink leading-tight">IGI Certified Diamond</p>
-                          <p className="text-[10px] text-ink-muted leading-tight">Laser inscribed serial</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 sm:border-l sm:border-border-subtle sm:pl-3">
-                        <div className="w-8 h-8 rounded-full bg-white p-1 flex items-center justify-center border border-border-subtle flex-shrink-0">
-                          <Image
-                            src="/images/certifications/bis-hallmark.png"
-                            alt="BIS Hallmark 750 (18K) Gold Hallmark"
-                            width={28}
-                            height={16}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-[11px] font-semibold text-ink leading-tight">BIS Hallmark 750</p>
-                          <p className="text-[10px] text-ink-muted leading-tight">Govt authenticated HUID</p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 )}
               </div>
@@ -627,21 +785,37 @@ export default function ProductDetailPage() {
               <div>
                 <button
                   type="button"
-                  onClick={() => setActiveAccordion(activeAccordion === "shipping" ? null : "shipping")}
-                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-ink"
+                  onClick={() =>
+                    setActiveAccordion(
+                      activeAccordion === "shipping" ? null : "shipping"
+                    )
+                  }
+                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
                 >
-                  <span>Complimentary Shipping, 15-Day Returns & Buyback</span>
+                  <span>Complimentary Shipping & 15-Day Returns</span>
                   <ChevronDown
                     size={16}
-                    className={`transition-transform ${activeAccordion === "shipping" ? "rotate-180" : ""}`}
+                    className={`transition-transform ${
+                      activeAccordion === "shipping" ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
                 {activeAccordion === "shipping" && (
-                  <div className="pb-4 space-y-2 text-xs text-ink-muted leading-relaxed">
-                    <p>• Complimentary insured transit across India via BlueDart Apex and BVC Logistics.</p>
-                    <p>• Tamper-proof security seal packaging accompanied by physical IGI certificate.</p>
-                    <p>• 15-day easy returns on unworn pieces. 30-day complimentary ring resizing.</p>
-                    <p>• Lifetime transparent exchange and buyback policy at prevailing market valuations.</p>
+                  <div className="pb-4 space-y-2 text-xs text-[#7A7A7A] leading-relaxed">
+                    <p>
+                      • Complimentary insured transit across India via BlueDart Apex
+                      and BVC Logistics.
+                    </p>
+                    <p>
+                      • Tamper-proof luxury gift packaging accompanied by physical
+                      authenticity card / IGI certificate.
+                    </p>
+                    <p>
+                      • 15-day easy returns on unworn pieces in original condition.
+                    </p>
+                    <p>
+                      • Anti-tarnish micron e-coating for lasting brilliant shine.
+                    </p>
                   </div>
                 )}
               </div>
@@ -651,19 +825,19 @@ export default function ProductDetailPage() {
 
         {/* Similar Designs Row */}
         {relatedProducts.length > 0 && (
-          <section className="mt-20 pt-10 border-t border-border-subtle space-y-6">
+          <section className="mt-20 pt-10 border-t border-[#DDD8D0] space-y-6">
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-champagne">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#C09981]">
                   Complementary Radiance
                 </p>
-                <h2 className="font-serif text-2xl md:text-3xl text-ink font-light">
+                <h2 className="font-serif text-2xl md:text-3xl text-[#1A1A1A] font-light">
                   Similar Designs
                 </h2>
               </div>
               <Link
                 href={`/shop?category=${encodeURIComponent(product.category)}`}
-                className="text-xs uppercase tracking-widest text-champagne-accessible font-semibold hover:underline flex items-center gap-1"
+                className="text-xs uppercase tracking-widest text-[#C09981] font-semibold hover:underline flex items-center gap-1"
               >
                 <span>View All {product.category}</span>
                 <ArrowRight size={14} />
@@ -680,12 +854,12 @@ export default function ProductDetailPage() {
 
         {/* Recently Viewed Row */}
         {recentProducts.length > 0 && (
-          <section className="mt-16 pt-10 border-t border-border-subtle space-y-6">
+          <section className="mt-16 pt-10 border-t border-[#DDD8D0] space-y-6">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-champagne">
+              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#C09981]">
                 Your Exploration History
               </p>
-              <h2 className="font-serif text-2xl text-ink font-light">
+              <h2 className="font-serif text-2xl text-[#1A1A1A] font-light">
                 Recently Viewed Designs
               </h2>
             </div>
@@ -700,23 +874,27 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Sticky Bottom Bar on Mobile for Instant Checkout */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-ivory-pure border-t border-border-subtle p-3 flex items-center justify-between gap-3 shadow-lg">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-[#DDD8D0] p-3 flex items-center justify-between gap-3 shadow-lg">
         <div>
-          <p className="text-[11px] text-ink-muted leading-tight line-clamp-1">{product.name}</p>
-          <p className="text-sm font-semibold text-ink">{formatPriceINR(product.price)}</p>
+          <p className="text-[11px] text-[#7A7A7A] leading-tight line-clamp-1">
+            {product.name}
+          </p>
+          <p className="text-sm font-semibold text-[#1A1A1A]">
+            {formatPriceINR(currentPrice * quantity)}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={handleWhatsAppEnquiry}
-            className="p-3 border border-[#1B3B30] text-[#1B3B30] bg-ivory"
+            className="p-3 border border-[#1A1A1A] text-[#1A1A1A] bg-white"
             aria-label="WhatsApp Enquiry"
           >
             <MessageCircle size={18} />
           </button>
           <button
             type="button"
-            onClick={() => addToCart(product, 1, selectedSize, selectedMetal)}
+            onClick={handleAddToCart}
             className="btn-primary py-3 px-5 text-xs font-semibold"
           >
             Add to Bag

@@ -29,13 +29,22 @@ const CATEGORY_OPTIONS = [
 
 const PRICE_RANGES = [
   { id: "all", label: "All Prices", min: 0, max: Infinity },
-  { id: "under-35k", label: "Under ₹35,000", min: 0, max: 35000 },
-  { id: "35k-75k", label: "₹35,000 – ₹75,000", min: 35000, max: 75000 },
-  { id: "75k-150k", label: "₹75,000 – ₹1,50,000", min: 75000, max: 150000 },
-  { id: "above-150k", label: "Above ₹1,50,000", min: 150000, max: Infinity },
+  { id: "under-5k", label: "Under ₹5,000 (Silver & CZ)", min: 0, max: 5000 },
+  { id: "5k-15k", label: "₹5,000 – ₹15,000 (Silver & CZ)", min: 5000, max: 15000 },
+  { id: "15k-50k", label: "₹15,000 – ₹50,000 (Fine Silver & Diamond)", min: 15000, max: 50000 },
+  { id: "50k-100k", label: "₹50,000 – ₹1,00,000 (18K Lab Diamond)", min: 50000, max: 100000 },
+  { id: "above-100k", label: "Above ₹1,00,000 (Solitaire & Suites)", min: 100000, max: Infinity },
 ];
 
-const METAL_OPTIONS = ["All", "Yellow Gold", "Rose Gold", "White Gold"];
+const STONE_OPTIONS = [
+  "All",
+  "Cubic Zirconia (CZ)",
+  "Lab-Grown Diamond",
+  "Solitaire Diamond",
+  "Emerald & Diamond",
+];
+
+const METAL_OPTIONS = ["All", "925 Sterling Silver", "Yellow Gold", "Rose Gold", "White Gold"];
 const PURITY_OPTIONS = ["All", "18kt", "14kt", "925 Silver"];
 const SHAPE_OPTIONS = ["All", "Round", "Oval", "Emerald", "Princess", "Pear", "Cushion"];
 const OCCASION_OPTIONS = ["All", "Daily Wear", "Engagement", "Wedding", "Festive", "Gifting"];
@@ -51,6 +60,7 @@ function ShopCatalogueContent() {
   const categoryParam = searchParams.get("category") || "All";
   const priceParam = searchParams.get("price") || "all";
   const metalParam = searchParams.get("metal") || "All";
+  const stoneParam = searchParams.get("stone") || "All";
   const purityParam = searchParams.get("purity") || "All";
   const shapeParam = searchParams.get("shape") || "All";
   const occasionParam = searchParams.get("occasion") || "All";
@@ -90,9 +100,29 @@ function ShopCatalogueContent() {
           return false;
         }
       }
+      // 2.5 Stone Type (Silver CZ vs Lab Diamond)
+      if (stoneParam !== "All") {
+        const stoneLower = product.stone.toLowerCase();
+        if (stoneParam === "Cubic Zirconia (CZ)" && !stoneLower.includes("cubic zirconia") && !stoneLower.includes("cz")) {
+          return false;
+        }
+        if (stoneParam === "Lab-Grown Diamond" && !stoneLower.includes("lab-grown diamond")) {
+          return false;
+        }
+        if (stoneParam === "Solitaire Diamond" && !stoneLower.includes("solitaire")) {
+          return false;
+        }
+        if (stoneParam === "Emerald & Diamond" && !stoneLower.includes("emerald")) {
+          return false;
+        }
+      }
       // 3. Metal
-      if (metalParam !== "All" && product.metal.toLowerCase() !== metalParam.toLowerCase()) {
-        return false;
+      if (metalParam !== "All") {
+        const prodMetal = product.metal.toLowerCase();
+        const selMetal = metalParam.toLowerCase();
+        if (!prodMetal.includes(selMetal.replace("925 sterling ", "").replace(" gold", ""))) {
+          return false;
+        }
       }
       // 4. Purity
       if (purityParam !== "All" && product.purity.toLowerCase() !== purityParam.toLowerCase()) {
@@ -131,6 +161,7 @@ function ShopCatalogueContent() {
     categoryParam,
     priceParam,
     metalParam,
+    stoneParam,
     purityParam,
     shapeParam,
     occasionParam,
@@ -164,6 +195,7 @@ function ShopCatalogueContent() {
       key: "price",
       label: `Price: ${PRICE_RANGES.find((r) => r.id === priceParam)?.label}`,
     },
+    stoneParam !== "All" && { key: "stone", label: `Stone: ${stoneParam}` },
     metalParam !== "All" && { key: "metal", label: `Metal: ${metalParam}` },
     purityParam !== "All" && { key: "purity", label: `Purity: ${purityParam}` },
     shapeParam !== "All" && { key: "shape", label: `Shape: ${shapeParam}` },
@@ -187,7 +219,7 @@ function ShopCatalogueContent() {
           All Fine Jewellery Creations
         </h1>
         <p className="text-xs md:text-sm text-ink-muted max-w-2xl leading-relaxed font-light">
-          Explore {allProducts.length} certified solitaires, graduated necklaces, daily bands, and bridal suites handcrafted in 18K solid gold.
+          Explore {allProducts.length} certified solitaires, graduated necklaces, daily bands, and bridal suites handcrafted in 925 sterling silver with Swiss cubic zirconia, and solid 18K gold with certified lab-grown diamonds.
         </p>
       </div>
 
@@ -308,6 +340,28 @@ function ShopCatalogueContent() {
                 >
                   <span>{range.label}</span>
                   {priceParam === range.id && <Check size={13} />}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Filter Group: Stone Type (Silver CZ & Lab Diamond) */}
+          <div className="space-y-2 pt-3 border-t border-border-subtle">
+            <p className="text-[11px] uppercase tracking-wider font-semibold text-ink">Stone & Gems</p>
+            <div className="space-y-1 text-xs">
+              {STONE_OPTIONS.map((st) => (
+                <button
+                  key={st}
+                  type="button"
+                  onClick={() => updateFilter("stone", st)}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
+                    stoneParam.toLowerCase() === st.toLowerCase()
+                      ? "font-semibold text-champagne-accessible"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  <span>{st}</span>
+                  {stoneParam.toLowerCase() === st.toLowerCase() && <Check size={13} />}
                 </button>
               ))}
             </div>
@@ -439,6 +493,26 @@ function ShopCatalogueContent() {
                     className="w-full text-left py-1 text-ink-muted hover:text-ink"
                   >
                     {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Stone Type */}
+            <div className="space-y-2 pt-3 border-t border-border-subtle">
+              <p className="text-xs uppercase font-semibold text-ink">Stone & Gems</p>
+              <div className="space-y-1 text-xs">
+                {STONE_OPTIONS.map((st) => (
+                  <button
+                    key={st}
+                    type="button"
+                    onClick={() => {
+                      updateFilter("stone", st);
+                      setMobileFilterOpen(false);
+                    }}
+                    className="w-full text-left py-1 text-ink-muted hover:text-ink"
+                  >
+                    {st}
                   </button>
                 ))}
               </div>
