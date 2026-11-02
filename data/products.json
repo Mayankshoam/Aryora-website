@@ -1,14 +1,25 @@
 [
   {
     "id": "ary-rng-001",
-    "slug": "sample-solitaire-ring-01",
-    "name": "Classic Solitaire CZ & Silver Ring",
+    "slug": "brilliant-round-shaped-solitaire-engagement-ring",
+    "name": "Brilliant Round Shaped Solitaire Engagement Ring",
     "category": "Rings",
     "subcategory": "Solitaire Rings",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
     "carat": 1,
+    "caratOptions": [
+      0.75,
+      1,
+      1.5,
+      2
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Round",
     "color": "D",
     "clarity": "VVS1",
@@ -24,7 +35,7 @@
     "occasion": "Engagement",
     "gender": "Women",
     "style": "Solitaire",
-    "price": 3499,
+    "price": 3999,
     "discountPercent": 12,
     "stock": 12,
     "images": [
@@ -33,40 +44,39 @@
       "/products/ring-01-c.jpg",
       "/products/ring-01-d.jpg"
     ],
-    "description": "Four-prong classic solitaire ring crafted in pure 925 sterling silver, plated in 18K yellow gold and rhodium. Features a flawless 1.0ct equivalent brilliant-cut cubic zirconia.",
+    "description": "Celebrate with the classic elegance of the Brilliant Round Shaped Solitaire Ring. Handcrafted in 925 sterling silver with 18K gold and rhodium plating, it features a brilliant round-cut sparkling solitaire in a secure 4-prong setting.",
     "tags": [
       "silver",
       "cubic zirconia",
       "cz",
       "rings",
       "solitaire",
-      "gifting"
+      "engagement"
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SR4878-WHT-G",
-    "platings": [
-      "GOLD",
-      "RHODIUM",
-      "ROSE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "sku": "SR02407-306-WHT-G-5"
   },
   {
     "id": "ary-rng-002",
-    "slug": "sample-eternity-band-02",
-    "name": "Eternity Pavé Silver Band",
+    "slug": "pure-pave-solitaire-eternity-band-ring",
+    "name": "Pure Pavé Solitaire Eternity Band Ring",
     "category": "Rings",
     "subcategory": "Eternity Bands",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
-    "carat": 0.6,
+    "carat": 0.75,
+    "caratOptions": [
+      0.5,
+      0.75,
+      1
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Round",
     "color": "E",
     "clarity": "VVS2",
@@ -81,16 +91,16 @@
     "occasion": "Daily Wear",
     "gender": "Women",
     "style": "Classic",
-    "price": 2899,
+    "price": 4499,
     "discountPercent": 15,
-    "stock": 8,
+    "stock": 18,
     "images": [
       "/products/ring-02-a.jpg",
       "/products/ring-02-b.jpg",
       "/products/ring-02-c.jpg",
       "/products/ring-02-d.jpg"
     ],
-    "description": "Continuous unbroken circle of light crafted in 925 sterling silver with micro-prong pavé cubic zirconia. Available in 18K Rose Gold and Rhodium finishes.",
+    "description": "Continuous unbroken circle of light crafted in 925 sterling silver with micro-prong pavé cubic zirconia. Available in 18K Gold, Rose Gold, and Rhodium finishes.",
     "tags": [
       "silver",
       "cubic zirconia",
@@ -98,203 +108,195 @@
       "bands",
       "stacking"
     ],
-    "isBestseller": false,
-    "isNew": true,
-    "sku": "SR9012-WHT-G",
+    "isBestseller": true,
+    "isNew": false,
+    "sku": "SR02981-WHT-G-6"
+  },
+  {
+    "id": "ary-rng-003",
+    "slug": "emerald-cut-solitaire-engagement-ring",
+    "name": "Emerald Cut Solitaire Engagement Ring",
+    "category": "Rings",
+    "subcategory": "Engagement Rings",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 1.5,
+    "caratOptions": [
+      1,
+      1.5,
+      2
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
-  },
-  {
-    "id": "ary-rng-003",
-    "slug": "sample-halo-cushion-ring-03",
-    "name": "Sample Halo Cushion Ring 03",
-    "category": "Rings",
-    "subcategory": "Halo Rings",
-    "metal": "White Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.5,
-    "shape": "Cushion",
-    "color": "E",
+    "shape": "Emerald",
+    "color": "D",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589203",
-    "weightGrams": 4.6,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 3.6,
     "sizes": [
       "12",
       "14",
-      "16",
-      "18"
+      "16"
     ],
-    "occasion": "Wedding",
+    "occasion": "Engagement",
     "gender": "Women",
     "style": "Halo",
-    "price": 115000,
+    "price": 4999,
     "discountPercent": 8,
-    "stock": 6,
+    "stock": 9,
     "images": [
       "/products/ring-03-a.jpg",
       "/products/ring-03-b.jpg",
       "/products/ring-03-c.jpg",
       "/products/ring-03-d.jpg"
     ],
-    "description": "A cushion-cut center stone encircled by a micro-pavé halo in crisp 18K white gold.",
+    "description": "The Emerald Cut Solitaire Ring is handcrafted in 925 sterling silver featuring a step-cut rectangular solitaire stone handset in a four-prong architectural basket.",
     "tags": [
-      "halo",
-      "cushion",
-      "white gold",
-      "wedding",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "rings",
+      "emerald cut"
     ],
-    "isBestseller": true,
-    "isNew": false,
-    "sku": "SR2594-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "isBestseller": false,
+    "isNew": true,
+    "sku": "SR02317-306-WHT-G-5"
   },
   {
     "id": "ary-rng-004",
-    "slug": "sample-minimal-stacking-ring-04",
-    "name": "Dainty Pavé Diamond Silver Ring",
+    "slug": "oval-shaped-solitaire-engagement-ring",
+    "name": "Oval Shaped Solitaire Engagement Ring",
     "category": "Rings",
-    "subcategory": "Stackable Rings",
+    "subcategory": "Solitaire Rings",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
-    "stone": "Lab-Grown Diamond",
-    "carat": 0.35,
-    "shape": "Round",
-    "color": "F",
-    "clarity": "VS1",
-    "certificate": "IGI Certified Lab Diamond & 925 Hallmark",
-    "weightGrams": 2.2,
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 1.25,
+    "caratOptions": [
+      0.8,
+      1.25,
+      2
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
+    "shape": "Oval",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 2.9,
     "sizes": [
-      "8",
       "10",
       "12",
       "14",
-      "16"
+      "16",
+      "18"
     ],
     "occasion": "Daily Wear",
     "gender": "Women",
-    "style": "Modern",
-    "price": 12500,
+    "style": "Minimal",
+    "price": 4299,
     "discountPercent": 8,
-    "stock": 15,
+    "stock": 22,
     "images": [
       "/products/ring-04-a.jpg",
       "/products/ring-04-b.jpg",
       "/products/ring-04-c.jpg",
       "/products/ring-04-d.jpg"
     ],
-    "description": "Real IGI-certified lab-grown diamonds set in solid 925 sterling silver with thick 18K yellow gold vermeil for accessible genuine diamond brilliance.",
+    "description": "Discover the timeless charm of the Oval Shaped Solitaire Ring. Handcrafted and handset with precision, the elongated oval CZ stone sparkles brilliantly.",
     "tags": [
       "silver",
-      "lab diamond",
+      "cubic zirconia",
+      "cz",
       "rings",
-      "affordable luxury"
+      "oval"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "SR4438-WHT-G",
+    "isNew": false,
+    "sku": "SS00618R-306-WHT-G-5"
+  },
+  {
+    "id": "ary-rng-005",
+    "slug": "oval-shaped-solitaire-wedding-bands",
+    "name": "Oval Shaped Solitaire Wedding Bands",
+    "category": "Rings",
+    "subcategory": "Wedding Bands",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 2.5,
+    "caratOptions": [
+      1.5,
+      2.5,
+      3.5
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
-  },
-  {
-    "id": "ary-rng-005",
-    "slug": "sample-mens-signet-ring-05",
-    "name": "Sample Men's Signet Ring 05",
-    "category": "Rings",
-    "subcategory": "Men's Bands",
-    "metal": "White Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 0.8,
-    "shape": "Princess",
-    "color": "F",
+    "shape": "Oval",
+    "color": "E",
     "clarity": "VVS2",
-    "certificate": "IGI Certified #LG-589205",
-    "weightGrams": 7.2,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 5.6,
     "sizes": [
       "18",
       "20",
       "22",
       "24"
     ],
-    "occasion": "Daily Wear",
+    "occasion": "Wedding",
     "gender": "Men",
-    "style": "Modern",
-    "price": 78000,
-    "discountPercent": 10,
-    "stock": 5,
+    "style": "Classic",
+    "price": 11999,
+    "discountPercent": 0,
+    "stock": 7,
     "images": [
       "/products/ring-05-a.jpg",
       "/products/ring-05-b.jpg",
       "/products/ring-05-c.jpg",
       "/products/ring-05-d.jpg"
     ],
-    "description": "Sleek brushed 18K white gold signet ring embedded with an architectural princess-cut diamond.",
+    "description": "Exquisite eternity wedding band featuring graduated oval-cut cubic zirconia gemstones prong-set across a substantial 925 sterling silver band.",
     "tags": [
-      "mens",
-      "signet",
-      "white gold",
-      "princess",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "wedding band",
+      "statement"
     ],
     "isBestseller": false,
     "isNew": false,
-    "sku": "SR8182-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "sku": "SR02981-WHT-G-7"
   },
   {
     "id": "ary-ear-006",
-    "slug": "sample-solitaire-studs-01",
-    "name": "Brilliant Round Solitaire Stud Earrings",
+    "slug": "brilliant-round-shaped-solitaire-stud-earrings",
+    "name": "Brilliant Round Shaped Solitaire Stud Earrings",
     "category": "Earrings",
     "subcategory": "Studs",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
     "carat": 0.84,
+    "caratOptions": [
+      0.84,
+      1.5,
+      2,
+      3.87
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Round",
     "color": "D",
     "clarity": "VVS1",
@@ -328,105 +330,101 @@
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SE03346-WHT-G",
+    "sku": "SE03346-WHT-G"
+  },
+  {
+    "id": "ary-ear-007",
+    "slug": "luna-cascade-danglers-earrings",
+    "name": "Luna Cascade Danglers Earrings",
+    "category": "Earrings",
+    "subcategory": "Drops",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 3.2,
+    "caratOptions": [
+      2,
+      3.2,
+      4.5
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.84,
-      1.5,
-      2,
-      3.87
-    ]
-  },
-  {
-    "id": "ary-ear-007",
-    "slug": "sample-luminary-drop-earrings-02",
-    "name": "Sample Luminary Drop Earrings 02",
-    "category": "Earrings",
-    "subcategory": "Drops",
-    "metal": "Yellow Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.6,
     "shape": "Pear",
     "color": "E",
-    "clarity": "VVS2",
-    "certificate": "IGI Certified #LG-589207",
-    "weightGrams": 5.2,
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 4.8,
     "sizes": [
       "One Size"
     ],
     "occasion": "Festive",
     "gender": "Women",
-    "style": "Vintage",
-    "price": 94000,
-    "discountPercent": 10,
-    "stock": 7,
+    "style": "Modern",
+    "price": 13999,
+    "discountPercent": 12,
+    "stock": 6,
     "images": [
       "/products/earring-02-a.jpg",
       "/products/earring-02-b.jpg",
       "/products/earring-02-c.jpg",
       "/products/earring-02-d.jpg"
     ],
-    "description": "Gracefully articulated pear drops suspended from an 18K yellow gold diamond-accented motif.",
+    "description": "Cascade of light featuring graduated brilliant drops that move gracefully with every gesture. Crafted in 925 sterling silver with protective rhodium finish.",
     "tags": [
-      "drops",
-      "pear",
-      "yellow gold",
-      "festive",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "earrings",
+      "danglers"
     ],
     "isBestseller": false,
     "isNew": true,
-    "sku": "SE8949-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      0.84,
-      1.2,
-      2
-    ]
+    "sku": "SE03297-WHT-R"
   },
   {
     "id": "ary-ear-008",
-    "slug": "sample-diamond-huggie-hoops-03",
-    "name": "Circle of Life CZ Huggie Hoops",
+    "slug": "studded-huggie-solitaire-earrings",
+    "name": "Studded Huggie Solitaire Earrings",
     "category": "Earrings",
-    "subcategory": "Hoops",
+    "subcategory": "Huggies",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
-    "carat": 0.5,
+    "carat": 0.6,
+    "caratOptions": [
+      0.5,
+      0.8,
+      1.2
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Round",
-    "color": "F",
-    "clarity": "VS1",
+    "color": "D",
+    "clarity": "VVS2",
     "certificate": "925 BIS Hallmark & Authenticity Card",
-    "weightGrams": 3.5,
+    "weightGrams": 2.4,
     "sizes": [
       "One Size"
     ],
     "occasion": "Daily Wear",
     "gender": "Women",
-    "style": "Modern",
-    "price": 3299,
+    "style": "Huggies",
+    "price": 4999,
     "discountPercent": 10,
-    "stock": 18,
+    "stock": 20,
     "images": [
       "/products/earring-03-a.jpg",
       "/products/earring-03-b.jpg",
       "/products/earring-03-c.jpg",
       "/products/earring-03-d.jpg"
     ],
-    "description": "Dainty huggie hoops in 925 sterling silver, adorned with sparkling cubic zirconia channel settings for seamless daily elegance.",
+    "description": "Dainty daily huggies in 925 sterling silver, adorned with sparkling cubic zirconia channel settings for seamless daily elegance.",
     "tags": [
       "silver",
       "cubic zirconia",
@@ -436,420 +434,411 @@
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SE3614-WHT-G",
+    "sku": "HD-E5017EB"
+  },
+  {
+    "id": "ary-ear-009",
+    "slug": "emerald-cut-solitaire-stud-earrings",
+    "name": "Emerald Cut Solitaire Stud Earrings",
+    "category": "Earrings",
+    "subcategory": "Studs",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 1.5,
+    "caratOptions": [
+      1,
+      1.5,
+      2.5
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.5,
-      0.84,
-      1.2,
-      2
-    ]
-  },
-  {
-    "id": "ary-ear-009",
-    "slug": "sample-emerald-cut-chandelier-04",
-    "name": "Sample Emerald-Cut Chandelier 04",
-    "category": "Earrings",
-    "subcategory": "Chandeliers",
-    "metal": "Yellow Gold",
-    "purity": "18kt",
-    "stone": "Emerald & Diamond",
-    "carat": 2.4,
     "shape": "Emerald",
-    "color": "E",
+    "color": "D",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589209",
-    "weightGrams": 7.8,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 3.5,
     "sizes": [
       "One Size"
     ],
     "occasion": "Wedding",
     "gender": "Women",
-    "style": "Halo",
-    "price": 148000,
-    "discountPercent": 10,
-    "stock": 4,
+    "style": "Vintage",
+    "price": 5999,
+    "discountPercent": 0,
+    "stock": 8,
     "images": [
       "/products/earring-04-a.jpg",
       "/products/earring-04-b.jpg",
       "/products/earring-04-c.jpg",
       "/products/earring-04-d.jpg"
     ],
-    "description": "Tiered architectural chandeliers pairing Zambian-grade emeralds with brilliant lab diamonds.",
+    "description": "Regal emerald-cut solitaire studs handset in four-prong 925 sterling silver baskets. Clean architectural geometry with dazzling clarity.",
     "tags": [
-      "chandeliers",
-      "emerald",
-      "wedding",
-      "luxury",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "earrings",
+      "studs",
+      "emerald cut"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "SE1167-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      0.84,
-      1.2,
-      2
-    ]
+    "isNew": false,
+    "sku": "SE03154-306-WHT-G"
   },
   {
     "id": "ary-pen-010",
-    "slug": "sample-solitaire-bezel-pendant-01",
-    "name": "Floating Solitaire CZ Pendant",
+    "slug": "brilliant-round-shaped-solitaire-pendant-with-chain",
+    "name": "Brilliant Round Shaped Solitaire Pendant With Chain",
     "category": "Pendants",
-    "subcategory": "Solitaires",
+    "subcategory": "Solitaire Pendants",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
     "carat": 1,
+    "caratOptions": [
+      0.75,
+      1,
+      1.5,
+      2
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Round",
     "color": "D",
     "clarity": "VVS1",
     "certificate": "925 BIS Hallmark & Authenticity Card",
-    "weightGrams": 3.1,
+    "weightGrams": 2.8,
     "sizes": [
-      "16-18 inch Chain"
+      "One Size"
     ],
     "occasion": "Daily Wear",
     "gender": "Women",
-    "style": "Minimal",
-    "price": 2799,
+    "style": "Solitaire",
+    "price": 5999,
     "discountPercent": 10,
-    "stock": 16,
+    "stock": 15,
     "images": [
       "/products/pendant-01-a.jpg",
       "/products/pendant-01-b.jpg",
       "/products/pendant-01-c.jpg",
       "/products/pendant-01-d.jpg"
     ],
-    "description": "A floating bezel pendant featuring a 1.0ct brilliant-cut cubic zirconia suspended on a 925 sterling silver cable chain with adjustable loops.",
+    "description": "The Brilliant Round Shaped Solitaire Pendant is a classic piece of elegance. The sparkling CZ round solitaire is hand cut and handset in a prong setting on an adjustable sterling silver chain.",
     "tags": [
       "silver",
       "cubic zirconia",
       "cz",
-      "pendants"
+      "pendants",
+      "solitaire"
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SP6460-WHT-G",
+    "sku": "SN01548-WHT-G"
+  },
+  {
+    "id": "ary-pen-011",
+    "slug": "pear-shaped-solitaire-pendant-with-chain",
+    "name": "Pear Shaped Solitaire Pendant With Chain",
+    "category": "Pendants",
+    "subcategory": "Halo Pendants",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 1.2,
+    "caratOptions": [
+      0.8,
+      1.2,
+      2
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.5,
-      0.75,
-      1,
-      1.5
-    ]
-  },
-  {
-    "id": "ary-pen-011",
-    "slug": "sample-teardrop-halo-pendant-02",
-    "name": "Sample Teardrop Halo Pendant 02",
-    "category": "Pendants",
-    "subcategory": "Halo Pendants",
-    "metal": "Rose Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.1,
     "shape": "Pear",
     "color": "E",
-    "clarity": "VVS2",
-    "certificate": "IGI Certified #LG-589211",
-    "weightGrams": 3.9,
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 3.1,
     "sizes": [
-      "18 inch Chain"
+      "One Size"
     ],
-    "occasion": "Gifting",
+    "occasion": "Festive",
     "gender": "Women",
     "style": "Halo",
-    "price": 64000,
-    "discountPercent": 15,
-    "stock": 9,
+    "price": 6999,
+    "discountPercent": 12,
+    "stock": 11,
     "images": [
       "/products/pendant-02-a.jpg",
       "/products/pendant-02-b.jpg",
       "/products/pendant-02-c.jpg",
       "/products/pendant-02-d.jpg"
     ],
-    "description": "An elegant pear-shaped centerpiece magnified by a shimmering micro-halo in warm 18K rose gold.",
+    "description": "Graceful pear-shaped cubic zirconia pendant suspended from a dainty 925 sterling silver cable chain. Features a bezel-tipped prong basket.",
     "tags": [
-      "teardrop",
-      "pear",
-      "rose gold",
-      "gifting",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "pendants",
+      "pear"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "SP9520-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      0.75,
-      1,
-      1.5
-    ]
+    "isNew": false,
+    "sku": "SN01551-WHT-G"
   },
   {
     "id": "ary-pen-012",
-    "slug": "sample-geometric-bar-pendant-03",
-    "name": "Modern Linear Diamond Silver Pendant",
+    "slug": "marquise-shaped-solitaire-pendant-with-chain",
+    "name": "Marquise Shaped Solitaire Pendant With Chain",
     "category": "Pendants",
-    "subcategory": "Geometric",
+    "subcategory": "Solitaire Pendants",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
-    "stone": "Lab-Grown Diamond",
-    "carat": 0.45,
-    "shape": "Princess",
-    "color": "F",
-    "clarity": "VS1",
-    "certificate": "IGI Certified Lab Diamond & 925 Hallmark",
-    "weightGrams": 2.8,
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 1,
+    "caratOptions": [
+      0.75,
+      1,
+      1.5
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
+    "shape": "Marquise",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 2.9,
     "sizes": [
-      "16-18 inch Chain"
+      "One Size"
     ],
     "occasion": "Daily Wear",
-    "gender": "Unisex",
+    "gender": "Women",
     "style": "Modern",
-    "price": 16800,
+    "price": 6499,
     "discountPercent": 10,
-    "stock": 12,
+    "stock": 14,
     "images": [
       "/products/pendant-03-a.jpg",
       "/products/pendant-03-b.jpg",
       "/products/pendant-03-c.jpg",
       "/products/pendant-03-d.jpg"
     ],
-    "description": "Geometric vertical bar pendant in 925 sterling silver with five channel-set lab-grown diamonds. Modern, minimalist, and certified.",
+    "description": "Dramatic marquise-cut solitaire pendant with pointed chevron prongs. Handcrafted in 925 sterling silver with thick 18K yellow gold and rhodium plating.",
     "tags": [
       "silver",
-      "lab diamond",
-      "pendants"
+      "cubic zirconia",
+      "cz",
+      "pendants",
+      "marquise"
     ],
     "isBestseller": false,
-    "isNew": false,
-    "sku": "SP8925-WHT-G",
+    "isNew": true,
+    "sku": "SN01542-WHT-G"
+  },
+  {
+    "id": "ary-nck-013",
+    "slug": "brilliant-round-shaped-solitaire-tennis-necklace",
+    "name": "Brilliant Round Shaped Solitaire Tennis Necklace",
+    "category": "Necklaces",
+    "subcategory": "Tennis Necklaces",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 6.5,
+    "caratOptions": [
+      5,
+      6.5,
+      10
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      0.5,
-      0.75,
-      1,
-      1.5
-    ]
-  },
-  {
-    "id": "ary-nck-013",
-    "slug": "sample-graduated-tennis-necklace-01",
-    "name": "Sample Graduated Tennis Necklace 01",
-    "category": "Necklaces",
-    "subcategory": "Tennis",
-    "metal": "White Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 6.5,
     "shape": "Round",
     "color": "D",
-    "clarity": "VVS2",
-    "certificate": "IGI Certified #LG-589213",
-    "weightGrams": 22.4,
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 14.5,
     "sizes": [
-      "16 inch"
+      "16 inch",
+      "18 inch"
     ],
-    "occasion": "Wedding",
+    "occasion": "Festive",
     "gender": "Women",
     "style": "Tennis",
-    "price": 285000,
-    "discountPercent": 8,
-    "stock": 3,
+    "price": 26999,
+    "discountPercent": 10,
+    "stock": 5,
     "images": [
       "/products/necklace-01-a.jpg",
       "/products/necklace-01-b.jpg",
       "/products/necklace-01-c.jpg",
       "/products/necklace-01-d.jpg"
     ],
-    "description": "A continuous cascade of graduated Type IIa brilliant-cut diamonds handcrafted in solid 18K white gold.",
+    "description": "Embrace classic sophistication with the Brilliant Round Shaped Solitaire Necklace. Each brilliant stone is hand cut and handset in 925 sterling silver with double safety box clasp.",
     "tags": [
-      "tennis",
-      "necklace",
-      "white gold",
-      "high luxury",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "necklaces",
+      "tennis"
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SN4222-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      3,
-      5,
-      8.5
-    ]
+    "sku": "SN00313-WHT-G"
   },
   {
     "id": "ary-nck-014",
-    "slug": "sample-heritage-choker-necklace-02",
-    "name": "Sample Heritage Choker Necklace 02",
+    "slug": "emerald-shaped-solitaire-choker-necklace",
+    "name": "Emerald Shaped Solitaire Choker Necklace",
     "category": "Necklaces",
     "subcategory": "Chokers",
-    "metal": "Yellow Gold",
-    "purity": "18kt",
-    "stone": "Emerald & Diamond",
-    "carat": 5.2,
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 8,
+    "caratOptions": [
+      6,
+      8,
+      12
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
     "shape": "Emerald",
-    "color": "E",
+    "color": "D",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589214",
-    "weightGrams": 28.5,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 18.2,
     "sizes": [
-      "Adjustable Dori / Clasp"
+      "14-16 inch adjustable"
     ],
     "occasion": "Wedding",
     "gender": "Women",
     "style": "Vintage",
-    "price": 345000,
+    "price": 34999,
     "discountPercent": 5,
-    "stock": 2,
+    "stock": 4,
     "images": [
       "/products/necklace-02-a.jpg",
       "/products/necklace-02-b.jpg",
       "/products/necklace-02-c.jpg",
       "/products/necklace-02-d.jpg"
     ],
-    "description": "Royal Awadhi heritage choker combining certified emeralds with brilliant lab diamonds in 18K gold.",
+    "description": "Experience the sophistication of the Emerald Cut Solitaire Necklace. These emerald cut Cubic Zirconia stones are handset in gold plated 925 sterling silver with luxurious weight and drape.",
     "tags": [
+      "silver",
+      "cubic zirconia",
+      "cz",
       "choker",
-      "heritage",
-      "emerald",
-      "awadh",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "emerald cut"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "SN8146-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      3,
-      5,
-      8.5
-    ]
+    "isNew": false,
+    "sku": "SN01543-WHT-G"
   },
   {
     "id": "ary-nck-015",
-    "slug": "sample-floating-solitaire-choker-03",
-    "name": "Sample Floating Solitaire Choker 03",
+    "slug": "oval-shaped-solitaire-necklace",
+    "name": "Oval Shaped Solitaire Necklace",
     "category": "Necklaces",
-    "subcategory": "Solitaires",
-    "metal": "Rose Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.25,
-    "shape": "Round",
+    "subcategory": "Collar Necklaces",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 7.5,
+    "caratOptions": [
+      5,
+      7.5,
+      10
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
+    "shape": "Oval",
     "color": "E",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589215",
-    "weightGrams": 6.2,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 15,
     "sizes": [
-      "15-17 inch"
+      "16-18 inch adjustable"
     ],
-    "occasion": "Festive",
+    "occasion": "Engagement",
     "gender": "Women",
     "style": "Modern",
-    "price": 88000,
-    "discountPercent": 12,
-    "stock": 8,
+    "price": 34999,
+    "discountPercent": 8,
+    "stock": 6,
     "images": [
       "/products/necklace-03-a.jpg",
       "/products/necklace-03-b.jpg",
       "/products/necklace-03-c.jpg",
       "/products/necklace-03-d.jpg"
     ],
-    "description": "Minimalist collar choker holding a single 1.25ct solitaire diamond with hidden bail design.",
+    "description": "Stunning rivière collar of calibrated oval-cut solitaire gems set in individual articulated baskets for flawless contouring along the collarbone.",
     "tags": [
-      "floating",
-      "solitaire",
-      "rose gold",
-      "festive",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "necklaces",
+      "oval"
     ],
     "isBestseller": false,
-    "isNew": false,
-    "sku": "SN3558-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      3,
-      5,
-      8.5
-    ]
+    "isNew": true,
+    "sku": "SN01546-WHT-G"
   },
   {
     "id": "ary-brc-016",
-    "slug": "sample-classic-tennis-bracelet-01",
-    "name": "Oval Solitaire CZ Tennis Bracelet",
+    "slug": "oval-shaped-solitaire-tennis-bracelet",
+    "name": "Oval Shaped Solitaire Tennis Bracelet",
     "category": "Bracelets",
-    "subcategory": "Tennis",
+    "subcategory": "Tennis Bracelets",
     "metal": "925 Sterling Silver",
     "purity": "925 Silver",
     "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
     "carat": 3.5,
-    "shape": "Round",
+    "caratOptions": [
+      2.5,
+      3.5,
+      5
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
+    "shape": "Oval",
     "color": "D",
-    "clarity": "VVS2",
+    "clarity": "VVS1",
     "certificate": "925 BIS Hallmark & Authenticity Card",
-    "weightGrams": 12.8,
+    "weightGrams": 8.5,
     "sizes": [
       "6.5 inch",
-      "7.0 inch",
+      "7 inch",
       "7.5 inch"
     ],
-    "occasion": "Daily Wear",
-    "gender": "Unisex",
+    "occasion": "Engagement",
+    "gender": "Women",
     "style": "Tennis",
     "price": 14999,
     "discountPercent": 10,
-    "stock": 7,
+    "stock": 12,
     "images": [
       "/products/bracelet-01-a.jpg",
       "/products/bracelet-01-b.jpg",
@@ -866,143 +855,141 @@
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "SB5288-WHT-G",
+    "sku": "SB00873-WHT-G"
+  },
+  {
+    "id": "ary-brc-017",
+    "slug": "brilliant-round-shaped-solitaire-tennis-bracelet",
+    "name": "Brilliant Round Shaped Solitaire Tennis Bracelet",
+    "category": "Bracelets",
+    "subcategory": "Tennis Bracelets",
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 3,
+    "caratOptions": [
+      2,
+      3,
+      4.5
+    ],
     "platings": [
       "GOLD",
       "RHODIUM",
       "ROSE GOLD"
     ],
-    "caratOptions": [
-      2.5,
-      3.5,
-      5
-    ]
-  },
-  {
-    "id": "ary-brc-017",
-    "slug": "sample-open-cuff-bangle-02",
-    "name": "Sample Open Cuff Bangle 02",
-    "category": "Bracelets",
-    "subcategory": "Bangles",
-    "metal": "Yellow Gold",
-    "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.8,
-    "shape": "Pear",
-    "color": "E",
+    "shape": "Round",
+    "color": "D",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589217",
-    "weightGrams": 14.5,
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 7.9,
     "sizes": [
-      "2.4",
-      "2.6",
-      "2.8"
+      "6.5 inch",
+      "7 inch",
+      "7.5 inch"
     ],
-    "occasion": "Festive",
+    "occasion": "Daily Wear",
     "gender": "Women",
-    "style": "Modern",
-    "price": 118000,
-    "discountPercent": 15,
-    "stock": 5,
+    "style": "Classic",
+    "price": 13999,
+    "discountPercent": 10,
+    "stock": 16,
     "images": [
       "/products/bracelet-02-a.jpg",
       "/products/bracelet-02-b.jpg",
       "/products/bracelet-02-c.jpg",
       "/products/bracelet-02-d.jpg"
     ],
-    "description": "Solid 18K yellow gold bypass bangle terminated by two radiant pear-shaped lab diamonds.",
+    "description": "The iconic classic tennis bracelet handset with round brilliant cut stones. Smooth articulation with hidden safety tongue.",
     "tags": [
-      "cuff",
-      "bangle",
-      "yellow gold",
-      "festive",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "bracelets",
+      "tennis"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "SB4128-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      2.5,
-      3.5,
-      5
-    ]
+    "isNew": false,
+    "sku": "SB00189-WHT-G"
   },
   {
     "id": "ary-brc-018",
-    "slug": "sample-minimal-chain-bracelet-03",
-    "name": "Sample Minimal Chain Bracelet 03",
+    "slug": "classic-baguette-tennis-bracelet",
+    "name": "Classic Baguette Tennis Bracelet",
     "category": "Bracelets",
     "subcategory": "Chain Bracelets",
-    "metal": "Rose Gold",
-    "purity": "14kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 0.5,
-    "shape": "Round",
-    "color": "F",
-    "clarity": "VS1",
-    "certificate": "IGI Certified #LG-589218",
-    "weightGrams": 3.2,
+    "metal": "925 Sterling Silver",
+    "purity": "925 Silver",
+    "stone": "AAA+ Swiss Cubic Zirconia (CZ)",
+    "carat": 4,
+    "caratOptions": [
+      2.5,
+      4,
+      6
+    ],
+    "platings": [
+      "GOLD",
+      "RHODIUM",
+      "ROSE GOLD"
+    ],
+    "shape": "Baguette",
+    "color": "D",
+    "clarity": "VVS1",
+    "certificate": "925 BIS Hallmark & Authenticity Card",
+    "weightGrams": 9.2,
     "sizes": [
-      "6.5-7.5 inch"
+      "6.5 inch",
+      "7 inch"
     ],
     "occasion": "Daily Wear",
     "gender": "Women",
-    "style": "Minimal",
-    "price": 32000,
-    "discountPercent": 0,
-    "stock": 14,
+    "style": "Modern",
+    "price": 16999,
+    "discountPercent": 12,
+    "stock": 8,
     "images": [
       "/products/bracelet-03-a.jpg",
       "/products/bracelet-03-b.jpg",
       "/products/bracelet-03-c.jpg",
       "/products/bracelet-03-d.jpg"
     ],
-    "description": "Delicate paperclip chain adorned with 3 bezel-set solitaire diamonds for understated elegance.",
+    "description": "Art-deco inspired channel of step-cut baguette cubic zirconia framed in high-polish 925 sterling silver.",
     "tags": [
-      "chain",
-      "rose gold",
-      "minimal",
-      "daily wear",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "silver",
+      "cubic zirconia",
+      "cz",
+      "bracelets",
+      "baguette"
     ],
     "isBestseller": false,
-    "isNew": false,
-    "sku": "SB9257-WHT-G",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      2.5,
-      3.5,
-      5
-    ]
+    "isNew": true,
+    "sku": "SB00841-WHT-R"
   },
   {
     "id": "ary-sol-019",
-    "slug": "sample-certified-solitaire-ring-2ct-01",
-    "name": "Sample Certified Solitaire Ring 2ct 01",
+    "slug": "certified-2ct-brilliant-solitaire-ring",
+    "name": "Certified 2ct Brilliant Solitaire Ring",
     "category": "Solitaires",
     "subcategory": "Solitaire Rings",
     "metal": "Yellow Gold",
     "purity": "18kt",
-    "stone": "Solitaire Diamond",
-    "carat": 2.02,
+    "stone": "IGI-Certified Lab-Grown Diamond",
+    "carat": 2,
+    "caratOptions": [
+      1,
+      1.5,
+      2,
+      3
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Round",
-    "color": "D",
+    "color": "E",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589219",
-    "weightGrams": 4.8,
+    "certificate": "IGI Certified Lab Diamond Dossier",
+    "weightGrams": 4.6,
     "sizes": [
       "10",
       "12",
@@ -1014,7 +1001,7 @@
     "gender": "Women",
     "style": "Solitaire",
     "price": 198000,
-    "discountPercent": 12,
+    "discountPercent": 8,
     "stock": 4,
     "images": [
       "/products/solitaire-01-a.jpg",
@@ -1022,48 +1009,45 @@
       "/products/solitaire-01-c.jpg",
       "/products/solitaire-01-d.jpg"
     ],
-    "description": "A monumental 2.02 carat Hearts & Arrows D VVS1 diamond mounted in cathedral prongs of 18K yellow gold.",
+    "description": "Masterpiece 2.00ct round brilliant lab-grown diamond with IGI dossier certificate, set in solid 18K yellow gold with secret pavé gallery.",
     "tags": [
       "solitaire",
-      "2 carat",
-      "engagement",
-      "luxury",
+      "2ct",
       "lab diamond",
       "18k gold",
-      "fine joaillerie"
+      "igi certified",
+      "heirloom"
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "AR-ARY-SOL-019",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "sku": "AR-SOL-200-DIA"
   },
   {
     "id": "ary-sol-020",
-    "slug": "sample-oval-solitaire-ring-1-5ct-02",
-    "name": "Sample Oval Solitaire Ring 1.5ct 02",
+    "slug": "oval-solitaire-diamond-masterpiece-ring",
+    "name": "Oval Solitaire Diamond Masterpiece Ring",
     "category": "Solitaires",
     "subcategory": "Solitaire Rings",
     "metal": "Rose Gold",
     "purity": "18kt",
-    "stone": "Solitaire Diamond",
-    "carat": 1.51,
+    "stone": "IGI-Certified Lab-Grown Diamond",
+    "carat": 1.5,
+    "caratOptions": [
+      1,
+      1.5,
+      2
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Oval",
-    "color": "E",
-    "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589220",
-    "weightGrams": 4.1,
+    "color": "D",
+    "clarity": "VVS2",
+    "certificate": "IGI Certified Lab Diamond Dossier",
+    "weightGrams": 3.9,
     "sizes": [
-      "10",
       "12",
       "14",
       "16"
@@ -1072,54 +1056,51 @@
     "gender": "Women",
     "style": "Solitaire",
     "price": 138000,
-    "discountPercent": 8,
-    "stock": 6,
+    "discountPercent": 10,
+    "stock": 5,
     "images": [
       "/products/solitaire-02-a.jpg",
       "/products/solitaire-02-b.jpg",
       "/products/solitaire-02-c.jpg",
       "/products/solitaire-02-d.jpg"
     ],
-    "description": "Elongated oval lab diamond featuring optical ratio 1.45, held by six delicate claws in 18K rose gold.",
+    "description": "1.50ct elongated oval lab-grown diamond held by six claw prongs in solid 18K rose gold.",
     "tags": [
-      "oval",
       "solitaire",
-      "rose gold",
-      "engagement",
+      "oval",
       "lab diamond",
       "18k gold",
-      "fine joaillerie"
+      "engagement"
     ],
     "isBestseller": false,
-    "isNew": true,
-    "sku": "AR-ARY-SOL-020",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "isNew": false,
+    "sku": "AR-SOL-150-DIA"
   },
   {
     "id": "ary-sol-021",
-    "slug": "sample-emerald-cut-solitaire-1ct-03",
-    "name": "Sample Emerald-Cut Solitaire 1ct 03",
+    "slug": "emerald-cut-solitaire-diamond-ring",
+    "name": "Emerald Cut Solitaire Diamond Ring",
     "category": "Solitaires",
     "subcategory": "Solitaire Rings",
     "metal": "White Gold",
     "purity": "18kt",
-    "stone": "Solitaire Diamond",
-    "carat": 1.01,
+    "stone": "IGI-Certified Lab-Grown Diamond",
+    "carat": 1,
+    "caratOptions": [
+      1,
+      1.5,
+      2
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Emerald",
     "color": "E",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589221",
-    "weightGrams": 3.9,
+    "certificate": "IGI Certified Lab Diamond Dossier",
+    "weightGrams": 3.7,
     "sizes": [
       "12",
       "14",
@@ -1130,60 +1111,56 @@
     "gender": "Women",
     "style": "Solitaire",
     "price": 92000,
-    "discountPercent": 10,
-    "stock": 9,
+    "discountPercent": 0,
+    "stock": 6,
     "images": [
       "/products/solitaire-03-a.jpg",
       "/products/solitaire-03-b.jpg",
       "/products/solitaire-03-c.jpg",
       "/products/solitaire-03-d.jpg"
     ],
-    "description": "Hall-of-mirrors step-cut emerald lab diamond set in a minimalist 18K white gold compass setting.",
+    "description": "1.00ct emerald cut lab-grown diamond mounted in a solid 18K white gold cathedral shank.",
     "tags": [
-      "emerald cut",
       "solitaire",
-      "white gold",
-      "classic",
+      "emerald cut",
       "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "white gold"
     ],
     "isBestseller": false,
-    "isNew": false,
-    "sku": "AR-ARY-SOL-021",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      0.5,
-      1,
-      1.5,
-      2
-    ]
+    "isNew": true,
+    "sku": "AR-SOL-100-DIA"
   },
   {
     "id": "ary-brd-022",
-    "slug": "sample-royal-bridal-necklace-suite-01",
-    "name": "Sample Royal Bridal Necklace Suite 01",
+    "slug": "royal-heritage-bridal-necklace-suite",
+    "name": "Royal Heritage Bridal Necklace Suite",
     "category": "Bridal",
-    "subcategory": "Bridal Sets",
+    "subcategory": "Bridal Suites",
     "metal": "Yellow Gold",
     "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
+    "stone": "IGI-Certified Lab-Grown Diamond",
     "carat": 8.5,
+    "caratOptions": [
+      6,
+      8.5,
+      12
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Round",
-    "color": "D",
-    "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589222",
-    "weightGrams": 48,
+    "color": "D-F",
+    "clarity": "VVS-VS",
+    "certificate": "IGI Certified Complete Suite & BIS 750",
+    "weightGrams": 42,
     "sizes": [
-      "Complete Set"
+      "Custom Atelier Sizing"
     ],
     "occasion": "Wedding",
     "gender": "Women",
-    "style": "Vintage",
+    "style": "Bridal Suite",
     "price": 485000,
     "discountPercent": 5,
     "stock": 2,
@@ -1193,105 +1170,101 @@
       "/products/bridal-01-c.jpg",
       "/products/bridal-01-d.jpg"
     ],
-    "description": "A monumental bridal heirloom suite comprising ceremonial necklace, matching chandelier earrings, and maang tikka.",
+    "description": "Full grand bridal collation featuring graduated diamond river collar, matching chandelier earrings, and maang tikka handcrafted in BIS-hallmarked 18K gold.",
     "tags": [
       "bridal",
-      "wedding suite",
-      "awadh",
+      "wedding",
       "heirloom",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "necklace suite",
+      "18k gold"
     ],
     "isBestseller": true,
     "isNew": false,
-    "sku": "AR-ARY-BRD-022",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      4.5,
-      7.5,
-      12
-    ]
+    "sku": "AR-BRD-ROYAL-01"
   },
   {
     "id": "ary-brd-023",
-    "slug": "sample-modern-diamond-mangalsutra-02",
-    "name": "Sample Modern Diamond Mangalsutra 02",
+    "slug": "modern-brilliant-diamond-mangalsutra",
+    "name": "Modern Brilliant Diamond Mangalsutra",
     "category": "Bridal",
     "subcategory": "Mangalsutras",
     "metal": "Yellow Gold",
     "purity": "18kt",
-    "stone": "Lab-Grown Diamond",
-    "carat": 1.15,
+    "stone": "IGI-Certified Lab-Grown Diamond",
+    "carat": 0.75,
+    "caratOptions": [
+      0.5,
+      0.75,
+      1
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Round",
     "color": "E",
-    "clarity": "VVS2",
-    "certificate": "IGI Certified #LG-589223",
-    "weightGrams": 5.6,
+    "clarity": "VVS1",
+    "certificate": "IGI Certified Diamond & BIS 750",
+    "weightGrams": 6.2,
     "sizes": [
-      "16-18 inch"
+      "16 inch",
+      "18 inch"
     ],
     "occasion": "Wedding",
     "gender": "Women",
     "style": "Modern",
     "price": 78500,
     "discountPercent": 10,
-    "stock": 11,
+    "stock": 9,
     "images": [
       "/products/bridal-02-a.jpg",
       "/products/bridal-02-b.jpg",
       "/products/bridal-02-c.jpg",
       "/products/bridal-02-d.jpg"
     ],
-    "description": "Contemporary sacred mangalsutra uniting auspicious black beads with a floating geometric diamond bar in 18K gold.",
+    "description": "Contemporary mangalsutra blending sacred black onyx beads with a certified round brilliant solitaire centerpiece in 18K gold.",
     "tags": [
       "mangalsutra",
       "bridal",
-      "yellow gold",
-      "bestseller",
-      "lab diamond",
       "18k gold",
-      "fine joaillerie"
+      "daily luxury"
     ],
-    "isBestseller": true,
+    "isBestseller": false,
     "isNew": true,
-    "sku": "AR-ARY-BRD-023",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      4.5,
-      7.5,
-      12
-    ]
+    "sku": "AR-BRD-MAN-02"
   },
   {
     "id": "ary-brd-024",
-    "slug": "sample-bridal-emerald-choker-set-03",
-    "name": "Sample Bridal Emerald Choker Set 03",
+    "slug": "regal-emerald-and-solitaire-choker-set",
+    "name": "Regal Emerald & Solitaire Choker Set",
     "category": "Bridal",
-    "subcategory": "Bridal Sets",
+    "subcategory": "Choker Sets",
     "metal": "Yellow Gold",
     "purity": "18kt",
-    "stone": "Emerald & Diamond",
-    "carat": 6.8,
+    "stone": "Emerald & Lab-Grown Diamond",
+    "carat": 6,
+    "caratOptions": [
+      4.5,
+      6,
+      9
+    ],
+    "platings": [
+      "18K YELLOW GOLD",
+      "18K WHITE GOLD",
+      "18K ROSE GOLD"
+    ],
     "shape": "Emerald",
-    "color": "E",
+    "color": "Columbian Green & E-F",
     "clarity": "VVS1",
-    "certificate": "IGI Certified #LG-589224",
-    "weightGrams": 42.5,
+    "certificate": "IGI Certified Gem & Diamond Dossier",
+    "weightGrams": 36.5,
     "sizes": [
-      "Complete Set"
+      "Custom Atelier Sizing"
     ],
     "occasion": "Wedding",
     "gender": "Women",
-    "style": "Vintage",
+    "style": "Royal Heritage",
     "price": 395000,
     "discountPercent": 8,
     "stock": 3,
@@ -1301,28 +1274,16 @@
       "/products/bridal-03-c.jpg",
       "/products/bridal-03-d.jpg"
     ],
-    "description": "Tribute to Awadhi royal courts: deep green emerald centerpieces framed by scintillating lab diamond halos.",
+    "description": "Awadhi royal court-inspired choker necklace with deep Colombian-hue emerald centerpieces framed by brilliant lab-grown diamond halos in 18K gold.",
     "tags": [
-      "bridal",
       "emerald",
+      "bridal",
       "choker",
-      "luxury",
-      "lab diamond",
-      "18k gold",
-      "fine joaillerie"
+      "royal",
+      "wedding"
     ],
     "isBestseller": false,
     "isNew": false,
-    "sku": "AR-ARY-BRD-024",
-    "platings": [
-      "18K YELLOW GOLD",
-      "18K ROSE GOLD",
-      "18K WHITE GOLD"
-    ],
-    "caratOptions": [
-      4.5,
-      7.5,
-      12
-    ]
+    "sku": "AR-BRD-EME-03"
   }
 ]
