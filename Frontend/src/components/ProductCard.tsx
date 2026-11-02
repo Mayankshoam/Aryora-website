@@ -172,7 +172,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             )}
           </div>
           <span className="text-[10px] text-[#108474] font-medium">
-            100% IGI
+            {product.certificate?.includes("IGI") ? "100% IGI" : "925 Silver"}
           </span>
         </div>
       </div>

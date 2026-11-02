@@ -28,6 +28,9 @@ export interface Product {
   tags: string[];
   isBestseller: boolean;
   isNew: boolean;
+  sku?: string;
+  platings?: string[];
+  caratOptions?: number[];
 }
 
 export interface SiteConfig {
@@ -117,24 +120,39 @@ export function formatPriceINR(amount: number): string {
   }).format(amount);
 }
 
-/** Transparent Price Breakup calculator matching Indian Gold & Diamond standards */
-export function calculatePriceBreakup(product: Product) {
-  const total = product.price;
-  // Standard Indian jewellery breakup estimation:
+/** Transparent Price Breakup calculator matching Indian Gold & Silver standards */
+export function calculatePriceBreakup(product: Product, overridePrice?: number) {
+  const total = overridePrice || product.price;
   // 3% GST is included in the final price
   const baseBeforeGst = Math.round(total / 1.03);
   const gst = total - baseBeforeGst;
   
-  // Gold 18kt approx ~55% of base, Diamond ~35%, Making ~10%
-  const goldValue = Math.round(baseBeforeGst * 0.52);
-  const diamondValue = Math.round(baseBeforeGst * 0.36);
-  const makingCharges = baseBeforeGst - goldValue - diamondValue;
+  const isSilver = product.metal.toLowerCase().includes("silver") || product.purity.toLowerCase().includes("silver");
+
+  let metalLabel = isSilver ? "925 Sterling Silver" : "18K Gold";
+  let stoneLabel = isSilver ? "AAA+ Swiss Cubic Zirconia" : "IGI Lab Diamond";
+  
+  // Silver breakdown: silver weight ~35%, stone ~30%, artisan making ~35%
+  // Gold breakdown: 18kt ~52%, diamond ~36%, making ~12%
+  const metalRatio = isSilver ? 0.35 : 0.52;
+  const stoneRatio = isSilver ? 0.32 : 0.36;
+
+  const metalValue = Math.round(baseBeforeGst * metalRatio);
+  const stoneValue = Math.round(baseBeforeGst * stoneRatio);
+  const makingCharges = baseBeforeGst - metalValue - stoneValue;
 
   return {
-    goldValue,
+    metalLabel,
+    metalValue,
+    metalWeight: product.weightGrams,
+    stoneLabel,
+    stoneValue,
+    stoneCarat: product.carat,
+    // Backwards-compatibility
+    goldValue: metalValue,
     goldWeight: product.weightGrams,
-    goldRatePerGram: Math.round(goldValue / (product.weightGrams || 1)),
-    diamondValue,
+    goldRatePerGram: Math.round(metalValue / (product.weightGrams || 1)),
+    diamondValue: stoneValue,
     diamondCarat: product.carat,
     makingCharges,
     gst,
