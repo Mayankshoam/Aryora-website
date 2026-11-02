@@ -67,7 +67,7 @@ export default function SizeGuideModal() {
             <Check size={14} className="text-champagne-accessible" /> Complimentary 30-Day Resizing
           </p>
           <p>
-            Every Aryora ring includes one complimentary resizing within 30 days of delivery. If you are between two sizes, we always advise selecting the larger size.
+            Every Ayor ring includes one complimentary resizing within 30 days of delivery. If you are between two sizes, we always advise selecting the larger size.
           </p>
         </div>
 

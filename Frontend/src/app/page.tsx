@@ -63,7 +63,7 @@ const REVIEWS = [
   {
     name: "Pooja & Rohan Mehra",
     city: "Delhi NCR",
-    text: "We wanted a sustainable wedding set without compromising on size or cut. Aryora’s lab diamonds possess incredible fire, and the transparent price breakup gave us complete confidence.",
+    text: "We wanted a sustainable wedding set without compromising on size or cut. Ayor’s lab diamonds possess incredible fire, and the transparent price breakup gave us complete confidence.",
     jewel: "Sample Graduated Tennis Necklace 01",
     rating: 5,
   },
@@ -201,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. WHY ARYORA LAB-GROWN FINE JEWELLERY */}
+      {/* 6. WHY AYOR LAB-GROWN FINE JEWELLERY */}
       <section className="bg-[#F5F0EA] border-y border-[#DDD8D0] py-16 md:py-20">
         <div className="max-w-content mx-auto px-4 md:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -209,7 +209,7 @@ export default function HomePage() {
               The Conscious Revolution
             </p>
             <h2 className="font-serif text-3xl md:text-4xl text-ink font-light">
-              Why Choose Aryora Fine Lab Diamonds
+              Why Choose Ayor Fine Lab Diamonds
             </h2>
             <p className="text-xs text-ink-muted leading-relaxed">
               We eliminate earth mining disruption and excessive middleman markups without sacrificing an ounce of Awadhi royal grandeur.
@@ -217,7 +217,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {siteConfig.whyAryora.map((pillar) => (
+            {siteConfig.whyAyor.map((pillar) => (
               <div
                 key={pillar.title}
                 className="bg-white border border-[#DDD8D0] p-6 space-y-3 flex flex-col justify-between shadow-sm"
@@ -236,7 +236,7 @@ export default function HomePage() {
           {/* Educational Comparison Card */}
           <div className="bg-white border border-[#DDD8D0] p-6 md:p-8 max-w-3xl mx-auto shadow-sm">
             <h3 className="font-serif text-lg text-ink text-center mb-4 font-normal">
-              Aryora Lab Diamond vs. Mined Diamond: Scientific Equivalence
+              Ayor Lab Diamond vs. Mined Diamond: Scientific Equivalence
             </h3>
             <div className="grid grid-cols-3 gap-2 text-center text-xs divide-x divide-[#DDD8D0]">
               <div className="p-2 space-y-1">
@@ -330,7 +330,7 @@ export default function HomePage() {
             <div className="relative w-56 h-56 rounded-full border border-[#C09981]/40 p-4 flex items-center justify-center">
               <Image
                 src="/site/brand-emblem.svg"
-                alt="Aryora Custom Emblem"
+                alt="Ayor Custom Emblem"
                 width={140}
                 height={140}
                 className="object-contain animate-spin-slow opacity-85"
@@ -388,19 +388,19 @@ export default function HomePage() {
           <div className="inline-flex items-center space-x-1.5 text-xs text-[#C09981] font-medium">
             <InstagramIcon size={14} />
             <a
-              href="https://instagram.com/aryora.legacy"
+              href="https://instagram.com/ayor.legacy"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >
-              @aryora.legacy
+              @ayor.legacy
             </a>
           </div>
           <h2 className="font-serif text-2xl md:text-3xl text-ink font-light">
             Styled by Our Community
           </h2>
           <p className="text-xs text-ink-muted">
-            Tag #AryoraLegacy to be featured in our Lucknow atelier editorial showcase.
+            Tag #AyorLegacy to be featured in our Lucknow atelier editorial showcase.
           </p>
         </div>
 

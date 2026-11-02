@@ -2,11 +2,11 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const metadata = {
   title: "Terms & Conditions",
-  description: "Terms and conditions governing purchases and services at Aryora Fine Jewellery.",
+  description: "Terms and conditions governing purchases and services at Ayor Fine Jewellery.",
 };
 
 const TERMS = [
-  "All pieces crafted by Aryora are guaranteed authentic, hallmarked, and accompanied by independent laboratory certification (IGI) where specified.",
+  "All pieces crafted by Ayor are guaranteed authentic, hallmarked, and accompanied by independent laboratory certification (IGI) where specified.",
   "Listed prices are inclusive of all applicable statutory taxes (including 3% GST across India).",
   "Orders are officially confirmed upon successful payment verification. Delivery times are subject to location logistics and custom manufacturing complexity.",
   "Returns are accepted within 7 days of delivery only if the piece is unworn, intact, and in original packaging. Bespoke engraved pieces carry exchange/buyback only.",

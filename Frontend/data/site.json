@@ -1,14 +1,14 @@
 {
   "brand": {
-    "name": "Aryora",
+    "name": "Ayor",
     "tagline": "Light. Legacy. You.",
     "city": "Lucknow, Uttar Pradesh, India",
     "phone": "+91 8808828646",
     "whatsapp": "+91 8808828646",
-    "email": "aryora.legacy@hotmail.com",
-    "address": "Aryora Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
-    "instagram": "https://instagram.com/aryora.legacy",
-    "instagramHandle": "@aryora.legacy"
+    "email": "ayor.legacy@hotmail.com",
+    "address": "Ayor Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
+    "instagram": "https://instagram.com/ayor.legacy",
+    "instagramHandle": "@ayor.legacy"
   },
   "hero": {
     "eyebrow": "Awadhi Royal Atelier · Lab-Grown Fine Joaillerie",
@@ -114,7 +114,7 @@
       "image": "/images/certifications/bis-hallmark.png"
     }
   ],
-  "whyAryora": [
+  "whyAyor": [
     {
       "title": "Zero Earth Mining",
       "desc": "Grown above ground with renewable solar energy. Optically, physically, and chemically identical to mined diamonds."
@@ -161,7 +161,7 @@
     ],
     "discover": [
       {
-        "label": "About Aryora",
+        "label": "About Ayor",
         "href": "/about"
       },
       {

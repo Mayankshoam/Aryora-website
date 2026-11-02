@@ -179,14 +179,14 @@ export default function ProductDetailPage() {
 
   const handleWhatsAppEnquiry = () => {
     const text = encodeURIComponent(
-      `Hello Aryora Concierge, I would like to enquire about ${product.name} (SKU: ${product.sku || product.id}, Plating: ${selectedPlating}, Carat: ${selectedCarat}ct). Please share details and customization options.`
+      `Hello Ayor Concierge, I would like to enquire about ${product.name} (SKU: ${product.sku || product.id}, Plating: ${selectedPlating}, Carat: ${selectedCarat}ct). Please share details and customization options.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
 
   const handleVideoConsultation = () => {
     const text = encodeURIComponent(
-      `Hello Aryora Concierge, I would like to book a WhatsApp Video Consultation to view ${product.name} (SKU: ${product.sku || product.id}) live.`
+      `Hello Ayor Concierge, I would like to book a WhatsApp Video Consultation to view ${product.name} (SKU: ${product.sku || product.id}) live.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
@@ -221,7 +221,7 @@ export default function ProductDetailPage() {
     mpn: product.sku || product.id,
     brand: {
       "@type": "Brand",
-      name: "Aryora",
+      name: "Ayor",
     },
     offers: {
       "@type": "Offer",
@@ -235,7 +235,7 @@ export default function ProductDetailPage() {
           : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "Aryora Fine Joaillerie",
+        name: "Ayor Fine Joaillerie",
       },
     },
   };
@@ -605,7 +605,7 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Miss Jo / Aryora 4-Pillar Trust Strip */}
+            {/* Miss Jo / Ayor 4-Pillar Trust Strip */}
             <div className="grid grid-cols-4 gap-2 py-4 border-y border-[#DDD8D0] text-center text-[10px] text-[#7A7A7A]">
               <div className="space-y-1">
                 <Award size={18} className="mx-auto text-[#108474]" />

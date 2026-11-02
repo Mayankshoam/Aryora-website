@@ -11,7 +11,7 @@ export interface CartItem {
   selectedMetal?: string;
 }
 
-interface AryoraStore {
+interface AyorStore {
   // Cart
   cart: CartItem[];
   addToCart: (product: Product, quantity?: number, size?: string, selectedMetal?: string) => void;
@@ -48,7 +48,7 @@ interface AryoraStore {
   closeStoreLocator: () => void;
 }
 
-export const useAryoraStore = create<AryoraStore>()(
+export const useAryoraStore = create<AyorStore>()(
   persist(
     (set, get) => ({
       cart: [],

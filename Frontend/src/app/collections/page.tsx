@@ -5,7 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 export const metadata = {
   title: "Curated Collections",
   description:
-    "Explore Aryora's thematic fine jewellery collections: Heritage Bridal, Solitaire Brilliance, and Everyday Luxury.",
+    "Explore Ayor's thematic fine jewellery collections: Heritage Bridal, Solitaire Brilliance, and Everyday Luxury.",
 };
 
 const COLLECTIONS = [
@@ -45,7 +45,7 @@ export default function CollectionsPage() {
           Heirloom Collections
         </h1>
         <p className="text-xs md:text-sm text-ink-muted leading-relaxed font-light">
-          Each Aryora collection expresses a distinct dimension of light, uniting ethical lab-grown diamonds with generational artisan craftsmanship.
+          Each Ayor collection expresses a distinct dimension of light, uniting ethical lab-grown diamonds with generational artisan craftsmanship.
         </p>
       </div>
 

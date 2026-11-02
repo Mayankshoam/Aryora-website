@@ -4,14 +4,14 @@ import { Truck, ShieldCheck, Clock, MapPin } from "lucide-react";
 export const metadata = {
   title: "Shipping & Delivery Policy",
   description:
-    "Learn about Aryora's complimentary, 100% insured courier shipping across India.",
+    "Learn about Ayor's complimentary, 100% insured courier shipping across India.",
 };
 
 const POINTS = [
   {
     icon: Truck,
     title: "Complimentary Insured Courier",
-    text: "Every order across India ships free of charge via authorized high-value logistics partners (BlueDart Apex / BVC Logistics). Every shipment is 100% transit-insured by Aryora until the point of physical delivery.",
+    text: "Every order across India ships free of charge via authorized high-value logistics partners (BlueDart Apex / BVC Logistics). Every shipment is 100% transit-insured by Ayor until the point of physical delivery.",
   },
   {
     icon: Clock,
@@ -64,8 +64,8 @@ export default function ShippingPage() {
       <div className="border-t border-border-subtle pt-8 text-xs text-ink-subtle">
         <p>
           For shipment inquiries or urgent dispatch requests, contact our concierge at{" "}
-          <a href="mailto:aryora.legacy@hotmail.com" className="text-ink underline">
-            aryora.legacy@hotmail.com
+          <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
+            ayor.legacy@hotmail.com
           </a>{" "}
           or WhatsApp +91 8808828646.
         </p>

@@ -10,7 +10,7 @@ export default function StoreLocatorModal() {
 
   const whatsappAppointmentUrl =
     "https://wa.me/918808828646?text=" +
-    encodeURIComponent("Hello Aryora Boutique, I would like to book a private atelier visit in Lucknow.");
+    encodeURIComponent("Hello Ayor Boutique, I would like to book a private atelier visit in Lucknow.");
 
   return (
     <div
@@ -38,7 +38,7 @@ export default function StoreLocatorModal() {
               Flagship Boutique & Atelier
             </p>
             <h2 id="store-modal-title" className="font-serif text-2xl md:text-3xl text-ink font-light">
-              Visit Aryora in Lucknow
+              Visit Ayor in Lucknow
             </h2>
             <p className="text-xs text-ink-muted leading-relaxed">
               Experience the royal brilliance of IGI-certified lab-grown diamonds, bespoke bridal consults, and 18K solid gold in person.
@@ -49,7 +49,7 @@ export default function StoreLocatorModal() {
             <div className="flex items-start gap-3">
               <MapPin size={18} className="text-[#C09981] mt-0.5 flex-shrink-0" />
               <div className="text-xs space-y-0.5">
-                <p className="font-semibold text-ink">Aryora Haute Joaillerie Atelier</p>
+                <p className="font-semibold text-ink">Ayor Haute Joaillerie Atelier</p>
                 <p className="text-ink-muted">Hazratganj / Aliganj Fine Jewelry Enclave</p>
                 <p className="text-ink-muted">Lucknow, Uttar Pradesh 226001, India</p>
               </div>

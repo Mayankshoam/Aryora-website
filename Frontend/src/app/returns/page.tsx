@@ -4,7 +4,7 @@ import { RotateCcw, ShieldCheck, RefreshCw, Award } from "lucide-react";
 export const metadata = {
   title: "Returns, Buyback & Warranty",
   description:
-    "Learn about Aryora's 7-day return policy, 6-month warranty, and lifetime transparent buyback terms.",
+    "Learn about Ayor's 7-day return policy, 6-month warranty, and lifetime transparent buyback terms.",
 };
 
 const POLICIES = [
@@ -21,7 +21,7 @@ const POLICIES = [
   {
     icon: ShieldCheck,
     title: "6-Month Manufacturing Warranty",
-    text: "Every Aryora jewel carries a 6-month atelier warranty covering manufacturing defects, loose prong tension, or clasp integrity. Accidental damage or rough wear is repaired at nominal cost.",
+    text: "Every Ayor jewel carries a 6-month atelier warranty covering manufacturing defects, loose prong tension, or clasp integrity. Accidental damage or rough wear is repaired at nominal cost.",
   },
   {
     icon: Award,
@@ -65,8 +65,8 @@ export default function ReturnsPage() {
         <p className="font-medium text-ink">How to Initiate a Return or Service Request:</p>
         <p>
           Send an email with your Order Number to{" "}
-          <a href="mailto:aryora.legacy@hotmail.com" className="text-ink underline">
-            aryora.legacy@hotmail.com
+          <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
+            ayor.legacy@hotmail.com
           </a>{" "}
           or WhatsApp +91 8808828646. Our concierge will dispatch a return waybill and guide you through packaging.
         </p>

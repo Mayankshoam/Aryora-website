@@ -4,15 +4,15 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { Sparkles, Award, HeartHandshake } from "lucide-react";
 
 export const metadata = {
-  title: "About Aryora — Light. Legacy. You.",
+  title: "About Ayor — Light. Legacy. You.",
   description:
-    "Learn about Aryora, a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, gold and 92.5 silver heirlooms for modern India.",
+    "Learn about Ayor, a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, gold and 92.5 silver heirlooms for modern India.",
 };
 
 export default function AboutPage() {
   return (
     <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16 space-y-16 md:space-y-24">
-      <Breadcrumbs items={[{ label: "About Aryora" }]} />
+      <Breadcrumbs items={[{ label: "About Ayor" }]} />
 
       {/* Hero Narrative */}
       <div className="max-w-3xl mx-auto text-center space-y-4">
@@ -21,7 +21,7 @@ export default function AboutPage() {
           Light. Legacy. You.
         </h1>
         <p className="text-base md:text-lg text-ink-muted leading-relaxed font-light">
-          Founded in Lucknow, Uttar Pradesh, Aryora was born from a singular belief: that modern fine jewellery should honor centuries of royal craftsmanship while respecting the living earth.
+          Founded in Lucknow, Uttar Pradesh, Ayor was born from a singular belief: that modern fine jewellery should honor centuries of royal craftsmanship while respecting the living earth.
         </p>
       </div>
 
@@ -30,7 +30,7 @@ export default function AboutPage() {
         <div className="md:col-span-7 relative aspect-[4/3] bg-ivory-warm border border-border-subtle overflow-hidden flex items-center justify-center p-6">
           <Image
             src="/site/hero-poster.svg"
-            alt="Master artisan hand-setting diamonds at Aryora atelier"
+            alt="Master artisan hand-setting diamonds at Ayor atelier"
             fill
             priority
             sizes="(max-width: 768px) 100vw, 60vw"
@@ -44,7 +44,7 @@ export default function AboutPage() {
             Rooted in Lucknow, Crafted for Tomorrow.
           </h2>
           <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-            Lucknow has long stood as an epicenter of artistic refinement—from chikankari to zardozi and delicate royal meenakari. Aryora continues this rich creative heritage by pairing veteran Indian goldsmiths with certified lab-grown diamond technology.
+            Lucknow has long stood as an epicenter of artistic refinement—from chikankari to zardozi and delicate royal meenakari. Ayor continues this rich creative heritage by pairing veteran Indian goldsmiths with certified lab-grown diamond technology.
           </p>
           <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
             Every piece is designed to be passed down through generations—an enduring heirloom that never compromises on brilliance, carat weight, or integrity.
@@ -56,7 +56,7 @@ export default function AboutPage() {
       <div className="border-y border-border-subtle py-16">
         <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
           <p className="eyebrow">Our Three Pillars</p>
-          <h2 className="font-serif text-3xl text-ink">The Aryora Ethos</h2>
+          <h2 className="font-serif text-3xl text-ink">The Ayor Ethos</h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-10 text-center">

@@ -46,7 +46,7 @@ export default function CheckoutPage() {
           </div>
           <p className="eyebrow">Order Confirmed</p>
           <h1 className="font-serif text-3xl md:text-4xl text-ink">
-            Thank You for Choosing Aryora
+            Thank You for Choosing Ayor
           </h1>
           <p className="text-xs text-ink-muted leading-relaxed">
             Order Reference: <strong className="text-ink font-semibold">{orderComplete}</strong>. We have dispatched a confirmation receipt with tamper-proof tracking to <span className="text-ink">{form.email || "your email"}</span>.
