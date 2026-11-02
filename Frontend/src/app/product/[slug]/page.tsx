@@ -235,23 +235,23 @@ export default function ProductDetailPage() {
                   }
                 />
 
-                {/* Overlaid Badges */}
+                {/* Overlaid Badges (Miss Jo Palette) */}
                 <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start pointer-events-none">
                   {product.isBestseller && (
-                    <span className="bg-[#1B3B30] text-ivory text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
+                    <span className="bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
                       Bestseller
                     </span>
                   )}
                   {product.discountPercent > 0 && (
-                    <span className="bg-[#B93826] text-ivory text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
+                    <span className="bg-[#A32D2D] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
                       {product.discountPercent}% OFF
                     </span>
                   )}
                 </div>
 
                 <div className="absolute bottom-4 left-4 pointer-events-none">
-                  <span className="bg-ivory-pure/95 backdrop-blur-sm px-3 py-1 text-xs uppercase tracking-wider text-ink font-medium border border-border-subtle flex items-center gap-1.5 shadow-sm">
-                    <Award size={14} className="text-champagne-accessible" />
+                  <span className="bg-white/95 backdrop-blur-sm px-3 py-1 text-xs uppercase tracking-wider text-ink font-medium border border-[#DDD8D0] flex items-center gap-1.5 shadow-sm">
+                    <Award size={14} className="text-[#108474]" />
                     <span>{product.certificate}</span>
                   </span>
                 </div>
@@ -260,13 +260,13 @@ export default function ProductDetailPage() {
           </div>
 
           {/* ========================================================= */}
-          {/* RIGHT: BUYING PANEL (Ethera reference layout)             */}
+          {/* RIGHT: BUYING PANEL (Miss Jo Luxury Editorial Layout)     */}
           {/* ========================================================= */}
           <div className="lg:col-span-5 space-y-6">
             {/* Header info */}
-            <div className="space-y-2 border-b border-border-subtle pb-5">
+            <div className="space-y-2 border-b border-[#DDD8D0] pb-5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+                <span className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
                   {product.category} · {product.subcategory}
                 </span>
                 <span className="text-xs text-ink-subtle">SKU: {product.id}</span>
@@ -282,7 +282,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Price Block */}
-            <div className="space-y-2 bg-[#FAF8F4] p-4 border border-border-subtle">
+            <div className="space-y-2 bg-[#F5F0EA] p-4 border border-[#DDD8D0]">
               <div className="flex items-baseline space-x-3">
                 <span className="font-serif text-3xl font-medium text-ink">
                   {formatPriceINR(product.price)}
@@ -293,7 +293,7 @@ export default function ProductDetailPage() {
                   </span>
                 )}
                 {product.discountPercent > 0 && (
-                  <span className="text-xs text-[#2A6E4E] font-semibold">
+                  <span className="text-xs text-[#108474] font-semibold">
                     Save {formatPriceINR(originalPrice! - product.price)} ({product.discountPercent}% OFF)
                   </span>
                 )}
@@ -396,13 +396,13 @@ export default function ProductDetailPage() {
                 </button>
               </form>
               {pincodeStatus === "valid" && (
-                <div className="flex items-center gap-1.5 text-xs text-[#2A6E4E] pt-1">
+                <div className="flex items-center gap-1.5 text-xs text-[#108474] pt-1">
                   <Check size={14} />
                   <span>Complimentary insured transit to {pincode}. Estimated delivery: <strong>{deliveryDate}</strong>.</span>
                 </div>
               )}
               {pincodeStatus === "invalid" && (
-                <p className="text-xs text-[#B93826]">
+                <p className="text-xs text-[#A32D2D]">
                   Please enter a valid 6-digit Indian PIN code.
                 </p>
               )}
@@ -414,7 +414,7 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={() => addToCart(product, 1, selectedSize, selectedMetal)}
-                  className="btn-primary flex-1 py-4 text-xs font-semibold uppercase tracking-wider text-center"
+                  className="btn-primary flex-1 py-4 text-xs font-semibold uppercase tracking-wider text-center shadow-sm"
                 >
                   Add to Bag · {formatPriceINR(product.price)}
                 </button>
@@ -424,8 +424,8 @@ export default function ProductDetailPage() {
                   aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
                   className={`p-4 border transition-colors ${
                     inWishlist
-                      ? "border-[#B93826] bg-[#B93826] text-ivory"
-                      : "border-border-subtle bg-ivory text-ink hover:border-ink"
+                      ? "border-[#C09981] bg-[#C09981] text-white shadow-sm"
+                      : "border-[#DDD8D0] bg-white text-ink hover:border-ink shadow-sm"
                   }`}
                 >
                   <Heart size={18} fill={inWishlist ? "currentColor" : "none"} strokeWidth={1.5} />
@@ -437,7 +437,7 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={handleWhatsAppEnquiry}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#1B3B30] text-[#1B3B30] hover:bg-[#1B3B30] hover:text-ivory text-xs font-semibold uppercase tracking-wider transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-ink text-ink hover:bg-ink hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
                 >
                   <MessageCircle size={15} />
                   <span>WhatsApp Concierge</span>
@@ -446,33 +446,33 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={handleVideoConsultation}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-border-subtle bg-ivory-warm/40 text-ink hover:border-ink text-xs font-semibold uppercase tracking-wider transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-[#F5F0EA] text-ink hover:border-ink text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
                 >
-                  <Video size={15} className="text-champagne-accessible" />
+                  <Video size={15} className="text-[#C09981]" />
                   <span>Live Video Call</span>
                 </button>
               </div>
             </div>
 
-            {/* BlueStone / Ethera Trust Strip */}
-            <div className="grid grid-cols-4 gap-2 py-4 border-y border-border-subtle text-center text-[10px] text-ink-muted">
+            {/* Miss Jo / Ethera Trust Strip */}
+            <div className="grid grid-cols-4 gap-2 py-4 border-y border-[#DDD8D0] text-center text-[10px] text-ink-muted">
               <div className="space-y-1">
-                <Award size={18} className="mx-auto text-champagne-accessible" />
+                <Award size={18} className="mx-auto text-[#108474]" />
                 <p className="font-semibold text-ink">100% IGI</p>
                 <p className="text-[9px]">Certified</p>
               </div>
               <div className="space-y-1">
-                <RotateCcw size={18} className="mx-auto text-champagne-accessible" />
+                <RotateCcw size={18} className="mx-auto text-[#108474]" />
                 <p className="font-semibold text-ink">15-Day</p>
                 <p className="text-[9px]">Easy Return</p>
               </div>
               <div className="space-y-1">
-                <ShieldCheck size={18} className="mx-auto text-champagne-accessible" />
+                <ShieldCheck size={18} className="mx-auto text-[#108474]" />
                 <p className="font-semibold text-ink">Lifetime</p>
                 <p className="text-[9px]">Buyback</p>
               </div>
               <div className="space-y-1">
-                <Truck size={18} className="mx-auto text-champagne-accessible" />
+                <Truck size={18} className="mx-auto text-[#108474]" />
                 <p className="font-semibold text-ink">Insured</p>
                 <p className="text-[9px]">Pan-India Transit</p>
               </div>

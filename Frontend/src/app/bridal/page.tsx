@@ -201,7 +201,7 @@ export default function BridalPage() {
               href={whatsappBridalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-semibold px-6 py-3.5 border border-[#1B3B30] text-[#1B3B30] hover:bg-[#1B3B30] hover:text-ivory transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold px-6 py-3.5 border border-ink text-ink hover:bg-ink hover:text-white transition-colors"
             >
               <MessageCircle size={16} />
               <span>WhatsApp Bridal Concierge</span>
@@ -431,7 +431,7 @@ export default function BridalPage() {
 
               {status === "done" ? (
                 <div className="text-center py-12 space-y-3 bg-champagne-subtle p-8 border border-champagne-light">
-                  <div className="w-12 h-12 rounded-full bg-[#1B3B30] text-ivory flex items-center justify-center mx-auto">
+                  <div className="w-12 h-12 rounded-full bg-[#108474] text-white flex items-center justify-center mx-auto shadow-sm">
                     <Check size={22} />
                   </div>
                   <h3 className="font-serif text-2xl text-ink">
@@ -592,7 +592,7 @@ export default function BridalPage() {
                   href={whatsappBridalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2.5 bg-[#1B3B30] text-ivory hover:bg-[#122720] transition-colors py-3.5 px-4 text-xs uppercase tracking-wider font-semibold"
+                  className="w-full flex items-center justify-center gap-2.5 bg-ink text-white hover:bg-[#353535] transition-colors py-3.5 px-4 text-xs uppercase tracking-wider font-semibold shadow-sm"
                 >
                   <MessageCircle size={16} />
                   <span>Chat on WhatsApp (+91 8808828646)</span>

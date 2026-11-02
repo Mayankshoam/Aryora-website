@@ -147,11 +147,11 @@ export default function Header() {
 
   return (
     <>
-      {/* 1. TOP ANNOUNCEMENT STRIP */}
-      <div className="bg-[#1B3B30] text-ivory text-[11px] py-2 px-4 text-center tracking-wider font-medium flex items-center justify-center gap-2">
-        <Sparkles size={12} className="text-champagne-light" />
+      {/* 1. TOP ANNOUNCEMENT STRIP (Miss Jo Luxury Minimal Aesthetic) */}
+      <div className="bg-[#1A1A1A] text-[#FDFBF9] text-[11px] py-2 px-4 text-center tracking-wider font-medium flex items-center justify-center gap-2 border-b border-white/10">
+        <Sparkles size={12} className="text-[#C09981]" />
         <span>100% IGI-Certified Lab-Grown Diamonds · Complimentary Insured Pan-India Delivery</span>
-        <span className="hidden md:inline text-champagne-light">· 15-Day Easy Returns</span>
+        <span className="hidden md:inline text-[#C09981]">· 15-Day Easy Returns</span>
       </div>
 
       {/* 2. MAIN HEADER (Ethera Diamonds Reference Layout) */}
@@ -371,7 +371,7 @@ export default function Header() {
             >
               <ShoppingBag size={19} strokeWidth={1.5} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#1B3B30] text-ivory text-[9px] font-bold rounded-full flex items-center justify-center leading-none">
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#C09981] text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none shadow-sm">
                   {cartCount}
                 </span>
               )}

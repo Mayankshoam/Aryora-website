@@ -49,12 +49,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-ivory border-t border-border-subtle mt-20 text-ink" role="contentinfo">
-      {/* 1. Trust Badges Strip (BlueStone Concept) */}
-      <div className="border-b border-border-subtle bg-ivory-warm/40">
+    <footer className="bg-[#F5F0EA] border-t border-[#DDD8D0] mt-20 text-ink" role="contentinfo">
+      {/* 1. Trust Badges Strip (Miss Jo Assurance Concept) */}
+      <div className="border-b border-[#DDD8D0] bg-[#EFEBE4]/60">
         <div className="max-w-content mx-auto px-4 md:px-8 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div className="space-y-1.5 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#108474] border border-[#DDD8D0] shadow-sm">
               <Award size={18} strokeWidth={1.5} />
             </div>
             <p className="font-serif text-sm font-medium text-ink">100% IGI Certified</p>
@@ -62,15 +62,15 @@ export default function Footer() {
           </div>
 
           <div className="space-y-1.5 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#108474] border border-[#DDD8D0] shadow-sm">
               <RotateCcw size={18} strokeWidth={1.5} />
             </div>
-            <p className="font-serif text-sm font-medium text-ink">7-Day Easy Returns</p>
+            <p className="font-serif text-sm font-medium text-ink">15-Day Easy Returns</p>
             <p className="text-[11px] text-ink-muted">30-day free ring resizing</p>
           </div>
 
           <div className="space-y-1.5 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#108474] border border-[#DDD8D0] shadow-sm">
               <ShieldCheck size={18} strokeWidth={1.5} />
             </div>
             <p className="font-serif text-sm font-medium text-ink">Lifetime Buyback</p>
@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-1.5 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-ivory flex items-center justify-center text-champagne-accessible border border-champagne/40">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#108474] border border-[#DDD8D0] shadow-sm">
               <Truck size={18} strokeWidth={1.5} />
             </div>
             <p className="font-serif text-sm font-medium text-ink">Free Insured Transit</p>
@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         {/* Accreditation Seal Bar */}
-        <div className="border-t border-border-subtle/70 py-3 bg-ivory/80">
+        <div className="border-t border-[#DDD8D0] py-3 bg-[#F5F0EA]">
           <div className="max-w-content mx-auto px-4 md:px-8 flex flex-wrap items-center justify-center gap-6 md:gap-10 text-[11px] text-ink-muted">
             <div className="flex items-center gap-2">
               <Image
@@ -119,10 +119,10 @@ export default function Footer() {
       </div>
 
       {/* 2. Newsletter Banner */}
-      <div className="border-b border-border-subtle">
+      <div className="border-b border-[#DDD8D0]">
         <div className="max-w-content mx-auto px-6 md:px-8 py-12 md:py-16 grid lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 space-y-2">
-            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#C09981]">
               The Aryora Circle
             </p>
             <h2 className="font-serif text-2xl md:text-3xl text-ink leading-tight font-light">
@@ -145,26 +145,26 @@ export default function Footer() {
                     if (status === "error") setStatus("idle");
                   }}
                   placeholder="Enter your email address"
-                  className="w-full h-11 bg-transparent border-b border-ink/30 px-1 py-2 text-xs text-ink placeholder:text-ink-light focus:outline-none focus:border-champagne transition-colors pr-10"
+                  className="w-full h-11 bg-transparent border-b border-ink/30 px-1 py-2 text-xs text-ink placeholder:text-ink-subtle focus:outline-none focus:border-[#C09981] transition-colors pr-10"
                   disabled={status === "sending" || status === "done"}
                 />
                 <button
                   type="submit"
                   disabled={status === "sending" || status === "done"}
                   aria-label="Subscribe to newsletter"
-                  className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-ink hover:text-champagne-accessible transition-colors disabled:opacity-50"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-ink hover:text-[#C09981] transition-colors disabled:opacity-50"
                 >
                   <ArrowRight size={16} strokeWidth={1.5} />
                 </button>
               </div>
 
               {status === "done" && (
-                <p className="text-xs text-[#2A6E4E] flex items-center gap-1.5 pt-1" role="status">
+                <p className="text-xs text-[#108474] flex items-center gap-1.5 pt-1" role="status">
                   <Check size={14} /> Welcome to the circle. We look forward to sharing our journey.
                 </p>
               )}
               {status === "error" && (
-                <p className="text-xs text-[#B93826] pt-1" role="alert">
+                <p className="text-xs text-[#A32D2D] pt-1" role="alert">
                   {errorMsg}
                 </p>
               )}

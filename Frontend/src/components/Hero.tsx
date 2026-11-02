@@ -53,7 +53,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full min-h-[580px] md:min-h-[680px] lg:min-h-[760px] flex items-center bg-[#1B3B30] overflow-hidden">
+    <section className="relative w-full min-h-[580px] md:min-h-[680px] lg:min-h-[760px] flex items-center bg-[#1A1A1A] overflow-hidden">
       {/* Background Loop Video */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video
@@ -71,28 +71,28 @@ export default function Hero() {
         </video>
 
         {/* Sophisticated gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent md:to-ink/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/45 to-transparent md:to-ink/15" />
       </div>
 
       {/* Content Container (Ethera Editorial Alignment) */}
       <div className="relative z-10 max-w-content mx-auto px-6 md:px-8 py-16 md:py-24 w-full">
         <div className="max-w-2xl space-y-6">
-          <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] font-semibold text-champagne-light">
+          <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] font-semibold text-[#C09981]">
             {heroData.eyebrow}
           </p>
 
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ivory font-light leading-[1.12]">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#FDFBF9] font-light leading-[1.12]">
             {heroData.title}
           </h1>
 
-          <p className="text-sm md:text-base text-ivory-muted leading-relaxed max-w-xl font-light">
+          <p className="text-sm md:text-base text-cream-warm/90 leading-relaxed max-w-xl font-light">
             {heroData.subtitle}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4">
             <Link
               href={heroData.ctaPrimary.href}
-              className="bg-[#B89B5E] text-ink hover:bg-[#A3864A] transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 inline-flex items-center gap-2 shadow-md"
+              className="bg-[#C09981] text-white hover:bg-[#A97B63] transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 inline-flex items-center gap-2 shadow-md"
             >
               <span>{heroData.ctaPrimary.label}</span>
               <ArrowRight size={14} />
@@ -100,7 +100,7 @@ export default function Hero() {
 
             <Link
               href={heroData.ctaSecondary.href}
-              className="border border-ivory text-ivory hover:bg-ivory hover:text-ink transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 inline-flex items-center gap-2 backdrop-blur-sm"
+              className="border border-white/80 text-white hover:bg-white hover:text-ink transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 inline-flex items-center gap-2 backdrop-blur-sm"
             >
               <Calendar size={14} />
               <span>{heroData.ctaSecondary.label}</span>
@@ -114,7 +114,7 @@ export default function Hero() {
         type="button"
         onClick={togglePlay}
         aria-label={isPlaying ? "Pause background video" : "Play background video"}
-        className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-ink/60 hover:bg-ink/80 text-ivory flex items-center justify-center backdrop-blur-sm transition-colors border border-ivory/20"
+        className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full bg-ink/60 hover:bg-ink/80 text-ivory flex items-center justify-center backdrop-blur-sm transition-colors border border-white/20"
       >
         {isPlaying ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
       </button>

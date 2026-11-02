@@ -179,8 +179,8 @@ function ShopCatalogueContent() {
       <Breadcrumbs items={[{ label: "Shop Catalogue" }]} />
 
       {/* 2. Hero Header Banner */}
-      <div className="bg-[#FAF8F4] border border-border-subtle p-6 md:p-10 space-y-3">
-        <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+      <div className="bg-[#F5F0EA] border border-[#DDD8D0] p-6 md:p-10 space-y-3">
+        <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
           Fine Lab-Grown Joaillerie · Lucknow Atelier
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-ink font-light">
@@ -280,11 +280,10 @@ function ShopCatalogueContent() {
                   key={cat}
                   type="button"
                   onClick={() => updateFilter("category", cat)}
-                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
-                    categoryParam.toLowerCase() === cat.toLowerCase()
-                      ? "font-semibold text-champagne-accessible"
-                      : "text-ink-muted hover:text-ink"
-                  }`}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${categoryParam.toLowerCase() === cat.toLowerCase()
+                    ? "font-semibold text-champagne-accessible"
+                    : "text-ink-muted hover:text-ink"
+                    }`}
                 >
                   <span>{cat}</span>
                   {categoryParam.toLowerCase() === cat.toLowerCase() && <Check size={13} />}
@@ -302,11 +301,10 @@ function ShopCatalogueContent() {
                   key={range.id}
                   type="button"
                   onClick={() => updateFilter("price", range.id)}
-                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
-                    priceParam === range.id
-                      ? "font-semibold text-champagne-accessible"
-                      : "text-ink-muted hover:text-ink"
-                  }`}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${priceParam === range.id
+                    ? "font-semibold text-champagne-accessible"
+                    : "text-ink-muted hover:text-ink"
+                    }`}
                 >
                   <span>{range.label}</span>
                   {priceParam === range.id && <Check size={13} />}
@@ -324,11 +322,10 @@ function ShopCatalogueContent() {
                   key={metal}
                   type="button"
                   onClick={() => updateFilter("metal", metal)}
-                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
-                    metalParam.toLowerCase() === metal.toLowerCase()
-                      ? "font-semibold text-champagne-accessible"
-                      : "text-ink-muted hover:text-ink"
-                  }`}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${metalParam.toLowerCase() === metal.toLowerCase()
+                    ? "font-semibold text-champagne-accessible"
+                    : "text-ink-muted hover:text-ink"
+                    }`}
                 >
                   <span>{metal}</span>
                   {metalParam.toLowerCase() === metal.toLowerCase() && <Check size={13} />}
@@ -346,11 +343,10 @@ function ShopCatalogueContent() {
                   key={shape}
                   type="button"
                   onClick={() => updateFilter("shape", shape)}
-                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
-                    shapeParam.toLowerCase() === shape.toLowerCase()
-                      ? "font-semibold text-champagne-accessible"
-                      : "text-ink-muted hover:text-ink"
-                  }`}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${shapeParam.toLowerCase() === shape.toLowerCase()
+                    ? "font-semibold text-champagne-accessible"
+                    : "text-ink-muted hover:text-ink"
+                    }`}
                 >
                   <span>{shape}</span>
                   {shapeParam.toLowerCase() === shape.toLowerCase() && <Check size={13} />}
@@ -368,11 +364,10 @@ function ShopCatalogueContent() {
                   key={occ}
                   type="button"
                   onClick={() => updateFilter("occasion", occ)}
-                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${
-                    occasionParam.toLowerCase() === occ.toLowerCase()
-                      ? "font-semibold text-champagne-accessible"
-                      : "text-ink-muted hover:text-ink"
-                  }`}
+                  className={`w-full text-left py-1 flex items-center justify-between transition-colors ${occasionParam.toLowerCase() === occ.toLowerCase()
+                    ? "font-semibold text-champagne-accessible"
+                    : "text-ink-muted hover:text-ink"
+                    }`}
                 >
                   <span>{occ}</span>
                   {occasionParam.toLowerCase() === occ.toLowerCase() && <Check size={13} />}

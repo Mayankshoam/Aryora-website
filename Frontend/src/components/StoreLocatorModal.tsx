@@ -34,7 +34,7 @@ export default function StoreLocatorModal() {
 
         <div className="space-y-6">
           <div className="space-y-1">
-            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
+            <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#C09981]">
               Flagship Boutique & Atelier
             </p>
             <h2 id="store-modal-title" className="font-serif text-2xl md:text-3xl text-ink font-light">
@@ -45,9 +45,9 @@ export default function StoreLocatorModal() {
             </p>
           </div>
 
-          <div className="bg-ivory-warm/40 border border-border-subtle p-5 space-y-4">
+          <div className="bg-[#F5F0EA] border border-[#DDD8D0] p-5 space-y-4">
             <div className="flex items-start gap-3">
-              <MapPin size={18} className="text-champagne-accessible mt-0.5 flex-shrink-0" />
+              <MapPin size={18} className="text-[#C09981] mt-0.5 flex-shrink-0" />
               <div className="text-xs space-y-0.5">
                 <p className="font-semibold text-ink">Aryora Haute Joaillerie Atelier</p>
                 <p className="text-ink-muted">Hazratganj / Aliganj Fine Jewelry Enclave</p>
@@ -56,14 +56,14 @@ export default function StoreLocatorModal() {
             </div>
 
             <div className="flex items-center gap-3">
-              <Phone size={16} className="text-champagne-accessible flex-shrink-0" />
+              <Phone size={16} className="text-[#C09981] flex-shrink-0" />
               <a href="tel:+918808828646" className="text-xs text-ink hover:underline font-medium">
                 +91 8808828646
               </a>
             </div>
 
             <div className="flex items-center gap-3">
-              <Clock size={16} className="text-champagne-accessible flex-shrink-0" />
+              <Clock size={16} className="text-[#C09981] flex-shrink-0" />
               <p className="text-xs text-ink-muted">
                 Monday – Saturday: 11:00 AM – 8:00 PM IST (Sundays by Appointment)
               </p>
@@ -75,7 +75,7 @@ export default function StoreLocatorModal() {
               href={whatsappAppointmentUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-[#1B3B30] text-ivory hover:bg-[#122720] transition-colors py-3 px-4 text-xs uppercase tracking-wider font-semibold"
+              className="w-full flex items-center justify-center gap-2 bg-ink text-white hover:bg-[#353535] transition-colors py-3 px-4 text-xs uppercase tracking-wider font-semibold shadow-sm"
             >
               <MessageCircle size={16} />
               <span>Book Appointment via WhatsApp</span>

@@ -6,21 +6,34 @@
   :root {
     --font-cormorant: "Cormorant Garamond", Georgia, serif;
     --font-inter: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --bg-ivory: #FAF8F4;
+    
+    /* Miss Jo Inspired Brand Design Tokens */
+    --mj-cream: #F5F0EA;
+    --mj-page-bg: #FDFBF9;
+    --mj-black: #1A1A1A;
+    --mj-charcoal: #353535;
+    --mj-mid: #4A4A4A;
+    --mj-light: #9A9A9A;
+    --mj-border: #DDD8D0;
+    --mj-rose-gold: #C09981;
+    --mj-emerald: #108474;
+
+    /* Theme Tokens */
+    --bg-ivory: #FDFBF9;
     --text-ink: #1A1A1A;
-    --accent-champagne: #B89B5E;
-    --border-subtle: #E8E5DF;
+    --accent-champagne: #C09981;
+    --border-subtle: #DDD8D0;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #FAF8F4;
+    background-color: #FDFBF9;
     color: #1A1A1A;
     font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   body {
-    background-color: #FAF8F4;
+    background-color: #FDFBF9;
     color: #1A1A1A;
     font-size: 16px;
     line-height: 1.6;
@@ -31,14 +44,14 @@
     flex-direction: column;
   }
 
-  /* Accessible focus ring for all interactive elements */
+  /* Accessible focus ring in Miss Jo signature rose gold */
   *:focus-visible {
-    outline: 2px solid #B89B5E;
+    outline: 2px solid #C09981;
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  /* Headings use Cormorant Garamond */
+  /* Headings use Cormorant Garamond / Playfair aesthetic */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-cormorant), Georgia, serif;
     font-weight: 400;
@@ -47,24 +60,24 @@
   }
 }
 
-/* Custom luxury utility classes */
+/* Miss Jo signature luxury kicker / eyebrow styling */
 .eyebrow {
   font-family: var(--font-inter), sans-serif;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  font-weight: 500;
-  color: #7A5E20; /* WCAG 4.5:1+ contrast on #FAF8F4 */
+  font-weight: 600;
+  color: #C09981; /* Miss Jo Signature Rose Gold / Terracotta */
 }
 
-/* Primary Button: Solid dark, minimal, 48px standard touch target */
+/* Primary Button: Solid dark slate, minimal, 48px standard touch target */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background-color: #1A1A1A;
-  color: #FAF8F4;
+  color: #FDFBF9;
   padding: 0.875rem 2rem;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -77,8 +90,8 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #2F2D2A;
-  border-color: #2F2D2A;
+  background-color: #353535;
+  border-color: #353535;
   color: #FFFFFF;
 }
 
@@ -108,7 +121,7 @@
 
 .btn-outline:hover:not(:disabled) {
   background-color: #1A1A1A;
-  color: #FAF8F4;
+  color: #FDFBF9;
 }
 
 .btn-outline:disabled {
@@ -116,7 +129,7 @@
   cursor: not-allowed;
 }
 
-/* Soft secondary button with subtle grey border */
+/* Soft secondary button with Miss Jo warm beige border */
 .btn-subtle {
   display: inline-flex;
   align-items: center;
@@ -129,14 +142,14 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border: 1px solid #E8E5DF;
+  border: 1px solid #DDD8D0;
   transition: all 250ms ease;
   min-height: 44px;
 }
 
 .btn-subtle:hover {
   border-color: #1A1A1A;
-  background-color: #FAF8F4;
+  background-color: #F5F0EA;
 }
 
 /* Subtle motion: 1.03 zoom on image hover */
@@ -147,20 +160,20 @@
   transform: scale(1.03);
 }
 
-/* Clean scrollbar */
+/* Miss Jo Clean warm scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF8F4;
+  background: #F5F0EA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D5D1C8;
+  background: #DDD8D0;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B5B1AA;
+  background: #9A9A9A;
 }
 
 /* Accessibility: Respect prefers-reduced-motion */
@@ -174,4 +187,3 @@
     scroll-behavior: auto !important;
   }
 }
-

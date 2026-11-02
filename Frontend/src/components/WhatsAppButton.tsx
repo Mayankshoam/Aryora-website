@@ -16,9 +16,9 @@ export default function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with Aryora Concierge on WhatsApp (+91 8808828646)"
-        className="fixed bottom-24 md:bottom-8 right-5 md:right-8 z-30 flex items-center gap-2.5 bg-[#1B3B30] text-[#FAF8F4] px-4 py-3 shadow-xl hover:bg-[#122A22] transition-all duration-300 group border border-ivory/20"
+        className="fixed bottom-24 md:bottom-8 right-5 md:right-8 z-30 flex items-center gap-2.5 bg-[#1A1A1A] text-white px-4 py-3 shadow-2xl hover:bg-[#353535] transition-all duration-300 group border border-white/10"
       >
-        <MessageCircle size={18} strokeWidth={1.75} className="group-hover:scale-110 transition-transform" />
+        <MessageCircle size={18} strokeWidth={1.75} className="text-[#C09981] group-hover:scale-110 transition-transform" />
         <span className="text-xs uppercase tracking-luxury font-medium hidden sm:inline-block">
           Concierge
         </span>

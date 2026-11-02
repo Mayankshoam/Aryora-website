@@ -88,7 +88,7 @@ export default function CustomizePage() {
     return (
       <div className="max-w-content mx-auto px-6 md:px-8 py-24 text-center">
         <div className="max-w-md mx-auto space-y-4 bg-ivory-pure border border-border-subtle p-8 md:p-12 shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-[#1B3B30] text-ivory flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-full bg-[#108474] text-white flex items-center justify-center mx-auto shadow-sm">
             <Check size={20} />
           </div>
           <p className="eyebrow">Design Received</p>
