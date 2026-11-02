@@ -5,34 +5,66 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Miss Jo Signature Cream & Alabaster Palette
+        cream: {
+          DEFAULT: "#F5F0EA", // Miss Jo Signature Cream (--mj-cream)
+          light: "#FDFBF9",   // Luminous soft white page background
+          pure: "#FFFFFF",    // Pure white for cards & clean surfaces
+          warm: "#F0EADF",    // Miss Jo Warm Linen / Sand
+          soft: "#F7F5EF",    // Miss Jo Alabaster Silk
+          dark: "#EFEBE4",    // Shaded cream for active states
+        },
+        // Ivory aliases mapped to Miss Jo luminous warm palette
         ivory: {
-          DEFAULT: "#FAF8F4",
+          DEFAULT: "#FDFBF9",
           pure: "#FFFFFF",
-          muted: "#F3EFE8",
-          dark: "#ECE7DE",
+          muted: "#F5F0EA",
+          warm: "#F0EADF",
+          dark: "#EFEBE4",
         },
+        // Miss Jo Soft Charcoal & Slate Typography (--mj-black, --mj-mid, --mj-light)
         ink: {
-          DEFAULT: "#1A1A1A",
-          muted: "#5A5752",
-          subtle: "#8A8680",
-          faint: "#B5B1AA",
+          DEFAULT: "#1A1A1A",   // Miss Jo Primary Charcoal (--mj-black)
+          dark: "#141414",
+          charcoal: "#353535",   // Miss Jo Deep Slate
+          muted: "#4A4A4A",     // Miss Jo Mid Slate (--mj-mid)
+          subtle: "#7B7B7B",    // Miss Jo Secondary Gray
+          faint: "#9A9A9A",     // Miss Jo Light Gray (--mj-light)
+          light: "#C4C0B9",
         },
+        // Miss Jo Signature Rose Gold / Terracotta Accent (#C09981)
+        terracotta: {
+          DEFAULT: "#C09981",   // Miss Jo Signature Rose Gold Accent
+          hover: "#A97B63",     // Richer terracotta hover
+          light: "#D1B9A7",     // Miss Jo Cashmere Nude
+          subtle: "#F9F4F0",    // Soft blush tint
+          accessible: "#8E5B42", // WCAG AA 4.5:1+ accessible terracotta on cream
+        },
+        // Champagne alias mapped to Miss Jo warm metallic rose-gold & champagne
         champagne: {
-          DEFAULT: "#B89B5E",
-          hover: "#A3864A",
-          light: "#EADFC7",
-          subtle: "#F6F1E5",
-          // Accessible gold for text on ivory background (WCAG AA 4.5:1+)
-          accessible: "#7A5E20",
+          DEFAULT: "#C09981",   // Miss Jo Rose Gold Accent
+          hover: "#A97B63",
+          light: "#D1B9A7",
+          subtle: "#F9F4F0",
+          accessible: "#8E5B42",
         },
+        // Miss Jo Muted Natural Borders (--mj-border: #DDD8D0)
         border: {
-          subtle: "#E8E5DF",
-          medium: "#D5D1C8",
+          subtle: "#DDD8D0",    // Miss Jo Signature Border (--mj-border)
+          light: "#EAE5DE",     // Delicate divider
+          medium: "#D4CFC5",    // Mid divider
           strong: "#1A1A1A",
         },
+        // Miss Jo Emerald Trust & Assurance Accent (#108474)
         emerald: {
-          DEFAULT: "#1B3B30",
-          subtle: "#E9F0EC",
+          DEFAULT: "#108474",   // Miss Jo Signature Teal-Emerald
+          dark: "#0C6155",
+          hover: "#0E7567",
+          subtle: "#EAF3DE",    // Miss Jo Mint Tint
+        },
+        // Miss Jo Slate Card / Film Backdrop (#353535)
+        slate: {
+          mj: "#353535",
         },
       },
       fontFamily: {
@@ -76,4 +108,3 @@ const config: Config = {
 };
 
 export default config;
-

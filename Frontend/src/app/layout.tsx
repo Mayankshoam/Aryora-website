@@ -9,7 +9,7 @@ import StoreLocatorModal from "@/components/StoreLocatorModal";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const viewport: Viewport = {
-  themeColor: "#FAF8F4",
+  themeColor: "#FDFBF9",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

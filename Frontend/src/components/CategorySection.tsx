@@ -10,10 +10,13 @@ export default function CategorySection() {
 
   return (
     <section className="max-w-content mx-auto px-4 md:px-8 py-10 md:py-16 space-y-8">
-      {/* Title matching Ethera reference ("Your favorites, by category.") */}
-      <div className="flex items-end justify-between border-b border-border-subtle pb-3">
+      {/* Title matching Miss Jo / Ethera luxury editorial reference */}
+      <div className="flex items-end justify-between border-b border-[#DDD8D0] pb-3">
         <div>
-          <h2 className="font-serif text-2xl md:text-3xl text-[#1B3B30] font-normal">
+          <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
+            Curated Categories
+          </p>
+          <h2 className="font-serif text-2xl md:text-3xl text-ink font-light">
             Your favorites, by category.
           </h2>
           <p className="text-xs text-ink-muted mt-1">
@@ -22,13 +25,13 @@ export default function CategorySection() {
         </div>
         <Link
           href="/shop"
-          className="text-xs uppercase tracking-luxury text-champagne-accessible font-semibold hover:underline"
+          className="text-xs uppercase tracking-luxury text-[#C09981] hover:text-ink font-semibold transition-colors"
         >
           View All Categories &rarr;
         </Link>
       </div>
 
-      {/* Grid of 8 Circular / Rounded Category Tiles */}
+      {/* Grid of 8 Circular Category Tiles in Miss Jo Cream */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
         {tiles.map((tile) => (
           <Link
@@ -36,7 +39,7 @@ export default function CategorySection() {
             href={tile.href}
             className="group flex flex-col items-center text-center space-y-2.5 transition-transform duration-300 hover:-translate-y-1"
           >
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-ivory-warm border border-border-subtle group-hover:border-champagne/80 group-hover:shadow-md transition-all overflow-hidden flex items-center justify-center p-2">
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F5F0EA] border border-[#DDD8D0] group-hover:border-[#C09981] group-hover:shadow-md transition-all overflow-hidden flex items-center justify-center p-2">
               <Image
                 src={tile.image}
                 alt={tile.name}
@@ -46,7 +49,7 @@ export default function CategorySection() {
               />
             </div>
             <div className="space-y-0.5">
-              <p className="font-serif text-sm font-medium text-ink group-hover:text-champagne-accessible transition-colors">
+              <p className="font-serif text-sm font-medium text-ink group-hover:text-[#C09981] transition-colors">
                 {tile.name}
               </p>
               <p className="text-[10px] text-ink-muted leading-tight line-clamp-1">
@@ -59,4 +62,3 @@ export default function CategorySection() {
     </section>
   );
 }
-

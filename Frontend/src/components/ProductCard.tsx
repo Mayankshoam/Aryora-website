@@ -35,12 +35,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
   return (
     <div
-      className="group relative flex flex-col bg-ivory-pure border border-border-subtle hover:border-champagne/60 hover:shadow-md transition-all duration-300"
+      className="group relative flex flex-col bg-white border border-[#DDD8D0] hover:border-[#C09981] hover:shadow-md transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. Image Container with Hover Swap */}
-      <div className="relative aspect-square w-full bg-ivory overflow-hidden">
+      {/* 1. Image Container with Hover Swap on Miss Jo Cream Backplate */}
+      <div className="relative aspect-square w-full bg-[#F5F0EA]/60 overflow-hidden">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
             src={primaryImage}
@@ -65,20 +65,20 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           )}
         </Link>
 
-        {/* Top Badges */}
+        {/* Top Badges (Miss Jo Color Scheme) */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start pointer-events-none z-10">
           {product.isBestseller && (
-            <span className="bg-[#1B3B30] text-ivory text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
+            <span className="bg-[#1A1A1A] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
               Bestseller
             </span>
           )}
           {product.isNew && (
-            <span className="bg-champagne-accessible text-ivory text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
+            <span className="bg-[#C09981] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
               New
             </span>
           )}
           {product.discountPercent > 0 && (
-            <span className="bg-[#B93826] text-ivory text-[9px] font-semibold px-2 py-0.5 shadow-sm">
+            <span className="bg-[#A32D2D] text-white text-[9px] font-semibold px-2 py-0.5 shadow-sm">
               {product.discountPercent}% OFF
             </span>
           )}
@@ -95,8 +95,8 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           className={`absolute top-2.5 right-2.5 p-2 rounded-full backdrop-blur-sm transition-all z-10 ${
             wishlisted
-              ? "bg-[#B93826] text-ivory"
-              : "bg-ivory-pure/80 text-ink-muted hover:text-ink hover:bg-ivory-pure"
+              ? "bg-[#C09981] text-white shadow-sm"
+              : "bg-white/90 text-[#4A4A4A] hover:text-[#1A1A1A] hover:bg-white shadow-sm"
           }`}
         >
           <Heart size={15} fill={wishlisted ? "currentColor" : "none"} strokeWidth={1.5} />
@@ -115,7 +115,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               e.stopPropagation();
               addToCart(product, 1, product.sizes?.[0] || "One Size", selectedMetal);
             }}
-            className="w-full py-2 bg-ink/90 hover:bg-ink text-ivory text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
+            className="w-full py-2 bg-[#1A1A1A]/95 hover:bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
           >
             <ShoppingBag size={13} />
             <span>Add to Bag</span>
@@ -149,29 +149,29 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           </div>
 
           {/* Product Name */}
-          <h3 className="font-serif text-sm text-ink leading-snug line-clamp-1 group-hover:text-champagne-accessible transition-colors">
+          <h3 className="font-serif text-sm text-[#1A1A1A] leading-snug line-clamp-1 group-hover:text-[#C09981] transition-colors">
             <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h3>
 
           {/* Specs Subtitle */}
-          <p className="text-[11px] text-ink-muted line-clamp-1">
+          <p className="text-[11px] text-[#4A4A4A] line-clamp-1">
             {product.carat ? `${product.carat}ct ${product.shape} ` : ""}{product.stone}
           </p>
         </div>
 
         {/* Pricing Block */}
-        <div className="pt-1 border-t border-border-subtle/60 flex items-baseline justify-between">
+        <div className="pt-1 border-t border-[#DDD8D0]/80 flex items-baseline justify-between">
           <div className="flex items-baseline space-x-2">
-            <span className="text-sm font-semibold text-ink">
+            <span className="text-sm font-semibold text-[#1A1A1A]">
               {formatPriceINR(product.price)}
             </span>
             {originalPrice && (
-              <span className="text-xs text-ink-light line-through">
+              <span className="text-xs text-[#9A9A9A] line-through">
                 {formatPriceINR(originalPrice)}
               </span>
             )}
           </div>
-          <span className="text-[10px] text-champagne-accessible font-medium">
+          <span className="text-[10px] text-[#108474] font-medium">
             100% IGI
           </span>
         </div>

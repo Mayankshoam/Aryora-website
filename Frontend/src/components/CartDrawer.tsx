@@ -74,9 +74,9 @@ export default function CartDrawer() {
           </button>
         </div>
 
-        {/* Free Insured Shipping Progress */}
-        <div className="px-6 py-3 bg-[#FAF6EE] border-b border-border-subtle flex items-center gap-2 text-xs text-ink-muted">
-          <Truck size={15} className="text-champagne-accessible flex-shrink-0" />
+        {/* Free Insured Shipping Progress (Miss Jo Signature Cream Strip) */}
+        <div className="px-6 py-3 bg-[#F5F0EA] border-b border-[#DDD8D0] flex items-center gap-2 text-xs text-ink-muted">
+          <Truck size={15} className="text-[#108474] flex-shrink-0" />
           <span>Complimentary insured shipping included on all orders across India.</span>
         </div>
 
