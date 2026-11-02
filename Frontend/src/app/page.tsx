@@ -31,7 +31,7 @@ const FEATURED_COLLECTIONS = [
     subtitle: "Type IIa Lab Diamonds · 1ct to 3ct",
     desc: "Laser-inscribed IGI-certified diamonds set in architectural 18K gold prongs.",
     href: "/shop?category=Solitaires",
-    image: "/site/cat-solitaires.jpg",
+    image: "/products/solitaire-01-a.jpg",
     badge: "Certified Solitaires",
   },
   {
@@ -39,7 +39,7 @@ const FEATURED_COLLECTIONS = [
     subtitle: "Awadhi Royal Grandeur",
     desc: "Handcrafted wedding suites uniting certified emeralds and brilliant diamonds.",
     href: "/bridal",
-    image: "/site/cat-bridal.jpg",
+    image: "/products/bridal-01-a.jpg",
     badge: "Haute Joaillerie",
   },
   {
@@ -47,7 +47,7 @@ const FEATURED_COLLECTIONS = [
     subtitle: "Bands, Huggies & Tennis Cuffs",
     desc: "Engineered to be worn effortlessly from morning coffee to evening celebrations.",
     href: "/shop?occasion=Daily+Wear",
-    image: "/site/cat-bracelets.jpg",
+    image: "/products/bracelet-01-a.jpg",
     badge: "Everyday Luxury",
   },
 ];
@@ -57,21 +57,21 @@ const REVIEWS = [
     name: "Dr. Ananya Srivastava",
     city: "Lucknow",
     text: "Ordered a 1.5ct solitaire ring for my engagement. The IGI certificate was immediately verifiable, the gold finish is impeccable, and the concierge was wonderfully attentive on WhatsApp.",
-    jewel: "Sample Solitaire Ring 01",
+    jewel: "Brilliant Round Shaped Solitaire Engagement Ring",
     rating: 5,
   },
   {
     name: "Pooja & Rohan Mehra",
     city: "Delhi NCR",
     text: "We wanted a sustainable wedding set without compromising on size or cut. Ayor’s lab diamonds possess incredible fire, and the transparent price breakup gave us complete confidence.",
-    jewel: "Sample Graduated Tennis Necklace 01",
+    jewel: "Brilliant Round Shaped Solitaire Tennis Necklace",
     rating: 5,
   },
   {
     name: "Vikram Singhania",
     city: "Mumbai",
     text: "The men’s diamond signet ring arrived in 3 days in a beautiful velvet chest. 100% authentic BIS hallmark and very comfortable weight for daily wear.",
-    jewel: "Sample Men's Signet Ring 05",
+    jewel: "Oval Shaped Solitaire Wedding Bands",
     rating: 5,
   },
 ];
