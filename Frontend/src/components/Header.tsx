@@ -299,17 +299,17 @@ export default function Header() {
               <div className="relative w-7 h-7 flex-shrink-0">
                 <Image
                   src="/site/brand-emblem.svg"
-                  alt="Ayor Fine Jewellery Emblem"
+                  alt="AYOR Logo"
                   width={28}
                   height={28}
-                  className="object-contain group-hover:rotate-45 transition-transform duration-500"
+                  className="object-contain group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="text-left">
                 <span className="font-serif text-2xl md:text-3xl tracking-[0.22em] text-ink font-medium leading-none block">
                   AYOR
                 </span>
-                <span className="text-[8px] uppercase tracking-[0.3em] text-champagne-accessible font-semibold block pt-0.5">
+                <span className="text-[8px] uppercase tracking-[0.3em] text-[#C5A880] font-semibold block pt-0.5">
                   Light. Legacy. You.
                 </span>
               </div>
@@ -391,9 +391,20 @@ export default function Header() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
-              <span className="font-serif text-xl tracking-widest text-ink font-semibold">
-                AYOR
-              </span>
+              <div className="flex items-center gap-2.5">
+                <div className="relative w-6 h-6 flex-shrink-0">
+                  <Image
+                    src="/site/brand-emblem.svg"
+                    alt="AYOR Logo"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
+                <span className="font-serif text-xl tracking-widest text-ink font-semibold">
+                  AYOR
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}

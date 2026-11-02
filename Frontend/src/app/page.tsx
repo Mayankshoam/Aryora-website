@@ -327,13 +327,13 @@ export default function HomePage() {
           </div>
 
           <div className="lg:col-span-4 flex items-center justify-center">
-            <div className="relative w-56 h-56 rounded-full border border-[#C09981]/40 p-4 flex items-center justify-center">
+            <div className="relative w-56 h-56 rounded-full border border-[#C5A880]/40 p-4 flex items-center justify-center bg-white/40 backdrop-blur-sm shadow-sm">
               <Image
                 src="/site/brand-emblem.svg"
-                alt="Ayor Custom Emblem"
+                alt="AYOR Monogram Logo"
                 width={140}
                 height={140}
-                className="object-contain animate-spin-slow opacity-85"
+                className="object-contain opacity-90 transition-transform duration-500 hover:scale-105"
               />
             </div>
           </div>

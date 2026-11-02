@@ -213,16 +213,15 @@ fs.writeFileSync(path.join(SITE_DIR, 'hero-poster.svg'), heroPosterSvg, 'utf8');
 const brandEmblemSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
   <defs>
     <linearGradient id="emblemGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D4AF37"/>
-      <stop offset="50%" stop-color="#B89B5E"/>
-      <stop offset="100%" stop-color="#7A5E20"/>
+      <stop offset="0%" stop-color="#E8D0A7"/>
+      <stop offset="35%" stop-color="#C5A880"/>
+      <stop offset="70%" stop-color="#A88656"/>
+      <stop offset="100%" stop-color="#7E5E2F"/>
     </linearGradient>
   </defs>
-  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#emblemGold)" stroke-width="2.5" opacity="0.6"/>
-  <!-- Multi-facet Lotus Star -->
-  <polygon points="100,25 125,75 175,100 125,125 100,175 75,125 25,100 75,75" fill="none" stroke="url(#emblemGold)" stroke-width="3"/>
-  <polygon points="100,45 115,85 155,100 115,115 100,155 85,115 45,100 85,85" fill="#FAF8F4" stroke="#B89B5E" stroke-width="1.5" opacity="0.9"/>
-  <circle cx="100" cy="100" r="10" fill="url(#emblemGold)"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#emblemGold)" stroke-width="2.5" opacity="0.9"/>
+  <circle cx="100" cy="100" r="83" fill="none" stroke="url(#emblemGold)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.45"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#emblemGold)" d="M 91 44 L 109 44 C 112 44 114 46 114 49 L 148 148 C 150 153 154 154 159 155 L 159 158 L 126 158 L 126 155 C 131 154 134 152 133 148 L 126 128 L 74 128 L 67 148 C 66 152 69 154 74 155 L 74 158 L 41 158 L 41 155 C 46 154 50 153 52 148 L 86 49 C 86 46 88 44 91 44 Z M 100 66 L 122 120 L 78 120 Z"/>
 </svg>`;
 
 fs.writeFileSync(path.join(SITE_DIR, 'brand-emblem.svg'), brandEmblemSvg, 'utf8');
