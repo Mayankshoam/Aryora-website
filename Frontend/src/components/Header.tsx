@@ -24,69 +24,41 @@ const CATEGORIES_MENU = [
   {
     name: "Rings",
     href: "/shop?category=Rings",
-    desc: "Solitaires, Eternity & Stacking Bands",
     items: [
       { label: "All Rings", href: "/shop?category=Rings" },
-      { label: "Solitaire Rings", href: "/shop?category=Rings&style=Solitaire" },
-      { label: "Eternity Bands", href: "/shop?category=Rings&subcategory=Eternity+Bands" },
-      { label: "Halo Rings", href: "/shop?category=Rings&style=Halo" },
-      { label: "Men's Bands", href: "/shop?category=Rings&gender=Men" },
+      { label: "Solitaire Engagement", href: "/shop?category=Rings&style=Solitaire" },
+      { label: "Eternity & Stacking Bands", href: "/shop?category=Rings&subcategory=Eternity+Bands" },
+      { label: "Classic Wedding Bands", href: "/shop?category=Rings&gender=Men" },
     ],
   },
   {
     name: "Earrings",
     href: "/shop?category=Earrings",
-    desc: "Classic Studs, Luminary Drops & Huggies",
     items: [
       { label: "All Earrings", href: "/shop?category=Earrings" },
       { label: "Solitaire Studs", href: "/shop?category=Earrings&subcategory=Studs" },
-      { label: "Luminary Drops", href: "/shop?category=Earrings&subcategory=Drops" },
+      { label: "Drops & Danglers", href: "/shop?category=Earrings&subcategory=Drops" },
       { label: "Diamond Huggies", href: "/shop?category=Earrings&subcategory=Hoops" },
-      { label: "Chandeliers", href: "/shop?category=Earrings&subcategory=Chandeliers" },
     ],
   },
   {
-    name: "Pendants",
-    href: "/shop?category=Pendants",
-    desc: "Floating Bezels & Geometric Bars",
-    items: [
-      { label: "All Pendants", href: "/shop?category=Pendants" },
-      { label: "Solitaire Pendants", href: "/shop?category=Pendants&subcategory=Solitaires" },
-      { label: "Teardrop Halos", href: "/shop?category=Pendants&subcategory=Halo+Pendants" },
-      { label: "Geometric Bars", href: "/shop?category=Pendants&subcategory=Geometric" },
-    ],
-  },
-  {
-    name: "Necklaces",
+    name: "Necklaces & Pendants",
     href: "/shop?category=Necklaces",
-    desc: "Graduated Tennis Lines & Chokers",
     items: [
       { label: "All Necklaces", href: "/shop?category=Necklaces" },
-      { label: "Graduated Tennis", href: "/shop?category=Necklaces&style=Tennis" },
-      { label: "Heritage Chokers", href: "/shop?category=Necklaces&subcategory=Chokers" },
-      { label: "Collar Solitaires", href: "/shop?category=Necklaces&subcategory=Solitaires" },
+      { label: "Solitaire Pendants With Chain", href: "/shop?category=Pendants" },
+      { label: "Diamond Tennis Necklaces", href: "/shop?category=Necklaces&style=Tennis" },
+      { label: "Chokers & Heritage Chains", href: "/shop?category=Necklaces&subcategory=Chokers" },
     ],
   },
   {
-    name: "Bracelets",
+    name: "Bracelets & Solitaires",
     href: "/shop?category=Bracelets",
-    desc: "Tennis Lines, Open Cuffs & Chains",
     items: [
       { label: "All Bracelets", href: "/shop?category=Bracelets" },
-      { label: "Classic Tennis Lines", href: "/shop?category=Bracelets&style=Tennis" },
-      { label: "Open Cuff Bangles", href: "/shop?category=Bracelets&subcategory=Bangles" },
-      { label: "Minimal Chains", href: "/shop?category=Bracelets&subcategory=Chain+Bracelets" },
-    ],
-  },
-  {
-    name: "Solitaires & Bridal",
-    href: "/bridal",
-    desc: "1ct to 3ct IGI Certified & Wedding Suites",
-    items: [
-      { label: "Heritage Bridal Suite", href: "/bridal" },
-      { label: "2ct+ Solitaires", href: "/shop?category=Solitaires" },
-      { label: "Modern Mangalsutras", href: "/shop?category=Bridal&subcategory=Mangalsutras" },
-      { label: "Emerald Wedding Suites", href: "/shop?category=Bridal&stone=Emerald+%26+Diamond" },
+      { label: "Solitaire Tennis Bracelets", href: "/shop?category=Bracelets&style=Tennis" },
+      { label: "Certified Solitaires (1-3ct)", href: "/shop?category=Solitaires" },
+      { label: "Heritage Bridal Suites", href: "/bridal" },
     ],
   },
 ];
@@ -162,7 +134,7 @@ export default function Header() {
       >
         <div className="max-w-content mx-auto px-4 md:px-8 h-18 md:h-20 flex items-center justify-between">
           {/* LEFT: Categories, Customize, More */}
-          <nav className="hidden lg:flex items-center space-x-7 text-xs uppercase tracking-luxury font-medium text-ink">
+          <nav className="hidden lg:flex items-center space-x-8 text-xs font-medium text-[#111111]">
             {/* Categories Mega Dropdown Trigger */}
             <div
               className="relative"
@@ -172,13 +144,13 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "categories" ? null : "categories")}
-                className={`flex items-center gap-1.5 py-4 transition-colors hover:text-champagne-accessible ${
-                  activeDropdown === "categories" ? "text-champagne-accessible font-semibold" : ""
+                className={`flex items-center gap-1.5 py-4 transition-colors font-semibold tracking-wider text-[13px] text-[#111111] hover:text-[#8E5B42] ${
+                  activeDropdown === "categories" ? "text-[#8E5B42]" : ""
                 }`}
               >
                 <span>Categories</span>
                 <ChevronDown
-                  size={13}
+                  size={14}
                   className={`transition-transform duration-200 ${
                     activeDropdown === "categories" ? "rotate-180" : ""
                   }`}
@@ -189,41 +161,89 @@ export default function Header() {
               {activeDropdown === "categories" && (
                 <div
                   ref={dropdownRef}
-                  className="absolute top-full left-0 w-[840px] bg-ivory-pure border border-border-subtle shadow-xl p-6 grid grid-cols-3 gap-6 animate-fadeIn"
+                  className="absolute top-full left-0 w-[880px] bg-white border border-[#DDD8D0] shadow-[0_20px_45px_rgba(0,0,0,0.12)] rounded-b-2xl p-7 animate-fadeIn z-50 normal-case"
                 >
-                  {CATEGORIES_MENU.map((col) => (
-                    <div key={col.name} className="space-y-2.5">
-                      <Link
-                        href={col.href}
-                        className="font-serif text-base text-ink font-semibold hover:text-champagne-accessible transition-colors block"
-                      >
-                        {col.name}
-                      </Link>
-                      <p className="text-[10px] text-ink-muted leading-tight">{col.desc}</p>
-                      <ul className="space-y-1.5 pt-1 text-[11px] text-ink-muted">
-                        {col.items.map((sub) => (
-                          <li key={sub.label}>
-                            <Link
-                              href={sub.href}
-                              className="hover:text-ink hover:underline transition-colors block py-0.5"
-                            >
-                              {sub.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                  <div className="grid grid-cols-12 gap-7">
+                    {/* 4 Clean Columns (Col-span 8) */}
+                    <div className="col-span-8 grid grid-cols-4 gap-6">
+                      {CATEGORIES_MENU.map((col) => (
+                        <div key={col.name} className="space-y-3">
+                          <Link
+                            href={col.href}
+                            onClick={() => setActiveDropdown(null)}
+                            className="font-serif text-[15px] text-[#111111] font-semibold hover:text-[#8E5B42] transition-colors block pb-1 border-b border-[#EAE5DE]"
+                          >
+                            {col.name}
+                          </Link>
+                          <ul className="space-y-2 text-[13px]">
+                            {col.items.map((sub) => (
+                              <li key={sub.label}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={() => setActiveDropdown(null)}
+                                  className="text-[#2D2D2D] hover:text-[#8E5B42] hover:translate-x-1 transition-all duration-150 block py-0.5 font-normal"
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                  <div className="col-span-3 pt-3 border-t border-border-subtle flex items-center justify-between text-[11px]">
-                    <span className="text-ink-muted font-normal">
-                      Every jewel is accompanied by independent IGI documentation and BIS 750 hallmark.
-                    </span>
+
+                    {/* Spotlight Card (Col-span 4) */}
+                    <div className="col-span-4 bg-[#FAF7F2] border border-[#EAE5DE] rounded-xl p-4 flex flex-col justify-between">
+                      <div>
+                        <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-3 bg-white">
+                          <Image
+                            src="/products/ring-01-a.jpg"
+                            alt="Brilliant Round Solitaire Engagement Ring"
+                            fill
+                            className="object-cover hover:scale-105 transition-transform duration-500"
+                          />
+                          <span className="absolute top-2 left-2 bg-[#1A1A1A] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full">
+                            Bestseller
+                          </span>
+                        </div>
+                        <p className="font-serif text-sm font-semibold text-[#111111] leading-snug">
+                          Brilliant Round Solitaire Ring
+                        </p>
+                        <p className="text-[11px] text-[#4A4A4A] mt-0.5">
+                          925 Silver · IGI Certified Lab Diamond
+                        </p>
+                      </div>
+                      <Link
+                        href="/product/brilliant-round-shaped-solitaire-engagement-ring"
+                        onClick={() => setActiveDropdown(null)}
+                        className="mt-3 pt-2.5 border-t border-[#DDD8D0] inline-flex items-center justify-between text-xs font-semibold text-[#8E5B42] hover:text-[#111111] transition-colors group"
+                      >
+                        <span>Explore Solitaire</span>
+                        <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Bottom Trust & Full Catalog Bar */}
+                  <div className="mt-6 pt-4 border-t border-[#EAE5DE] flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-3 text-[#2D2D2D] font-medium">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#108474]" />
+                        100% IGI Certified Diamonds
+                      </span>
+                      <span className="text-[#C4C0B9]">·</span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C09981]" />
+                        925 Sterling Silver & 18K Gold
+                      </span>
+                    </div>
                     <Link
                       href="/shop"
-                      className="font-semibold text-champagne-accessible hover:text-ink flex items-center gap-1"
+                      onClick={() => setActiveDropdown(null)}
+                      className="font-semibold text-[#8E5B42] hover:text-[#111111] flex items-center gap-1.5 group transition-colors"
                     >
-                      <span>Explore Full Catalogue</span>
-                      <ArrowRight size={12} />
+                      <span>Explore Entire Catalogue</span>
+                      <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -233,7 +253,7 @@ export default function Header() {
             {/* Customize / Atelier Link */}
             <Link
               href="/customize"
-              className="py-4 hover:text-champagne-accessible transition-colors"
+              className="py-4 font-semibold tracking-wider text-[13px] text-[#111111] hover:text-[#8E5B42] transition-colors"
             >
               Customize
             </Link>
@@ -247,13 +267,13 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "more" ? null : "more")}
-                className={`flex items-center gap-1.5 py-4 transition-colors hover:text-champagne-accessible ${
-                  activeDropdown === "more" ? "text-champagne-accessible font-semibold" : ""
+                className={`flex items-center gap-1.5 py-4 transition-colors font-semibold tracking-wider text-[13px] text-[#111111] hover:text-[#8E5B42] ${
+                  activeDropdown === "more" ? "text-[#8E5B42]" : ""
                 }`}
               >
                 <span>More</span>
                 <ChevronDown
-                  size={13}
+                  size={14}
                   className={`transition-transform duration-200 ${
                     activeDropdown === "more" ? "rotate-180" : ""
                   }`}
@@ -264,16 +284,17 @@ export default function Header() {
               {activeDropdown === "more" && (
                 <div
                   ref={dropdownRef}
-                  className="absolute top-full left-0 w-72 bg-ivory-pure border border-border-subtle shadow-xl p-4 space-y-3 animate-fadeIn"
+                  className="absolute top-full left-0 w-80 bg-white border border-[#DDD8D0] shadow-[0_20px_45px_rgba(0,0,0,0.1)] rounded-2xl p-3.5 space-y-1 animate-fadeIn z-50 normal-case"
                 >
                   {MORE_MENU.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="block p-2 rounded-sm hover:bg-ivory-warm/40 transition-colors"
+                      onClick={() => setActiveDropdown(null)}
+                      className="block p-2.5 rounded-lg hover:bg-[#FAF7F2] transition-colors"
                     >
-                      <p className="font-medium text-ink text-xs">{item.label}</p>
-                      <p className="text-[10px] text-ink-muted">{item.desc}</p>
+                      <p className="font-semibold text-[#111111] text-[13px]">{item.label}</p>
+                      <p className="text-[11px] text-[#4A4A4A] mt-0.5 leading-snug">{item.desc}</p>
                     </Link>
                   ))}
                 </div>
@@ -415,8 +436,8 @@ export default function Header() {
               </button>
             </div>
 
-            <div className="space-y-4 text-xs uppercase tracking-luxury font-medium text-ink">
-              <p className="text-[10px] uppercase tracking-wider font-semibold text-champagne pt-1">
+            <div className="space-y-4 text-xs font-medium text-[#111111]">
+              <p className="text-[10px] uppercase tracking-wider font-semibold text-[#8E5B42] pt-1">
                 Fine Jewellery Categories
               </p>
               {CATEGORIES_MENU.map((cat) => (
@@ -424,7 +445,7 @@ export default function Header() {
                   <Link
                     href={cat.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block font-serif text-sm normal-case font-medium hover:text-champagne-accessible"
+                    className="block font-serif text-base font-semibold text-[#111111] hover:text-[#8E5B42]"
                   >
                     {cat.name}
                   </Link>
@@ -442,7 +463,7 @@ export default function Header() {
                 <Link
                   href="/bridal"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-ink font-medium"
+                  className="block text-[#111111] font-semibold text-sm"
                 >
                   Heritage Bridal Suites
                 </Link>
@@ -452,7 +473,7 @@ export default function Header() {
                     setMobileMenuOpen(false);
                     openStoreLocator();
                   }}
-                  className="block text-left text-ink-muted hover:text-ink"
+                  className="block text-left text-[#2D2D2D] hover:text-[#111111] text-sm"
                 >
                   Lucknow Boutique Atelier
                 </button>
