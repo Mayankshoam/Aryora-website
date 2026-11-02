@@ -95,7 +95,7 @@ export default function RootLayout({
       addressRegion: "Uttar Pradesh",
       addressCountry: "IN",
     },
-    sameAs: ["https://instagram.com/ayor.legacy"],
+    sameAs: ["https://instagram.com/ayorjewellery"],
     priceRange: "₹₹₹",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

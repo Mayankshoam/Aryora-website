@@ -388,12 +388,12 @@ export default function HomePage() {
           <div className="inline-flex items-center space-x-1.5 text-xs text-[#C09981] font-medium">
             <InstagramIcon size={14} />
             <a
-              href="https://instagram.com/ayor.legacy"
+              href="https://instagram.com/ayorjewellery"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline font-semibold"
             >
-              @ayor.legacy
+              @ayorjewellery
             </a>
           </div>
           <h2 className="font-serif text-2xl md:text-3xl text-ink font-light">

@@ -320,13 +320,13 @@ export default function Footer() {
               </p>
               <div className="pt-2">
                 <a
-                  href="https://instagram.com/ayor.legacy"
+                  href="https://instagram.com/ayorjewellery"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wider text-ink hover:text-champagne-accessible transition-colors font-medium"
                 >
                   <InstagramIcon size={14} />
-                  <span>@ayor.legacy</span>
+                  <span>@ayorjewellery</span>
                 </a>
               </div>
             </div>
