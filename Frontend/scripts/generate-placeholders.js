@@ -212,16 +212,19 @@ fs.writeFileSync(path.join(SITE_DIR, 'hero-poster.svg'), heroPosterSvg, 'utf8');
 // 2. Brand Emblem
 const brandEmblemSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
   <defs>
-    <linearGradient id="emblemGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E8D0A7"/>
-      <stop offset="35%" stop-color="#C5A880"/>
-      <stop offset="70%" stop-color="#A88656"/>
-      <stop offset="100%" stop-color="#7E5E2F"/>
+    <linearGradient id="ayorDarkGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#144636"/>
+      <stop offset="50%" stop-color="#0E382B"/>
+      <stop offset="100%" stop-color="#0A281E"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C896"/>
+      <stop offset="100%" stop-color="#C5A880"/>
     </linearGradient>
   </defs>
-  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#emblemGold)" stroke-width="2.5" opacity="0.9"/>
-  <circle cx="100" cy="100" r="83" fill="none" stroke="url(#emblemGold)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.45"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#emblemGold)" d="M 91 44 L 109 44 C 112 44 114 46 114 49 L 148 148 C 150 153 154 154 159 155 L 159 158 L 126 158 L 126 155 C 131 154 134 152 133 148 L 126 128 L 74 128 L 67 148 C 66 152 69 154 74 155 L 74 158 L 41 158 L 41 155 C 46 154 50 153 52 148 L 86 49 C 86 46 88 44 91 44 Z M 100 66 L 122 120 L 78 120 Z"/>
+  <circle cx="100" cy="100" r="92" fill="#F7F4EE" stroke="#0E382B" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#goldAccent)" stroke-width="1" stroke-dasharray="3 3" opacity="0.65"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#ayorDarkGreen)" d="M 93 42 L 107 42 L 155 156 L 134 156 L 122 126 L 78 126 L 66 156 L 45 156 Z M 100 70 L 116 110 L 84 110 Z"/>
 </svg>`;
 
 fs.writeFileSync(path.join(SITE_DIR, 'brand-emblem.svg'), brandEmblemSvg, 'utf8');

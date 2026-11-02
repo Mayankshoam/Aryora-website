@@ -317,13 +317,13 @@ export default function Header() {
           {/* CENTER: Brand Emblem & Logo */}
           <div className="flex-1 lg:flex-initial text-center">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="relative w-7 h-7 flex-shrink-0">
+              <div className="relative w-8 h-8 flex-shrink-0">
                 <Image
                   src="/site/brand-emblem.svg"
                   alt="AYOR Logo"
-                  width={28}
-                  height={28}
-                  className="object-contain group-hover:scale-105 transition-transform duration-300"
+                  width={32}
+                  height={32}
+                  className="object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
                 />
               </div>
               <div className="text-left">
@@ -413,12 +413,12 @@ export default function Header() {
           >
             <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
               <div className="flex items-center gap-2.5">
-                <div className="relative w-6 h-6 flex-shrink-0">
+                <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
                     src="/site/brand-emblem.svg"
                     alt="AYOR Logo"
-                    width={24}
-                    height={24}
+                    width={28}
+                    height={28}
                     className="object-contain"
                   />
                 </div>
