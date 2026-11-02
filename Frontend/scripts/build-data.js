@@ -739,8 +739,8 @@ const SITE_CONFIG = {
     whatsapp: "+91 8808828646",
     email: "aryora.legacy@hotmail.com",
     address: "Aryora Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
-    instagram: "https://instagram.com/aryora.legacy",
-    instagramHandle: "@aryora.legacy"
+    instagram: "https://instagram.com/ayorjewellery",
+    instagramHandle: "@ayorjewellery"
   },
   hero: {
     eyebrow: "Awadhi Royal Atelier · Lab-Grown Fine Joaillerie",
