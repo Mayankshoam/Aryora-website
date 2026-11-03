@@ -353,7 +353,18 @@ export default function Footer() {
 
         {/* 5. Payment Methods & Copyright */}
         <div className="mt-10 pt-6 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between text-xs text-ink-light gap-4">
-          <p>© {new Date().getFullYear()} Ayor Fine Jewellery. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <div className="relative h-5 w-20 flex items-center">
+              <Image
+                src="/site/ayor-logo.svg"
+                alt="AYOR"
+                width={80}
+                height={24}
+                className="w-full h-full object-contain opacity-85"
+              />
+            </div>
+            <p>© {new Date().getFullYear()} Ayor Fine Jewellery. All rights reserved.</p>
+          </div>
           <p className="font-serif italic tracking-wider text-sm text-ink-muted">
             Light. Legacy. You.
           </p>
