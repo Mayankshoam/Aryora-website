@@ -187,3 +187,51 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* 3D Namaste Welcome Walk Animations */
+@keyframes namasteWalkLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-80px, 30px, -120px) rotateY(25deg) scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(5px, -5px, 20px) rotateY(6deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(4deg) scale(1);
+  }
+}
+
+@keyframes namasteWalkRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(80px, 30px, -120px) rotateY(-25deg) scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-5px, -5px, 20px) rotateY(-6deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateY(-4deg) scale(1);
+  }
+}
+
+@keyframes gentleSway {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.5deg);
+  }
+}
+
+.animate-namaste-walk-left {
+  animation: namasteWalkLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, gentleSway 4s ease-in-out infinite 1.2s;
+}
+
+.animate-namaste-walk-right {
+  animation: namasteWalkRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, gentleSway 4s ease-in-out infinite 1.4s;
+}
