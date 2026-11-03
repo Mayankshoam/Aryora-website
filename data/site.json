@@ -54,52 +54,58 @@
   ],
   "categoryTiles": [
     {
+      "name": "Bridal Rings",
+      "href": "/bridal",
+      "image": "/site/categories/cat-bridal-rings.webp",
+      "count": "Wedding & Engagement"
+    },
+    {
       "name": "Rings",
       "href": "/shop?category=Rings",
-      "image": "/site/cat-rings.jpg",
+      "image": "/site/categories/cat-rings.webp",
       "count": "Solitaires & Bands"
     },
     {
       "name": "Earrings",
       "href": "/shop?category=Earrings",
-      "image": "/site/cat-earrings.jpg",
+      "image": "/site/categories/cat-earrings.webp",
       "count": "Studs & Drops"
-    },
-    {
-      "name": "Pendants",
-      "href": "/shop?category=Pendants",
-      "image": "/site/cat-pendants.jpg",
-      "count": "Solitaire Bezels"
-    },
-    {
-      "name": "Necklaces",
-      "href": "/shop?category=Necklaces",
-      "image": "/site/cat-necklaces.jpg",
-      "count": "Tennis & Chokers"
     },
     {
       "name": "Bracelets",
       "href": "/shop?category=Bracelets",
-      "image": "/site/cat-bracelets.jpg",
-      "count": "Tennis Cuffs"
+      "image": "/site/categories/cat-bracelets.webp",
+      "count": "Tennis & Cuffs"
+    },
+    {
+      "name": "Necklaces",
+      "href": "/shop?category=Necklaces",
+      "image": "/site/categories/cat-necklaces.webp",
+      "count": "Tennis & Chokers"
+    },
+    {
+      "name": "Mangalsutras",
+      "href": "/shop?category=Bridal",
+      "image": "/site/categories/cat-mangalsutras.webp",
+      "count": "Modern Heirloom"
+    },
+    {
+      "name": "Bangles",
+      "href": "/shop?category=Bracelets",
+      "image": "/site/categories/cat-bangles.webp",
+      "count": "Open Cuffs & Bangles"
+    },
+    {
+      "name": "Pendants",
+      "href": "/shop?category=Pendants",
+      "image": "/site/categories/cat-pendants.webp",
+      "count": "Solitaire Bezels"
     },
     {
       "name": "Solitaires",
       "href": "/shop?category=Solitaires",
-      "image": "/site/cat-solitaires.jpg",
+      "image": "/site/categories/cat-solitaires.webp",
       "count": "IGI 0.5ct to 3ct"
-    },
-    {
-      "name": "Bridal",
-      "href": "/bridal",
-      "image": "/site/cat-bridal.jpg",
-      "count": "Wedding Suites"
-    },
-    {
-      "name": "Mangalsutras",
-      "href": "/shop?category=Bridal&subcategory=Mangalsutras",
-      "image": "/site/cat-mangalsutras.jpg",
-      "count": "Diamond Bars"
     }
   ],
   "certifications": [
