@@ -56,7 +56,7 @@ const REVIEWS = [
   {
     name: "Dr. Ananya Srivastava",
     city: "Lucknow",
-    text: "Ordered a 1.5ct solitaire ring for my engagement. The IGI certificate was immediately verifiable, the gold finish is impeccable, and the concierge was wonderfully attentive on WhatsApp.",
+    text: "Ordered a 1.5ct solitaire ring for my engagement. The IGI certificate was immediately verifiable, the gold finish is impeccable, and the customer care team was wonderfully attentive on WhatsApp.",
     jewel: "Brilliant Round Shaped Solitaire Engagement Ring",
     rating: 5,
   },
@@ -296,38 +296,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. CUSTOM ATELIER BANNER (Miss Jo #353535 Slate & Rose Gold Aesthetic) */}
+      {/* 7. CUSTOM ATELIER BANNER (Eye-Comfort Luxury Cream & Dark Green Aesthetic) */}
       <section className="max-w-content mx-auto px-4 md:px-8">
-        <div className="bg-[#353535] text-white p-8 md:p-14 grid lg:grid-cols-12 gap-8 items-center border border-[#C09981]/40 shadow-xl">
+        <div className="bg-[#FAF7F2] border border-[#DDD8D0] shadow-md rounded-2xl p-8 md:p-14 grid lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
-            <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
-              Bespoke Joaillerie Service
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold text-[#0E382B] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#0E382B]" />
+              Custom Jewellery & Bridal Craft
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight">
-              Design Your Custom Ring or Heirloom
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium text-[#111111] leading-tight">
+              Design Your Dream Custom Ring
             </h2>
-            <p className="text-xs md:text-sm text-cream-warm/90 leading-relaxed max-w-xl font-light">
-              Choose your diamond shape (Round, Oval, Emerald, Pear), metal karatage (18K Yellow, Rose, White Gold), and band prongs. Our master karigars craft your vision in 3D CAD before casting.
+            <p className="text-sm md:text-base text-[#3A3A3A] leading-relaxed max-w-xl font-normal">
+              Select your diamond shape (Round, Oval, Emerald, Pear), metal purity (18K Gold & 925 Sterling Silver), and custom setting. Our master karigars handcraft your bespoke design with 100% certified diamonds.
             </p>
             <div className="pt-2 flex flex-wrap gap-4">
               <Link
                 href="/customize"
-                className="bg-[#C09981] text-white hover:bg-[#A97B63] transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 inline-flex items-center gap-2 shadow-md"
+                className="bg-[#0E382B] hover:bg-[#144636] text-white transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 rounded-sm inline-flex items-center gap-2 shadow-sm"
               >
-                <span>Launch Custom Ring Builder</span>
+                <span>Customize Your Ring Now</span>
                 <ArrowRight size={14} />
               </Link>
               <Link
                 href="/bridal"
-                className="border border-white/80 text-white hover:bg-white hover:text-ink transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 inline-flex items-center gap-2 backdrop-blur-sm"
+                className="border border-[#0E382B] text-[#0E382B] hover:bg-[#0E382B] hover:text-white transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 rounded-sm inline-flex items-center gap-2"
               >
-                <span>Book Bridal Consultation</span>
+                <span>Book Free Video Consultation</span>
               </Link>
             </div>
           </div>
 
           <div className="lg:col-span-4 flex items-center justify-center">
-            <div className="relative w-56 h-56 rounded-full border border-[#0E382B]/20 p-4 flex items-center justify-center bg-white/50 backdrop-blur-sm shadow-md">
+            <div className="relative w-56 h-56 rounded-full border border-[#0E382B]/20 p-4 flex items-center justify-center bg-white shadow-md">
               <Image
                 src="/site/brand-emblem.svg"
                 alt="AYOR Monogram Logo"

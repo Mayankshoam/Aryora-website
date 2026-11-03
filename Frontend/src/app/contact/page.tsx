@@ -37,10 +37,10 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
-      <Breadcrumbs items={[{ label: "Concierge & Contact" }]} />
+      <Breadcrumbs items={[{ label: "Contact & Support" }]} />
 
       <div className="max-w-xl my-6 space-y-2">
-        <p className="eyebrow">Client Support & Concierge</p>
+        <p className="eyebrow">Customer Support & Assistance</p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink">Connect with Ayor</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
           Whether inquiring about a bespoke bridal commission, IGI grading verification, or boutique visit, our Lucknow atelier is at your service.
@@ -67,7 +67,7 @@ export default function ContactPage() {
               <div className="flex items-start gap-3">
                 <Phone size={18} className="text-champagne-accessible flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-ink">Concierge Direct</p>
+                  <p className="font-medium text-ink">Call & WhatsApp Support</p>
                   <a href="tel:+918808828646" className="hover:text-ink underline">
                     +91 8808828646
                   </a>
@@ -87,7 +87,7 @@ export default function ContactPage() {
 
             <div className="pt-4 border-t border-border-subtle">
               <a
-                href="https://wa.me/918808828646?text=Hello%20Ayor%2C%20I%20would%20like%20to%20speak%20with%20your%20design%20concierge."
+                href="https://wa.me/918808828646?text=Hello%20Ayor%2C%20I%20would%20like%20to%20speak%20with%20your%20jewellery%20team."
                 target="_blank"
                 rel="noreferrer"
                 className="btn-primary w-full text-xs flex items-center justify-center gap-2"
@@ -112,7 +112,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-serif text-2xl text-ink">Enquiry Dispatched</h3>
                 <p className="text-xs text-ink-muted max-w-sm mx-auto leading-relaxed">
-                  Thank you for reaching out. Our concierge will review your message and reply via WhatsApp or email within a few hours.
+                  Thank you for reaching out. Our support team will review your message and reply via WhatsApp or email within a few hours.
                 </p>
               </div>
             ) : (

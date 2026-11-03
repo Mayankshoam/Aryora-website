@@ -299,7 +299,7 @@ export default function Footer() {
           {/* Column 4: Contact & Atelier */}
           <div>
             <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
-              Concierge & Atelier
+              Customer Care & Store
             </h3>
             <div className="space-y-3 text-xs text-ink-muted">
               <p className="flex items-start gap-2">

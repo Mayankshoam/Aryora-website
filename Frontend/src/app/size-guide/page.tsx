@@ -85,10 +85,10 @@ export default function RingSizeGuidePage() {
         <div className="border border-border-subtle bg-ivory-pure p-8 space-y-4">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-ink">
             <Phone size={16} className="text-champagne-accessible" />
-            <span>Method 2: Virtual Concierge Sizing</span>
+            <span>Method 2: Free WhatsApp Sizing Help</span>
           </div>
           <p className="text-xs text-ink-muted leading-relaxed">
-            Our atelier specialists can guide you through sizing over a private WhatsApp video consultation, or dispatch a physical ring sizing tool directly to your doorstep in India.
+            Our jewellery specialists can guide you through sizing over a private WhatsApp video consultation, or dispatch a physical ring sizing tool directly to your doorstep in India.
           </p>
           <div className="pt-2">
             <a
@@ -97,7 +97,7 @@ export default function RingSizeGuidePage() {
               rel="noreferrer"
               className="btn-outline text-xs"
             >
-              Consult Our Concierge
+              Get WhatsApp Size Help
             </a>
           </div>
         </div>

@@ -41,13 +41,13 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="font-serif text-xl text-ink">4. Concierge Data Requests</h2>
+          <h2 className="font-serif text-xl text-ink">4. Customer Data Requests</h2>
           <p>
-            You may request an update or deletion of your personal contact records at any time by contacting our atelier concierge at{" "}
+            You may request an update or deletion of your personal contact records at any time by contacting our support team at{" "}
             <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
               ayor.legacy@hotmail.com
             </a>{" "}
-            or +91 8808828646.
+            or WhatsApp +91 8808828646.
           </p>
         </section>
       </div>

@@ -179,14 +179,14 @@ export default function ProductDetailPage() {
 
   const handleWhatsAppEnquiry = () => {
     const text = encodeURIComponent(
-      `Hello Ayor Concierge, I would like to enquire about ${product.name} (SKU: ${product.sku || product.id}, Plating: ${selectedPlating}, Carat: ${selectedCarat}ct). Please share details and customization options.`
+      `Hello AYOR team, I would like to enquire about ${product.name} (SKU: ${product.sku || product.id}, Plating: ${selectedPlating}, Carat: ${selectedCarat}ct). Please share details and customization options.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
 
   const handleVideoConsultation = () => {
     const text = encodeURIComponent(
-      `Hello Ayor Concierge, I would like to book a WhatsApp Video Consultation to view ${product.name} (SKU: ${product.sku || product.id}) live.`
+      `Hello AYOR team, I would like to book a WhatsApp Video Call to view ${product.name} (SKU: ${product.sku || product.id}) live.`
     );
     window.open(`https://wa.me/918808828646?text=${text}`, "_blank");
   };
@@ -539,7 +539,7 @@ export default function ProductDetailPage() {
                 </button>
               </div>
 
-              {/* Concierge & Video Call Triggers */}
+              {/* WhatsApp & Video Call Triggers */}
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <button
                   type="button"
@@ -547,7 +547,7 @@ export default function ProductDetailPage() {
                   className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
                 >
                   <MessageCircle size={15} />
-                  <span>WhatsApp Concierge</span>
+                  <span>Order on WhatsApp</span>
                 </button>
 
                 <button

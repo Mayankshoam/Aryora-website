@@ -26,7 +26,7 @@ const POINTS = [
   {
     icon: MapPin,
     title: "Nationwide Pan-India Coverage",
-    text: "We service over 19,000 postal codes across India. If your pin code is remote or requires special coordination, our concierge team will reach out directly prior to dispatch.",
+    text: "We service over 19,000 postal codes across India. If your pin code is remote or requires special coordination, our customer care team will reach out directly prior to dispatch.",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function ShippingPage() {
 
       <div className="border-t border-border-subtle pt-8 text-xs text-ink-subtle">
         <p>
-          For shipment inquiries or urgent dispatch requests, contact our concierge at{" "}
+          For shipment inquiries or urgent dispatch requests, contact our support team at{" "}
           <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
             ayor.legacy@hotmail.com
           </a>{" "}

@@ -84,7 +84,7 @@ export default function BridalPage() {
     emailId: "",
     mobileNumber: "",
     weddingDate: "",
-    consultationType: "Virtual Video Concierge",
+    consultationType: "Virtual Video Consultation",
     budgetRange: "₹2 Lakh – ₹5 Lakh",
     customerNotes: "",
   });
@@ -114,7 +114,7 @@ export default function BridalPage() {
   const whatsappBridalUrl =
     "https://wa.me/918808828646?text=" +
     encodeURIComponent(
-      "Hello Ayor Concierge, I would like to book a private consultation for bridal heirloom jewellery."
+      "Hello AYOR team, I would like to book a private consultation for bridal heirloom jewellery."
     );
 
   // Filter curated bridal products
@@ -204,7 +204,7 @@ export default function BridalPage() {
               className="inline-flex items-center gap-2 text-xs font-semibold px-6 py-3.5 border border-ink text-ink hover:bg-ink hover:text-white transition-colors"
             >
               <MessageCircle size={16} />
-              <span>WhatsApp Bridal Concierge</span>
+              <span>WhatsApp Bridal Team</span>
             </a>
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function BridalPage() {
         <div className="lg:col-span-5 relative">
           <div className="relative aspect-[4/5] bg-ivory-warm border border-border-subtle shadow-lg overflow-hidden group p-8 flex items-center justify-center">
             <Image
-              src="/site/cat-bridal.svg"
+              src="/site/cat-bridal.jpg"
               alt="Ayor Heritage Bridal Suite in 18K Gold and Certified Lab-Grown Diamonds"
               fill
               priority
@@ -410,7 +410,7 @@ export default function BridalPage() {
         </div>
       </section>
 
-      {/* 6. BRIDAL CONSULTATION BOOKING BOX + DIRECT CONCIERGE */}
+      {/* 6. BRIDAL CONSULTATION BOOKING BOX + DIRECT WHATSAPP */}
       <section id="book-consultation" className="scroll-mt-24">
         <div className="border border-border-subtle bg-ivory-pure p-8 md:p-12 shadow-sm">
           <div className="grid lg:grid-cols-12 gap-10 items-start">
@@ -438,7 +438,7 @@ export default function BridalPage() {
                     Consultation Request Received
                   </h3>
                   <p className="text-xs text-ink-muted leading-relaxed max-w-sm mx-auto">
-                    Our Senior Bridal Concierge will connect with you via WhatsApp/call within
+                    Our Bridal Jewellery Expert will connect with you via WhatsApp/call within
                     4 hours to confirm your preferred time slot and share initial bridal
                     lookbooks.
                   </p>
@@ -518,7 +518,7 @@ export default function BridalPage() {
                         }
                         className="w-full px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink transition-colors"
                       >
-                        <option>Virtual Video Concierge</option>
+                        <option>Virtual Video Consultation</option>
                         <option>Private Atelier in Lucknow</option>
                         <option>Phone / WhatsApp Discussion</option>
                       </select>
@@ -573,7 +573,7 @@ export default function BridalPage() {
               )}
             </div>
 
-            {/* Direct Concierge Contact Card */}
+            {/* Direct WhatsApp Contact Card */}
             <div className="lg:col-span-5 bg-ivory-warm/50 border border-border-subtle p-6 md:p-8 space-y-6">
               <div className="space-y-2">
                 <span className="text-[10px] uppercase tracking-wider font-semibold text-champagne">

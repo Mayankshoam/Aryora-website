@@ -69,7 +69,7 @@ const MORE_MENU = [
   { label: "Ethical & Sustainable Craft", href: "/sustainability", desc: "Zero earth mining & solar brilliance" },
   { label: "Ring Size & Fitting Guide", href: "/size-guide", desc: "Accurate Indian standard measurements" },
   { label: "Client FAQ & Dossiers", href: "/faq", desc: "IGI certification, buyback & warranties" },
-  { label: "Contact Atelier Concierge", href: "/contact", desc: "+91 8808828646 · Private appointments" },
+  { label: "Contact Customer Support", href: "/contact", desc: "+91 8808828646 · Call & WhatsApp Help" },
 ];
 
 export default function Header() {
@@ -495,7 +495,7 @@ export default function Header() {
             </div>
 
             <div className="pt-6 border-t border-border-subtle text-xs text-ink-muted space-y-1">
-              <p className="font-semibold text-ink">Client Concierge</p>
+              <p className="font-semibold text-ink">Customer Care & Support</p>
               <p>+91 8808828646</p>
               <p>ayor.legacy@hotmail.com</p>
             </div>
