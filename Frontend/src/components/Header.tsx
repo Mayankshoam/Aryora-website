@@ -314,26 +314,22 @@ export default function Header() {
             </button>
           </div>
 
-          {/* CENTER: Brand Emblem & Logo */}
+          {/* CENTER: Official AYOR Brand Logo */}
           <div className="flex-1 lg:flex-initial text-center">
-            <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="relative w-8 h-8 flex-shrink-0">
+            <Link href="/" className="inline-flex flex-col items-center group py-1">
+              <div className="relative h-7 sm:h-8 md:h-9 w-28 sm:w-32 md:w-36 flex items-center justify-center">
                 <Image
-                  src="/site/brand-emblem.svg"
-                  alt="AYOR Logo"
-                  width={32}
-                  height={32}
-                  className="object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
+                  src="/site/ayor-logo.svg"
+                  alt="AYOR Fine Jewellery"
+                  width={144}
+                  height={42}
+                  priority
+                  className="w-full h-full object-contain group-hover:opacity-85 transition-opacity"
                 />
               </div>
-              <div className="text-left">
-                <span className="font-serif text-2xl md:text-3xl tracking-[0.22em] text-ink font-medium leading-none block">
-                  AYOR
-                </span>
-                <span className="text-[8px] uppercase tracking-[0.3em] text-[#C5A880] font-semibold block pt-0.5">
-                  Light. Legacy. You.
-                </span>
-              </div>
+              <span className="text-[7.5px] md:text-[8.5px] uppercase tracking-[0.34em] text-[#B89B77] font-semibold block pt-1 leading-none">
+                Light. Legacy. You.
+              </span>
             </Link>
           </div>
 
@@ -412,20 +408,24 @@ export default function Header() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-7 h-7 flex-shrink-0">
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex flex-col items-start"
+              >
+                <div className="relative h-6 w-24 flex items-center">
                   <Image
-                    src="/site/brand-emblem.svg"
+                    src="/site/ayor-logo.svg"
                     alt="AYOR Logo"
-                    width={28}
-                    height={28}
-                    className="object-contain"
+                    width={100}
+                    height={30}
+                    className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="font-serif text-xl tracking-widest text-ink font-semibold">
-                  AYOR
+                <span className="text-[7px] uppercase tracking-[0.3em] text-[#B89B77] font-semibold pt-0.5">
+                  Light. Legacy. You.
                 </span>
-              </div>
+              </Link>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
