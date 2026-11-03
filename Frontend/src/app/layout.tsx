@@ -9,6 +9,7 @@ import StoreLocatorModal from "@/components/StoreLocatorModal";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AntiScrapeFirewall from "@/components/AntiScrapeFirewall";
 import ViolinAmbientPlayer from "@/components/ViolinAmbientPlayer";
+import NamasteWelcome from "@/components/NamasteWelcome";
 
 export const viewport: Viewport = {
   themeColor: "#FDFBF9",
@@ -158,6 +159,7 @@ export default function RootLayout({
         <WhatsAppButton />
         <AntiScrapeFirewall />
         <ViolinAmbientPlayer />
+        <NamasteWelcome />
       </body>
     </html>
   );

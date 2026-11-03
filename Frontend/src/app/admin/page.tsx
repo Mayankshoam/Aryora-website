@@ -23,7 +23,20 @@ import {
   RefreshCw,
   LogOut,
   Sparkles,
+  Users,
+  Database,
+  ExternalLink,
+  Copy,
+  ShoppingBag,
 } from "lucide-react";
+import {
+  getStoredCustomers,
+  getStoredOrders,
+  isSupabaseConnected,
+  SUPABASE_SQL_SCHEMA,
+  CustomerRecord,
+  OrderRecord,
+} from "@/lib/supabase";
 import {
   getDailyMetalRates,
   saveDailyMetalRates,
@@ -53,6 +66,11 @@ export default function MasterAdminPage() {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [saveProductSuccess, setSaveProductSuccess] = useState(false);
 
+  // Supabase Customers & Orders
+  const [customers, setCustomers] = useState<CustomerRecord[]>([]);
+  const [orders, setOrders] = useState<OrderRecord[]>([]);
+  const [copiedSql, setCopiedSql] = useState(false);
+
   // Initialize
   useEffect(() => {
     // Check session
@@ -62,6 +80,8 @@ export default function MasterAdminPage() {
     }
     setRates(getDailyMetalRates());
     setProducts(getAllProducts());
+    setCustomers(getStoredCustomers());
+    setOrders(getStoredOrders());
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -667,6 +687,209 @@ export default function MasterAdminPage() {
                 })}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* SECTION 3: SUPABASE CUSTOMER VAULT & LIVE ORDERS */}
+        <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EFEBE4]">
+            <div>
+              <div className="flex items-center gap-2">
+                <Database className="text-[#0E382B]" size={22} />
+                <h2 className="font-serif text-2xl text-[#111111] font-medium">
+                  Supabase Customer Vault &amp; Live Orders
+                </h2>
+              </div>
+              <p className="text-xs text-[#666666] mt-1">
+                Real-time synchronized client profiles with PIN code auto-detected cities/states, order UTR numbers, and WhatsApp verification.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full flex items-center gap-1.5 ${
+                  isSupabaseConnected()
+                    ? "bg-emerald-100 text-emerald-800"
+                    : "bg-[#FFFDF5] text-[#C5A880] border border-[#C5A880]"
+                }`}
+              >
+                <Database size={13} />
+                <span>{isSupabaseConnected() ? "Connected to Supabase Cloud" : "Local Vault Active (Config Ready)"}</span>
+              </span>
+
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(SUPABASE_SQL_SCHEMA);
+                  setCopiedSql(true);
+                  setTimeout(() => setCopiedSql(false), 2500);
+                }}
+                className="bg-[#FAF7F2] hover:bg-[#EFEBE4] text-[#111111] border border-[#DDD8D0] text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors"
+              >
+                <Copy size={13} />
+                <span>{copiedSql ? "Copied SQL Schema!" : "Copy Supabase SQL"}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#DDD8D0]">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase tracking-wider text-[#666666]">Total Customers</span>
+                <Users size={16} className="text-[#0E382B]" />
+              </div>
+              <p className="font-serif text-2xl font-bold text-[#111111] mt-1">{customers.length}</p>
+            </div>
+
+            <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#DDD8D0]">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase tracking-wider text-[#666666]">Total Orders</span>
+                <ShoppingBag size={16} className="text-[#0E382B]" />
+              </div>
+              <p className="font-serif text-2xl font-bold text-[#111111] mt-1">{orders.length}</p>
+            </div>
+
+            <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#DDD8D0]">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase tracking-wider text-[#666666]">Cash on Delivery</span>
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">COD</span>
+              </div>
+              <p className="font-serif text-2xl font-bold text-[#0E382B] mt-1">
+                {orders.filter((o) => o.paymentMode === "cod").length}
+              </p>
+            </div>
+
+            <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#DDD8D0]">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase tracking-wider text-[#666666]">UTR Verified / Online</span>
+                <CheckCircle2 size={16} className="text-emerald-700" />
+              </div>
+              <p className="font-serif text-2xl font-bold text-emerald-800 mt-1">
+                {orders.filter((o) => Boolean(o.utrNumber)).length}
+              </p>
+            </div>
+          </div>
+
+          {/* Orders Table */}
+          <div className="space-y-3">
+            <h3 className="text-xs uppercase tracking-wider font-semibold text-[#111111] flex items-center justify-between">
+              <span>Incoming Customer Orders &amp; Payment UTR Status</span>
+              <span className="text-[11px] font-normal text-[#666666]">
+                Orders cannot be dispatched without Verified UTR or COD
+              </span>
+            </h3>
+
+            {orders.length === 0 ? (
+              <div className="p-8 text-center bg-[#FAF7F2] rounded-xl border border-dashed border-[#DDD8D0] text-xs text-[#666666]">
+                No customer orders received yet. Placed orders with payment UTR numbers will automatically appear here.
+              </div>
+            ) : (
+              <div className="overflow-x-auto border border-[#DDD8D0] rounded-xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#FAF7F2] border-b border-[#DDD8D0] text-[11px] uppercase tracking-wider text-[#666666]">
+                    <tr>
+                      <th className="p-3">Order Ref</th>
+                      <th className="p-3">Customer</th>
+                      <th className="p-3">Destination</th>
+                      <th className="p-3">Payment Mode</th>
+                      <th className="p-3">UTR / RRN Status</th>
+                      <th className="p-3">Total (₹)</th>
+                      <th className="p-3 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#EFEBE4]">
+                    {orders.map((ord) => (
+                      <tr key={ord.orderNumber} className="hover:bg-[#FAF7F2]/50">
+                        <td className="p-3 font-mono font-bold text-[#0E382B]">{ord.orderNumber}</td>
+                        <td className="p-3">
+                          <p className="font-semibold text-[#111111]">{ord.fullName}</p>
+                          <p className="text-[11px] text-[#666666]">{ord.phone} • {ord.email}</p>
+                        </td>
+                        <td className="p-3 text-[11px]">
+                          {ord.shippingAddress.city}, {ord.shippingAddress.state} ({ord.shippingAddress.pincode})
+                        </td>
+                        <td className="p-3 capitalize font-medium">{ord.paymentMode}</td>
+                        <td className="p-3">
+                          {ord.utrNumber ? (
+                            <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-semibold text-[10px]">
+                              UTR: {ord.utrNumber}
+                            </span>
+                          ) : ord.paymentMode === "cod" ? (
+                            <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold text-[10px]">
+                              COD Confirmed
+                            </span>
+                          ) : (
+                            <span className="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold text-[10px]">
+                              Pending UTR Number
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-3 font-serif font-bold text-[#111111]">
+                          ₹{ord.totalAmount.toLocaleString("en-IN")}
+                        </td>
+                        <td className="p-3 text-right">
+                          <a
+                            href={`https://wa.me/91${ord.phone.replace(/\D/g, "")}?text=${encodeURIComponent(
+                              `Namaste ${ord.fullName}! Regarding your AYOR Atelier order ${ord.orderNumber} (₹${ord.totalAmount}).`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[11px] text-[#25D366] hover:underline font-semibold"
+                          >
+                            WhatsApp <ExternalLink size={11} />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Customers Vault Table */}
+          <div className="space-y-3 pt-4 border-t border-[#EFEBE4]">
+            <h3 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+              Registered Customer Vault ({customers.length})
+            </h3>
+            {customers.length === 0 ? (
+              <div className="p-8 text-center bg-[#FAF7F2] rounded-xl border border-dashed border-[#DDD8D0] text-xs text-[#666666]">
+                No customer profiles synced yet. Visitors who register or checkout will automatically sync here and to Supabase.
+              </div>
+            ) : (
+              <div className="overflow-x-auto border border-[#DDD8D0] rounded-xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#FAF7F2] border-b border-[#DDD8D0] text-[11px] uppercase tracking-wider text-[#666666]">
+                    <tr>
+                      <th className="p-3">Customer Name</th>
+                      <th className="p-3">Email Address</th>
+                      <th className="p-3">Mobile</th>
+                      <th className="p-3">Auto-Detected City &amp; State</th>
+                      <th className="p-3">PIN Code</th>
+                      <th className="p-3">Created</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#EFEBE4]">
+                    {customers.map((c, i) => (
+                      <tr key={i} className="hover:bg-[#FAF7F2]/50">
+                        <td className="p-3 font-semibold text-[#111111]">{c.fullName}</td>
+                        <td className="p-3 text-[#666666]">{c.email}</td>
+                        <td className="p-3 font-mono text-[11px]">{c.phone || "N/A"}</td>
+                        <td className="p-3">
+                          <span className="font-medium">{c.city || "N/A"}</span>
+                          {c.state ? `, ${c.state}` : ""}
+                        </td>
+                        <td className="p-3 font-mono font-bold text-[#0E382B]">{c.pincode || "N/A"}</td>
+                        <td className="p-3 text-[11px] text-[#888888]">
+                          {c.createdAt ? new Date(c.createdAt).toLocaleDateString("en-IN") : "Today"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </section>
 
