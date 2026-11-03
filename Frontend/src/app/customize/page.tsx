@@ -227,7 +227,7 @@ export default function CustomizePage() {
           {/* 5. Contact Details */}
           <div className="space-y-4 pt-4 border-t border-border-subtle">
             <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
-              5. Your Details for Concierge Estimate
+              5. Your Details for Price & Customization Estimate
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <input

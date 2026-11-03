@@ -16,7 +16,7 @@ const POLICIES = [
   {
     icon: RefreshCw,
     title: "30-Day Free Resizing",
-    text: "All rings include one complimentary resizing within 30 days of delivery for most band architectures. Reach out to our concierge team to schedule safe doorstep collection.",
+    text: "All rings include one complimentary resizing within 30 days of delivery for most band architectures. Reach out to our customer care team to schedule safe doorstep collection.",
   },
   {
     icon: ShieldCheck,
@@ -68,7 +68,7 @@ export default function ReturnsPage() {
           <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
             ayor.legacy@hotmail.com
           </a>{" "}
-          or WhatsApp +91 8808828646. Our concierge will dispatch a return waybill and guide you through packaging.
+          or WhatsApp +91 8808828646. Our support team will dispatch a return waybill and guide you through packaging.
         </p>
       </div>
     </div>

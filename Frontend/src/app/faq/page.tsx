@@ -67,7 +67,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "Do you offer complimentary ring resizing?",
-        a: "Yes. Every ring includes one complimentary resizing within 30 days of delivery. Simply reach out to our concierge team and we will coordinate return collection.",
+        a: "Yes. Every ring includes one complimentary resizing within 30 days of delivery. Simply reach out to our customer care team on WhatsApp and we will coordinate return collection.",
       },
       {
         q: "What does the 6-Month Manufacturing Warranty cover?",
@@ -180,11 +180,11 @@ export default function FaqPage() {
               })}
             </div>
 
-            {/* Direct Concierge Prompt */}
+            {/* Direct Support Prompt */}
             <div className="mt-12 p-6 border border-border-subtle bg-ivory-pure space-y-3">
               <h3 className="font-serif text-lg text-ink">Have a specific question?</h3>
               <p className="text-xs text-ink-muted leading-relaxed">
-                Our Lucknow atelier concierge is available 7 days a week to answer gemstone specifications, quote custom orders, or assist with orders.
+                Our Lucknow support team is available 7 days a week to answer gemstone specifications, quote custom orders, or assist with orders.
               </p>
               <div className="flex flex-wrap gap-4 pt-2">
                 <a
@@ -199,7 +199,7 @@ export default function FaqPage() {
                   href="mailto:ayor.legacy@hotmail.com"
                   className="btn-outline text-xs flex items-center gap-2"
                 >
-                  <Mail size={15} /> Email Concierge
+                  <Mail size={15} /> Email Support
                 </a>
               </div>
             </div>

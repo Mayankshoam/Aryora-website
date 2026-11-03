@@ -118,7 +118,7 @@ export default function AccountPage() {
                     rel="noreferrer"
                     className="text-champagne-accessible underline font-medium"
                   >
-                    Track with Concierge
+                    Track on WhatsApp
                   </a>
                 </div>
               </div>
