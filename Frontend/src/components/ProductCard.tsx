@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Sparkles, Check, ShoppingBag } from "lucide-react";
+import { Heart, Sparkles, Check, ShoppingBag, Clock } from "lucide-react";
 import { Product, formatPriceINR } from "@/lib/data";
 import { useAryoraStore } from "@/lib/store";
+import { calculateDynamicPrice, getDailyMetalRates } from "@/lib/metalRates";
 
 interface ProductCardProps {
   product: Product;
@@ -16,21 +17,42 @@ const METAL_SWATCH_COLORS: Record<string, { bg: string; label: string }> = {
   "Yellow Gold": { bg: "#D4AF37", label: "Yellow Gold" },
   "Rose Gold": { bg: "#C98A7D", label: "Rose Gold" },
   "White Gold": { bg: "#D9D9D9", label: "White Gold" },
+  "925 Sterling Silver": { bg: "#E6E8EA", label: "925 Silver" },
+  "Silver": { bg: "#E6E8EA", label: "Silver" },
 };
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const [selectedMetal, setSelectedMetal] = useState<string>(product.metal || "Yellow Gold");
+  const [selectedMetal, setSelectedMetal] = useState<string>(product.metal || "925 Sterling Silver");
   const [isHovered, setIsHovered] = useState(false);
+  const [dynamicPrice, setDynamicPrice] = useState<number>(product.price);
   const { toggleWishlist, isInWishlist, addToCart } = useAryoraStore();
 
   const wishlisted = isInWishlist(product.slug);
 
+  // Recalculate dynamic price when daily rates change or mount
+  useEffect(() => {
+    const rates = getDailyMetalRates();
+    const calculated = calculateDynamicPrice(product, rates);
+    setDynamicPrice(calculated.finalPrice);
+
+    const handleRatesUpdate = () => {
+      const updatedRates = getDailyMetalRates();
+      const updatedPrice = calculateDynamicPrice(product, updatedRates);
+      setDynamicPrice(updatedPrice.finalPrice);
+    };
+
+    window.addEventListener("ayor_metal_rates_updated", handleRatesUpdate);
+    return () => window.removeEventListener("ayor_metal_rates_updated", handleRatesUpdate);
+  }, [product]);
+
   const primaryImage = product.images?.[0] || "/products/ring-01-a.svg";
   const hoverImage = product.images?.[1] || primaryImage;
 
+  const isComingSoon = Boolean(product.isComingSoon);
+
   // Calculate original price if discount exists
   const originalPrice = product.discountPercent > 0
-    ? Math.round(product.price / (1 - product.discountPercent / 100))
+    ? Math.round(dynamicPrice / (1 - product.discountPercent / 100))
     : null;
 
   return (
@@ -65,19 +87,28 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           )}
         </Link>
 
-        {/* Top Badges (Miss Jo Color Scheme) */}
+        {/* Top Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start pointer-events-none z-10">
-          {product.isBestseller && (
-            <span className="bg-[#1A1A1A] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
-              Bestseller
+          {isComingSoon ? (
+            <span className="bg-[#B8860B] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm flex items-center gap-1">
+              <Clock size={10} />
+              <span>Coming Soon</span>
             </span>
+          ) : (
+            <>
+              {product.isBestseller && (
+                <span className="bg-[#1A1A1A] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
+                  Bestseller
+                </span>
+              )}
+              {product.isNew && (
+                <span className="bg-[#108474] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
+                  In Stock · Ready to Ship
+                </span>
+              )}
+            </>
           )}
-          {product.isNew && (
-            <span className="bg-[#C09981] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
-              New
-            </span>
-          )}
-          {product.discountPercent > 0 && (
+          {product.discountPercent > 0 && !isComingSoon && (
             <span className="bg-[#A32D2D] text-white text-[9px] font-semibold px-2 py-0.5 shadow-sm">
               {product.discountPercent}% OFF
             </span>
@@ -108,18 +139,28 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
           }`}
         >
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              addToCart(product, 1, product.sizes?.[0] || "One Size", selectedMetal);
-            }}
-            className="w-full py-2 bg-[#1A1A1A]/95 hover:bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
-          >
-            <ShoppingBag size={13} />
-            <span>Add to Bag</span>
-          </button>
+          {isComingSoon ? (
+            <Link
+              href={`/product/${product.slug}`}
+              className="w-full py-2 bg-[#B8860B]/95 hover:bg-[#9B6F07] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
+            >
+              <Clock size={13} />
+              <span>Coming Soon · View Details</span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToCart(product, 1, product.sizes?.[0] || "One Size", selectedMetal);
+              }}
+              className="w-full py-2 bg-[#1A1A1A]/95 hover:bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
+            >
+              <ShoppingBag size={13} />
+              <span>Add to Bag</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -128,8 +169,8 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         <div className="space-y-1">
           {/* Metal Swatches */}
           <div className="flex items-center space-x-1.5 pb-0.5">
-            {["Yellow Gold", "Rose Gold", "White Gold"].map((metal) => {
-              const meta = METAL_SWATCH_COLORS[metal] || { bg: "#D4AF37", label: metal };
+            {["925 Sterling Silver", "Yellow Gold", "Rose Gold"].map((metal) => {
+              const meta = METAL_SWATCH_COLORS[metal] || { bg: "#E6E8EA", label: metal };
               const isSelected = selectedMetal === metal;
               return (
                 <button
@@ -155,7 +196,9 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
           {/* Specs Subtitle */}
           <p className="text-[11px] text-[#4A4A4A] line-clamp-1">
-            {product.carat ? `${product.carat}ct ${product.shape} ` : ""}{product.stone}
+            {product.weightGrams ? `${product.weightGrams}g ` : ""}
+            {product.metal}
+            {product.stone && product.stone !== "None" ? ` · ${product.stone}` : ""}
           </p>
         </div>
 
@@ -163,16 +206,16 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         <div className="pt-1 border-t border-[#DDD8D0]/80 flex items-baseline justify-between">
           <div className="flex items-baseline space-x-2">
             <span className="text-sm font-semibold text-[#1A1A1A]">
-              {formatPriceINR(product.price)}
+              {formatPriceINR(dynamicPrice)}
             </span>
-            {originalPrice && (
+            {originalPrice && !isComingSoon && (
               <span className="text-xs text-[#9A9A9A] line-through">
                 {formatPriceINR(originalPrice)}
               </span>
             )}
           </div>
           <span className="text-[10px] text-[#108474] font-medium">
-            {product.certificate?.includes("IGI") ? "100% IGI" : "925 Silver"}
+            {isComingSoon ? "Gold/Diamond" : "925 Pure Silver"}
           </span>
         </div>
       </div>
