@@ -1,21 +1,48 @@
 export interface MetalRates {
   silver925PerGram: number; // ₹/g for 925 sterling silver
   gold24kPerGram: number;   // ₹/g for 24K pure gold
-  gold22kPerGram: number;   // ₹/g for 22K gold
-  gold18kPerGram: number;   // ₹/g for 18K gold (750)
-  gold14kPerGram: number;   // ₹/g for 14K gold (585)
+  gold22kPerGram: number;   // ₹/g for 22K gold (auto-calculated: 22/24)
+  gold18kPerGram: number;   // ₹/g for 18K gold (auto-calculated: 18/24)
+  gold14kPerGram: number;   // ₹/g for 14K gold (auto-calculated: 14/24)
+  gold9kPerGram: number;    // ₹/g for 09K gold (auto-calculated: 09/24)
   diamondPerCarat: number;  // ₹/carat for lab-grown diamonds
   makingChargePercent: number; // % making charges
   gstPercent: number;       // 3% GST on fine jewellery
   lastUpdated: string;
 }
 
+/**
+ * Standard Indian Hallmark Purity Multipliers:
+ * 22K = 22/24 (91.67%)
+ * 18K = 18/24 (75.00%)
+ * 14K = 14/24 (58.33%)
+ * 09K = 09/24 (37.50%)
+ */
+export function computePuritiesFrom24K(rate24k: number): {
+  gold22k: number;
+  gold18k: number;
+  gold14k: number;
+  gold9k: number;
+} {
+  const safe24k = Math.max(0, rate24k);
+  return {
+    gold22k: Math.round(safe24k * (22 / 24)),
+    gold18k: Math.round(safe24k * (18 / 24)),
+    gold14k: Math.round(safe24k * (14 / 24)),
+    gold9k: Math.round(safe24k * (9 / 24)),
+  };
+}
+
+const DEFAULT_24K = 7850;
+const defaultCalculatedPurities = computePuritiesFrom24K(DEFAULT_24K);
+
 export const DEFAULT_METAL_RATES: MetalRates = {
   silver925PerGram: 98,
-  gold24kPerGram: 7850,
-  gold22kPerGram: 7200,
-  gold18kPerGram: 5890,
-  gold14kPerGram: 4580,
+  gold24kPerGram: DEFAULT_24K,
+  gold22kPerGram: defaultCalculatedPurities.gold22k,
+  gold18kPerGram: defaultCalculatedPurities.gold18k,
+  gold14kPerGram: defaultCalculatedPurities.gold14k,
+  gold9kPerGram: defaultCalculatedPurities.gold9k,
   diamondPerCarat: 45000,
   makingChargePercent: 18,
   gstPercent: 3,
@@ -40,11 +67,26 @@ export function getDailyMetalRates(): MetalRates {
 
 export function saveDailyMetalRates(rates: Partial<MetalRates>): MetalRates {
   const current = getDailyMetalRates();
+  
+  // If 24k rate is passed, ensure all derivative purities (22, 18, 14, 09) auto-update
+  let autoPurities = {};
+  if (rates.gold24kPerGram && rates.gold24kPerGram > 0) {
+    const computed = computePuritiesFrom24K(rates.gold24kPerGram);
+    autoPurities = {
+      gold22kPerGram: rates.gold22kPerGram || computed.gold22k,
+      gold18kPerGram: rates.gold18kPerGram || computed.gold18k,
+      gold14kPerGram: rates.gold14kPerGram || computed.gold14k,
+      gold9kPerGram: rates.gold9kPerGram || computed.gold9k,
+    };
+  }
+
   const updated: MetalRates = {
     ...current,
     ...rates,
+    ...autoPurities,
     lastUpdated: new Date().toISOString(),
   };
+
   if (typeof window !== "undefined") {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event("ayor_metal_rates_updated"));
@@ -94,6 +136,8 @@ export function calculateDynamicPrice(
       metalRate = rates.gold22kPerGram;
     } else if (purityStr.includes("14K") || purityStr.includes("585")) {
       metalRate = rates.gold14kPerGram;
+    } else if (purityStr.includes("9K") || purityStr.includes("09K") || purityStr.includes("375")) {
+      metalRate = rates.gold9kPerGram || Math.round(rates.gold24kPerGram * (9 / 24));
     } else {
       // Default to 18K (750)
       metalRate = rates.gold18kPerGram;
@@ -120,7 +164,6 @@ export function calculateDynamicPrice(
     const gst = Math.round(subtotal * (rates.gstPercent / 100));
     const computed = Math.round(subtotal + gst);
 
-    // If calculated price is reasonably close to base price or product is silver/gold by weight, return computed
     return {
       finalPrice: computed > 0 ? computed : product.price,
       breakdown: {
@@ -133,7 +176,7 @@ export function calculateDynamicPrice(
     };
   }
 
-  // Fallback if weight is not specified: return base product.price with estimated breakdown
+  // Fallback if weight is not specified
   const gst = Math.round(product.price * 0.03);
   return {
     finalPrice: product.price,
@@ -146,4 +189,3 @@ export function calculateDynamicPrice(
     },
   };
 }
-

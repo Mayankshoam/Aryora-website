@@ -8,6 +8,7 @@ import SizeGuideModal from "@/components/SizeGuideModal";
 import StoreLocatorModal from "@/components/StoreLocatorModal";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AntiScrapeFirewall from "@/components/AntiScrapeFirewall";
+import ViolinAmbientPlayer from "@/components/ViolinAmbientPlayer";
 
 export const viewport: Viewport = {
   themeColor: "#FDFBF9",
@@ -156,6 +157,7 @@ export default function RootLayout({
         <StoreLocatorModal />
         <WhatsAppButton />
         <AntiScrapeFirewall />
+        <ViolinAmbientPlayer />
       </body>
     </html>
   );

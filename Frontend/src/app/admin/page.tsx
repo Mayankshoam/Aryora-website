@@ -22,11 +22,13 @@ import {
   ArrowRight,
   RefreshCw,
   LogOut,
+  Sparkles,
 } from "lucide-react";
 import {
   getDailyMetalRates,
   saveDailyMetalRates,
   calculateDynamicPrice,
+  computePuritiesFrom24K,
   DEFAULT_METAL_RATES,
   MetalRates,
 } from "@/lib/metalRates";
@@ -77,6 +79,18 @@ export default function MasterAdminPage() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     sessionStorage.removeItem("ayor_master_authenticated");
+  };
+
+  const handleGold24kChange = (val: number) => {
+    const computed = computePuritiesFrom24K(val);
+    setRates((prev) => ({
+      ...prev,
+      gold24kPerGram: val,
+      gold22kPerGram: computed.gold22k,
+      gold18kPerGram: computed.gold18k,
+      gold14kPerGram: computed.gold14k,
+      gold9kPerGram: computed.gold9k,
+    }));
   };
 
   const handleSaveRates = (e: React.FormEvent) => {
@@ -295,9 +309,138 @@ export default function MasterAdminPage() {
           </div>
 
           <form onSubmit={handleSaveRates} className="space-y-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-              {/* 1. Silver 925 Rate */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
+            <div className="bg-[#FAF7F2] border border-[#C5A880]/50 p-4 rounded-xl flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <Sparkles size={16} className="text-[#C5A880]" />
+                <span className="text-xs font-semibold text-[#111111]">
+                  Auto-Purity Calculation Enabled: Enter only the 24K Gold rate below — 22K, 18K, 14K &amp; 09K will auto-calculate automatically based on standard BIS hallmark percentages!
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+              {/* 1. Gold 24K Rate (MASTER INPUT) */}
+              <div className="space-y-1.5 bg-[#FFFDF5] p-3 rounded-xl border-2 border-[#C5A880] shadow-sm">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[11px] uppercase tracking-wider font-bold text-[#0E382B]">
+                    Gold 24K (₹/g)
+                  </label>
+                  <span className="text-[9px] bg-[#0E382B] text-white px-1.5 py-0.2 rounded font-semibold uppercase">
+                    Master
+                  </span>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
+                  <input
+                    type="number"
+                    step="1"
+                    value={rates.gold24kPerGram}
+                    onChange={(e) => handleGold24kChange(Number(e.target.value))}
+                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#C5A880] rounded-lg text-sm font-bold text-[#0E382B] focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
+                    required
+                  />
+                </div>
+                <span className="text-[10px] text-[#0E382B] font-medium block">Pure 999 Bullion</span>
+              </div>
+
+              {/* 2. Gold 22K Rate (AUTO: 22/24) */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
+                    Gold 22K (₹/g)
+                  </label>
+                  <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-mono">
+                    91.6%
+                  </span>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
+                  <input
+                    type="number"
+                    step="1"
+                    value={rates.gold22kPerGram}
+                    onChange={(e) => setRates({ ...rates, gold22kPerGram: Number(e.target.value) })}
+                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
+                    required
+                  />
+                </div>
+                <span className="text-[10px] text-[#888888] block">Auto (22/24 of 24K)</span>
+              </div>
+
+              {/* 3. Gold 18K Rate (AUTO: 18/24) */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
+                    Gold 18K (₹/g)
+                  </label>
+                  <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-mono">
+                    75.0%
+                  </span>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
+                  <input
+                    type="number"
+                    step="1"
+                    value={rates.gold18kPerGram}
+                    onChange={(e) => setRates({ ...rates, gold18kPerGram: Number(e.target.value) })}
+                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
+                    required
+                  />
+                </div>
+                <span className="text-[10px] text-[#888888] block">Auto (18/24 of 24K)</span>
+              </div>
+
+              {/* 4. Gold 14K Rate (AUTO: 14/24) */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
+                    Gold 14K (₹/g)
+                  </label>
+                  <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-mono">
+                    58.3%
+                  </span>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
+                  <input
+                    type="number"
+                    step="1"
+                    value={rates.gold14kPerGram}
+                    onChange={(e) => setRates({ ...rates, gold14kPerGram: Number(e.target.value) })}
+                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
+                    required
+                  />
+                </div>
+                <span className="text-[10px] text-[#888888] block">Auto (14/24 of 24K)</span>
+              </div>
+
+              {/* 5. Gold 09K Rate (AUTO: 09/24) */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
+                    Gold 09K (₹/g)
+                  </label>
+                  <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-mono">
+                    37.5%
+                  </span>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
+                  <input
+                    type="number"
+                    step="1"
+                    value={rates.gold9kPerGram || Math.round(rates.gold24kPerGram * (9 / 24))}
+                    onChange={(e) => setRates({ ...rates, gold9kPerGram: Number(e.target.value) })}
+                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
+                    required
+                  />
+                </div>
+                <span className="text-[10px] text-[#888888] block">Auto (09/24 of 24K)</span>
+              </div>
+
+              {/* 6. Silver 925 Rate */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
                   Silver 925 (₹/g)
                 </label>
@@ -312,87 +455,11 @@ export default function MasterAdminPage() {
                     required
                   />
                 </div>
-                <span className="text-[10px] text-[#888888] block">Today&apos;s Silver Rate</span>
+                <span className="text-[10px] text-[#888888] block">Pure 925 Silver</span>
               </div>
 
-              {/* 2. Gold 24K Rate */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
-                <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
-                  Gold 24K (₹/g)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
-                  <input
-                    type="number"
-                    step="1"
-                    value={rates.gold24kPerGram}
-                    onChange={(e) => setRates({ ...rates, gold24kPerGram: Number(e.target.value) })}
-                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
-                    required
-                  />
-                </div>
-                <span className="text-[10px] text-[#888888] block">999 Purity Gold</span>
-              </div>
-
-              {/* 3. Gold 22K Rate */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
-                <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
-                  Gold 22K (₹/g)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
-                  <input
-                    type="number"
-                    step="1"
-                    value={rates.gold22kPerGram}
-                    onChange={(e) => setRates({ ...rates, gold22kPerGram: Number(e.target.value) })}
-                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
-                    required
-                  />
-                </div>
-                <span className="text-[10px] text-[#888888] block">916 Hallmark Standard</span>
-              </div>
-
-              {/* 4. Gold 18K Rate */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
-                <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
-                  Gold 18K (₹/g)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
-                  <input
-                    type="number"
-                    step="1"
-                    value={rates.gold18kPerGram}
-                    onChange={(e) => setRates({ ...rates, gold18kPerGram: Number(e.target.value) })}
-                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
-                    required
-                  />
-                </div>
-                <span className="text-[10px] text-[#888888] block">750 Diamond Mount</span>
-              </div>
-
-              {/* 5. Gold 14K Rate */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
-                <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
-                  Gold 14K (₹/g)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#888888]">₹</span>
-                  <input
-                    type="number"
-                    step="1"
-                    value={rates.gold14kPerGram}
-                    onChange={(e) => setRates({ ...rates, gold14kPerGram: Number(e.target.value) })}
-                    className="w-full h-9 pl-6 pr-2 bg-white border border-[#DDD8D0] rounded-lg text-sm font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B]"
-                    required
-                  />
-                </div>
-                <span className="text-[10px] text-[#888888] block">585 Purity Gold</span>
-              </div>
-
-              {/* 6. Diamond Rate per Carat */}
-              <div className="space-y-1.5 bg-[#FAF7F2] p-3.5 rounded-xl border border-[#DDD8D0]">
+              {/* 7. Diamond Rate per Carat */}
+              <div className="space-y-1.5 bg-[#FAF7F2] p-3 rounded-xl border border-[#DDD8D0]">
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-[#111111]">
                   Diamond (₹/ct)
                 </label>
@@ -407,7 +474,7 @@ export default function MasterAdminPage() {
                     required
                   />
                 </div>
-                <span className="text-[10px] text-[#888888] block">Lab-Grown Solitaire Base</span>
+                <span className="text-[10px] text-[#888888] block">Lab Solitaire Base</span>
               </div>
             </div>
 
