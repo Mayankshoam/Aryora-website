@@ -1,75 +1,210 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { RotateCcw, ShieldCheck, RefreshCw, Award } from "lucide-react";
+import {
+  RotateCcw,
+  ShieldCheck,
+  Truck,
+  Video,
+  Clock,
+  AlertTriangle,
+  CheckCircle2,
+  PackageCheck,
+  FileText,
+} from "lucide-react";
 
 export const metadata = {
-  title: "Returns, Buyback & Warranty",
+  title: "Silver Return, Refund & Exchange Policy",
   description:
-    "Learn about Ayor's 7-day return policy, 6-month warranty, and lifetime transparent buyback terms.",
+    "Official 7-day return, refund and exchange policy for AYOR 925 Sterling Silver Jewellery.",
 };
-
-const POLICIES = [
-  {
-    icon: RotateCcw,
-    title: "7-Day Hassle-Free Returns",
-    text: "Returns are gladly accepted within 7 days of delivery, provided the piece is unworn, intact, and in its original presentation packaging accompanied by the original IGI certificate.",
-  },
-  {
-    icon: RefreshCw,
-    title: "30-Day Free Resizing",
-    text: "All rings include one complimentary resizing within 30 days of delivery for most band architectures. Reach out to our customer care team to schedule safe doorstep collection.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "6-Month Manufacturing Warranty",
-    text: "Every Ayor jewel carries a 6-month atelier warranty covering manufacturing defects, loose prong tension, or clasp integrity. Accidental damage or rough wear is repaired at nominal cost.",
-  },
-  {
-    icon: Award,
-    title: "Transparent Lifetime Buyback",
-    text: "We stand behind the enduring value of our lab-grown diamonds and certified gold. We offer a transparent buyback and upgrade policy based on prevailing metal rates and diamond valuation.",
-  },
-];
 
 export default function ReturnsPage() {
   return (
-    <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
-      <Breadcrumbs items={[{ label: "Returns & Warranty" }]} />
+    <div className="max-w-content mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-16 space-y-10">
+      <Breadcrumbs items={[{ label: "Shipping, Return & Refund Policy" }]} />
 
-      <div className="max-w-2xl my-6 space-y-2">
-        <p className="eyebrow">Client Assurance</p>
-        <h1 className="font-serif text-3xl md:text-5xl text-ink">Returns & Warranty</h1>
-        <p className="text-sm text-ink-muted leading-relaxed">
-          We want you to feel complete confidence in every heirloom you welcome from our atelier.
+      <div className="max-w-3xl space-y-3">
+        <span className="text-[10px] uppercase tracking-[0.24em] font-semibold text-[#C09981]">
+          925 Sterling Silver Assurance
+        </span>
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#111111] font-light">
+          Shipping, Return & Refund Policy
+        </h1>
+        <p className="text-sm text-[#555555] leading-relaxed">
+          At AYOR Fine Jewellery, we are committed to delivering the finest silver and fine jewellery with complete transparency and care. Please review our policies regarding order processing, transit, returns, and refunds.
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6 my-10">
-        {POLICIES.map((p) => {
-          const Icon = p.icon;
+      {/* Policy Highlights Cards */}
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          {
+            icon: Clock,
+            title: "24–48h Dispatch",
+            desc: "Rigorous quality check & secure packaging within 24 to 48 hours.",
+          },
+          {
+            icon: RotateCcw,
+            title: "7-Day Easy Return",
+            desc: "7-day return window for unworn, unused items with tags intact.",
+          },
+          {
+            icon: Video,
+            title: "360° Unboxing Video",
+            desc: "Mandatory unboxing video required for missing or transit damage claims.",
+          },
+          {
+            icon: PackageCheck,
+            title: "48h Fast Refund",
+            desc: "Refund initiated within 48 hours of warehouse inspection.",
+          },
+        ].map((item) => {
+          const Icon = item.icon;
           return (
             <div
-              key={p.title}
-              className="border border-border-subtle bg-ivory-pure p-8 space-y-3"
+              key={item.title}
+              className="bg-white border border-[#DDD8D0] p-5 rounded-xl space-y-2.5 shadow-sm"
             >
-              <div className="w-10 h-10 rounded-full border border-champagne flex items-center justify-center text-champagne-accessible bg-ivory">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#DDD8D0] text-[#0E382B] flex items-center justify-center">
                 <Icon size={18} strokeWidth={1.5} />
               </div>
-              <h2 className="font-serif text-xl text-ink">{p.title}</h2>
-              <p className="text-xs text-ink-muted leading-relaxed">{p.text}</p>
+              <h2 className="font-serif text-base font-semibold text-[#111111]">{item.title}</h2>
+              <p className="text-xs text-[#666666] leading-relaxed">{item.desc}</p>
             </div>
           );
         })}
       </div>
 
-      <div className="border border-border-subtle bg-ivory-pure p-6 space-y-2 text-xs text-ink-muted">
-        <p className="font-medium text-ink">How to Initiate a Return or Service Request:</p>
-        <p>
-          Send an email with your Order Number to{" "}
-          <a href="mailto:ayor.legacy@hotmail.com" className="text-ink underline">
-            ayor.legacy@hotmail.com
-          </a>{" "}
-          or WhatsApp +91 8808828646. Our support team will dispatch a return waybill and guide you through packaging.
-        </p>
+      {/* In-Depth Policy Articles */}
+      <div className="space-y-8 bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-10 shadow-sm divide-y divide-[#EFEBE4]">
+        {/* 1. Order Processing & Fulfilment */}
+        <div className="space-y-3 pt-6 first:pt-0">
+          <h2 className="font-serif text-xl sm:text-2xl text-[#111111] font-medium flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-[#0E382B] text-white text-xs flex items-center justify-center">1</span>
+            <span>Order Processing & Fulfilment Policy</span>
+          </h2>
+          <div className="text-xs sm:text-sm text-[#555555] space-y-2 leading-relaxed">
+            <p>
+              Every AYOR order undergoes multi-stage quality verification, hallmark authentication check, and tamper-evident packaging before dispatch.
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Processing Time:</strong> Orders are usually processed within 24 hours. During peak festive/wedding seasons, processing may take up to 48 hours due to high order volume and meticulous inspection.
+              </li>
+              <li>
+                <strong>Real-Time Tracking:</strong> Once your parcel is processed and handed over to logistics partners (BlueDart / Delhivery / BVC Logistics), your tracking ID is automatically generated and communicated via SMS, Email, and WhatsApp.
+              </li>
+              <li>
+                <strong>Product Availability:</strong> If an ordered silver piece is momentarily out of stock, our team will promptly notify you on WhatsApp. You may opt for an alternative design or an immediate full refund.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 2. Domestic & Insured Shipping */}
+        <div className="space-y-3 pt-6">
+          <h2 className="font-serif text-xl sm:text-2xl text-[#111111] font-medium flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-[#0E382B] text-white text-xs flex items-center justify-center">2</span>
+            <span>Domestic Shipping & Transit Security</span>
+          </h2>
+          <div className="text-xs sm:text-sm text-[#555555] space-y-2 leading-relaxed">
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Complimentary Insured Shipping:</strong> Complimentary transit insurance covers all orders across India until doorstep handover.
+              </li>
+              <li>
+                <strong>Estimated Delivery:</strong> Metros typically receive delivery within 3–5 business days from dispatch. Tier 2 and Tier 3 cities receive delivery within 5–7 business days.
+              </li>
+              <li>
+                <strong>Undelivered Parcels:</strong> In case a parcel is returned due to incorrect contact details, address issues, or client unavailability, re-shipping will be coordinated through customer support.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 3. Return & Replacement Policy */}
+        <div className="space-y-3 pt-6">
+          <h2 className="font-serif text-xl sm:text-2xl text-[#111111] font-medium flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-[#0E382B] text-white text-xs flex items-center justify-center">3</span>
+            <span>Return & Replacement Policy (7-Day Window)</span>
+          </h2>
+          <div className="text-xs sm:text-sm text-[#555555] space-y-2 leading-relaxed">
+            <p>
+              We want you to love your AYOR pieces. We offer a <strong>7-Day Return Policy</strong> from the date of physical delivery for unused, unworn items.
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Eligible Condition:</strong> The silver jewellery must be in original unworn condition with all authenticity tags, security seals, and premium presentation boxes intact.
+              </li>
+              <li>
+                <strong>Non-Returnable Exclusions:</strong> Custom-engraved jewellery, personalised pieces, silver coins, and hygiene-sensitive items (unless arriving defective) are non-returnable.
+              </li>
+              <li>
+                <strong>Missing Return Items:</strong> If any component (presentation box, authenticity card, or accompanying free gift) is omitted in return, the value will be deducted from the refund.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 4. Mandatory 360° Unboxing Video Rule */}
+        <div className="space-y-3 pt-6 bg-[#FAF7F2] p-5 rounded-xl border border-[#DDD8D0]">
+          <h2 className="font-serif text-lg sm:text-xl text-[#0E382B] font-semibold flex items-center gap-2">
+            <AlertTriangle className="text-amber-600" size={18} />
+            <span>Mandatory 360° Unboxing Video Requirement</span>
+          </h2>
+          <div className="text-xs sm:text-sm text-[#444444] space-y-2 leading-relaxed">
+            <p>
+              To protect customers against courier tampering, any claims regarding <strong>damaged, defective, missing, or incorrect items</strong> must be reported within <strong>24 to 48 hours of delivery</strong>.
+            </p>
+            <p className="font-semibold text-[#111111]">
+              ⚠️ A clear, uncut 360° unboxing video showing the outer sealed package, the label, and the initial unboxing is mandatory for transit claims. Claims without video proof cannot be entertained.
+            </p>
+          </div>
+        </div>
+
+        {/* 5. Refund Timelines & Process */}
+        <div className="space-y-3 pt-6">
+          <h2 className="font-serif text-xl sm:text-2xl text-[#111111] font-medium flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-[#0E382B] text-white text-xs flex items-center justify-center">4</span>
+            <span>Refund Timelines & Return Address</span>
+          </h2>
+          <div className="text-xs sm:text-sm text-[#555555] space-y-2 leading-relaxed">
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Inspection & Processing:</strong> Refunds are initiated within <strong>48 hours</strong> of the returned piece reaching our Lucknow atelier and passing quality inspection.
+              </li>
+              <li>
+                <strong>Credit Timeline:</strong> The refund will reflect in your original payment method (Bank account, UPI, Card) within <strong>5–7 business days</strong> depending on your banking provider.
+              </li>
+              <li>
+                <strong>Atelier Return Address:</strong> AYOR Fine Jewellery Atelier, Lucknow, Uttar Pradesh, India — 226001.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Need Assistance Bar */}
+      <div className="bg-[#FAF7F2] border border-[#DDD8D0] p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div>
+          <p className="font-semibold text-sm text-[#111111]">Need assistance with a return or order?</p>
+          <p className="text-[#666666]">Our Customer Care is available Monday to Saturday, 10 AM to 7 PM IST.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://wa.me/918808828646?text=Hello%20AYOR,%20I%20need%20assistance%20with%20returns%20or%20shipping."
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#0E382B] text-white px-5 py-2.5 rounded-lg font-semibold uppercase tracking-wider hover:bg-[#144636] transition-colors"
+          >
+            WhatsApp Support
+          </a>
+          <a
+            href="mailto:ayor.legacy@hotmail.com"
+            className="border border-[#111111] text-[#111111] px-5 py-2.5 rounded-lg font-semibold uppercase tracking-wider hover:bg-[#111111] hover:text-white transition-colors"
+          >
+            Email Support
+          </a>
+        </div>
       </div>
     </div>
   );

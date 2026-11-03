@@ -31,6 +31,9 @@ export interface Product {
   sku?: string;
   platings?: string[];
   caratOptions?: number[];
+  isComingSoon?: boolean;
+  availabilityNote?: string;
+  makingCharges?: number;
 }
 
 export interface SiteConfig {

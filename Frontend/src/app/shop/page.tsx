@@ -23,6 +23,8 @@ const CATEGORY_OPTIONS = [
   "Pendants",
   "Necklaces",
   "Bracelets",
+  "Mangalsutras",
+  "Anklets & Payal",
   "Solitaires",
   "Bridal",
 ];

@@ -31,6 +31,7 @@ import {
   Product,
 } from "@/lib/data";
 import { useAryoraStore } from "@/lib/store";
+import { calculateDynamicPrice, getDailyMetalRates, MetalRates } from "@/lib/metalRates";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -86,9 +87,22 @@ export default function ProductDetailPage() {
     caratOptions[0] || product.carat || 1
   );
 
-  // Dynamic pricing based on carat selection
+  const [rates, setRates] = useState<MetalRates>(getDailyMetalRates());
+
+  useEffect(() => {
+    setRates(getDailyMetalRates());
+    const handleRatesUpdate = () => setRates(getDailyMetalRates());
+    window.addEventListener("ayor_metal_rates_updated", handleRatesUpdate);
+    return () => window.removeEventListener("ayor_metal_rates_updated", handleRatesUpdate);
+  }, []);
+
+  const dynamicPricing = useMemo(() => {
+    return calculateDynamicPrice(product, rates);
+  }, [product, rates]);
+
+  // Dynamic pricing based on daily metal rates and carat selection
   const currentPrice = useMemo(() => {
-    const basePrice = product.price;
+    const basePrice = dynamicPricing.finalPrice;
     const baseCarat = product.carat || 1;
     if (selectedCarat && baseCarat && selectedCarat !== baseCarat) {
       const scaled = Math.round(
@@ -97,7 +111,7 @@ export default function ProductDetailPage() {
       return Math.max(2499, scaled);
     }
     return basePrice;
-  }, [product.price, product.carat, selectedCarat]);
+  }, [dynamicPricing.finalPrice, product.carat, selectedCarat]);
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>(
@@ -321,12 +335,24 @@ export default function ProductDetailPage() {
 
                 {/* Overlaid Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start pointer-events-none">
-                  {product.isBestseller && (
-                    <span className="bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
-                      Bestseller
+                  {product.isComingSoon ? (
+                    <span className="bg-[#B8860B] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm flex items-center gap-1">
+                      <Clock size={12} />
+                      <span>Coming Soon · Launching Shortly</span>
                     </span>
+                  ) : (
+                    <>
+                      {product.isBestseller && (
+                        <span className="bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
+                          Bestseller
+                        </span>
+                      )}
+                      <span className="bg-[#108474] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
+                        In Stock · Ready to Ship
+                      </span>
+                    </>
                   )}
-                  {product.discountPercent > 0 && (
+                  {product.discountPercent > 0 && !product.isComingSoon && (
                     <span className="bg-[#A32D2D] text-white text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 shadow-sm">
                       {product.discountPercent}% OFF
                     </span>
@@ -508,14 +534,25 @@ export default function ProductDetailPage() {
                   </button>
                 </div>
 
-                {/* ADD TO BAG Button */}
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  className="flex-1 h-12 bg-[#1A1A1A] text-white hover:bg-black font-semibold uppercase tracking-widest text-xs flex items-center justify-center transition-colors shadow-sm"
-                >
-                  ADD TO BAG · {formatPriceINR(currentPrice * quantity)}
-                </button>
+                {/* ADD TO BAG / COMING SOON Button */}
+                {product.isComingSoon ? (
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppEnquiry}
+                    className="flex-1 h-12 bg-[#B8860B] hover:bg-[#9B6F07] text-white font-semibold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
+                  >
+                    <Clock size={16} />
+                    <span>Coming Soon · Enquire on WhatsApp</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="flex-1 h-12 bg-[#1A1A1A] text-white hover:bg-black font-semibold uppercase tracking-widest text-xs flex items-center justify-center transition-colors shadow-sm"
+                  >
+                    ADD TO BAG · {formatPriceINR(currentPrice * quantity)}
+                  </button>
+                )}
 
                 {/* WISHLIST Button */}
                 <button
@@ -781,7 +818,7 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {/* Accordion 3: Shipping & Returns */}
+              {/* Accordion 3: Shipping & Returns (Khushbu Jewellers Silver Standard) */}
               <div>
                 <button
                   type="button"
@@ -792,7 +829,7 @@ export default function ProductDetailPage() {
                   }
                   className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
                 >
-                  <span>Complimentary Shipping & 15-Day Returns</span>
+                  <span>Shipping & 7-Day Return Policy (Silver Standard)</span>
                   <ChevronDown
                     size={16}
                     className={`transition-transform ${
@@ -801,20 +838,21 @@ export default function ProductDetailPage() {
                   />
                 </button>
                 {activeAccordion === "shipping" && (
-                  <div className="pb-4 space-y-2 text-xs text-[#7A7A7A] leading-relaxed">
+                  <div className="pb-4 space-y-2.5 text-xs text-[#666666] leading-relaxed">
                     <p>
-                      • Complimentary insured transit across India via BlueDart Apex
-                      and BVC Logistics.
+                      • <strong>24–48 Hours Dispatch:</strong> Quality checked, authenticated and securely packaged within 24 to 48 hours. Real-time tracking link shared on WhatsApp and SMS.
                     </p>
                     <p>
-                      • Tamper-proof luxury gift packaging accompanied by physical
-                      authenticity card / IGI certificate.
+                      • <strong>Complimentary Insured Courier:</strong> 100% transit-insured domestic delivery via BlueDart Apex and BVC Logistics.
                     </p>
                     <p>
-                      • 15-day easy returns on unworn pieces in original condition.
+                      • <strong>7-Day Easy Returns:</strong> We offer a 7-day return policy for unused, unworn items with tags and original presentation box intact.
+                    </p>
+                    <p className="bg-[#FAF7F2] p-2.5 rounded-lg border border-[#DDD8D0] text-[#111111] font-medium">
+                      ⚠️ <strong>Mandatory 360° Unboxing Video:</strong> For any transit damage, missing item, or defect claim, a clear 360° uncut unboxing video must be submitted within 24 to 48 hours of delivery.
                     </p>
                     <p>
-                      • Anti-tarnish micron e-coating for lasting brilliant shine.
+                      • <strong>Fast 48h Refund:</strong> Refunds are initiated within 48 hours of warehouse inspection, reflecting in 5–7 business days.
                     </p>
                   </div>
                 )}

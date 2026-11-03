@@ -70,6 +70,7 @@ const MORE_MENU = [
   { label: "Ring Size & Fitting Guide", href: "/size-guide", desc: "Accurate Indian standard measurements" },
   { label: "Client FAQ & Dossiers", href: "/faq", desc: "IGI certification, buyback & warranties" },
   { label: "Contact Customer Support", href: "/contact", desc: "+91 8808828646 · Call & WhatsApp Help" },
+  { label: "🔒 Master Admin Console", href: "/admin", desc: "Daily metal rates, auto-pricing & product editor" },
 ];
 
 export default function Header() {
@@ -490,6 +491,13 @@ export default function Header() {
                   className="block text-ink-muted hover:text-ink"
                 >
                   About Ayor
+                </Link>
+                <Link
+                  href="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block text-[#0E382B] font-semibold text-xs pt-1"
+                >
+                  🔒 Master Admin Console
                 </Link>
               </div>
             </div>
