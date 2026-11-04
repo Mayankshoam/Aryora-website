@@ -40,7 +40,7 @@ const FEATURED_COLLECTIONS = [
     desc: "Handcrafted wedding suites uniting certified emeralds and brilliant diamonds.",
     href: "/bridal",
     image: "/products/bridal-01-a.jpg",
-    badge: "Haute Joaillerie",
+    badge: "Bridal Jewellery",
   },
   {
     title: "Modern Everyday Radiance",

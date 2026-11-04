@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Heritage Bridal Haute Joaillerie — Bespoke Wedding Suites",
+  title: "Heritage Bridal Fine Jewellery — Bespoke Wedding Suites",
   description:
     "Explore bespoke bridal jewellery suites, IGI-certified lab-grown diamond chokers, engagement solitaires, and 18K BIS-hallmarked gold heirlooms handcrafted in Lucknow. Book your private bridal consultation.",
   openGraph: {
-    title: "Ayor Heritage Bridal Haute Joaillerie",
+    title: "Ayor Heritage Bridal Fine Jewellery",
     description:
       "Royal Awadhi craftsmanship meets modern conscious brilliance. Bespoke IGI-certified lab-grown diamond wedding suites.",
     images: ["/site/cat-bridal.svg"],

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import {
@@ -19,15 +19,58 @@ import {
   Wallet,
   Banknote,
   Sparkles,
+  Tag,
+  UploadCloud,
+  FileText,
 } from "lucide-react";
 import { useAryoraStore } from "@/lib/store";
 import { lookupPincode } from "@/lib/pincode";
 import { saveOrderToSupabase, updateOrderUTR, OrderRecord } from "@/lib/supabase";
+import {
+  getActiveCustomer,
+  isPanRequiredForAmount,
+  hasWelcomeDiscount,
+  submitCustomerPAN,
+  createCustomerInvoice,
+  CustomerProfile,
+  maskPAN,
+} from "@/lib/customerStore";
+import { BUSINESS_CONFIG } from "@/lib/config/business";
 
 export default function CheckoutPage() {
   const { cart, getCartTotal, clearCart } = useAryoraStore();
-  const total = getCartTotal();
-  const gst = Math.round(total * 0.03);
+
+  const [customer, setCustomer] = useState<CustomerProfile | null>(null);
+
+  // Load active customer session
+  useEffect(() => {
+    const cust = getActiveCustomer();
+    setCustomer(cust);
+    if (cust) {
+      setForm((prev) => ({
+        ...prev,
+        fullName: cust.name && cust.name !== "Atelier Client" ? cust.name : prev.fullName,
+        phone: cust.mobile || prev.phone,
+        email: cust.email || prev.email,
+        address: cust.address || prev.address,
+        pincode: cust.pincode || prev.pincode,
+        city: cust.city || prev.city,
+        state: cust.state || prev.state,
+      }));
+    }
+  }, []);
+
+  // Discount & Totals calculation
+  const isDiscountActive = hasWelcomeDiscount() || (customer && customer.hasWelcomeDiscount);
+  const rawSubtotal = cart.reduce((acc, it) => acc + it.product.price * it.quantity, 0);
+  const discountAmount = isDiscountActive ? Math.round(rawSubtotal * 0.1) : 0;
+  const taxableAmount = Math.max(0, rawSubtotal - discountAmount);
+  const gst = Math.round(taxableAmount * 0.03);
+  const finalTotal = taxableAmount + gst;
+
+  // PAN Check
+  const isHighValue = isPanRequiredForAmount(finalTotal);
+  const isPanCompliant = !isHighValue || Boolean(customer?.panVerified);
 
   const [form, setForm] = useState({
     fullName: "",
@@ -47,6 +90,14 @@ export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState<OrderRecord | null>(null);
   const [utrInputModal, setUtrInputModal] = useState("");
   const [copiedUpi, setCopiedUpi] = useState(false);
+
+  // Quick PAN Upload modal state in checkout if high value
+  const [showPanModal, setShowPanModal] = useState(false);
+  const [checkoutPanNum, setCheckoutPanNum] = useState("");
+  const [checkoutPanFile, setCheckoutPanFile] = useState<string | null>(null);
+  const [checkoutPanFileName, setCheckoutPanFileName] = useState("");
+  const [panSubmitError, setPanSubmitError] = useState("");
+  const panInputRef = useRef<HTMLInputElement>(null);
 
   // Auto-detect City & State when 6-digit PIN code is typed
   useEffect(() => {
@@ -69,6 +120,40 @@ export default function CheckoutPage() {
     }
   }, [form.pincode]);
 
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText("ayorjewellery@okaxis");
+    setCopiedUpi(true);
+    setTimeout(() => setCopiedUpi(false), 2000);
+  };
+
+  const handleCheckoutPanFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCheckoutPanFileName(file.name);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCheckoutPanFile(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveCheckoutPan = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPanSubmitError("");
+    if (!checkoutPanFile) {
+      setPanSubmitError("PAN card document file upload is mandatory.");
+      return;
+    }
+
+    try {
+      const verified = submitCustomerPAN(checkoutPanNum, checkoutPanFile, form.fullName);
+      setCustomer(verified);
+      setShowPanModal(false);
+    } catch (err: any) {
+      setPanSubmitError(err.message || "Failed to verify PAN.");
+    }
+  };
+
   // Build formatted WhatsApp message with complete cart and customer details
   const generateWhatsAppMessage = (orderNum: string, currentUtr?: string) => {
     const itemsList = cart
@@ -89,7 +174,9 @@ I would like to place and confirm my Jewellery Order.
 *Cart Items (${cart.length}):*
 ${itemsList}
 
-*Order Total:* ₹${total.toLocaleString("en-IN")} (incl. 3% GST & Insured Shipping)
+*Order Total:* ₹${finalTotal.toLocaleString("en-IN")}${
+      discountAmount > 0 ? ` (Includes 10% Discount -₹${discountAmount})` : ""
+    }
 *Payment Mode:* ${
       form.paymentMethod === "cod"
         ? "Cash on Delivery (COD)"
@@ -111,18 +198,23 @@ Please verify the payment and confirm my dispatch!`;
     return encodeURIComponent(text);
   };
 
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText("ayorjewellery@okaxis");
-    setCopiedUpi(true);
-    setTimeout(() => setCopiedUpi(false), 2000);
-  };
-
   // Main order placement handler
   const handlePlaceOrder = async (e?: React.FormEvent, forceMode?: "cod" | "whatsapp_confirm") => {
     if (e) e.preventDefault();
 
     if (!form.fullName || !form.phone || !form.email || !form.address || !form.pincode) {
       alert("Please fill all mandatory contact and shipping fields.");
+      return;
+    }
+
+    // MANDATORY PAN ENFORCEMENT FOR ORDERS >= RS. 2,00,000
+    if (isHighValue && !isPanCompliant) {
+      setShowPanModal(true);
+      alert(
+        `Orders of ₹${BUSINESS_CONFIG.panThresholdINR.toLocaleString(
+          "en-IN"
+        )} or above require a verified PAN Card as per Government of India Rule 114B. Please upload your PAN card to proceed.`
+      );
       return;
     }
 
@@ -158,9 +250,9 @@ Please verify the payment and confirm my dispatch!`;
         quantity: i.quantity,
         size: i.size,
       })),
-      subtotal: total - gst,
+      subtotal: taxableAmount,
       gst: gst,
-      totalAmount: total,
+      totalAmount: finalTotal,
       paymentMode: form.paymentMethod,
       paymentStatus:
         form.paymentMethod === "cod"
@@ -175,7 +267,27 @@ Please verify the payment and confirm my dispatch!`;
     // 1. Save to Supabase and Local Storage Vault
     await saveOrderToSupabase(orderRecord);
 
-    // 2. Dispatch automated email notification API
+    // 2. Generate Official Invoice for customer
+    if (customer) {
+      createCustomerInvoice({
+        orderNumber: orderNum,
+        customer,
+        items: cart.map((i) => ({
+          id: i.product.id,
+          name: i.product.name,
+          purity: i.product.purity,
+          metal: i.selectedMetal || i.product.metal,
+          price: i.product.price,
+          quantity: i.quantity,
+        })),
+        subtotal: rawSubtotal,
+        discountAmount: discountAmount,
+        totalAmount: finalTotal,
+        paymentMode: form.paymentMethod.toUpperCase(),
+      });
+    }
+
+    // 3. Dispatch automated email notification API
     try {
       await fetch("/api/order-notification", {
         method: "POST",
@@ -186,7 +298,7 @@ Please verify the payment and confirm my dispatch!`;
       console.warn("Order email notification background trigger", err);
     }
 
-    // 3. If WhatsApp redirect requested
+    // 4. If WhatsApp redirect requested
     if (forceMode === "whatsapp_confirm") {
       const waUrl = `https://wa.me/918808828882?text=${generateWhatsAppMessage(
         orderNum,
@@ -200,7 +312,6 @@ Please verify the payment and confirm my dispatch!`;
     setIsPlacing(false);
   };
 
-  // Handler to update UTR on completed order screen
   const handleUpdateOrderUTR = async () => {
     if (!utrInputModal.trim() || !orderComplete) return;
     await updateOrderUTR(orderComplete.orderNumber, utrInputModal.trim());
@@ -213,7 +324,7 @@ Please verify the payment and confirm my dispatch!`;
     setUtrInputModal("");
   };
 
-  // ORDER COMPLETE / SUCCESS SCREEN
+  // ORDER COMPLETE SCREEN
   if (orderComplete) {
     const isCod = orderComplete.paymentMode === "cod";
     const hasUtr = Boolean(orderComplete.utrNumber);
@@ -288,7 +399,7 @@ Please verify the payment and confirm my dispatch!`;
             </div>
           </div>
 
-          {/* If Online payment but UTR is missing: Prompt for UTR update */}
+          {/* If Online payment but UTR is missing */}
           {!isCod && !hasUtr && (
             <div className="bg-amber-50 border border-amber-300 p-5 rounded-xl text-left space-y-3">
               <div className="flex items-center gap-2 text-amber-900 font-semibold text-xs">
@@ -318,19 +429,13 @@ Please verify the payment and confirm my dispatch!`;
           )}
 
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#DDD8D0]">
-            <a
-              href={`https://wa.me/918808828882?text=${encodeURIComponent(
-                `Namaste AYOR Atelier! My Order is ${orderComplete.orderNumber} for ₹${orderComplete.totalAmount.toLocaleString(
-                  "en-IN"
-                )}. Status: ${orderComplete.paymentStatus}. Customer: ${orderComplete.fullName}`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors"
+            <Link
+              href="/account"
+              className="flex-1 bg-[#FAF7F2] border border-[#DDD8D0] hover:bg-[#EFEBE4] text-[#0E382B] px-6 py-3.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors"
             >
-              <MessageCircle size={16} />
-              <span>Track / Verify on WhatsApp</span>
-            </a>
+              <FileText size={16} />
+              <span>View Invoice in Account</span>
+            </Link>
 
             <Link
               href="/shop"
@@ -357,14 +462,42 @@ Please verify the payment and confirm my dispatch!`;
         <h1 className="font-serif text-3xl md:text-5xl text-[#111111]">Express Checkout</h1>
       </div>
 
-      <div className="grid lg:grid-cols-12 gap-12 pt-4">
+      {/* MANDATORY PAN CARD ALERT BANNER IF ORDER >= RS. 2,00,000 */}
+      {isHighValue && !isPanCompliant && (
+        <div className="bg-amber-50 border-2 border-amber-400 p-5 rounded-2xl mb-8 space-y-2">
+          <div className="flex items-center gap-2 text-amber-900 font-bold text-sm">
+            <AlertCircle size={18} className="text-amber-700" />
+            <span>Government of India Compliance Alert (Rule 114B)</span>
+          </div>
+          <p className="text-xs text-amber-900 leading-relaxed">
+            Your order value is <strong>₹{finalTotal.toLocaleString("en-IN")}</strong>. As per Income Tax Rule 114B, quoting and uploading a verified PAN card is <strong>mandatory for jewellery purchases of ₹2,00,000 or above</strong>.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowPanModal(true)}
+            className="bg-[#0E382B] hover:bg-[#144636] text-white px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider mt-1 cursor-pointer flex items-center gap-1.5"
+          >
+            <ShieldCheck size={14} />
+            <span>Upload PAN Card Now</span>
+          </button>
+        </div>
+      )}
+
+      <div className="grid lg:grid-cols-12 gap-12 pt-2">
         {/* Form */}
         <form onSubmit={(e) => handlePlaceOrder(e)} className="lg:col-span-7 space-y-8">
           {/* Contact Details */}
           <div className="border border-[#DDD8D0] bg-white p-6 md:p-8 space-y-4 rounded-xl shadow-sm">
-            <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111] pb-2 border-b border-[#EFEBE4]">
-              1. Contact Information
-            </h2>
+            <div className="flex items-center justify-between pb-2 border-b border-[#EFEBE4]">
+              <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+                1. Contact Information
+              </h2>
+              {customer && (
+                <span className="text-[11px] font-mono text-[#0E382B] font-bold">
+                  {customer.customerId}
+                </span>
+              )}
+            </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#666666] mb-1">
@@ -381,12 +514,12 @@ Please verify the payment and confirm my dispatch!`;
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#666666] mb-1">
-                  Mobile Number (for Courier SMS & WhatsApp) *
+                  Mobile Number *
                 </label>
                 <input
                   required
                   type="tel"
-                  placeholder="+91 98765 43210"
+                  placeholder="9876543210"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-[#FAF7F2] focus:outline-none focus:border-[#0E382B]"
@@ -408,7 +541,7 @@ Please verify the payment and confirm my dispatch!`;
             </div>
           </div>
 
-          {/* Shipping Address with Instant Pincode Auto-Fetch */}
+          {/* Shipping Address */}
           <div className="border border-[#DDD8D0] bg-white p-6 md:p-8 space-y-4 rounded-xl shadow-sm">
             <div className="flex items-center justify-between pb-2 border-b border-[#EFEBE4]">
               <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
@@ -488,7 +621,7 @@ Please verify the payment and confirm my dispatch!`;
             </div>
           </div>
 
-          {/* Payment Method & UTR / RRN Logic */}
+          {/* Payment Method */}
           <div className="border border-[#DDD8D0] bg-white p-6 md:p-8 space-y-4 rounded-xl shadow-sm">
             <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111] pb-2 border-b border-[#EFEBE4] flex items-center justify-between">
               <span>3. Payment Mode & Security Verification</span>
@@ -498,7 +631,6 @@ Please verify the payment and confirm my dispatch!`;
             </h2>
 
             <div className="space-y-3">
-              {/* Option 1: Cash on Delivery (COD) */}
               <label
                 className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
                   form.paymentMethod === "cod"
@@ -529,7 +661,6 @@ Please verify the payment and confirm my dispatch!`;
                 </div>
               </label>
 
-              {/* Option 2: Online UPI / QR Payment */}
               <label
                 className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
                   form.paymentMethod === "upi"
@@ -550,74 +681,14 @@ Please verify the payment and confirm my dispatch!`;
                     <span className="text-xs font-semibold text-[#111111]">
                       Online UPI / QR Payment (GPay, PhonePe, Paytm)
                     </span>
-                    <span className="text-[10px] bg-[#0E382B] text-white font-semibold px-2 py-0.2 rounded">
-                      Fastest
-                    </span>
                   </div>
                   <p className="text-[11px] text-[#666666] mt-0.5">
                     Scan boutique QR code or pay to UPI ID. Enter 12-digit UTR/RRN to confirm order.
                   </p>
                 </div>
               </label>
-
-              {/* Option 3: Online Net Banking */}
-              <label
-                className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
-                  form.paymentMethod === "netbanking"
-                    ? "border-[#0E382B] bg-[#F5F9F6]"
-                    : "border-[#DDD8D0] hover:bg-[#FAF7F2]"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="payment"
-                  checked={form.paymentMethod === "netbanking"}
-                  onChange={() => setForm({ ...form, paymentMethod: "netbanking" })}
-                  className="accent-[#0E382B] mt-0.5"
-                />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={16} className="text-[#0E382B]" />
-                    <span className="text-xs font-semibold text-[#111111]">
-                      Online Net Banking (IMPS / NEFT / RTGS)
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-[#666666] mt-0.5">
-                    Direct transfer to AYOR Atelier official current account.
-                  </p>
-                </div>
-              </label>
-
-              {/* Option 4: Debit / Credit Card */}
-              <label
-                className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
-                  form.paymentMethod === "card"
-                    ? "border-[#0E382B] bg-[#F5F9F6]"
-                    : "border-[#DDD8D0] hover:bg-[#FAF7F2]"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="payment"
-                  checked={form.paymentMethod === "card"}
-                  onChange={() => setForm({ ...form, paymentMethod: "card" })}
-                  className="accent-[#0E382B] mt-0.5"
-                />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <CreditCard size={16} className="text-[#0E382B]" />
-                    <span className="text-xs font-semibold text-[#111111]">
-                      Debit / Credit Card (Visa, Mastercard, RuPay)
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-[#666666] mt-0.5">
-                    Secure card gateway. Enter transaction authorization RRN after payment.
-                  </p>
-                </div>
-              </label>
             </div>
 
-            {/* EXPANDABLE SECTION: Online Payment Details + UTR Input + WhatsApp Bridge */}
             {isOnline && (
               <div className="mt-4 pt-4 border-t border-[#DDD8D0] space-y-4 bg-[#FAF7F2] p-5 rounded-xl border">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl border border-[#DDD8D0]">
@@ -633,19 +704,18 @@ Please verify the payment and confirm my dispatch!`;
                       <button
                         type="button"
                         onClick={handleCopyUpi}
-                        className="text-[11px] text-[#0E382B] hover:underline flex items-center gap-0.5 font-medium"
+                        className="text-[11px] text-[#0E382B] hover:underline flex items-center gap-0.5 font-medium cursor-pointer"
                       >
                         <Copy size={12} />
                         <span>{copiedUpi ? "Copied!" : "Copy"}</span>
                       </button>
                     </div>
                     <p className="text-[11px] text-[#666666]">
-                      Amount to Pay: <strong>₹{total.toLocaleString("en-IN")}</strong>
+                      Amount to Pay: <strong>₹{finalTotal.toLocaleString("en-IN")}</strong>
                     </p>
                   </div>
 
                   <div className="text-center bg-white p-2 border border-[#DDD8D0] rounded-lg shadow-2xs">
-                    {/* SVG Stylized QR Code for visual luxury */}
                     <div className="w-24 h-24 bg-[#FAF7F2] border border-[#DDD8D0] rounded flex flex-col items-center justify-center text-center p-1">
                       <QrCode size={40} className="text-[#0E382B]" />
                       <span className="text-[9px] font-bold text-[#0E382B] mt-1">Scan to Pay</span>
@@ -653,7 +723,6 @@ Please verify the payment and confirm my dispatch!`;
                   </div>
                 </div>
 
-                {/* MANDATORY UTR / RRN NUMBER INPUT BOX */}
                 <div className="bg-white p-4 rounded-xl border-2 border-[#C5A880] space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="block text-xs uppercase tracking-wider font-bold text-[#0E382B]">
@@ -670,28 +739,24 @@ Please verify the payment and confirm my dispatch!`;
                     onChange={(e) => setForm({ ...form, utrNumber: e.target.value })}
                     className="w-full px-3.5 py-2.5 text-xs font-mono font-semibold border border-[#DDD8D0] rounded-lg bg-[#FFFDF5] focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
                   />
-                  <p className="text-[11px] text-[#666666]">
-                    Jab tak payment UTR number nahi dalenge ya Cash on Delivery choose nahi karenge, tab tak order confirm nahi hoga.
-                  </p>
                 </div>
 
-                {/* WHATSAPP CONCIERGE BRIDGE */}
                 <div className="bg-[#EAF3DE] border border-[#C5DDA8] p-4 rounded-xl space-y-2">
                   <div className="flex items-center gap-2 text-xs font-semibold text-[#1B3B30]">
                     <MessageCircle size={16} className="text-[#25D366]" />
                     <span>Or Confirm Directly on WhatsApp:</span>
                   </div>
                   <p className="text-[11px] text-[#2D5A47]">
-                    Agar aapne payment kar di hai aur direct WhatsApp par screenshot/RRN bhejna chahte hain, to neeche click karein. Aapka cart aur details automatic transfer ho jayenge:
+                    Agar aapne payment kar di hai aur direct WhatsApp par screenshot/RRN bhejna chahte hain, to neeche click karein:
                   </p>
                   <button
                     type="button"
                     onClick={() => handlePlaceOrder(undefined, "whatsapp_confirm")}
                     disabled={isPlacing || cart.length === 0}
-                    className="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors"
+                    className="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
                   >
                     <MessageCircle size={15} />
-                    <span>Pay & Share Cart on WhatsApp (चैट पर ऑर्डर करें)</span>
+                    <span>Pay &amp; Share Cart on WhatsApp (चैट पर ऑर्डर करें)</span>
                   </button>
                 </div>
               </div>
@@ -701,25 +766,32 @@ Please verify the payment and confirm my dispatch!`;
           {/* SUBMIT BUTTON */}
           <button
             type="submit"
-            disabled={isPlacing || cart.length === 0}
+            disabled={isPlacing || cart.length === 0 || (isHighValue && !isPanCompliant)}
             className={`w-full py-4 text-xs uppercase tracking-wider font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 ${
-              form.paymentMethod === "cod" || hasEnteredUtr
+              isHighValue && !isPanCompliant
+                ? "bg-amber-600 text-white cursor-pointer"
+                : form.paymentMethod === "cod" || hasEnteredUtr
                 ? "bg-[#0E382B] hover:bg-[#144636] text-white cursor-pointer"
                 : "bg-stone-300 text-stone-600 cursor-not-allowed"
             }`}
           >
             {isPlacing ? (
               "Securing Your Atelier Order..."
+            ) : isHighValue && !isPanCompliant ? (
+              <>
+                <span>Upload PAN Card to Proceed (Order ≥ ₹2 Lakh)</span>
+                <ShieldCheck size={14} />
+              </>
             ) : form.paymentMethod === "cod" ? (
               <>
-                <span>Confirm Order via Cash on Delivery (₹{total.toLocaleString("en-IN")})</span>
+                <span>Confirm Order via Cash on Delivery (₹{finalTotal.toLocaleString("en-IN")})</span>
                 <ArrowRight size={14} />
               </>
             ) : hasEnteredUtr ? (
               <>
                 <span>
                   Confirm Order with UTR #{form.utrNumber.slice(0, 4)}... (₹
-                  {total.toLocaleString("en-IN")})
+                  {finalTotal.toLocaleString("en-IN")})
                 </span>
                 <CheckCircle2 size={14} />
               </>
@@ -761,19 +833,32 @@ Please verify the payment and confirm my dispatch!`;
             <div className="space-y-2 pt-3 border-t border-[#EFEBE4] text-xs text-[#666666]">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>₹{(total - gst).toLocaleString("en-IN")}</span>
+                <span>₹{rawSubtotal.toLocaleString("en-IN")}</span>
               </div>
+
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-emerald-800 font-semibold bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                  <span className="flex items-center gap-1">
+                    <Tag size={12} />
+                    <span>Welcome Privilege (10% OFF - AYOR10):</span>
+                  </span>
+                  <span>-₹{discountAmount.toLocaleString("en-IN")}</span>
+                </div>
+              )}
+
               <div className="flex justify-between">
                 <span>Applicable GST (3%)</span>
                 <span>₹{gst.toLocaleString("en-IN")}</span>
               </div>
+
               <div className="flex justify-between">
                 <span>Insured Courier Delivery</span>
                 <span className="text-[#0E382B] font-medium">Free</span>
               </div>
+
               <div className="flex justify-between pt-2 border-t border-[#EFEBE4] text-sm font-serif font-semibold text-[#111111]">
                 <span>Total Amount</span>
-                <span>₹{total.toLocaleString("en-IN")}</span>
+                <span>₹{finalTotal.toLocaleString("en-IN")}</span>
               </div>
             </div>
 
@@ -790,6 +875,85 @@ Please verify the payment and confirm my dispatch!`;
           </div>
         </div>
       </div>
+
+      {/* QUICK PAN UPLOAD MODAL */}
+      {showPanModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+          <div className="bg-white border border-[#DDD8D0] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EFEBE4]">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={18} className="text-[#0E382B]" />
+                <h3 className="font-serif text-lg font-bold text-[#111111]">
+                  Upload PAN Card (Rule 114B)
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowPanModal(false)}
+                className="text-gray-400 hover:text-black p-1 text-sm cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs text-[#555555]">
+              As per Government of India regulations, quoting and uploading a verified PAN card is mandatory for purchases of ₹2,00,000 or above.
+            </p>
+
+            {panSubmitError && (
+              <p className="text-xs text-red-600 bg-red-50 p-2 rounded border border-red-200">
+                {panSubmitError}
+              </p>
+            )}
+
+            <form onSubmit={handleSaveCheckoutPan} className="space-y-3 text-xs">
+              <div>
+                <label className="block font-semibold uppercase tracking-wider mb-1">
+                  10-Digit PAN Number *
+                </label>
+                <input
+                  type="text"
+                  required
+                  maxLength={10}
+                  placeholder="ABCDE1234F"
+                  value={checkoutPanNum}
+                  onChange={(e) => setCheckoutPanNum(e.target.value.toUpperCase())}
+                  className="w-full px-3 py-2 border border-[#C5A880] rounded-lg uppercase font-mono font-bold focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold uppercase tracking-wider mb-1">
+                  Upload PAN Document (Mandatory) *
+                </label>
+                <div
+                  onClick={() => panInputRef.current?.click()}
+                  className="border-2 border-dashed border-[#C5A880] rounded-xl p-4 text-center cursor-pointer hover:bg-[#FFFDF5]"
+                >
+                  <input
+                    ref={panInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,application/pdf"
+                    onChange={handleCheckoutPanFile}
+                    className="hidden"
+                  />
+                  <UploadCloud className="mx-auto text-[#C5A880]" size={24} />
+                  <p className="text-xs font-semibold text-[#111111] mt-1">
+                    {checkoutPanFileName || "Click to select PAN Card file"}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 rounded-lg font-semibold uppercase tracking-wider mt-2 cursor-pointer"
+              >
+                Verify PAN &amp; Continue Order
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

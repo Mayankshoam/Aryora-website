@@ -7,6 +7,7 @@ import { Heart, Sparkles, Check, ShoppingBag, Clock } from "lucide-react";
 import { Product, formatPriceINR } from "@/lib/data";
 import { useAryoraStore } from "@/lib/store";
 import { calculateDynamicPrice, getDailyMetalRates } from "@/lib/metalRates";
+import { getActiveCustomer, toggleCustomerWishlist } from "@/lib/customerStore";
 
 interface ProductCardProps {
   product: Product;
@@ -121,7 +122,17 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            const customer = getActiveCustomer();
+            if (!customer) {
+              // Guest clicked wishlist: prompt login and queue item for post-login
+              if (typeof window !== "undefined") {
+                localStorage.setItem("ayor_pending_wishlist_slug", product.slug);
+                window.dispatchEvent(new Event("ayor_replay_welcome"));
+              }
+              return;
+            }
             toggleWishlist(product.slug);
+            toggleCustomerWishlist(customer.customerId, product.slug);
           }}
           aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           className={`absolute top-2.5 right-2.5 p-2 rounded-full backdrop-blur-sm transition-all z-10 ${

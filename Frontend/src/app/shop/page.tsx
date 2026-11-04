@@ -215,7 +215,7 @@ function ShopCatalogueContent() {
       {/* 2. Hero Header Banner */}
       <div className="bg-[#F5F0EA] border border-[#DDD8D0] p-6 md:p-10 space-y-3">
         <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[#C09981]">
-          Fine Lab-Grown Joaillerie · Lucknow Atelier
+          Fine Lab-Grown Jewellery · Lucknow Atelier
         </p>
         <h1 className="font-serif text-3xl md:text-4xl text-ink font-light">
           All Fine Jewellery Creations

@@ -49,7 +49,7 @@ export default function StoreLocatorModal() {
             <div className="flex items-start gap-3">
               <MapPin size={18} className="text-[#C09981] mt-0.5 flex-shrink-0" />
               <div className="text-xs space-y-0.5">
-                <p className="font-semibold text-ink">Ayor Haute Joaillerie Atelier</p>
+                <p className="font-semibold text-ink">Ayor Fine Jewellery Atelier</p>
                 <p className="text-ink-muted">Hazratganj / Aliganj Fine Jewelry Enclave</p>
                 <p className="text-ink-muted">Lucknow, Uttar Pradesh 226001, India</p>
               </div>
