@@ -22,3 +22,4 @@ export const BUSINESS_CONFIG = {
     minOrderValue: 0,
   },
 };
+
