@@ -118,11 +118,11 @@ export default function CustomizePage() {
         <form onSubmit={handleSubmit} className="lg:col-span-7 space-y-10">
           {/* 1. Style Selection */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-border-subtle">
-              <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
+            <div className="flex items-center justify-between pb-2 border-b border-[#E5E0D8]">
+              <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                 1. Select Setting Style
               </h2>
-              <span className="text-[11px] text-ink-subtle">Combine one or more styles</span>
+              <span className="text-[11px] text-[#666666]">Combine one or more styles</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {STYLES.map((s) => {
@@ -132,14 +132,14 @@ export default function CustomizePage() {
                     type="button"
                     key={s.id}
                     onClick={() => toggleStyle(s.id)}
-                    className={`p-3.5 text-left border transition-all text-xs ${
+                    className={`p-3.5 text-left border rounded-xl transition-all text-xs cursor-pointer ${
                       active
-                        ? "border-ink bg-ivory-pure shadow-sm"
-                        : "border-border-subtle bg-ivory hover:border-ink/50"
+                        ? "border-[#0E382B] bg-[#FAF7F2] shadow-sm ring-1 ring-[#0E382B]"
+                        : "border-[#E5E0D8] bg-white hover:border-[#0E382B]/60"
                     }`}
                   >
-                    <p className="font-serif text-sm font-medium text-ink">{s.label}</p>
-                    <p className="text-[11px] text-ink-subtle mt-0.5 leading-snug">{s.desc}</p>
+                    <p className="font-serif text-sm font-medium text-[#111111]">{s.label}</p>
+                    <p className="text-[11px] text-[#666666] mt-0.5 leading-snug">{s.desc}</p>
                   </button>
                 );
               })}
@@ -148,11 +148,11 @@ export default function CustomizePage() {
 
           {/* 2. Metal Selection */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-border-subtle">
-              <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
-                2. Select Metal & Purity
+            <div className="flex items-center justify-between pb-2 border-b border-[#E5E0D8]">
+              <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+                2. Select Precious Metal
               </h2>
-              <span className="text-[11px] text-ink-subtle">18K Certified Gold or 92.5 Silver</span>
+              <span className="text-[11px] text-[#666666]">18K Certified Gold or 925 Silver</span>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {METALS.map((m) => (
@@ -160,10 +160,10 @@ export default function CustomizePage() {
                   type="button"
                   key={m.id}
                   onClick={() => setMetal(m.id)}
-                  className={`px-4 py-2.5 text-xs border transition-all font-medium ${
+                  className={`px-4 py-2.5 text-xs border rounded-xl transition-all font-medium cursor-pointer ${
                     metal === m.id
-                      ? "border-ink bg-ink text-ivory"
-                      : "border-border-subtle bg-ivory-pure text-ink hover:border-ink"
+                      ? "border-[#0E382B] bg-[#0E382B] text-white shadow-sm"
+                      : "border-[#E5E0D8] bg-white text-[#111111] hover:border-[#0E382B]"
                   }`}
                 >
                   {m.label}
@@ -174,11 +174,11 @@ export default function CustomizePage() {
 
           {/* 3. Diamond Shape */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-border-subtle">
-              <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
+            <div className="flex items-center justify-between pb-2 border-b border-[#E5E0D8]">
+              <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                 3. Choose Center Stone Shape
               </h2>
-              <span className="text-[11px] text-ink-subtle">IGI Certified Lab-Grown</span>
+              <span className="text-[11px] text-[#666666]">IGI Certified Lab-Grown</span>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {SHAPES.map((s) => (
@@ -186,10 +186,10 @@ export default function CustomizePage() {
                   type="button"
                   key={s}
                   onClick={() => setShape(s)}
-                  className={`px-4 py-2.5 text-xs border transition-all font-medium ${
+                  className={`px-4 py-2.5 text-xs border rounded-xl transition-all font-medium cursor-pointer ${
                     shape === s
-                      ? "border-ink bg-ink text-ivory"
-                      : "border-border-subtle bg-ivory-pure text-ink hover:border-ink"
+                      ? "border-[#0E382B] bg-[#0E382B] text-white shadow-sm"
+                      : "border-[#E5E0D8] bg-white text-[#111111] hover:border-[#0E382B]"
                   }`}
                 >
                   {s}
@@ -200,11 +200,11 @@ export default function CustomizePage() {
 
           {/* 4. Carat Weight */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-border-subtle">
-              <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
+            <div className="flex items-center justify-between pb-2 border-b border-[#E5E0D8]">
+              <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                 4. Approximate Carat Weight
               </h2>
-              <span className="text-[11px] text-ink-subtle">Custom sizes also available</span>
+              <span className="text-[11px] text-[#666666]">Custom sizes also available</span>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {CARATS.map((c) => (
@@ -212,10 +212,10 @@ export default function CustomizePage() {
                   type="button"
                   key={c}
                   onClick={() => setCarat(c)}
-                  className={`px-4 py-2.5 text-xs border transition-all font-medium ${
+                  className={`px-4 py-2.5 text-xs border rounded-xl transition-all font-medium cursor-pointer ${
                     carat === c
-                      ? "border-ink bg-ink text-ivory"
-                      : "border-border-subtle bg-ivory-pure text-ink hover:border-ink"
+                      ? "border-[#0E382B] bg-[#0E382B] text-white shadow-sm"
+                      : "border-[#E5E0D8] bg-white text-[#111111] hover:border-[#0E382B]"
                   }`}
                 >
                   {c}
@@ -225,9 +225,9 @@ export default function CustomizePage() {
           </div>
 
           {/* 5. Contact Details */}
-          <div className="space-y-4 pt-4 border-t border-border-subtle">
-            <h2 className="text-xs uppercase tracking-wider font-semibold text-ink">
-              5. Your Details for Price & Customization Estimate
+          <div className="space-y-4 pt-4 border-t border-[#E5E0D8]">
+            <h2 className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+              5. Contact Details for Estimation & Blueprint
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <input
@@ -236,7 +236,7 @@ export default function CustomizePage() {
                 placeholder="Full Name *"
                 value={contact.fullName}
                 onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
-                className="px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink"
+                className="px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
               />
               <input
                 required
@@ -244,7 +244,7 @@ export default function CustomizePage() {
                 placeholder="Email Address *"
                 value={contact.emailId}
                 onChange={(e) => setContact({ ...contact, emailId: e.target.value })}
-                className="px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink"
+                className="px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
               />
               <input
                 required
@@ -252,14 +252,14 @@ export default function CustomizePage() {
                 placeholder="Mobile Number (WhatsApp) *"
                 value={contact.mobileNumber}
                 onChange={(e) => setContact({ ...contact, mobileNumber: e.target.value })}
-                className="sm:col-span-2 px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink"
+                className="sm:col-span-2 px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
               />
               <textarea
                 rows={3}
                 placeholder="Specific preferences (prong style, budget, engraving, target date)..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="sm:col-span-2 px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink"
+                className="sm:col-span-2 px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
               />
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function CustomizePage() {
           <button
             type="submit"
             disabled={!isComplete || status === "sending"}
-            className="btn-primary w-full text-xs font-semibold py-4"
+            className="w-full bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-medium py-4 rounded-xl shadow-md transition-all cursor-pointer"
           >
             {status === "sending" ? "Sending Design..." : "Submit My Custom Design"}
           </button>
@@ -277,15 +277,17 @@ export default function CustomizePage() {
 
         {/* Right: Sticky 3D Preview */}
         <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-28 border border-border-subtle bg-ivory-pure p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
-              <p className="eyebrow">Real-Time 3D Stage</p>
-              <span className="text-[11px] text-ink-subtle flex items-center gap-1">
-                <Sparkles size={12} className="text-champagne-accessible" /> Interactive View
+          <div className="lg:sticky lg:top-28 rounded-2xl border border-[#E5E0D8] bg-[#FAF7F2] p-5 sm:p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5E0D8]">
+              <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#0E382B]">
+                Real-Time 3D Stage
+              </p>
+              <span className="text-[11px] text-[#666666] flex items-center gap-1 font-medium">
+                <Sparkles size={12} className="text-[#C09981]" /> 360° Studio View
               </span>
             </div>
 
-            <div className="aspect-square bg-ivory overflow-hidden relative border border-border-subtle">
+            <div className="aspect-square bg-white rounded-xl overflow-hidden relative border border-[#E5E0D8] shadow-xs">
               <RingPreview
                 metal={metal}
                 carat={carat}
