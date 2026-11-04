@@ -313,14 +313,14 @@ export default function HomePage() {
             <div className="pt-2 flex flex-wrap gap-4">
               <Link
                 href="/customize"
-                className="bg-[#0E382B] hover:bg-[#144636] text-white transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 rounded-sm inline-flex items-center gap-2 shadow-sm"
+                className="bg-[#0E382B] hover:bg-[#144636] text-white transition-colors text-xs uppercase tracking-wider font-semibold px-7 py-3.5 rounded-xl inline-flex items-center gap-2 shadow-sm"
               >
                 <span>Customize Your Ring Now</span>
                 <ArrowRight size={14} />
               </Link>
               <Link
                 href="/bridal"
-                className="border border-[#0E382B] text-[#0E382B] hover:bg-[#0E382B] hover:text-white transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 rounded-sm inline-flex items-center gap-2"
+                className="border border-[#0E382B] text-[#0E382B] hover:bg-[#0E382B] hover:text-white transition-colors text-xs uppercase tracking-wider font-semibold px-6 py-3.5 rounded-xl inline-flex items-center gap-2"
               >
                 <span>Book Free Video Consultation</span>
               </Link>
@@ -328,13 +328,13 @@ export default function HomePage() {
           </div>
 
           <div className="lg:col-span-4 flex items-center justify-center">
-            <div className="relative w-56 h-56 rounded-full border border-[#0E382B]/20 p-4 flex items-center justify-center bg-white shadow-md">
+            <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full border border-[#E5E0D8] p-8 flex items-center justify-center bg-white shadow-md hover:shadow-lg transition-all">
               <Image
-                src="/site/brand-emblem.svg"
-                alt="AYOR Monogram Logo"
-                width={150}
-                height={150}
-                className="object-contain hover:scale-105 transition-transform duration-500 drop-shadow-sm"
+                src="/site/ayor-symbol.svg"
+                alt="AYOR Stylized Monogram"
+                width={130}
+                height={130}
+                className="object-contain hover:scale-105 transition-transform duration-500 drop-shadow-xs"
               />
             </div>
           </div>

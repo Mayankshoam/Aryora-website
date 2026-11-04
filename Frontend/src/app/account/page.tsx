@@ -290,8 +290,9 @@ export default function AccountPage() {
               </span>
             )}
             {customer.hasWelcomeDiscount && (
-              <span className="bg-[#FFFDF5] text-[#C5A880] border border-[#C5A880] text-[10px] font-bold px-2 py-0.5 rounded-full">
-                10% Welcome Discount (AYOR10)
+              <span className="bg-[#FAF7F2] text-[#0E382B] border border-[#E5E0D8] text-[10px] font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <Sparkles size={10} className="text-[#C09981]" />
+                <span>Welcome Privilege Active</span>
               </span>
             )}
           </div>

@@ -58,12 +58,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
   return (
     <div
-      className="group relative flex flex-col bg-white border border-[#DDD8D0] hover:border-[#C09981] hover:shadow-md transition-all duration-300"
+      className="group relative flex flex-col bg-white rounded-2xl border border-[#E5E0D8] hover:border-[#C5A880] hover:shadow-lg transition-all duration-300 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* 1. Image Container with Hover Swap on Miss Jo Cream Backplate */}
-      <div className="relative aspect-square w-full bg-[#F5F0EA]/60 overflow-hidden">
+      <div className="relative aspect-square w-full bg-[#FAF7F2] overflow-hidden">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
             src={primaryImage}
@@ -88,32 +88,22 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           )}
         </Link>
 
-        {/* Top Badges */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start pointer-events-none z-10">
+        {/* Top Minimalist Badge (At most 1 quiet luxury pill, no cheap discount tags) */}
+        <div className="absolute top-3 left-3 pointer-events-none z-10">
           {isComingSoon ? (
-            <span className="bg-[#B8860B] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm flex items-center gap-1">
+            <span className="bg-[#0E382B]/85 backdrop-blur-md text-[#FAF7F2] text-[9px] uppercase tracking-widest font-medium px-2.5 py-1 rounded-full shadow-2xs flex items-center gap-1 border border-white/20">
               <Clock size={10} />
               <span>Coming Soon</span>
             </span>
-          ) : (
-            <>
-              {product.isBestseller && (
-                <span className="bg-[#1A1A1A] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
-                  Bestseller
-                </span>
-              )}
-              {product.isNew && (
-                <span className="bg-[#108474] text-white text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-sm">
-                  In Stock · Ready to Ship
-                </span>
-              )}
-            </>
-          )}
-          {product.discountPercent > 0 && !isComingSoon && (
-            <span className="bg-[#A32D2D] text-white text-[9px] font-semibold px-2 py-0.5 shadow-sm">
-              {product.discountPercent}% OFF
+          ) : product.isBestseller ? (
+            <span className="bg-[#111111]/85 backdrop-blur-md text-[#FAF7F2] text-[9px] uppercase tracking-widest font-medium px-2.5 py-1 rounded-full shadow-2xs border border-white/20">
+              Bestseller
             </span>
-          )}
+          ) : product.isNew ? (
+            <span className="bg-[#0E382B]/85 backdrop-blur-md text-[#FAF7F2] text-[9px] uppercase tracking-widest font-medium px-2.5 py-1 rounded-full shadow-2xs border border-white/20">
+              Ready to Ship
+            </span>
+          ) : null}
         </div>
 
         {/* Wishlist Button */}
@@ -124,7 +114,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             e.stopPropagation();
             const customer = getActiveCustomer();
             if (!customer) {
-              // Guest clicked wishlist: prompt login and queue item for post-login
               if (typeof window !== "undefined") {
                 localStorage.setItem("ayor_pending_wishlist_slug", product.slug);
                 window.dispatchEvent(new Event("ayor_replay_welcome"));
@@ -135,10 +124,10 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             toggleCustomerWishlist(customer.customerId, product.slug);
           }}
           aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
-          className={`absolute top-2.5 right-2.5 p-2 rounded-full backdrop-blur-sm transition-all z-10 ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all z-10 ${
             wishlisted
               ? "bg-[#C09981] text-white shadow-sm"
-              : "bg-white/90 text-[#4A4A4A] hover:text-[#1A1A1A] hover:bg-white shadow-sm"
+              : "bg-white/90 text-[#4A4A4A] hover:text-[#111111] hover:bg-white shadow-2xs"
           }`}
         >
           <Heart size={15} fill={wishlisted ? "currentColor" : "none"} strokeWidth={1.5} />
@@ -146,17 +135,17 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
         {/* Quick Add To Bag Pill on Hover */}
         <div
-          className={`absolute bottom-2 inset-x-2 transition-all duration-200 z-10 ${
+          className={`absolute bottom-3 inset-x-3 transition-all duration-200 z-10 ${
             isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
           }`}
         >
           {isComingSoon ? (
             <Link
               href={`/product/${product.slug}`}
-              className="w-full py-2 bg-[#B8860B]/95 hover:bg-[#9B6F07] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
+              className="w-full py-2.5 rounded-xl bg-[#0E382B]/90 hover:bg-[#0E382B] text-white text-[10px] uppercase tracking-wider font-medium flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
             >
               <Clock size={13} />
-              <span>Coming Soon · View Details</span>
+              <span>Coming Soon</span>
             </Link>
           ) : (
             <button
@@ -166,18 +155,18 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
                 e.stopPropagation();
                 addToCart(product, 1, product.sizes?.[0] || "One Size", selectedMetal);
               }}
-              className="w-full py-2 bg-[#1A1A1A]/95 hover:bg-[#1A1A1A] text-white text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 backdrop-blur-sm transition-colors shadow-sm"
+              className="w-full py-2.5 rounded-xl bg-[#0E382B] hover:bg-[#144636] text-white text-[10px] uppercase tracking-wider font-medium flex items-center justify-center gap-1.5 shadow-md transition-colors cursor-pointer"
             >
               <ShoppingBag size={13} />
-              <span>Add to Bag</span>
+              <span>Quick Add</span>
             </button>
           )}
         </div>
       </div>
 
       {/* 2. Product Details */}
-      <div className="p-3.5 flex flex-col flex-1 justify-between space-y-2">
-        <div className="space-y-1">
+      <div className="p-4 flex flex-col flex-1 justify-between space-y-2.5">
+        <div className="space-y-1.5">
           {/* Metal Swatches */}
           <div className="flex items-center space-x-1.5 pb-0.5">
             {["925 Sterling Silver", "Yellow Gold", "Rose Gold"].map((metal) => {
@@ -206,7 +195,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           </h3>
 
           {/* Specs Subtitle */}
-          <p className="text-[11px] text-[#4A4A4A] line-clamp-1">
+          <p className="text-[11px] text-[#666666] line-clamp-1">
             {product.weightGrams ? `${product.weightGrams}g ` : ""}
             {product.metal}
             {product.stone && product.stone !== "None" ? ` · ${product.stone}` : ""}
@@ -214,19 +203,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         </div>
 
         {/* Pricing Block */}
-        <div className="pt-1 border-t border-[#DDD8D0]/80 flex items-baseline justify-between">
-          <div className="flex items-baseline space-x-2">
-            <span className="text-sm font-semibold text-[#1A1A1A]">
-              {formatPriceINR(dynamicPrice)}
-            </span>
-            {originalPrice && !isComingSoon && (
-              <span className="text-xs text-[#9A9A9A] line-through">
-                {formatPriceINR(originalPrice)}
-              </span>
-            )}
-          </div>
-          <span className="text-[10px] text-[#108474] font-medium">
-            {isComingSoon ? "Gold/Diamond" : "925 Pure Silver"}
+        <div className="pt-2 border-t border-[#F0EBE1] flex items-baseline justify-between">
+          <span className="font-serif text-sm font-semibold text-[#111111]">
+            {formatPriceINR(dynamicPrice)}
+          </span>
+          <span className="text-[10px] text-[#0E382B] font-medium tracking-wide">
+            {isComingSoon ? "Coming Soon" : "925 Pure Silver"}
           </span>
         </div>
       </div>

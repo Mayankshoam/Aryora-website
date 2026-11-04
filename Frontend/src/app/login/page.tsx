@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { Sparkles, Phone, ShieldCheck, Tag } from "lucide-react";
+import { Sparkles, Phone, ShieldCheck, Tag, ArrowRight } from "lucide-react";
 import { loginWithMobile, isValidIndianMobile } from "@/lib/customerStore";
 
 export default function LoginPage() {
@@ -39,15 +39,15 @@ export default function LoginPage() {
     <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
       <Breadcrumbs items={[{ label: "Sign In" }]} />
 
-      <div className="max-w-md mx-auto my-12 border border-[#DDD8D0] bg-[#FAF7F2] p-8 md:p-10 shadow-sm rounded-2xl space-y-6">
+      <div className="max-w-md mx-auto my-12 border border-[#E5E0D8] bg-[#FAF7F2] p-8 md:p-10 shadow-sm rounded-2xl space-y-6">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 bg-[#FFFDF5] border border-[#C5A880] px-3 py-1 rounded-full text-[10px] font-bold text-[#0E382B]">
-            <Tag size={11} className="text-[#C5A880]" />
-            <span>Flat 10% Welcome Discount (AYOR10)</span>
+          <div className="inline-flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-1 rounded-full text-[10px] font-medium text-[#0E382B]">
+            <Sparkles size={11} className="text-[#C09981]" />
+            <span>Welcome Privilege · 10% First Order Benefit</span>
           </div>
-          <h1 className="font-serif text-3xl text-[#111111]">Client Portal Sign In</h1>
+          <h1 className="font-serif text-3xl text-[#111111]">Client Sign In</h1>
           <p className="text-xs text-[#666666]">
-            Sign in with your mobile number to view orders, download invoices, and access your verified profile.
+            Sign in with your mobile number to view orders, download invoices, and manage your account.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function LoginPage() {
               Mobile Number (10 Digits) *
             </label>
             <div className="flex items-center gap-2">
-              <div className="bg-white border border-[#DDD8D0] px-3 py-2.5 rounded-lg text-xs font-semibold text-[#111111]">
+              <div className="bg-white border border-[#E5E0D8] px-3 py-2.5 rounded-xl text-xs font-medium text-[#111111]">
                 🇮🇳 +91
               </div>
               <input
@@ -70,7 +70,7 @@ export default function LoginPage() {
                   if (error) setError("");
                 }}
                 placeholder="9876543210"
-                className="flex-1 px-3.5 py-2.5 text-xs border border-[#C5A880] rounded-lg bg-white text-[#111111] font-mono font-medium focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
+                className="flex-1 px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] font-mono focus:outline-none focus:border-[#0E382B]"
               />
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function LoginPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Ananya Roy"
-              className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
+              className="w-full px-3.5 py-2.5 text-xs border border-[#E5E0D8] rounded-xl bg-white text-[#111111] focus:outline-none focus:border-[#0E382B]"
             />
           </div>
 
@@ -93,16 +93,16 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-semibold py-3.5 mt-2 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-medium py-3.5 mt-2 rounded-xl shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>{loading ? "Signing In..." : "Instant Access (Without OTP)"}</span>
-            <Sparkles size={14} className="text-[#C5A880]" />
+            <span>{loading ? "Signing In..." : "Continue to Account"}</span>
+            <ArrowRight size={14} />
           </button>
         </form>
 
-        <div className="pt-4 border-t border-[#DDD8D0] text-center space-y-2">
+        <div className="pt-4 border-t border-[#E5E0D8] text-center space-y-2">
           <p className="text-[11px] text-[#666666]">
-            New to Ayor? Logging in automatically generates your unique Customer ID and activates your 10% Welcome Discount.
+            Signing in automatically secures your customer account and applies your welcome privilege.
           </p>
         </div>
       </div>

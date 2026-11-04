@@ -47,7 +47,10 @@ export default function ProductDetailPage() {
 
   const isSilver =
     product.metal.toLowerCase().includes("silver") ||
-    product.purity.toLowerCase().includes("silver");
+    product.purity.toLowerCase().includes("silver") ||
+    product.category.toLowerCase().includes("silver") ||
+    product.name.toLowerCase().includes("silver") ||
+    product.name.toLowerCase().includes("payal");
 
   // Multi-image list (guaranteed 4 images)
   const productImages = useMemo(() => {
@@ -388,104 +391,98 @@ export default function ProductDetailPage() {
                 SKU: {product.sku || product.id.toUpperCase()}
               </div>
 
-              {/* Price Block matching Miss Jo PDP */}
+              {/* Price Block */}
               <div className="pt-3 space-y-1">
                 <div className="flex items-baseline space-x-3">
-                  <span className="font-serif text-2xl md:text-3xl font-normal text-[#1A1A1A]">
-                    MRP {formatPriceINR(currentPrice)}
+                  <span className="font-serif text-2xl md:text-3xl font-normal text-[#111111]">
+                    {formatPriceINR(currentPrice)}
                   </span>
-                  {originalPrice && (
-                    <span className="text-sm text-[#9A9A9A] line-through">
-                      {formatPriceINR(originalPrice)}
-                    </span>
-                  )}
-                  {product.discountPercent > 0 && (
-                    <span className="text-xs text-[#108474] font-semibold">
-                      ({product.discountPercent}% OFF)
-                    </span>
-                  )}
                 </div>
                 <p className="text-xs text-[#7A7A7A] font-light">
-                  Price inclusive of all taxes.
+                  Price inclusive of all taxes · Complimentary insured delivery
                 </p>
               </div>
 
               {/* Stone & Purity Badges */}
               <div className="flex flex-wrap gap-2 pt-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F5F0EA] border border-[#DDD8D0] text-[11px] font-medium text-[#1A1A1A] rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FAF7F2] border border-[#E5E0D8] text-[11px] font-medium text-[#111111] rounded-full">
                   <Gem size={12} className="text-[#C09981]" />
                   <span>{product.stone}</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#DDD8D0] text-[11px] font-medium text-[#108474] rounded-full">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E0D8] text-[11px] font-medium text-[#0E382B] rounded-full">
                   <Award size={12} />
                   <span>{product.purity}</span>
                 </span>
               </div>
             </div>
 
-            {/* PLATING Selection (Matching user Miss Jo screenshot) */}
-            <div className="space-y-2.5">
-              <div className="text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]">
-                PLATING:
+            {/* PLATING Selection (Only for Gold / Non-Silver items with multiple platings defined) */}
+            {!isSilver && product.platings && product.platings.length > 1 && (
+              <div className="space-y-2.5">
+                <div className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+                  PLATING:
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {platings.map((plating) => {
+                    const isSelected = selectedPlating === plating;
+                    return (
+                      <button
+                        key={plating}
+                        type="button"
+                        onClick={() => setSelectedPlating(plating)}
+                        className={`px-5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-[#0E382B] text-white border border-[#0E382B] shadow-sm"
+                            : "bg-white text-[#111111] border border-[#DDD8D0] hover:border-[#0E382B]"
+                        }`}
+                      >
+                        {plating}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2.5">
-                {platings.map((plating) => {
-                  const isSelected = selectedPlating === plating;
-                  return (
-                    <button
-                      key={plating}
-                      type="button"
-                      onClick={() => setSelectedPlating(plating)}
-                      className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                        isSelected
-                          ? "bg-[#1A1A1A] text-white border border-[#1A1A1A] shadow-sm"
-                          : "bg-white text-[#1A1A1A] border border-[#DDD8D0] hover:border-[#1A1A1A]"
-                      }`}
-                    >
-                      {plating}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            )}
 
-            {/* CARAT SIZE Selection (Matching user Miss Jo screenshot) */}
-            <div className="space-y-2.5">
-              <div className="text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]">
-                CARAT SIZE:
+            {/* CARAT SIZE Selection (Only for Gold / Diamond Solitaires with multiple carat options) */}
+            {!isSilver && product.caratOptions && product.caratOptions.length > 1 && (
+              <div className="space-y-2.5">
+                <div className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
+                  CARAT SIZE:
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {caratOptions.map((ct) => {
+                    const isSelected = selectedCarat === ct;
+                    return (
+                      <button
+                        key={ct}
+                        type="button"
+                        onClick={() => setSelectedCarat(ct)}
+                        className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-[#0E382B] text-white border border-[#0E382B] shadow-sm"
+                            : "bg-white text-[#111111] border border-[#DDD8D0] hover:border-[#0E382B]"
+                        }`}
+                      >
+                        {ct} CT
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2.5">
-                {caratOptions.map((ct) => {
-                  const isSelected = selectedCarat === ct;
-                  return (
-                    <button
-                      key={ct}
-                      type="button"
-                      onClick={() => setSelectedCarat(ct)}
-                      className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                        isSelected
-                          ? "bg-[#1A1A1A] text-white border border-[#1A1A1A] shadow-sm"
-                          : "bg-white text-[#1A1A1A] border border-[#DDD8D0] hover:border-[#1A1A1A]"
-                      }`}
-                    >
-                      {ct} CT
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            )}
 
             {/* Size Selection (for rings) */}
             {product.sizes && product.sizes.length > 0 && product.sizes[0] !== "One Size" && (
               <div className="space-y-2.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="uppercase tracking-wider font-semibold text-[#1A1A1A]">
+                  <span className="uppercase tracking-wider font-semibold text-[#111111]">
                     RING SIZE: <strong>{selectedSize}</strong>
                   </span>
                   <button
                     type="button"
                     onClick={openSizeGuide}
-                    className="text-[#C09981] font-semibold hover:underline text-[11px]"
+                    className="text-[#C09981] font-semibold hover:underline text-[11px] cursor-pointer"
                   >
                     Size Guide
                   </button>
@@ -496,10 +493,10 @@ export default function ProductDetailPage() {
                       key={size}
                       type="button"
                       onClick={() => setSelectedSize(size)}
-                      className={`px-3.5 py-1.5 text-xs border rounded-sm transition-colors ${
+                      className={`px-4 py-2 text-xs border rounded-xl transition-all cursor-pointer ${
                         selectedSize === size
-                          ? "border-[#1A1A1A] bg-[#1A1A1A] text-white font-semibold"
-                          : "border-[#DDD8D0] bg-white text-[#1A1A1A] hover:border-[#1A1A1A]"
+                          ? "border-[#0E382B] bg-[#0E382B] text-white font-semibold shadow-xs"
+                          : "border-[#DDD8D0] bg-white text-[#111111] hover:border-[#0E382B]"
                       }`}
                     >
                       {size}
@@ -509,27 +506,27 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {/* Quantity Stepper + ADD TO BAG + WISHLIST (Matching user screenshot) */}
+            {/* Quantity Stepper + ADD TO BAG + WISHLIST */}
             <div className="pt-2 space-y-3">
               <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                 {/* Quantity Stepper */}
-                <div className="flex items-center border border-[#DDD8D0] bg-white h-12 w-32 justify-between px-3 flex-shrink-0">
+                <div className="flex items-center border border-[#DDD8D0] bg-white h-12 w-32 justify-between px-3 rounded-xl flex-shrink-0 shadow-2xs">
                   <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     aria-label="Decrease quantity"
-                    className="text-lg text-[#1A1A1A] px-2 hover:opacity-70 font-light select-none"
+                    className="text-lg text-[#111111] px-2 hover:opacity-70 font-light select-none cursor-pointer"
                   >
                     –
                   </button>
-                  <span className="text-xs font-semibold text-[#1A1A1A]">
+                  <span className="text-xs font-semibold text-[#111111]">
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity(quantity + 1)}
                     aria-label="Increase quantity"
-                    className="text-lg text-[#1A1A1A] px-2 hover:opacity-70 font-light select-none"
+                    className="text-lg text-[#111111] px-2 hover:opacity-70 font-light select-none cursor-pointer"
                   >
                     +
                   </button>
@@ -540,7 +537,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={handleWhatsAppEnquiry}
-                    className="flex-1 h-12 bg-[#B8860B] hover:bg-[#9B6F07] text-white font-semibold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
+                    className="flex-1 h-12 bg-[#0E382B]/85 hover:bg-[#0E382B] text-white font-semibold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer"
                   >
                     <Clock size={16} />
                     <span>Coming Soon · Enquire on WhatsApp</span>
@@ -549,7 +546,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="flex-1 h-12 bg-[#1A1A1A] text-white hover:bg-black font-semibold uppercase tracking-widest text-xs flex items-center justify-center transition-colors shadow-sm"
+                    className="flex-1 h-12 bg-[#0E382B] hover:bg-[#144636] text-white font-semibold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center transition-all shadow-md hover:shadow-lg cursor-pointer"
                   >
                     ADD TO BAG · {formatPriceINR(currentPrice * quantity)}
                   </button>
@@ -573,10 +570,10 @@ export default function ProductDetailPage() {
                   aria-label={
                     inWishlist ? "Remove from wishlist" : "Add to wishlist"
                   }
-                  className={`h-12 px-6 border font-semibold uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-colors flex-shrink-0 ${
+                  className={`h-12 px-6 border font-semibold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 transition-all flex-shrink-0 cursor-pointer ${
                     inWishlist
                       ? "border-[#C09981] bg-[#C09981] text-white shadow-sm"
-                      : "border-[#1A1A1A] bg-white text-[#1A1A1A] hover:bg-[#F5F0EA]"
+                      : "border-[#DDD8D0] bg-white text-[#111111] hover:bg-[#FAF7F2] hover:border-[#0E382B]"
                   }`}
                 >
                   <Heart
@@ -593,16 +590,16 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={handleWhatsAppEnquiry}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#1A1A1A] text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-white text-[#111111] hover:bg-[#FAF7F2] rounded-xl text-xs font-semibold uppercase tracking-wider transition-all shadow-2xs cursor-pointer"
                 >
-                  <MessageCircle size={15} />
+                  <MessageCircle size={15} className="text-[#25D366]" />
                   <span>Order on WhatsApp</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={handleVideoConsultation}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-[#F5F0EA] text-[#1A1A1A] hover:border-[#1A1A1A] text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-3 border border-[#DDD8D0] bg-[#FAF7F2] text-[#111111] hover:border-[#0E382B] rounded-xl text-xs font-semibold uppercase tracking-wider transition-all shadow-2xs cursor-pointer"
                 >
                   <Video size={15} className="text-[#C09981]" />
                   <span>Live Video Call</span>
@@ -614,9 +611,9 @@ export default function ProductDetailPage() {
             <div className="space-y-2 pt-2 border-t border-[#DDD8D0]">
               <label
                 htmlFor="pincode-input"
-                className="block text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
+                className="block text-xs uppercase tracking-wider font-semibold text-[#111111]"
               >
-                Check Delivery Date & Services
+                Check Delivery Date &amp; Services
               </label>
               <form onSubmit={handleCheckPincode} className="flex gap-2">
                 <input
@@ -629,18 +626,18 @@ export default function ProductDetailPage() {
                     if (pincodeStatus !== "idle") setPincodeStatus("idle");
                   }}
                   placeholder="Enter 6-digit PIN code"
-                  className="flex-1 px-3.5 py-2.5 text-xs border border-[#DDD8D0] bg-white focus:outline-none focus:border-[#1A1A1A]"
+                  className="flex-1 px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-xl bg-white focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-[#1A1A1A] text-white text-xs uppercase tracking-wider font-semibold hover:bg-black transition-colors"
+                  className="px-5 py-2.5 bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-semibold rounded-xl transition-all cursor-pointer shadow-xs"
                 >
                   {pincodeStatus === "checking" ? "Checking..." : "Check"}
                 </button>
               </form>
               {pincodeStatus === "valid" && (
-                <div className="flex items-center gap-1.5 text-xs text-[#108474] pt-1">
-                  <Check size={14} />
+                <div className="flex items-center gap-1.5 text-xs text-[#0E382B] pt-1">
+                  <Check size={14} className="text-[#0E382B]" />
                   <span>
                     Complimentary insured transit to {pincode}. Estimated delivery:{" "}
                     <strong>{deliveryDate}</strong>.
@@ -648,7 +645,7 @@ export default function ProductDetailPage() {
                 </div>
               )}
               {pincodeStatus === "invalid" && (
-                <p className="text-xs text-[#A32D2D]">
+                <p className="text-xs text-red-600">
                   Please enter a valid 6-digit Indian PIN code.
                 </p>
               )}
@@ -788,39 +785,43 @@ export default function ProductDetailPage() {
                             {product.metal} ({product.purity})
                           </td>
                         </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">Selected Plating</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {selectedPlating}
-                          </td>
-                        </tr>
+                        {!isSilver && selectedPlating && (
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Selected Plating</td>
+                            <td className="py-2 text-right font-medium text-[#111111]">
+                              {selectedPlating}
+                            </td>
+                          </tr>
+                        )}
                         <tr>
                           <td className="py-2 text-[#7A7A7A]">Stone Variety</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                          <td className="py-2 text-right font-medium text-[#111111]">
                             {product.stone}
                           </td>
                         </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">Carat Weight</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {selectedCarat} CT
-                          </td>
-                        </tr>
+                        {!isSilver && selectedCarat > 0 && (
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Carat Weight</td>
+                            <td className="py-2 text-right font-medium text-[#111111]">
+                              {selectedCarat} CT
+                            </td>
+                          </tr>
+                        )}
                         <tr>
                           <td className="py-2 text-[#7A7A7A]">Stone Shape</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                          <td className="py-2 text-right font-medium text-[#111111]">
                             {product.shape} Brilliant Cut
                           </td>
                         </tr>
                         <tr>
                           <td className="py-2 text-[#7A7A7A]">Certification</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                          <td className="py-2 text-right font-medium text-[#111111]">
                             {product.certificate}
                           </td>
                         </tr>
                         <tr>
                           <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                          <td className="py-2 text-right font-medium text-[#111111]">
                             {product.weightGrams}g
                           </td>
                         </tr>
@@ -830,7 +831,7 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {/* Accordion 3: Shipping & Returns (Khushbu Jewellers Silver Standard) */}
+              {/* Accordion 3: Shipping & Returns */}
               <div>
                 <button
                   type="button"
@@ -839,9 +840,9 @@ export default function ProductDetailPage() {
                       activeAccordion === "shipping" ? null : "shipping"
                     )
                   }
-                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#1A1A1A]"
+                  className="w-full py-4 flex items-center justify-between text-left text-xs uppercase tracking-wider font-semibold text-[#111111]"
                 >
-                  <span>Shipping & 7-Day Return Policy (Silver Standard)</span>
+                  <span>Shipping &amp; 7-Day Returns</span>
                   <ChevronDown
                     size={16}
                     className={`transition-transform ${
@@ -850,21 +851,18 @@ export default function ProductDetailPage() {
                   />
                 </button>
                 {activeAccordion === "shipping" && (
-                  <div className="pb-4 space-y-2.5 text-xs text-[#666666] leading-relaxed">
+                  <div className="pb-4 space-y-2 text-xs text-[#666666] leading-relaxed">
                     <p>
-                      • <strong>24–48 Hours Dispatch:</strong> Quality checked, authenticated and securely packaged within 24 to 48 hours. Real-time tracking link shared on WhatsApp and SMS.
+                      • <strong>24–48 Hours Dispatch:</strong> Quality checked, authenticated and securely dispatched with live tracking.
                     </p>
                     <p>
                       • <strong>Complimentary Insured Courier:</strong> 100% transit-insured domestic delivery via BlueDart Apex and BVC Logistics.
                     </p>
                     <p>
-                      • <strong>7-Day Easy Returns:</strong> We offer a 7-day return policy for unused, unworn items with tags and original presentation box intact.
-                    </p>
-                    <p className="bg-[#FAF7F2] p-2.5 rounded-lg border border-[#DDD8D0] text-[#111111] font-medium">
-                      ⚠️ <strong>Mandatory 360° Unboxing Video:</strong> For any transit damage, missing item, or defect claim, a clear 360° uncut unboxing video must be submitted within 24 to 48 hours of delivery.
+                      • <strong>7-Day Easy Returns:</strong> Hassle-free return policy for unused, unworn pieces in original tamper-evident presentation box.
                     </p>
                     <p>
-                      • <strong>Fast 48h Refund:</strong> Refunds are initiated within 48 hours of warehouse inspection, reflecting in 5–7 business days.
+                      • <strong>Fast 48h Refund:</strong> Direct refunds initiated within 48 hours of inspection to original payment source.
                     </p>
                   </div>
                 )}
@@ -937,15 +935,15 @@ export default function ProductDetailPage() {
           <button
             type="button"
             onClick={handleWhatsAppEnquiry}
-            className="p-3 border border-[#1A1A1A] text-[#1A1A1A] bg-white"
+            className="p-3 border border-[#DDD8D0] text-[#111111] bg-white rounded-xl shadow-2xs"
             aria-label="WhatsApp Enquiry"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={18} className="text-[#25D366]" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
-            className="btn-primary py-3 px-5 text-xs font-semibold"
+            className="bg-[#0E382B] hover:bg-[#144636] text-white py-3 px-5 text-xs font-semibold rounded-xl shadow-md uppercase tracking-wider transition-all"
           >
             Add to Bag
           </button>
