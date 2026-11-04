@@ -305,3 +305,4 @@ CREATE POLICY "Allow public update to orders" ON public.orders FOR UPDATE USING 
 CREATE POLICY "Allow authenticated read" ON public.customers FOR SELECT USING (true);
 CREATE POLICY "Allow authenticated read orders" ON public.orders FOR SELECT USING (true);
 `;
+
