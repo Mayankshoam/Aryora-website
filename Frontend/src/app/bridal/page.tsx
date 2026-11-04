@@ -150,7 +150,7 @@ export default function BridalPage() {
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-3">
             <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] font-semibold text-champagne">
-              Awadhi Royal Atelier · Bespoke Haute Joaillerie
+              Awadhi Royal Atelier · Bespoke Fine Jewellery
             </p>
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ink leading-[1.15] font-light">
               Heritage Bridal Heirlooms For Modern Royalty
@@ -222,7 +222,7 @@ export default function BridalPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-80" />
             <div className="absolute bottom-4 left-4 right-4 p-4 bg-ivory-pure/90 backdrop-blur-md border border-border-subtle text-ink space-y-1">
               <p className="text-[10px] uppercase tracking-wider font-semibold text-champagne">
-                Haute Joaillerie Atelier
+                Fine Jewellery Atelier
               </p>
               <p className="font-serif text-lg leading-snug">
                 Noor Heritage Bridal Suite & Royal Emerald Choker
@@ -617,7 +617,7 @@ export default function BridalPage() {
                 <div className="p-4 bg-ivory-pure border border-border-subtle space-y-1.5 text-xs text-ink">
                   <p className="font-semibold">Atelier Visit Location</p>
                   <p className="text-ink-muted text-[11px] leading-relaxed">
-                    Ayor Haute Joaillerie Atelier, Lucknow, Uttar Pradesh, India.
+                    Ayor Fine Jewellery Atelier, Lucknow, Uttar Pradesh, India.
                     By prior appointment only.
                   </p>
                 </div>

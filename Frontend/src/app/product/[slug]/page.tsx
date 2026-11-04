@@ -32,6 +32,7 @@ import {
 } from "@/lib/data";
 import { useAryoraStore } from "@/lib/store";
 import { calculateDynamicPrice, getDailyMetalRates, MetalRates } from "@/lib/metalRates";
+import { getActiveCustomer, toggleCustomerWishlist } from "@/lib/customerStore";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -249,7 +250,7 @@ export default function ProductDetailPage() {
           : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "Ayor Fine Joaillerie",
+        name: "Ayor Fine Jewellery",
       },
     },
   };
@@ -557,7 +558,18 @@ export default function ProductDetailPage() {
                 {/* WISHLIST Button */}
                 <button
                   type="button"
-                  onClick={() => toggleWishlist(product.slug)}
+                  onClick={() => {
+                    const customer = getActiveCustomer();
+                    if (!customer) {
+                      if (typeof window !== "undefined") {
+                        localStorage.setItem("ayor_pending_wishlist_slug", product.slug);
+                        window.dispatchEvent(new Event("ayor_replay_welcome"));
+                      }
+                      return;
+                    }
+                    toggleWishlist(product.slug);
+                    toggleCustomerWishlist(customer.customerId, product.slug);
+                  }}
                   aria-label={
                     inWishlist ? "Remove from wishlist" : "Add to wishlist"
                   }

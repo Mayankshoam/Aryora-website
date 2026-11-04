@@ -4,17 +4,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Sparkles, Tag, ShieldCheck } from "lucide-react";
+import { loginWithMobile, isValidIndianMobile } from "@/lib/customerStore";
 import { lookupPincode } from "@/lib/pincode";
-import { saveCustomerToSupabase } from "@/lib/supabase";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
+    mobile: "",
     email: "",
-    phone: "",
-    password: "",
     pincode: "",
     city: "",
     state: "Uttar Pradesh",
@@ -45,46 +44,23 @@ export default function RegisterPage() {
     }
   }, [form.pincode]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
+    const clean = form.mobile.replace(/\D/g, "");
+    if (!isValidIndianMobile(clean)) {
+      setError("Kripya 10-digit ka valid Indian mobile number enter karein.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      // 1. Save customer profile to Supabase & local vault
-      await saveCustomerToSupabase({
-        fullName: form.fullName,
-        email: form.email,
-        phone: form.phone,
-        city: form.city,
-        state: form.state,
-        pincode: form.pincode,
-        source: "client_portal_register",
-      });
-
-      // 2. Dispatch to backend if available
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/auth/register`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(form),
-          }
-        );
-        const data = await res.json().catch(() => ({}));
-        if (data.accessToken) {
-          localStorage.setItem("aryora_token", data.accessToken);
-        }
-      } catch {
-        localStorage.setItem("aryora_token", "demo_token_session");
-      }
-
+      loginWithMobile(clean, form.fullName);
       router.push("/account");
-    } catch {
-      localStorage.setItem("aryora_token", "demo_token_session");
-      router.push("/account");
-    } finally {
+    } catch (err: any) {
+      setError(err.message || "Registration failed.");
       setLoading(false);
     }
   };
@@ -93,16 +69,39 @@ export default function RegisterPage() {
     <div className="max-w-content mx-auto px-6 md:px-8 py-8 md:py-16">
       <Breadcrumbs items={[{ label: "Register" }]} />
 
-      <div className="max-w-lg mx-auto my-12 border border-[#DDD8D0] bg-[#FAF7F2] p-8 md:p-10 shadow-sm rounded-xl">
-        <div className="text-center space-y-2 mb-8">
-          <p className="eyebrow">Join The Circle</p>
-          <h1 className="font-serif text-3xl text-[#111111]">Create an Account</h1>
+      <div className="max-w-lg mx-auto my-12 border border-[#DDD8D0] bg-[#FAF7F2] p-8 md:p-10 shadow-sm rounded-2xl space-y-6">
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-1.5 bg-[#FFFDF5] border border-[#C5A880] px-3 py-1 rounded-full text-[10px] font-bold text-[#0E382B]">
+            <Tag size={11} className="text-[#C5A880]" />
+            <span>Flat 10% Welcome Discount (AYOR10)</span>
+          </div>
+          <h1 className="font-serif text-3xl text-[#111111]">Create Atelier Account</h1>
           <p className="text-xs text-[#666666]">
-            Enjoy priority access to private collections, saved wishlists, and seamless bespoke design tracking.
+            Fast mobile onboarding without OTP. Instantly unlocks your unique Customer ID and 10% Welcome Discount.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
+              Mobile Number (10 Digits) *
+            </label>
+            <div className="flex items-center gap-2">
+              <div className="bg-white border border-[#DDD8D0] px-3 py-2.5 rounded-lg text-xs font-semibold text-[#111111]">
+                🇮🇳 +91
+              </div>
+              <input
+                required
+                type="tel"
+                maxLength={10}
+                value={form.mobile}
+                onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                placeholder="9876543210"
+                className="flex-1 px-3.5 py-2.5 text-xs border border-[#C5A880] rounded-lg bg-white text-[#111111] font-mono font-medium focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
+              />
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
               Full Name *
@@ -117,41 +116,24 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
-                Email Address *
-              </label>
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="priyanshu@example.com"
-                className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-white focus:outline-none focus:border-[#0E382B]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
-                Mobile Number *
-              </label>
-              <input
-                required
-                type="tel"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                placeholder="+91 98765 43210"
-                className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-white focus:outline-none focus:border-[#0E382B]"
-              />
-            </div>
+          <div>
+            <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
+              Email Address (Optional)
+            </label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              placeholder="priyanshu@example.com"
+              className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-white focus:outline-none focus:border-[#0E382B]"
+            />
           </div>
 
           {/* PIN code with Auto-detection */}
-          <div className="border border-[#DDD8D0] p-3.5 rounded-lg bg-white space-y-2">
+          <div className="border border-[#DDD8D0] p-3.5 rounded-xl bg-white space-y-2">
             <div className="flex items-center justify-between">
               <label className="block text-xs uppercase tracking-wider font-semibold text-[#0E382B]">
-                PIN Code (Auto-Detect City/State) *
+                PIN Code (Auto-Detect City/State)
               </label>
               {pinDetectedMsg && (
                 <span className="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -162,65 +144,51 @@ export default function RegisterPage() {
             <div className="grid grid-cols-3 gap-2">
               <div className="col-span-1">
                 <input
-                  required
                   type="text"
                   maxLength={6}
                   value={form.pincode}
                   onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                  placeholder="e.g. 226001"
-                  className="w-full px-3 py-2 text-xs font-mono font-bold border border-[#C5A880] rounded bg-[#FFFDF5] focus:outline-none"
+                  placeholder="226001"
+                  className="w-full px-3 py-2 text-xs font-mono font-bold border border-[#C5A880] rounded-lg bg-[#FFFDF5] focus:outline-none"
                 />
               </div>
               <div className="col-span-1">
                 <input
                   type="text"
                   value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
+                  readOnly
                   placeholder="City"
-                  className="w-full px-3 py-2 text-xs border border-[#DDD8D0] rounded bg-white focus:outline-none"
+                  className="w-full px-3 py-2 text-xs border border-[#DDD8D0] rounded-lg bg-stone-100 text-stone-700"
                 />
               </div>
               <div className="col-span-1">
                 <input
                   type="text"
                   value={form.state}
-                  onChange={(e) => setForm({ ...form, state: e.target.value })}
+                  readOnly
                   placeholder="State"
-                  className="w-full px-3 py-2 text-xs border border-[#DDD8D0] rounded bg-white focus:outline-none"
+                  className="w-full px-3 py-2 text-xs border border-[#DDD8D0] rounded-lg bg-stone-100 text-stone-700"
                 />
               </div>
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1">
-              Create Password *
-            </label>
-            <input
-              required
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              placeholder="At least 8 characters"
-              className="w-full px-3.5 py-2.5 text-xs border border-[#DDD8D0] rounded-lg bg-white focus:outline-none focus:border-[#0E382B]"
-            />
-          </div>
-
-          {error && <p className="text-xs text-[#B93826]">{error}</p>}
+          {error && <p className="text-xs text-red-600">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-semibold py-3.5 mt-2 rounded-lg shadow-sm transition-colors"
+            className="w-full bg-[#0E382B] hover:bg-[#144636] text-white text-xs uppercase tracking-wider font-semibold py-3.5 mt-2 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            {loading ? "Creating Account & Syncing..." : "Create Account"}
+            <span>{loading ? "Creating Profile..." : "Create Account & Claim 10% OFF"}</span>
+            <Sparkles size={14} className="text-[#C5A880]" />
           </button>
         </form>
 
-        <p className="text-xs text-center text-[#666666] mt-6 pt-6 border-t border-[#DDD8D0]">
+        <p className="text-xs text-center text-[#666666] pt-4 border-t border-[#DDD8D0]">
           Already have an account?{" "}
-          <Link href="/login" className="text-[#0E382B] underline font-medium hover:text-[#144636]">
-            Sign In
+          <Link href="/login" className="text-[#0E382B] underline font-semibold hover:text-[#144636]">
+            Sign In with Mobile
           </Link>
         </p>
       </div>
