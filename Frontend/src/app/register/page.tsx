@@ -51,7 +51,7 @@ export default function RegisterPage() {
 
     const clean = form.mobile.replace(/\D/g, "");
     if (!isValidIndianMobile(clean)) {
-      setError("Kripya 10-digit ka valid Indian mobile number enter karein.");
+      setError("Please enter a valid 10-digit Indian mobile number.");
       setLoading(false);
       return;
     }

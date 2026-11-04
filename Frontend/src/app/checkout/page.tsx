@@ -276,7 +276,7 @@ Please verify the payment and confirm my dispatch!`;
     const isOnline = form.paymentMethod !== "cod";
     if (isOnline && !form.utrNumber.trim() && forceMode !== "whatsapp_confirm") {
       alert(
-        "Kripya Payment UTR / RRN number enter karein ya 'Pay & Share on WhatsApp' par click karein. Online orders bina payment UTR number ke confirm nahi ho sakte."
+        "Please enter your Payment UTR / RRN number or choose 'Pay & Share on WhatsApp'. Online orders require a payment transaction reference to confirm."
       );
       return;
     }
@@ -863,16 +863,16 @@ Please verify the payment and confirm my dispatch!`;
                     <span>Or Confirm Directly on WhatsApp:</span>
                   </div>
                   <p className="text-[11px] text-[#2D5A47]">
-                    Agar aapne payment kar di hai aur direct WhatsApp par screenshot/RRN bhejna chahte hain, to neeche click karein:
+                    If you have made payment and wish to share the screenshot or reference directly on WhatsApp, click below:
                   </p>
                   <button
                     type="button"
                     onClick={() => handlePlaceOrder(undefined, "whatsapp_confirm")}
                     disabled={isPlacing || cart.length === 0}
-                    className="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
+                    className="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
                   >
                     <MessageCircle size={15} />
-                    <span>Pay &amp; Share Cart on WhatsApp (चैट पर ऑर्डर करें)</span>
+                    <span>Share Order Details on WhatsApp</span>
                   </button>
                 </div>
               </div>

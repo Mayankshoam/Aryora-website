@@ -58,12 +58,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
   return (
     <div
-      className="group relative flex flex-col bg-white rounded-2xl border border-[#E5E0D8] hover:border-[#C5A880] hover:shadow-lg transition-all duration-300 overflow-hidden"
+      className="group relative flex flex-col bg-white rounded-2xl border border-[#E5E0D8] hover:border-[#C5A880] hover:shadow-lg transition-all duration-500 ease-out overflow-hidden hover:rounded-t-[75px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* 1. Image Container with Hover Swap on Miss Jo Cream Backplate */}
-      <div className="relative aspect-square w-full bg-[#FAF7F2] overflow-hidden">
+      <div className="relative aspect-square w-full bg-[#FAF7F2] overflow-hidden transition-all duration-500 ease-out group-hover:rounded-t-[75px]">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
             src={primaryImage}

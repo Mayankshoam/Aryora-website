@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
     if (!isValidIndianMobile(clean)) {
       return NextResponse.json(
-        { success: false, message: "Kripya valid 10-digit Indian mobile number enter karein." },
+        { success: false, message: "Please enter a valid 10-digit Indian mobile number." },
         { status: 400 }
       );
     }

@@ -181,7 +181,7 @@ export function numberToIndianRupeesWords(amount: number): string {
 export function loginWithMobile(mobile: string, name?: string): { success: boolean; customer: CustomerProfile; isNew: boolean } {
   const cleanMobile = mobile.replace(/\D/g, "");
   if (!isValidIndianMobile(cleanMobile)) {
-    throw new Error("Kripya 10-digit ka valid Indian mobile number enter karein (e.g. 9876543210).");
+    throw new Error("Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).");
   }
 
   if (typeof window === "undefined") {

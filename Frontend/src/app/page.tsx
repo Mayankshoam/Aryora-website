@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,6 +13,7 @@ import {
   Video,
   Clock,
   Check,
+  ChevronLeft,
   ChevronRight,
   Gem,
   Palette,
@@ -84,6 +85,49 @@ export default function HomePage() {
 
   const [activeTab, setActiveTab] = useState<"bestsellers" | "new">("bestsellers");
   const displayProducts = activeTab === "bestsellers" ? bestsellers : newArrivals;
+  const prodScrollRef = useRef<HTMLDivElement>(null);
+  const [isProdPaused, setIsProdPaused] = useState(false);
+
+  // Auto-scroll for Curated Products Carousel
+  useEffect(() => {
+    const el = prodScrollRef.current;
+    if (!el) return;
+
+    let lastTime = performance.now();
+    let animId: number;
+
+    const step = (currentTime: number) => {
+      const delta = currentTime - lastTime;
+      lastTime = currentTime;
+
+      if (!isProdPaused && el) {
+        el.scrollLeft += (40 * delta) / 1000;
+        const singleSetWidth = el.scrollWidth / 3;
+        if (el.scrollLeft >= singleSetWidth * 2) {
+          el.scrollLeft -= singleSetWidth;
+        } else if (el.scrollLeft <= 5) {
+          el.scrollLeft += singleSetWidth;
+        }
+      }
+
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isProdPaused]);
+
+  const handleProdManualScroll = (direction: "left" | "right") => {
+    if (prodScrollRef.current) {
+      const cardWidth = 300;
+      prodScrollRef.current.scrollBy({
+        left: direction === "left" ? -cardWidth : cardWidth,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const repeatedProducts = [...displayProducts, ...displayProducts, ...displayProducts];
 
   return (
     <div className="space-y-16 md:space-y-24">
@@ -135,11 +179,45 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {displayProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+        {/* Product Carousel with Auto-Movement and Controls */}
+        <div
+          className="relative group/prod-slider"
+          onMouseEnter={() => setIsProdPaused(true)}
+          onMouseLeave={() => setIsProdPaused(false)}
+          onTouchStart={() => setIsProdPaused(true)}
+          onTouchEnd={() => setIsProdPaused(false)}
+        >
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => handleProdManualScroll("left")}
+            aria-label="Previous creations"
+            className="absolute -left-2 sm:left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 text-[#111111] shadow-[0_4px_20px_rgba(0,0,0,0.15)] border border-[#E5E0D8] flex items-center justify-center hover:bg-[#111111] hover:text-white transition-all duration-300 cursor-pointer"
+          >
+            <ChevronLeft size={20} strokeWidth={1.5} />
+          </button>
+
+          <div
+            ref={prodScrollRef}
+            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 pt-1 px-1 no-scrollbar select-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {repeatedProducts.map((product, idx) => (
+              <div key={`${product.id}-${idx}`} className="w-[230px] sm:w-[260px] md:w-[285px] flex-shrink-0">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => handleProdManualScroll("right")}
+            aria-label="Next creations"
+            className="absolute -right-2 sm:right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 text-[#111111] shadow-[0_4px_20px_rgba(0,0,0,0.15)] border border-[#E5E0D8] flex items-center justify-center hover:bg-[#111111] hover:text-white transition-all duration-300 cursor-pointer"
+          >
+            <ChevronRight size={20} strokeWidth={1.5} />
+          </button>
         </div>
 
         <div className="text-center pt-4">
