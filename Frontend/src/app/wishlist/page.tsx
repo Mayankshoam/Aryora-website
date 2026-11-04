@@ -172,25 +172,21 @@ export default function WishlistPage() {
         )}
       </div>
 
-      {/* GUEST BANNER: Instant 10% discount & cloud sync without OTP */}
+      {/* GUEST BANNER: Clean minimalist sync panel */}
       {!customer && (
-        <div className="bg-gradient-to-r from-[#FFFDF5] via-[#FAF5EC] to-[#F5ECE1] border-2 border-[#C5A880] p-4 sm:p-5 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-[#FAF7F2] border border-[#E5E0D8] p-4 sm:p-5 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-1.5 bg-[#0E382B] text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full">
-              <Tag size={10} className="text-[#C5A880]" />
-              <span>10% Welcome Discount · No OTP Needed</span>
-            </div>
-            <h3 className="font-serif text-lg text-[#111111] font-medium">
-              Save your jewellery pieces forever &amp; unlock Flat 10% OFF
+            <h3 className="font-serif text-base md:text-lg text-[#111111] font-medium">
+              Save your curated pieces across all devices
             </h3>
             <p className="text-xs text-[#666666]">
-              Enter your mobile number to permanently link your wishlist to your customer account and activate code <strong>AYOR10</strong>.
+              Enter your mobile number to securely sync your wishlist with your customer account.
             </p>
           </div>
 
           <form onSubmit={handleInlineLogin} className="w-full md:w-auto flex-shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <div className="flex items-center gap-1.5 bg-white border border-[#C5A880] px-3 py-2 rounded-xl text-xs">
-              <span className="font-semibold text-[#111111]">🇮🇳 +91</span>
+            <div className="flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-2 rounded-xl text-xs">
+              <span className="font-medium text-[#111111]">🇮🇳 +91</span>
               <input
                 type="tel"
                 maxLength={10}
@@ -200,16 +196,16 @@ export default function WishlistPage() {
                   setMobileInput(e.target.value);
                   if (loginError) setLoginError("");
                 }}
-                className="w-32 sm:w-36 outline-none text-xs font-medium text-[#111111]"
+                className="w-32 sm:w-36 outline-none text-xs text-[#111111]"
                 required
               />
             </div>
             <button
               type="submit"
-              className="bg-[#0E382B] hover:bg-[#144636] text-white px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+              className="bg-[#0E382B] hover:bg-[#144636] text-white px-5 py-2.5 rounded-xl text-xs font-medium uppercase tracking-wider transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
-              <span>Unlock 10% &amp; Sync</span>
-              <Sparkles size={12} className="text-[#C5A880]" />
+              <span>Sync Wishlist</span>
+              <ArrowRight size={13} />
             </button>
             {loginError && <p className="text-[11px] text-red-600 block sm:hidden">{loginError}</p>}
           </form>
@@ -217,10 +213,10 @@ export default function WishlistPage() {
       )}
 
       {justLoggedIn && customer && (
-        <div className="bg-[#EAF3DE] border border-[#C5DDA8] p-3 rounded-xl flex items-center gap-2 text-xs text-[#0E382B] animate-fadeIn">
+        <div className="bg-[#FAF7F2] border border-[#E5E0D8] p-3.5 rounded-xl flex items-center gap-2.5 text-xs text-[#0E382B] animate-fadeIn">
           <CheckCircle2 size={16} />
           <span>
-            🎉 Successfully registered! Your wishlist is now synced to <strong>{customer.customerId}</strong> and coupon <strong>AYOR10</strong> (10% OFF) is active!
+            Wishlist synced to customer account <strong>{customer.customerId}</strong> · Welcome privilege unlocked.
           </span>
         </div>
       )}

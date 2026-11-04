@@ -186,79 +186,76 @@ export default function NamasteWelcome() {
               </p>
             </div>
 
-            {/* AESTHETIC VIP 10% DISCOUNT OFFER BOX */}
-            <div className="bg-gradient-to-br from-[#FFFDF5] to-[#FAF5EC] border-2 border-[#C5A880] p-4 rounded-2xl shadow-sm space-y-2.5 text-left relative overflow-hidden">
+            {/* Minimalist Member Access & Privilege Card */}
+            <div className="bg-[#FAF7F2] border border-[#E5E0D8] p-4 rounded-2xl shadow-sm space-y-3 text-left relative">
               <div className="flex items-center justify-between">
-                <span className="bg-[#0E382B] text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                  <Tag size={10} className="text-[#C5A880]" />
-                  <span>Flat 10% Welcome Discount</span>
+                <span className="text-[11px] font-serif font-medium text-[#0E382B] flex items-center gap-1.5">
+                  <Sparkles size={12} className="text-[#C09981]" />
+                  <span>Welcome Privilege</span>
                 </span>
-                <span className="text-[10px] font-mono font-bold text-[#0E382B] bg-[#EAF3DE] px-2 py-0.5 rounded border border-[#C5DDA8]">
-                  CODE: AYOR10
+                <span className="text-[10px] text-[#666666] tracking-wide uppercase">
+                  10% First Order Benefit
                 </span>
               </div>
 
               {!discountUnlocked ? (
                 <>
                   {hasPendingWishlist && (
-                    <div className="bg-[#FAF0E6] border border-[#C09981] p-2 rounded-lg flex items-center gap-2 text-[11px] text-[#0E382B] font-medium">
+                    <div className="bg-white border border-[#E5E0D8] p-2.5 rounded-xl flex items-center gap-2 text-[11px] text-[#0E382B]">
                       <Heart size={13} className="text-[#C09981] fill-[#C09981]" />
-                      <span>Sign in to save this piece to your account wishlist!</span>
+                      <span>Sign in to save this item to your wishlist</span>
                     </div>
                   )}
-                  <p className="text-xs text-[#444444] leading-relaxed">
-                    Apna 10-digit mobile number dalein aur pehle order par <strong>Flat 10% OFF</strong> unlock karein:
-                  </p>
 
-                  <form onSubmit={handleClaimDiscount} className="space-y-2">
+                  <form onSubmit={handleClaimDiscount} className="space-y-2.5">
                     <div className="flex items-center gap-2">
-                      <div className="bg-white border border-[#DDD8D0] px-2.5 py-2 rounded-lg text-xs font-semibold text-[#111111] shadow-2xs">
+                      <div className="bg-white border border-[#E5E0D8] px-3 py-2 rounded-xl text-xs font-medium text-[#111111]">
                         🇮🇳 +91
                       </div>
                       <input
                         type="tel"
                         maxLength={10}
-                        placeholder="Enter 10-digit Mobile No."
+                        placeholder="Enter 10-digit mobile number"
                         value={mobileNumber}
                         onChange={(e) => {
                           setMobileNumber(e.target.value);
                           if (inputError) setInputError("");
                         }}
-                        className="flex-1 bg-white border border-[#C5A880] px-3 py-2 rounded-lg text-xs font-medium text-[#111111] focus:outline-none focus:ring-1 focus:ring-[#0E382B]"
+                        className="flex-1 bg-white border border-[#E5E0D8] px-3.5 py-2 rounded-xl text-xs text-[#111111] focus:outline-none focus:border-[#0E382B] transition-colors"
                         required
                       />
                     </div>
 
-                    {inputError && <p className="text-[11px] text-red-600 font-medium">{inputError}</p>}
+                    {inputError && <p className="text-[11px] text-red-600">{inputError}</p>}
 
                     <button
                       type="submit"
-                      className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-medium shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <span>Unlock 10% OFF &amp; Enter Store (प्रवेश करें)</span>
-                      <Sparkles size={13} className="text-[#C5A880]" />
+                      <span>Enter Store (प्रवेश करें)</span>
+                      <ArrowRight size={13} />
                     </button>
                   </form>
                 </>
               ) : (
-                <div className="bg-[#EAF3DE] border border-[#C5DDA8] p-3.5 rounded-xl space-y-2 text-center animate-fadeIn">
-                  <div className="w-8 h-8 rounded-full bg-[#0E382B] text-white flex items-center justify-center mx-auto">
-                    <CheckCircle2 size={18} />
+                <div className="bg-white border border-[#E5E0D8] p-3.5 rounded-xl space-y-2 text-center animate-fadeIn">
+                  <div className="w-7 h-7 rounded-full bg-[#0E382B] text-white flex items-center justify-center mx-auto">
+                    <CheckCircle2 size={16} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#0E382B]">
-                      🎉 10% Welcome Discount Activated!
+                    <p className="text-xs font-medium text-[#111111]">
+                      Welcome Privilege Active
                     </p>
-                    <p className="text-[11px] text-[#2D5A47] mt-0.5">
-                      Coupon <strong>AYOR10</strong> is active. Customer ID: <strong>{customerId}</strong>
+                    <p className="text-[11px] text-[#666666] mt-0.5">
+                      10% discount unlocked · Customer ID: <span className="font-mono text-[#0E382B]">{customerId}</span>
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={handleEnterStore}
-                    className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-semibold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-medium shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Claim 10% OFF &amp; Start Shopping</span>
+                    <span>Begin Exploring</span>
                     <ArrowRight size={13} />
                   </button>
                 </div>

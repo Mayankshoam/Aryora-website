@@ -953,10 +953,10 @@ Please verify the payment and confirm my dispatch!`;
               </div>
 
               {discountAmount > 0 && (
-                <div className="flex justify-between text-emerald-800 font-semibold bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
-                  <span className="flex items-center gap-1">
-                    <Tag size={12} />
-                    <span>Welcome Privilege (10% OFF - AYOR10):</span>
+                <div className="flex justify-between text-[#0E382B] font-medium bg-[#FAF7F2] px-3 py-2 rounded-xl border border-[#E5E0D8]">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles size={12} className="text-[#C09981]" />
+                    <span>Welcome Privilege (10%):</span>
                   </span>
                   <span>-₹{discountAmount.toLocaleString("en-IN")}</span>
                 </div>
