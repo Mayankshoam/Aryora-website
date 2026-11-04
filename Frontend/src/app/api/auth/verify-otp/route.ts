@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       customer: {
         customerId,
         mobile: clean,
-        name: name || "Atelier Client",
+        name: name || "Valued Customer",
         panVerified: false,
         nameLocked: false,
         hasWelcomeDiscount: true,

@@ -37,7 +37,7 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: "Are all Ayor stones certified by independent gemological laboratories?",
-        a: "Yes. Every center stone is independently certified by the International Gemological Institute (IGI). Your piece ships in a sealed heirloom presentation box containing the official laminated IGI dossier specifying precise 4Cs grading.",
+        a: "Yes. Every center stone is independently certified by the International Gemological Institute (IGI). Your piece ships in a sealed luxury presentation box containing the official laminated IGI dossier specifying precise 4Cs grading.",
       },
       {
         q: "What metal hallmark standards does Ayor use?",
@@ -54,7 +54,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "What is the standard delivery timeline?",
-        a: "Ready-to-ship heirlooms dispatch within 2-4 business days and deliver within 4-7 business days across major Indian metros. Bespoke bridal and custom CAD pieces dispatch within 3-4 weeks from final design approval.",
+        a: "Ready-to-ship jewellery dispatches within 2-4 business days and delivers within 4-7 business days across major Indian metros. Bespoke bridal and custom CAD pieces dispatch within 3-4 weeks from final design approval.",
       },
     ],
   },
@@ -71,7 +71,7 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "What does the 6-Month Manufacturing Warranty cover?",
-        a: "Our warranty covers manufacturing defects, loose prongs, and stone setting integrity. Wear and tear or accidental structural deformation is repaired at nominal atelier raw-material cost.",
+        a: "Our warranty covers manufacturing defects, loose prongs, and stone setting integrity. Wear and tear or accidental structural deformation is repaired at nominal workshop raw-material cost.",
       },
     ],
   },
@@ -80,7 +80,7 @@ const CATEGORIES: Category[] = [
     items: [
       {
         q: "Can I commission a bespoke design or alter an existing piece?",
-        a: "Absolutely. Our 'Design Your Own' atelier allows you to pick your dream diamond shape, carat, setting style, and gold alloy. Our 3D CAD team works closely with you to finalize every millimeter.",
+        a: "Absolutely. Our 'Design Your Own' service allows you to pick your dream diamond shape, carat, setting style, and gold alloy. Our 3D CAD team works closely with you to finalize every millimeter.",
       },
     ],
   },

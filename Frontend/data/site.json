@@ -6,12 +6,12 @@
     "phone": "+91 8808828646",
     "whatsapp": "+91 8808828646",
     "email": "ayor.legacy@hotmail.com",
-    "address": "Ayor Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
+    "address": "Ayor Fine Jewellery Studio, Hazratganj / Aliganj, Lucknow, UP 226001",
     "instagram": "https://instagram.com/ayorjewellery",
     "instagramHandle": "@ayorjewellery"
   },
   "hero": {
-    "eyebrow": "Awadhi Royal Atelier · Lab-Grown Fine Joaillerie",
+    "eyebrow": "Awadhi Royal Jewellery Studio · Lab-Grown Fine Jewellery",
     "title": "Made for you, not for your locker.",
     "subtitle": "Conscious lab-grown diamonds of extraordinary chemical purity, handcrafted in Lucknow in BIS-hallmarked 18K gold. Born to be celebrated daily.",
     "ctaPrimary": {
@@ -19,7 +19,7 @@
       "href": "/shop"
     },
     "ctaSecondary": {
-      "label": "Book Atelier Consultation",
+      "label": "Book Jewellery Consultation",
       "href": "/bridal"
     },
     "videoDesktop": "/videos/hero-desktop.mp4",
@@ -87,7 +87,7 @@
       "name": "Mangalsutras",
       "href": "/shop?category=Bridal",
       "image": "/site/categories/cat-mangalsutras.webp",
-      "count": "Modern Heirloom"
+      "count": "Modern Jewellery"
     },
     {
       "name": "Bangles",
@@ -131,7 +131,7 @@
     },
     {
       "title": "Awadhi Royal Craft",
-      "desc": "Generational master artisans in Lucknow hand-forging heirlooms built to last generations."
+      "desc": "Generational master artisans in Lucknow handcrafting fine jewellery built to last generations."
     },
     {
       "title": "Complimentary Insured Courier",

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Order receipt prepared for customer and atelier notification dispatched.",
+      message: "Order receipt prepared for customer and dispatch notification dispatched.",
       orderNumber: orderData.orderNumber,
       dispatchedTo: [orderData.email, adminEmail],
     });

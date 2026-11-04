@@ -86,14 +86,14 @@ export default function CartDrawer() {
             <div className="h-full flex flex-col items-center justify-center text-center py-16 space-y-4">
               <p className="font-serif text-xl text-ink">Your bag is currently empty</p>
               <p className="text-xs text-ink-muted max-w-xs leading-relaxed">
-                Explore our lab-grown diamond heirlooms, certified rings, and bespoke necklaces.
+                Explore our lab-grown diamond jewellery, certified rings, and bespoke necklaces.
               </p>
               <Link
                 href="/shop"
                 onClick={closeCart}
                 className="btn-primary mt-2 text-xs"
               >
-                Explore Heirlooms
+                Explore Jewellery
               </Link>
             </div>
           ) : (

@@ -43,7 +43,7 @@ export default function ShippingPage() {
           Shipping & Delivery Policy
         </h1>
         <p className="text-sm text-[#555555] leading-relaxed">
-          Transparent, fully insured, and secure doorstep transit from our Lucknow atelier directly to your hands.
+          Transparent, fully insured, and secure doorstep transit from our Lucknow studio directly to your hands.
         </p>
       </div>
 

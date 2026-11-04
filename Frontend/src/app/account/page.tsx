@@ -225,7 +225,7 @@ export default function AccountPage() {
           </div>
 
           <div className="space-y-1">
-            <p className="eyebrow text-[10px]">Client Atelier Access</p>
+            <p className="eyebrow text-[10px]">Customer Account Access</p>
             <h1 className="font-serif text-3xl text-[#111111]">Client Portal Sign In</h1>
             <p className="text-xs text-[#666666]">
               Enter your mobile number to view past orders, official tax invoices, and manage your verified KYC profile.
@@ -344,7 +344,7 @@ export default function AccountPage() {
                 : "border-[#DDD8D0] bg-[#FAF7F2] text-[#444444] hover:text-[#111111]"
             }`}
           >
-            <Package size={15} /> Atelier Orders
+            <Package size={15} /> My Orders
           </button>
 
           <Link
@@ -352,7 +352,7 @@ export default function AccountPage() {
             className="w-full text-left px-4 py-3 text-xs uppercase tracking-wider font-medium border border-[#DDD8D0] bg-[#FAF7F2] text-[#444444] hover:text-[#111111] rounded-xl flex items-center justify-between"
           >
             <span className="flex items-center gap-2.5">
-              <Heart size={15} /> Saved Heirlooms
+              <Heart size={15} /> Saved Jewellery
             </span>
           </Link>
         </aside>
@@ -750,7 +750,7 @@ export default function AccountPage() {
                 <div className="flex items-center justify-between">
                   <span className="font-mono font-bold text-[#0E382B]">REF: ARY-729104</span>
                   <span className="bg-[#E9F0EC] text-[#1B3B30] text-[10px] font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <Clock size={11} /> In Crafting (Atelier Lucknow)
+                    <Clock size={11} /> In Crafting (Lucknow Workshop)
                   </span>
                 </div>
                 <p className="font-serif text-base font-semibold text-[#111111]">
@@ -918,7 +918,7 @@ export default function AccountPage() {
                 <div className="text-right space-y-12">
                   <p className="font-semibold text-[#111111]">For {BUSINESS_CONFIG.name}</p>
                   <p className="border-t border-[#DDD8D0] pt-1 font-serif italic inline-block w-48 text-center text-[#444444]">
-                    Authorized Atelier Signatory
+                    Authorized Signatory
                   </p>
                 </div>
               </div>

@@ -25,7 +25,7 @@ export default function TermsPage() {
         <p className="eyebrow">Legal Framework</p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink">Terms & Conditions</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
-          Please review the terms and policies governing purchases, bespoke commissions, and atelier services.
+          Please review the terms and policies governing purchases, bespoke commissions, and custom jewellery services.
         </p>
       </div>
 

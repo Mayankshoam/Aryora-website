@@ -1018,7 +1018,7 @@ export default function MasterAdminPage() {
                         <td className="p-3 text-right">
                           <a
                             href={`https://wa.me/91${ord.phone.replace(/\D/g, "")}?text=${encodeURIComponent(
-                              `Namaste ${ord.fullName}! Regarding your AYOR Atelier order ${ord.orderNumber} (₹${ord.totalAmount}).`
+                              `Namaste ${ord.fullName}! Regarding your AYOR Jewellery order ${ord.orderNumber} (₹${ord.totalAmount}).`
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"

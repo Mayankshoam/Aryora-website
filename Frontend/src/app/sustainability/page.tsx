@@ -5,7 +5,7 @@ import { Earth, Sparkles, ShieldCheck, RefreshCw } from "lucide-react";
 export const metadata = {
   title: "Sustainability & Ethics",
   description:
-    "Learn about Ayor's commitment to zero-mining diamonds, recycled gold, conflict-free sourcing, and heirloom sustainability.",
+    "Learn about Ayor's commitment to zero-mining diamonds, recycled gold, conflict-free sourcing, and long-term sustainability.",
 };
 
 const PILLARS = [
@@ -26,7 +26,7 @@ const PILLARS = [
   },
   {
     icon: Sparkles,
-    title: "Reusable Heirloom Packaging",
+    title: "Reusable Keepsake Packaging",
     desc: "Our presentation boxes are crafted from FSC-certified sustainable timber and plush organic cotton velvet, meant to safe-keep your jewelry across a lifetime rather than end up in a landfill.",
   },
 ];
@@ -42,7 +42,7 @@ export default function SustainabilityPage() {
           Conscious by Design
         </h1>
         <p className="text-base md:text-lg text-ink-muted leading-relaxed font-light">
-          True luxury should leave an enduring legacy of beauty, not environmental debt. Here is how Ayor crafts heirlooms with reverence for modern India and the earth.
+          True luxury should leave an enduring legacy of beauty, not environmental debt. Here is how Ayor crafts jewellery with reverence for modern India and the earth.
         </p>
       </div>
 
@@ -74,7 +74,7 @@ export default function SustainabilityPage() {
         </p>
         <div className="pt-2">
           <Link href="/shop" className="btn-primary text-xs">
-            Explore Sustainable Heirlooms
+            Explore Sustainable Jewellery
           </Link>
         </div>
       </div>

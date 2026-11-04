@@ -19,7 +19,7 @@ const COLLECTIONS = [
   {
     name: "Heritage Bridal",
     slug: "bridal",
-    tag: "Awadhi Royal Heirloom",
+    tag: "Awadhi Royal Collection",
     desc: "Regal chokers, layered diamond necklaces, and bespoke bridal suites paying homage to the Nawabi aesthetic of Lucknow.",
     image: "/site/cat-bridal.svg",
   },
@@ -42,7 +42,7 @@ export default function CollectionsPage() {
           Curated Editions
         </p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink font-light">
-          Heirloom Collections
+          Jewellery Collections
         </h1>
         <p className="text-xs md:text-sm text-ink-muted leading-relaxed font-light">
           Each Ayor collection expresses a distinct dimension of light, uniting ethical lab-grown diamonds with generational artisan craftsmanship.

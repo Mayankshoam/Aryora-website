@@ -46,7 +46,7 @@ export default function NamasteWelcome() {
     sessionStorage.setItem("ayor_welcome_greeted", "true");
   };
 
-  const handleEnterAtelier = () => {
+  const handleEnterStore = () => {
     setHasEntered(true);
     setTimeout(() => {
       handleDismiss();
@@ -163,7 +163,7 @@ export default function NamasteWelcome() {
               </button>
             </div>
             <p className="text-[10px] text-center text-[#888888] mt-2 font-serif italic">
-              Traditional Indian Atelier Welcome Greeting
+              Traditional Indian Welcome Greeting
             </p>
           </div>
 
@@ -182,7 +182,7 @@ export default function NamasteWelcome() {
                 Welcome to <span className="text-[#0E382B] font-semibold">AYOR</span>
               </h2>
               <p className="text-[11px] uppercase tracking-[0.2em] text-[#C5A880] font-medium">
-                Fine Jewellery &amp; Solitaire Atelier
+                Fine Jewellery &amp; Solitaire Studio
               </p>
             </div>
 
@@ -235,7 +235,7 @@ export default function NamasteWelcome() {
                       type="submit"
                       className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <span>Unlock 10% OFF &amp; Enter (प्रवेश करें)</span>
+                      <span>Unlock 10% OFF &amp; Enter Store (प्रवेश करें)</span>
                       <Sparkles size={13} className="text-[#C5A880]" />
                     </button>
                   </form>
@@ -255,7 +255,7 @@ export default function NamasteWelcome() {
                   </div>
                   <button
                     type="button"
-                    onClick={handleEnterAtelier}
+                    onClick={handleEnterStore}
                     className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-semibold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Claim 10% OFF &amp; Start Shopping</span>
@@ -272,7 +272,7 @@ export default function NamasteWelcome() {
               </span>
               <button
                 type="button"
-                onClick={handleEnterAtelier}
+                onClick={handleEnterStore}
                 className="text-[11px] text-[#888888] hover:text-[#111111] underline transition-colors"
               >
                 Skip &amp; Browse as Guest →

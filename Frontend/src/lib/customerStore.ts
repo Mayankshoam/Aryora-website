@@ -188,7 +188,7 @@ export function loginWithMobile(mobile: string, name?: string): { success: boole
     const fallbackCustomer: CustomerProfile = {
       customerId: "CUST-000001",
       mobile: cleanMobile,
-      name: name || "Atelier Guest",
+      name: name || "Valued Customer",
       panVerified: false,
       nameLocked: false,
       hasWelcomeDiscount: true,
@@ -205,7 +205,7 @@ export function loginWithMobile(mobile: string, name?: string): { success: boole
   let isNew = false;
 
   if (existing) {
-    if (name && !existing.nameLocked && existing.name === "Atelier Client") {
+    if (name && !existing.nameLocked && (existing.name === "Valued Customer" || existing.name === "Atelier Client")) {
       existing.name = name;
       existing.updatedAt = new Date().toISOString();
     }
@@ -214,7 +214,7 @@ export function loginWithMobile(mobile: string, name?: string): { success: boole
     existing = {
       customerId: generateCustomerId(),
       mobile: cleanMobile,
-      name: name && name.trim().length > 0 ? name.trim() : "Atelier Client",
+      name: name && name.trim().length > 0 ? name.trim() : "Valued Customer",
       panVerified: false,
       nameLocked: false,
       hasWelcomeDiscount: true, // 10% discount activated on first registration

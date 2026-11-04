@@ -35,7 +35,7 @@ const FEATURED_COLLECTIONS = [
     badge: "Certified Solitaires",
   },
   {
-    title: "Heritage Bridal Atelier",
+    title: "Heritage Bridal Studio",
     subtitle: "Awadhi Royal Grandeur",
     desc: "Handcrafted wedding suites uniting certified emeralds and brilliant diamonds.",
     href: "/bridal",
@@ -296,7 +296,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. CUSTOM ATELIER BANNER (Eye-Comfort Luxury Cream & Dark Green Aesthetic) */}
+      {/* 7. CUSTOM DESIGN STUDIO BANNER (Eye-Comfort Luxury Cream & Dark Green Aesthetic) */}
       <section className="max-w-content mx-auto px-4 md:px-8">
         <div className="bg-[#FAF7F2] border border-[#DDD8D0] shadow-md rounded-2xl p-8 md:p-14 grid lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
@@ -401,7 +401,7 @@ export default function HomePage() {
             Styled by Our Community
           </h2>
           <p className="text-xs text-ink-muted">
-            Tag #AyorLegacy to be featured in our Lucknow atelier editorial showcase.
+            Tag #AyorLegacy to be featured in our Lucknow studio editorial showcase.
           </p>
         </div>
 

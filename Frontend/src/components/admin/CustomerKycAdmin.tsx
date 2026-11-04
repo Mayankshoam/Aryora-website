@@ -899,7 +899,7 @@ export default function CustomerKycAdmin({
 
                 {customerWishlistProducts.length === 0 ? (
                   <p className="text-xs text-[#888888] italic py-4 text-center">
-                    No heirlooms saved in wishlist yet.
+                    No items saved in wishlist yet.
                   </p>
                 ) : (
                   <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
@@ -1095,3 +1095,4 @@ export default function CustomerKycAdmin({
     </div>
   );
 }
+

@@ -47,7 +47,7 @@ const BRIDAL_STEPS = [
   {
     step: "04",
     title: "Insured White-Glove Delivery",
-    desc: "Presented in heirloom velvet jewel chests, accompanied by individual IGI grading dossiers, tamper-evident seals, and lifetime insurance.",
+    desc: "Presented in luxury velvet jewel chests, accompanied by individual IGI grading dossiers, tamper-evident seals, and lifetime insurance.",
     icon: Truck,
   },
 ];
@@ -70,7 +70,7 @@ const BRIDAL_FAQS = [
     a: "Yes. Over 60% of our bespoke bridal patrons consult with us virtually from Delhi, Mumbai, Bengaluru, the Middle East, and the USA. We conduct private video styling sessions with live camera showcases of gemstones, sample pieces, and CAD models.",
   },
   {
-    q: "What is your resizing and lifetime buyback policy on bridal heirlooms?",
+    q: "What is your resizing and lifetime buyback policy on bridal jewellery?",
     a: "We provide 30-day complimentary ring and choker adjustments. All Ayor fine jewellery is protected by our transparent lifetime buyback and exchange policy based on prevailing market gold valuations and 100% diamond exchange credit.",
   },
 ];
@@ -114,7 +114,7 @@ export default function BridalPage() {
   const whatsappBridalUrl =
     "https://wa.me/918808828646?text=" +
     encodeURIComponent(
-      "Hello AYOR team, I would like to book a private consultation for bridal heirloom jewellery."
+      "Hello AYOR team, I would like to book a private consultation for bridal fine jewellery."
     );
 
   // Filter curated bridal products
@@ -143,21 +143,21 @@ export default function BridalPage() {
   return (
     <div className="max-w-content mx-auto px-4 md:px-8 py-6 md:py-12 space-y-16 md:space-y-24">
       {/* 1. BREADCRUMBS */}
-      <Breadcrumbs items={[{ label: "Bridal Heirloom" }]} />
+      <Breadcrumbs items={[{ label: "Bridal Jewellery" }]} />
 
       {/* 2. HERO BANNER */}
       <section className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-3">
             <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] font-semibold text-champagne">
-              Awadhi Royal Atelier · Bespoke Fine Jewellery
+              Awadhi Royal Studio · Bespoke Fine Jewellery
             </p>
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ink leading-[1.15] font-light">
-              Heritage Bridal Heirlooms For Modern Royalty
+              Heritage Bridal Jewellery For Modern Royalty
             </h1>
             <p className="text-sm md:text-base text-ink-muted leading-relaxed max-w-xl">
               Crafted in homage to the majestic royal courts of Awadh, Ayor creates
-              one-of-a-kind wedding suites and regal solitaire heirlooms. Hand-set with
+              one-of-a-kind wedding suites and regal solitaire designs. Hand-set with
               flawless D-F VVS lab-grown diamonds, royal emeralds, and solid 18K
               BIS-hallmarked gold—born to be treasured for generations.
             </p>
@@ -182,7 +182,7 @@ export default function BridalPage() {
             <div className="p-3 bg-ivory-warm/40 border border-border-subtle flex items-center gap-2.5 col-span-2 sm:col-span-1">
               <Clock size={18} className="text-champagne-accessible flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold text-ink">3–4 Week Atelier</p>
+                <p className="text-xs font-semibold text-ink">3–4 Week Timeline</p>
                 <p className="text-[10px] text-ink-muted">Bespoke CAD to door</p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function BridalPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-80" />
             <div className="absolute bottom-4 left-4 right-4 p-4 bg-ivory-pure/90 backdrop-blur-md border border-border-subtle text-ink space-y-1">
               <p className="text-[10px] uppercase tracking-wider font-semibold text-champagne">
-                Fine Jewellery Atelier
+                Fine Jewellery Studio
               </p>
               <p className="font-serif text-lg leading-snug">
                 Noor Heritage Bridal Suite & Royal Emerald Choker
@@ -235,7 +235,7 @@ export default function BridalPage() {
         </div>
       </section>
 
-      {/* 3. CURATED BRIDAL HEIRLOOMS CATALOGUE */}
+      {/* 3. CURATED BRIDAL JEWELLERY CATALOGUE */}
       <section className="space-y-8 pt-6 border-t border-border-subtle">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -254,7 +254,7 @@ export default function BridalPage() {
           {/* Tab Filter Controls */}
           <div className="flex flex-wrap gap-2 text-xs">
             {[
-              { id: "all", label: "All Heirlooms" },
+              { id: "all", label: "All Designs" },
               { id: "suites", label: "Necklace Suites" },
               { id: "solitaires", label: "Solitaires & Bands" },
               { id: "mangalsutras", label: "Mangalsutras" },
@@ -293,18 +293,18 @@ export default function BridalPage() {
         </div>
       </section>
 
-      {/* 4. THE 4-STEP BESPOKE ATELIER JOURNEY */}
+      {/* 4. THE 4-STEP BESPOKE JEWELLERY JOURNEY */}
       <section className="bg-ivory-warm/40 border border-border-subtle p-8 md:p-12 space-y-10">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
             The Bespoke Experience
           </p>
           <h2 className="font-serif text-3xl md:text-4xl text-ink font-light">
-            How Your Bridal Heirloom Is Created
+            How Your Bridal Jewellery Is Created
           </h2>
           <p className="text-xs text-ink-muted leading-relaxed">
             From your first virtual conversation to the moment your velvet presentation chest
-            arrives, every step is executed with atelier precision.
+            arrives, every step is executed with master craftsmanship.
           </p>
         </div>
 
@@ -342,7 +342,7 @@ export default function BridalPage() {
               Government & Global Accreditation
             </p>
             <h2 className="font-serif text-2xl sm:text-3xl text-ink font-light">
-              Dual Certification with Every Bridal Heirloom
+              Dual Certification with Every Bridal Jewellery Piece
             </h2>
             <p className="text-xs text-ink-muted leading-relaxed">
               We eliminate doubts with transparent laboratory grading and official gold
@@ -418,7 +418,7 @@ export default function BridalPage() {
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
                 <p className="text-[10px] uppercase tracking-[0.24em] font-semibold text-champagne">
-                  Personalized Atelier Service
+                  Personalized Jewellery Service
                 </p>
                 <h2 className="font-serif text-3xl text-ink font-light">
                   Book a Private Bridal Consultation
@@ -519,7 +519,7 @@ export default function BridalPage() {
                         className="w-full px-3.5 py-2.5 text-xs border border-border-subtle bg-ivory focus:outline-none focus:border-ink transition-colors"
                       >
                         <option>Virtual Video Consultation</option>
-                        <option>Private Atelier in Lucknow</option>
+                        <option>Private Studio in Lucknow</option>
                         <option>Phone / WhatsApp Discussion</option>
                       </select>
                     </div>
@@ -551,7 +551,7 @@ export default function BridalPage() {
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="Share details such as lehenga colors, neckline style, preferred diamond shapes, or specific heirloom ideas..."
+                      placeholder="Share details such as lehenga colors, neckline style, preferred diamond shapes, or specific jewellery design ideas..."
                       value={form.customerNotes}
                       onChange={(e) =>
                         setForm({ ...form, customerNotes: e.target.value })
@@ -601,7 +601,7 @@ export default function BridalPage() {
                 <div className="p-4 bg-ivory-pure border border-border-subtle space-y-2 text-xs text-ink">
                   <p className="font-semibold flex items-center gap-2">
                     <Phone size={14} className="text-champagne-accessible" />
-                    <span>Bridal Atelier Helpline</span>
+                    <span>Bridal Jewellery Helpline</span>
                   </p>
                   <p className="text-ink-muted text-[11px]">
                     Available Monday – Saturday, 10:30 AM to 8:00 PM IST
@@ -615,9 +615,9 @@ export default function BridalPage() {
                 </div>
 
                 <div className="p-4 bg-ivory-pure border border-border-subtle space-y-1.5 text-xs text-ink">
-                  <p className="font-semibold">Atelier Visit Location</p>
+                  <p className="font-semibold">Studio Visit Location</p>
                   <p className="text-ink-muted text-[11px] leading-relaxed">
-                    Ayor Fine Jewellery Atelier, Lucknow, Uttar Pradesh, India.
+                    Ayor Fine Jewellery Studio, Lucknow, Uttar Pradesh, India.
                     By prior appointment only.
                   </p>
                 </div>
