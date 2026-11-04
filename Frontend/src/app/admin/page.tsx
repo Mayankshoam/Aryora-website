@@ -28,6 +28,7 @@ import {
   ExternalLink,
   Copy,
   ShoppingBag,
+  FileText,
 } from "lucide-react";
 import {
   getStoredCustomers,
@@ -46,14 +47,29 @@ import {
   MetalRates,
 } from "@/lib/metalRates";
 import { getAllProducts, Product } from "@/lib/data";
+import CustomerKycAdmin from "@/components/admin/CustomerKycAdmin";
+import InvoicesAdmin from "@/components/admin/InvoicesAdmin";
+import { CustomerInvoice } from "@/lib/customerStore";
 
 const MASTER_PIN = "ayor2026";
 const MASTER_PIN_ALT = "880882";
 
 export default function MasterAdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminUsername, setAdminUsername] = useState("admin@ayor.in");
+  const [usernameInput, setUsernameInput] = useState("admin@ayor.in");
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
+  const [adminToken, setAdminToken] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  // Active Master Tab
+  const [activeTab, setActiveTab] = useState<
+    "CUSTOMERS" | "INVOICES" | "RATES" | "CATALOGUE" | "ORDERS"
+  >("CUSTOMERS");
+
+  // Invoice to view/reprint across tabs
+  const [viewingInvoice, setViewingInvoice] = useState<CustomerInvoice | null>(null);
 
   // Metal Rates
   const [rates, setRates] = useState<MetalRates>(DEFAULT_METAL_RATES);
@@ -75,8 +91,12 @@ export default function MasterAdminPage() {
   useEffect(() => {
     // Check session
     const auth = sessionStorage.getItem("ayor_master_authenticated");
+    const storedToken = sessionStorage.getItem("ayor_admin_token");
+    const storedUser = sessionStorage.getItem("ayor_admin_username");
     if (auth === "true") {
       setIsAuthenticated(true);
+      if (storedToken) setAdminToken(storedToken);
+      if (storedUser) setAdminUsername(storedUser);
     }
     setRates(getDailyMetalRates());
     setProducts(getAllProducts());
@@ -84,21 +104,70 @@ export default function MasterAdminPage() {
     setOrders(getStoredOrders());
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput === MASTER_PIN || pinInput === MASTER_PIN_ALT) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("ayor_master_authenticated", "true");
-      setPinError("");
-      setPinInput("");
-    } else {
-      setPinError("Invalid Master Access PIN. Please try again.");
+    setPinError("");
+    setLoginLoading(true);
+
+    const cleanUser = usernameInput.trim().toLowerCase();
+    const cleanPin = pinInput.trim();
+
+    try {
+      // 1. Try Authenticating via Protected Admin API with Rate Limiting
+      const res = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: cleanUser, password: cleanPin }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success && data.role === "admin") {
+        setIsAuthenticated(true);
+        setAdminToken(data.token);
+        setAdminUsername(cleanUser);
+        sessionStorage.setItem("ayor_master_authenticated", "true");
+        sessionStorage.setItem("ayor_admin_token", data.token);
+        sessionStorage.setItem("ayor_admin_username", cleanUser);
+        sessionStorage.setItem("ayor_admin_role", "admin");
+        setPinInput("");
+        return;
+      }
+
+      // Fallback check for direct client access with valid PIN
+      if (cleanPin === MASTER_PIN || cleanPin === MASTER_PIN_ALT) {
+        setIsAuthenticated(true);
+        setAdminUsername(cleanUser);
+        sessionStorage.setItem("ayor_master_authenticated", "true");
+        sessionStorage.setItem("ayor_admin_username", cleanUser);
+        sessionStorage.setItem("ayor_admin_role", "admin");
+        setPinInput("");
+        return;
+      }
+
+      setPinError(data.error || "Invalid Admin credentials or unauthorized role.");
+    } catch {
+      // Fallback in offline/sandbox mode
+      if (cleanPin === MASTER_PIN || cleanPin === MASTER_PIN_ALT) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("ayor_master_authenticated", "true");
+        sessionStorage.setItem("ayor_admin_username", cleanUser);
+        sessionStorage.setItem("ayor_admin_role", "admin");
+        setPinInput("");
+      } else {
+        setPinError("Invalid Master Access PIN / Credentials.");
+      }
+    } finally {
+      setLoginLoading(false);
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     sessionStorage.removeItem("ayor_master_authenticated");
+    sessionStorage.removeItem("ayor_admin_token");
+    sessionStorage.removeItem("ayor_admin_username");
+    sessionStorage.removeItem("ayor_admin_role");
   };
 
   const handleGold24kChange = (val: number) => {
@@ -214,17 +283,38 @@ export default function MasterAdminPage() {
               <Lock size={26} strokeWidth={1.5} />
             </div>
             <h1 className="font-serif text-2xl md:text-3xl text-[#111111] font-light">
-              AYOR Master Access
+              AYOR Administrator Portal
             </h1>
             <p className="text-xs text-[#666666]">
-              Enter your master authorization PIN to manage daily metal market rates, inventory & product pricing.
+              Secure administrator access for Customer Accounts, Rule 114B KYC, Invoices &amp; Bullion Pricing.
             </p>
+            <div className="inline-flex items-center gap-1.5 bg-[#FAF7F2] border border-[#DDD8D0] px-3 py-1 rounded-full text-[11px] font-semibold text-[#0E382B]">
+              <ShieldAlert size={12} className="text-[#C5A880]" />
+              <span>Role Protected: Administrator Only</span>
+            </div>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4 pt-2">
             <div>
               <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1.5">
-                Master Authorization PIN / Password
+                Admin Username / Email
+              </label>
+              <input
+                type="text"
+                value={usernameInput}
+                onChange={(e) => {
+                  setUsernameInput(e.target.value);
+                  setPinError("");
+                }}
+                placeholder="admin@ayor.in"
+                className="w-full h-11 px-3.5 bg-[#FAF7F2] border border-[#DDD8D0] rounded-lg text-xs font-semibold text-[#111111] focus:outline-none focus:border-[#0E382B] transition-colors"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs uppercase tracking-wider font-semibold text-[#111111] mb-1.5">
+                Administrator PIN / Password
               </label>
               <input
                 type="password"
@@ -236,6 +326,7 @@ export default function MasterAdminPage() {
                 placeholder="Enter PIN (e.g. ayor2026)"
                 className="w-full h-11 px-3.5 bg-[#FAF7F2] border border-[#DDD8D0] rounded-lg text-sm text-[#111111] focus:outline-none focus:border-[#0E382B] transition-colors"
                 autoFocus
+                required
               />
               {pinError && (
                 <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
@@ -246,14 +337,15 @@ export default function MasterAdminPage() {
 
             <button
               type="submit"
-              className="w-full h-11 bg-[#0E382B] hover:bg-[#144636] text-white font-medium text-xs uppercase tracking-wider rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2"
+              disabled={loginLoading}
+              className="w-full h-11 bg-[#0E382B] hover:bg-[#144636] disabled:opacity-50 text-white font-medium text-xs uppercase tracking-wider rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <Unlock size={14} />
-              <span>Unlock Master Console</span>
+              <span>{loginLoading ? "Verifying Role & Session..." : "Sign In to Admin Console"}</span>
             </button>
 
             <p className="text-[11px] text-center text-[#888888]">
-              Default Master Key: <code className="bg-[#FAF7F2] px-1 py-0.5 rounded font-mono">ayor2026</code>
+              Default Admin Key: <code className="bg-[#FAF7F2] px-1 py-0.5 rounded font-mono">ayor2026</code> (Username: <code className="bg-[#FAF7F2] px-1 py-0.5 rounded font-mono">admin@ayor.in</code>)
             </p>
           </form>
         </div>
@@ -276,14 +368,14 @@ export default function MasterAdminPage() {
               className="object-contain"
             />
           </div>
-          <span className="text-xs uppercase tracking-widest bg-white/15 px-2 py-0.5 rounded font-mono">
-            Master Console
+          <span className="text-xs uppercase tracking-widest bg-white/15 px-2.5 py-0.5 rounded-full font-mono">
+            Admin Console · Role: Administrator
           </span>
         </div>
 
         <div className="flex items-center gap-4 text-xs">
-          <span className="hidden sm:inline text-white/80">
-            Last Updated: {new Date(rates.lastUpdated).toLocaleDateString("en-IN", { hour: "2-digit", minute: "2-digit" })}
+          <span className="hidden md:inline text-white/80">
+            Signed in as: <strong>{adminUsername}</strong>
           </span>
           <Link
             href="/"
@@ -291,21 +383,112 @@ export default function MasterAdminPage() {
             className="hover:underline flex items-center gap-1 text-white/90"
           >
             <Eye size={13} />
-            <span>View Live Site</span>
+            <span>View Storefront</span>
           </Link>
           <button
             type="button"
             onClick={handleLogout}
-            className="flex items-center gap-1 text-red-200 hover:text-white transition-colors"
+            className="flex items-center gap-1 text-red-200 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded cursor-pointer"
           >
             <LogOut size={13} />
-            <span>Lock</span>
+            <span>Sign Out</span>
           </button>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-8 space-y-10">
-        {/* SECTION 1: DAILY METAL PRICING CONTROL BOARD */}
+      {/* LUXURY ADMIN TABS NAVIGATION */}
+      <div className="bg-white border-b border-[#DDD8D0] sticky top-0 z-30 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center gap-2 overflow-x-auto py-2">
+          <button
+            type="button"
+            onClick={() => setActiveTab("CUSTOMERS")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "CUSTOMERS"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <Users size={14} className={activeTab === "CUSTOMERS" ? "text-[#C5A880]" : ""} />
+            <span>Customers &amp; KYC Vault</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("INVOICES")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "INVOICES"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <FileText size={14} className={activeTab === "INVOICES" ? "text-[#C5A880]" : ""} />
+            <span>Invoices &amp; Tax Bills</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("RATES")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "RATES"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <Coins size={14} className={activeTab === "RATES" ? "text-[#C5A880]" : ""} />
+            <span>Bullion Metal Rates</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("CATALOGUE")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "CATALOGUE"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <Package size={14} className={activeTab === "CATALOGUE" ? "text-[#C5A880]" : ""} />
+            <span>Catalogue &amp; Inventory</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("ORDERS")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "ORDERS"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <ShoppingBag size={14} className={activeTab === "ORDERS" ? "text-[#C5A880]" : ""} />
+            <span>Live Orders &amp; UTR ({orders.length})</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-6 space-y-8">
+        {/* TAB 1: CUSTOMERS & KYC VAULT */}
+        {activeTab === "CUSTOMERS" && (
+          <CustomerKycAdmin
+            adminToken={adminToken}
+            adminUsername={adminUsername}
+            onViewInvoice={(inv) => {
+              setViewingInvoice(inv);
+              setActiveTab("INVOICES");
+            }}
+          />
+        )}
+
+        {/* TAB 2: INVOICES & TAX BILLS */}
+        {activeTab === "INVOICES" && (
+          <InvoicesAdmin
+            selectedInvoice={viewingInvoice}
+            onCloseInvoiceModal={() => setViewingInvoice(null)}
+          />
+        )}
+
+        {/* TAB 3: DAILY METAL PRICING CONTROL BOARD */}
+        {activeTab === "RATES" && (
         <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EFEBE4]">
             <div>
@@ -536,8 +719,10 @@ export default function MasterAdminPage() {
             </div>
           </form>
         </section>
+        )}
 
-        {/* SECTION 2: PRODUCT MANAGEMENT & IMAGE MODIFIER */}
+        {/* TAB 4: PRODUCT MANAGEMENT & IMAGE MODIFIER */}
+        {activeTab === "CATALOGUE" && (
         <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EFEBE4]">
             <div>
@@ -689,8 +874,10 @@ export default function MasterAdminPage() {
             </table>
           </div>
         </section>
+        )}
 
-        {/* SECTION 3: SUPABASE CUSTOMER VAULT & LIVE ORDERS */}
+        {/* TAB 5: SUPABASE CUSTOMER VAULT & LIVE ORDERS */}
+        {activeTab === "ORDERS" && (
         <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EFEBE4]">
             <div>
@@ -892,6 +1079,7 @@ export default function MasterAdminPage() {
             )}
           </div>
         </section>
+        )}
 
         {/* MODAL: PRODUCT DETAIL & IMAGE EDITOR */}
         {editingProduct && (

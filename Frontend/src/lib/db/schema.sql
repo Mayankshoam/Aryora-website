@@ -107,3 +107,4 @@ CREATE TABLE IF NOT EXISTS public.audit_logs (
 );
 
 CREATE INDEX IF NOT EXISTS idx_audit_customer ON public.audit_logs(customer_id);
+

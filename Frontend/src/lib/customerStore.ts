@@ -59,11 +59,29 @@ export interface CustomerInvoice {
   terms: string[];
 }
 
+export interface AuditLogEntry {
+  id: string;
+  customerId: string;
+  eventType:
+    | "REGISTRATION"
+    | "PAN_SUBMITTED"
+    | "NAME_LOCKED"
+    | "PROFILE_UPDATED"
+    | "INVOICE_GENERATED"
+    | "ADMIN_PAN_VIEWED";
+  description: string;
+  actor: "CUSTOMER" | "ADMIN" | "SYSTEM";
+  adminUsername?: string;
+  ipAddress?: string;
+  createdAt: string;
+}
+
 const STORAGE_KEY_CUSTOMER = "ayor_customer_active";
 const STORAGE_KEY_ALL_CUSTOMERS = "ayor_all_customers_db";
 const STORAGE_KEY_INVOICES = "ayor_customer_invoices_db";
 const STORAGE_KEY_WISHLIST = "ayor_customer_wishlist_db";
 const STORAGE_KEY_DISCOUNT = "ayor_welcome_discount_active";
+const STORAGE_KEY_AUDIT_LOGS = "ayor_audit_logs_db";
 
 /**
  * Validates 10-digit Indian mobile number format.
@@ -204,6 +222,12 @@ export function loginWithMobile(mobile: string, name?: string): { success: boole
       updatedAt: new Date().toISOString(),
     };
     allCustomers.push(existing);
+    recordAuditLog({
+      customerId: existing.customerId,
+      eventType: "REGISTRATION",
+      description: `New customer registered with mobile +91 ${existing.mobile}. Assigned Customer ID ${existing.customerId}. 10% Welcome Discount activated.`,
+      actor: "CUSTOMER",
+    });
   }
 
   localStorage.setItem(STORAGE_KEY_ALL_CUSTOMERS, JSON.stringify(allCustomers));
@@ -269,6 +293,13 @@ export function updateCustomerProfile(updates: Partial<CustomerProfile>): Custom
     }
 
     window.dispatchEvent(new Event("ayor_customer_changed"));
+
+    recordAuditLog({
+      customerId: updated.customerId,
+      eventType: "PROFILE_UPDATED",
+      description: `Customer updated profile details.`,
+      actor: "CUSTOMER",
+    });
   }
 
   return updated;
@@ -335,6 +366,20 @@ export function submitCustomerPAN(
     }
 
     window.dispatchEvent(new Event("ayor_customer_changed"));
+
+    recordAuditLog({
+      customerId: verifiedCustomer.customerId,
+      eventType: "PAN_SUBMITTED",
+      description: `Customer submitted PAN ${maskPAN(cleanPan)} with mandatory document upload. Verified successfully.`,
+      actor: "CUSTOMER",
+    });
+
+    recordAuditLog({
+      customerId: verifiedCustomer.customerId,
+      eventType: "NAME_LOCKED",
+      description: `Official legal name permanently locked to "${verifiedCustomer.name}" as per verified PAN records.`,
+      actor: "SYSTEM",
+    });
   }
 
   return verifiedCustomer;
@@ -437,6 +482,13 @@ export function createCustomerInvoice(params: {
       const invoices: CustomerInvoice[] = raw ? JSON.parse(raw) : [];
       invoices.unshift(invoice);
       localStorage.setItem(STORAGE_KEY_INVOICES, JSON.stringify(invoices));
+
+      recordAuditLog({
+        customerId: params.customer.customerId,
+        eventType: "INVOICE_GENERATED",
+        description: `Tax Invoice ${invoice.invoiceNumber} generated for ₹${params.totalAmount.toLocaleString("en-IN")}. Mode: ${params.paymentMode}.`,
+        actor: "SYSTEM",
+      });
     } catch (e) {
       console.warn("Failed to store invoice", e);
     }
@@ -499,3 +551,169 @@ export function toggleCustomerWishlist(customerId: string, productSlug: string):
   window.dispatchEvent(new Event("ayor_wishlist_changed"));
   return updated;
 }
+
+/**
+ * Records an audit log entry.
+ */
+export function recordAuditLog(entry: {
+  customerId: string;
+  eventType: AuditLogEntry["eventType"];
+  description: string;
+  actor: AuditLogEntry["actor"];
+  adminUsername?: string;
+  ipAddress?: string;
+}): AuditLogEntry {
+  const newLog: AuditLogEntry = {
+    id: `AUDIT-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+    ...entry,
+    createdAt: new Date().toISOString(),
+  };
+
+  if (typeof window !== "undefined") {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_AUDIT_LOGS);
+      const list: AuditLogEntry[] = raw ? JSON.parse(raw) : [];
+      list.unshift(newLog);
+      localStorage.setItem(STORAGE_KEY_AUDIT_LOGS, JSON.stringify(list));
+    } catch (e) {
+      console.warn("Failed to save audit log", e);
+    }
+  }
+
+  return newLog;
+}
+
+/**
+ * Retrieves audit logs for a specific customer.
+ */
+export function getCustomerAuditLogs(customerId: string): AuditLogEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_AUDIT_LOGS);
+    const list: AuditLogEntry[] = raw ? JSON.parse(raw) : [];
+    return list.filter((l) => l.customerId === customerId);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Retrieves all system audit logs.
+ */
+export function getAllAuditLogs(): AuditLogEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_AUDIT_LOGS);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Retrieves all registered customers in the system.
+ */
+export function getAllCustomers(): CustomerProfile[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_ALL_CUSTOMERS);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Retrieves a customer by their unique Customer ID.
+ */
+export function getCustomerById(customerId: string): CustomerProfile | null {
+  if (typeof window === "undefined") return null;
+  const list = getAllCustomers();
+  return list.find((c) => c.customerId === customerId) || null;
+}
+
+/**
+ * Retrieves all invoices generated across the store.
+ */
+export function getAllInvoices(): CustomerInvoice[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_INVOICES);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Admin update for customer profile.
+ * CRITICAL ENFORCEMENT: Admin cannot edit a locked customer official legal name!
+ */
+export function adminUpdateCustomerProfile(
+  customerId: string,
+  updates: Partial<CustomerProfile>,
+  adminUsername: string = "admin@ayor.in"
+): CustomerProfile {
+  if (typeof window === "undefined") {
+    throw new Error("Cannot execute outside browser/runtime environment.");
+  }
+  const all = getAllCustomers();
+  const index = all.findIndex((c) => c.customerId === customerId);
+  if (index === -1) throw new Error("Customer profile not found.");
+
+  const current = all[index];
+
+  // ADMIN CANNOT EDIT A LOCKED CUSTOMER NAME:
+  if (current.nameLocked && updates.name && updates.name.trim() !== current.name.trim()) {
+    throw new Error("Admin cannot edit a locked customer official legal name. Official PAN name is permanent.");
+  }
+
+  const updated: CustomerProfile = {
+    ...current,
+    ...updates,
+    customerId: current.customerId,
+    mobile: current.mobile,
+    name: current.nameLocked ? current.name : (updates.name ? updates.name.trim() : current.name),
+    nameLocked: current.nameLocked,
+    panVerified: current.panVerified,
+    updatedAt: new Date().toISOString(),
+  };
+
+  all[index] = updated;
+  localStorage.setItem(STORAGE_KEY_ALL_CUSTOMERS, JSON.stringify(all));
+
+  const active = getActiveCustomer();
+  if (active && active.customerId === customerId) {
+    localStorage.setItem(STORAGE_KEY_CUSTOMER, JSON.stringify(updated));
+  }
+
+  recordAuditLog({
+    customerId,
+    eventType: "PROFILE_UPDATED",
+    description: `Admin [${adminUsername}] updated customer profile details.`,
+    actor: "ADMIN",
+    adminUsername,
+  });
+
+  window.dispatchEvent(new Event("ayor_customer_changed"));
+  return updated;
+}
+
+/**
+ * Logs every admin view of a customer's PAN image in audit_logs.
+ */
+export function logAdminPanView(
+  customerId: string,
+  adminUsername: string = "admin@ayor.in",
+  ipAddress?: string
+): AuditLogEntry {
+  return recordAuditLog({
+    customerId,
+    eventType: "ADMIN_PAN_VIEWED",
+    description: `Admin [${adminUsername}] viewed customer verified PAN image document via secure signed link.`,
+    actor: "ADMIN",
+    adminUsername,
+    ipAddress,
+  });
+}
+
