@@ -67,7 +67,7 @@ export default function NamasteWelcome() {
 
     const clean = mobileNumber.replace(/\D/g, "");
     if (!isValidIndianMobile(clean)) {
-      setInputError("Kripya 10-digit ka valid mobile number dalein (e.g. 9876543210).");
+      setInputError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
@@ -145,11 +145,8 @@ export default function NamasteWelcome() {
               />
 
               <div className="absolute bottom-3 left-3 z-20 flex items-center gap-2">
-                <span className="bg-[#0E382B]/90 backdrop-blur-xs text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-md border border-[#C5A880]/60">
-                  नमस्ते • Namaste
-                </span>
-                <span className="bg-white/95 backdrop-blur-xs text-[#0E382B] text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full shadow-md border border-[#DDD8D0]">
-                  स्वागतम्
+                <span className="bg-[#0E382B]/90 backdrop-blur-xs text-white text-[10px] uppercase font-semibold tracking-widest px-3 py-1 rounded-full shadow-md border border-[#C5A880]/60">
+                  Welcome to AYOR
                 </span>
               </div>
 
@@ -163,7 +160,7 @@ export default function NamasteWelcome() {
               </button>
             </div>
             <p className="text-[10px] text-center text-[#888888] mt-2 font-serif italic">
-              Traditional Indian Welcome Greeting
+              Fine Jewellery &amp; Solitaires
             </p>
           </div>
 
@@ -172,7 +169,7 @@ export default function NamasteWelcome() {
             <div className="inline-flex items-center gap-1.5 bg-[#0E382B]/5 border border-[#0E382B]/15 px-3 py-1 rounded-full">
               <Sparkles size={12} className="text-[#C5A880]" />
               <span className="text-[10px] uppercase tracking-widest font-semibold text-[#0E382B]">
-                Aapka Swagat Hai • Welcome
+                Welcome
               </span>
               <Sparkles size={12} className="text-[#C5A880]" />
             </div>
@@ -232,7 +229,7 @@ export default function NamasteWelcome() {
                       type="submit"
                       className="w-full bg-[#0E382B] hover:bg-[#144636] text-white py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider font-medium shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <span>Enter Store (प्रवेश करें)</span>
+                      <span>Enter Store</span>
                       <ArrowRight size={13} />
                     </button>
                   </form>

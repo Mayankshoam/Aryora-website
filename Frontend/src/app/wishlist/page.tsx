@@ -80,7 +80,7 @@ export default function WishlistPage() {
 
     const clean = mobileInput.replace(/\D/g, "");
     if (!isValidIndianMobile(clean)) {
-      setLoginError("Kripya 10-digit ka valid mobile number dalein (e.g. 9876543210).");
+      setLoginError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
