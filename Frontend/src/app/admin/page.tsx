@@ -29,6 +29,7 @@ import {
   Copy,
   ShoppingBag,
   FileText,
+  UploadCloud,
 } from "lucide-react";
 import {
   getStoredCustomers,
@@ -49,6 +50,8 @@ import {
 import { getAllProducts, Product } from "@/lib/data";
 import CustomerKycAdmin from "@/components/admin/CustomerKycAdmin";
 import InvoicesAdmin from "@/components/admin/InvoicesAdmin";
+import ImportProductsAdmin from "@/components/admin/ImportProductsAdmin";
+import PopupManagerAdmin from "@/components/admin/PopupManagerAdmin";
 import { CustomerInvoice } from "@/lib/customerStore";
 
 const MASTER_PIN = "ayor2026";
@@ -65,7 +68,7 @@ export default function MasterAdminPage() {
 
   // Active Master Tab
   const [activeTab, setActiveTab] = useState<
-    "CUSTOMERS" | "INVOICES" | "RATES" | "CATALOGUE" | "ORDERS"
+    "CUSTOMERS" | "INVOICES" | "RATES" | "CATALOGUE" | "ORDERS" | "IMPORT" | "POPUP"
   >("CUSTOMERS");
 
   // Invoice to view/reprint across tabs
@@ -462,6 +465,32 @@ export default function MasterAdminPage() {
           >
             <ShoppingBag size={14} className={activeTab === "ORDERS" ? "text-[#C5A880]" : ""} />
             <span>Live Orders &amp; UTR ({orders.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("IMPORT")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "IMPORT"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <UploadCloud size={14} className={activeTab === "IMPORT" ? "text-[#C5A880]" : ""} />
+            <span>Import Products</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("POPUP")}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "POPUP"
+                ? "bg-[#0E382B] text-white shadow-xs"
+                : "text-[#666666] hover:text-[#111111] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <Sparkles size={14} className={activeTab === "POPUP" ? "text-[#C5A880]" : ""} />
+            <span>Promo Pop-up</span>
           </button>
         </div>
       </div>
@@ -1079,6 +1108,20 @@ export default function MasterAdminPage() {
             )}
           </div>
         </section>
+        )}
+
+        {/* TAB 6: BULK PRODUCT IMPORT */}
+        {activeTab === "IMPORT" && (
+          <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm">
+            <ImportProductsAdmin />
+          </section>
+        )}
+
+        {/* TAB 7: PROMOTIONAL POP-UP MANAGER */}
+        {activeTab === "POPUP" && (
+          <section className="bg-white border border-[#DDD8D0] rounded-2xl p-6 sm:p-8 shadow-sm">
+            <PopupManagerAdmin />
+          </section>
         )}
 
         {/* MODAL: PRODUCT DETAIL & IMAGE EDITOR */}

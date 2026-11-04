@@ -10,6 +10,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import AntiScrapeFirewall from "@/components/AntiScrapeFirewall";
 import ViolinAmbientPlayer from "@/components/ViolinAmbientPlayer";
 import NamasteWelcome from "@/components/NamasteWelcome";
+import AntiTarnishPromoPopup from "@/components/AntiTarnishPromoPopup";
 
 export const viewport: Viewport = {
   themeColor: "#FDFBF9",
@@ -160,6 +161,7 @@ export default function RootLayout({
         <AntiScrapeFirewall />
         <ViolinAmbientPlayer />
         <NamasteWelcome />
+        <AntiTarnishPromoPopup />
       </body>
     </html>
   );
