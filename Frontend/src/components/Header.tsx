@@ -125,6 +125,14 @@ export default function Header() {
         <Sparkles size={12} className="text-[#C09981]" />
         <span>100% IGI-Certified Lab-Grown Diamonds · Complimentary Insured Pan-India Delivery</span>
         <span className="hidden md:inline text-[#C09981]">· 15-Day Easy Returns</span>
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event("ayor_replay_welcome"))}
+          className="hidden sm:inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-[#C5A880] hover:text-white ml-3 pl-3 border-l border-white/20 transition-colors cursor-pointer"
+          title="Watch Traditional Welcome Video"
+        >
+          <span>🙏 नमस्ते Welcome Video</span>
+        </button>
       </div>
 
       {/* 2. MAIN HEADER (Ethera Diamonds Reference Layout) */}
