@@ -145,7 +145,7 @@ export default function WishlistPage() {
             Your Curated Selections
           </p>
           <h1 className="font-serif text-3xl md:text-5xl text-[#111111] font-light">
-            My Wishlist &amp; Saved Heirlooms
+            My Wishlist &amp; Saved Jewellery
           </h1>
           <p className="text-xs text-[#666666]">
             Every masterpiece saved to your personal lookbook, synced across all your sessions.
@@ -181,7 +181,7 @@ export default function WishlistPage() {
               <span>10% Welcome Discount · No OTP Needed</span>
             </div>
             <h3 className="font-serif text-lg text-[#111111] font-medium">
-              Save your heirlooms forever &amp; unlock Flat 10% OFF
+              Save your jewellery pieces forever &amp; unlock Flat 10% OFF
             </h3>
             <p className="text-xs text-[#666666]">
               Enter your mobile number to permanently link your wishlist to your customer account and activate code <strong>AYOR10</strong>.
@@ -229,7 +229,7 @@ export default function WishlistPage() {
       {savedProducts.length > 0 && (
         <div className="flex items-center justify-between pt-2">
           <p className="text-xs text-[#666666] font-medium">
-            Showing {savedProducts.length} {savedProducts.length === 1 ? "heirloom" : "heirlooms"}
+            Showing {savedProducts.length} {savedProducts.length === 1 ? "piece" : "pieces"}
           </p>
           <button
             type="button"

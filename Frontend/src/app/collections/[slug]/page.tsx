@@ -28,7 +28,7 @@ const COLLECTION_META: Record<
   },
   bridal: {
     title: "Heritage Bridal",
-    subtitle: "Awadhi Royal Heirloom",
+    subtitle: "Awadhi Royal Collection",
     desc: "Regal chokers, layered diamond necklaces, and bespoke bridal suites paying homage to the Nawabi aesthetic of Lucknow.",
     heroImage: "/site/cat-bridal.svg",
     category: "Bridal",
@@ -51,7 +51,7 @@ export default function CollectionDetailPage({ params }: Props) {
   const meta = COLLECTION_META[slug] || {
     title: slug.charAt(0).toUpperCase() + slug.slice(1) + " Collection",
     subtitle: "Curated Edition",
-    desc: "Handcrafted lab-grown diamond heirlooms by Ayor.",
+    desc: "Handcrafted lab-grown diamond jewellery by Ayor.",
     heroImage: "/site/hero-poster.svg",
     category: "Rings",
   };

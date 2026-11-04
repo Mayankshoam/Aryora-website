@@ -64,7 +64,7 @@ const CATEGORIES_MENU = [
 ];
 
 const MORE_MENU = [
-  { label: "About Ayor Atelier", href: "/about", desc: "Heritage craft born in Lucknow" },
+  { label: "About Ayor Jewellery House", href: "/about", desc: "Heritage craft born in Lucknow" },
   { label: "The World of Lab Diamonds", href: "/world-of-lgd", desc: "Chemical, physical & optical equivalence" },
   { label: "Ethical & Sustainable Craft", href: "/sustainability", desc: "Zero earth mining & solar brilliance" },
   { label: "Ring Size & Fitting Guide", href: "/size-guide", desc: "Accurate Indian standard measurements" },
@@ -125,14 +125,6 @@ export default function Header() {
         <Sparkles size={12} className="text-[#C09981]" />
         <span>100% IGI-Certified Lab-Grown Diamonds · Complimentary Insured Pan-India Delivery</span>
         <span className="hidden md:inline text-[#C09981]">· 15-Day Easy Returns</span>
-        <button
-          type="button"
-          onClick={() => window.dispatchEvent(new Event("ayor_replay_welcome"))}
-          className="hidden sm:inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-[#C5A880] hover:text-white ml-3 pl-3 border-l border-white/20 transition-colors cursor-pointer"
-          title="Watch Traditional Welcome Video"
-        >
-          <span>🙏 नमस्ते Welcome Video</span>
-        </button>
       </div>
 
       {/* 2. MAIN HEADER (Ethera Diamonds Reference Layout) */}
@@ -259,7 +251,7 @@ export default function Header() {
               )}
             </div>
 
-            {/* Customize / Atelier Link */}
+            {/* Customize Link */}
             <Link
               href="/customize"
               className="py-4 font-semibold tracking-wider text-[13px] text-[#111111] hover:text-[#8E5B42] transition-colors"
@@ -359,7 +351,7 @@ export default function Header() {
               type="button"
               onClick={openStoreLocator}
               aria-label="Find Ayor Lucknow Boutique"
-              title="Lucknow Boutique Atelier"
+              title="Lucknow Boutique Studio"
               className="p-2 text-ink hover:text-champagne-accessible transition-colors hidden sm:inline-flex"
             >
               <MapPin size={19} strokeWidth={1.5} />
@@ -484,7 +476,7 @@ export default function Header() {
                   }}
                   className="block text-left text-[#2D2D2D] hover:text-[#111111] text-sm"
                 >
-                  Lucknow Boutique Atelier
+                  Lucknow Boutique Studio
                 </button>
                 <Link
                   href="/world-of-lgd"

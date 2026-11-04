@@ -170,13 +170,13 @@ export default function ReturnsPage() {
           <div className="text-xs sm:text-sm text-[#555555] space-y-2 leading-relaxed">
             <ul className="list-disc pl-5 space-y-1">
               <li>
-                <strong>Inspection & Processing:</strong> Refunds are initiated within <strong>48 hours</strong> of the returned piece reaching our Lucknow atelier and passing quality inspection.
+                <strong>Inspection & Processing:</strong> Refunds are initiated within <strong>48 hours</strong> of the returned piece reaching our Lucknow studio and passing quality inspection.
               </li>
               <li>
                 <strong>Credit Timeline:</strong> The refund will reflect in your original payment method (Bank account, UPI, Card) within <strong>5–7 business days</strong> depending on your banking provider.
               </li>
               <li>
-                <strong>Atelier Return Address:</strong> AYOR Fine Jewellery Atelier, Lucknow, Uttar Pradesh, India — 226001.
+                <strong>Studio Return Address:</strong> AYOR Fine Jewellery Studio, Lucknow, Uttar Pradesh, India — 226001.
               </li>
             </ul>
           </div>

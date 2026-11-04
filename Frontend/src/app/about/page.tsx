@@ -6,7 +6,7 @@ import { Sparkles, Award, HeartHandshake } from "lucide-react";
 export const metadata = {
   title: "About Ayor — Light. Legacy. You.",
   description:
-    "Learn about Ayor, a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, gold and 92.5 silver heirlooms for modern India.",
+    "Learn about Ayor, a Lucknow-based fine jewellery brand crafting IGI-certified lab-grown diamond, gold and 92.5 silver jewellery for modern India.",
 };
 
 export default function AboutPage() {
@@ -16,7 +16,7 @@ export default function AboutPage() {
 
       {/* Hero Narrative */}
       <div className="max-w-3xl mx-auto text-center space-y-4">
-        <p className="eyebrow">The Atelier Chronicle</p>
+        <p className="eyebrow">The Heritage Story</p>
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-ink leading-tight">
           Light. Legacy. You.
         </h1>
@@ -30,7 +30,7 @@ export default function AboutPage() {
         <div className="md:col-span-7 relative aspect-[4/3] bg-ivory-warm border border-border-subtle overflow-hidden flex items-center justify-center p-6">
           <Image
             src="/site/hero-poster.svg"
-            alt="Master artisan hand-setting diamonds at Ayor atelier"
+            alt="Master artisan hand-setting diamonds at Ayor studio"
             fill
             priority
             sizes="(max-width: 768px) 100vw, 60vw"
@@ -47,7 +47,7 @@ export default function AboutPage() {
             Lucknow has long stood as an epicenter of artistic refinement—from chikankari to zardozi and delicate royal meenakari. Ayor continues this rich creative heritage by pairing veteran Indian goldsmiths with certified lab-grown diamond technology.
           </p>
           <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-            Every piece is designed to be passed down through generations—an enduring heirloom that never compromises on brilliance, carat weight, or integrity.
+            Every piece is designed to be passed down through generations—an enduring treasure that never compromises on brilliance, carat weight, or integrity.
           </p>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function AboutPage() {
             </div>
             <h3 className="font-serif text-2xl text-ink">Legacy</h3>
             <p className="text-xs sm:text-sm text-ink-muted leading-relaxed max-w-xs mx-auto">
-              Crafted in solid hallmarked 18K gold and 92.5 sterling silver. We build heirlooms intended to outlive trends, bearing milestone memories from generation to generation.
+              Crafted in solid hallmarked 18K gold and 92.5 sterling silver. We build jewellery intended to outlive trends, bearing milestone memories from generation to generation.
             </p>
           </div>
 

@@ -633,8 +633,8 @@ const RAW_PRODUCTS = [
     discountPercent: 5,
     stock: 2,
     images: ["/products/bridal-01-a.svg", "/products/bridal-01-b.svg"],
-    description: "A monumental bridal heirloom suite comprising ceremonial necklace, matching chandelier earrings, and maang tikka.",
-    tags: ["bridal", "wedding suite", "awadh", "heirloom"],
+    description: "A monumental bridal jewellery suite comprising ceremonial necklace, matching chandelier earrings, and maang tikka.",
+    tags: ["bridal", "wedding suite", "awadh", "jewellery"],
     isBestseller: true,
     isNew: false
   },
@@ -738,12 +738,12 @@ const SITE_CONFIG = {
     phone: "+91 8808828646",
     whatsapp: "+91 8808828646",
     email: "aryora.legacy@hotmail.com",
-    address: "Aryora Haute Joaillerie Atelier, Hazratganj / Aliganj, Lucknow, UP 226001",
+    address: "Ayor Fine Jewellery Studio, Hazratganj / Aliganj, Lucknow, UP 226001",
     instagram: "https://instagram.com/ayorjewellery",
     instagramHandle: "@ayorjewellery"
   },
   hero: {
-    eyebrow: "Awadhi Royal Atelier · Lab-Grown Fine Joaillerie",
+    eyebrow: "Awadhi Royal Jewellery Studio · Lab-Grown Fine Jewellery",
     title: "Made for you, not for your locker.",
     subtitle: "Conscious lab-grown diamonds of extraordinary chemical purity, handcrafted in Lucknow in BIS-hallmarked 18K gold. Born to be celebrated daily.",
     ctaPrimary: {
@@ -751,7 +751,7 @@ const SITE_CONFIG = {
       href: "/shop"
     },
     ctaSecondary: {
-      label: "Book Atelier Consultation",
+      label: "Book Jewellery Consultation",
       href: "/bridal"
     },
     videoDesktop: "/videos/hero-desktop.mp4",
@@ -857,7 +857,7 @@ const SITE_CONFIG = {
     },
     {
       title: "Awadhi Royal Craft",
-      desc: "Generational master artisans in Lucknow hand-forging heirlooms built to last generations."
+      desc: "Generational master artisans in Lucknow handcrafting fine jewellery built to last generations."
     },
     {
       title: "Complimentary Insured Courier",

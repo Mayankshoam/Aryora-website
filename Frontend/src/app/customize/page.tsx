@@ -106,10 +106,10 @@ export default function CustomizePage() {
       <Breadcrumbs items={[{ label: "Design Your Own" }]} />
 
       <div className="max-w-2xl my-8 space-y-3">
-        <p className="eyebrow">Atelier Studio</p>
+        <p className="eyebrow">Custom Jewellery Studio</p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink">Design Your Own Ring</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
-          Configure your setting style, precious metal, and lab diamond geometry. See your piece update in real-time 3D, then submit for a tailored atelier quote.
+          Configure your setting style, precious metal, and lab diamond geometry. See your piece update in real-time 3D, then submit for a tailored jewellery quote.
         </p>
       </div>
 

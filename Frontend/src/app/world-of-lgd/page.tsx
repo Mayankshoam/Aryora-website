@@ -127,7 +127,7 @@ export default function WorldOfLgdPage() {
           <p className="eyebrow">From Seed to Setting</p>
           <h2 className="font-serif text-3xl md:text-4xl text-ink">The Diamond Growing Process</h2>
           <p className="text-xs sm:text-sm text-ink-muted">
-            How a tiny diamond seed blossoms into an eternal heirloom in our controlled laboratories.
+            How a tiny diamond seed blossoms into an eternal diamond piece in our controlled laboratories.
           </p>
         </div>
 

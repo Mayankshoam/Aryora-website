@@ -259,7 +259,7 @@ export function getStoredOrders(): OrderRecord[] {
 /**
  * SQL schema for user to run in Supabase SQL editor.
  */
-export const SUPABASE_SQL_SCHEMA = `-- Supabase Schema for AYOR Atelier
+export const SUPABASE_SQL_SCHEMA = `-- Supabase Schema for AYOR Jewellery
 -- Run this in your Supabase SQL Editor (https://supabase.com/dashboard/project/_/sql)
 
 -- 1. Customers Table

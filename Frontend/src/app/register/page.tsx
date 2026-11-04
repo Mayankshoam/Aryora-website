@@ -75,7 +75,7 @@ export default function RegisterPage() {
             <Tag size={11} className="text-[#C5A880]" />
             <span>Flat 10% Welcome Discount (AYOR10)</span>
           </div>
-          <h1 className="font-serif text-3xl text-[#111111]">Create Atelier Account</h1>
+          <h1 className="font-serif text-3xl text-[#111111]">Create Customer Account</h1>
           <p className="text-xs text-[#666666]">
             Fast mobile onboarding without OTP. Instantly unlocks your unique Customer ID and 10% Welcome Discount.
           </p>

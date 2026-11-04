@@ -3,13 +3,13 @@
  */
 
 export const BUSINESS_CONFIG = {
-  name: "AYOR Fine Jewellery Atelier",
-  legalEntity: "Ayor Luxury Joaillerie Private Limited",
+  name: "AYOR Fine Jewellery Studio",
+  legalEntity: "Ayor Luxury Jewellery Private Limited",
   tagline: "Light. Legacy. You.",
   address: "Hazratganj / Aliganj Fine Jewellery Enclave, Lucknow, Uttar Pradesh 226001, India",
   phone: "+91 8808828646",
-  whatsapp: "+91 8808828882",
-  email: "atelier@ayorjewellery.com",
+  whatsapp: "+91 8808828646",
+  email: "care@ayorjewellery.com",
   website: "https://ayorjewellery.com",
   // GSTIN is left blank for now as requested
   gstin: "", 

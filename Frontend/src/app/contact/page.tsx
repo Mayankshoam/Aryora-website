@@ -43,7 +43,7 @@ export default function ContactPage() {
         <p className="eyebrow">Customer Support & Assistance</p>
         <h1 className="font-serif text-3xl md:text-5xl text-ink">Connect with Ayor</h1>
         <p className="text-sm text-ink-muted leading-relaxed">
-          Whether inquiring about a bespoke bridal commission, IGI grading verification, or boutique visit, our Lucknow atelier is at your service.
+          Whether inquiring about a bespoke bridal commission, IGI grading verification, or boutique visit, our Lucknow jewellery studio is at your service.
         </p>
       </div>
 
@@ -52,14 +52,14 @@ export default function ContactPage() {
         <div className="lg:col-span-5 space-y-6">
           <div className="border border-border-subtle bg-ivory-pure p-8 space-y-6 shadow-sm">
             <h2 className="font-serif text-2xl text-ink pb-3 border-b border-border-subtle">
-              Atelier Information
+              Studio &amp; Boutique Information
             </h2>
 
             <div className="space-y-4 text-xs md:text-sm text-ink-muted">
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-champagne-accessible flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-ink">Boutique & Atelier</p>
+                  <p className="font-medium text-ink">Boutique &amp; Studio</p>
                   <p>Lucknow, Uttar Pradesh, India</p>
                 </div>
               </div>

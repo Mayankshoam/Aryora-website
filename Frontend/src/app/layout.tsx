@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ayor — Light. Legacy. You.",
     description:
-      "IGI-certified lab-grown diamonds, 18K gold and 92.5 silver heirlooms crafted for modern India.",
+      "IGI-certified lab-grown diamonds, 18K gold and 92.5 silver jewellery crafted for modern India.",
     url: "https://aryora-website-d3sv.vercel.app",
     siteName: "Ayor",
     locale: "en_IN",

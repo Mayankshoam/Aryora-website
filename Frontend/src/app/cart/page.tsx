@@ -26,7 +26,7 @@ export default function CartPage() {
         <div className="text-center py-24 border border-border-subtle bg-ivory-pure p-8 my-8 space-y-4">
           <p className="font-serif text-2xl text-ink">Your bag is currently empty</p>
           <p className="text-xs text-ink-muted max-w-sm mx-auto leading-relaxed">
-            Discover our collection of IGI-certified lab-grown diamond rings, earrings, pendants, and heirloom bridal sets.
+            Discover our collection of IGI-certified lab-grown diamond rings, earrings, pendants, and bridal jewellery sets.
           </p>
           <div className="pt-2">
             <Link href="/shop" className="btn-primary text-xs">

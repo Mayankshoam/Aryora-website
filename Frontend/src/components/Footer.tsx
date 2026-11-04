@@ -179,7 +179,7 @@ export default function Footer() {
           {/* Column 1: Shop */}
           <div>
             <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
-              Shop Heirlooms
+              Shop Jewellery
             </h3>
             <ul className="space-y-2.5 text-xs text-ink-muted">
               <li>
@@ -296,7 +296,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Contact & Atelier */}
+          {/* Column 4: Contact & Studio */}
           <div>
             <h3 className="text-xs uppercase tracking-widest font-semibold text-ink mb-4">
               Customer Care & Store

@@ -49,7 +49,7 @@ export default function CheckoutPage() {
     if (cust) {
       setForm((prev) => ({
         ...prev,
-        fullName: cust.name && cust.name !== "Atelier Client" ? cust.name : prev.fullName,
+        fullName: cust.name && cust.name !== "Atelier Client" && cust.name !== "Valued Customer" ? cust.name : prev.fullName,
         phone: cust.mobile || prev.phone,
         email: cust.email || prev.email,
         address: cust.address || prev.address,
@@ -90,6 +90,7 @@ export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState<OrderRecord | null>(null);
   const [utrInputModal, setUtrInputModal] = useState("");
   const [copiedUpi, setCopiedUpi] = useState(false);
+  const [waRedirectMessage, setWaRedirectMessage] = useState<string | null>(null);
 
   // Quick PAN Upload modal state in checkout if high value
   const [showPanModal, setShowPanModal] = useState(false);
@@ -154,6 +155,59 @@ export default function CheckoutPage() {
     }
   };
 
+  // Redirect to WhatsApp chat immediately upon selecting any payment mode
+  const handleSelectPaymentMethod = (method: "cod" | "upi" | "card" | "netbanking") => {
+    setForm((prev) => ({ ...prev, paymentMethod: method }));
+
+    const methodLabels: Record<string, string> = {
+      cod: "Cash on Delivery (COD)",
+      upi: "Online UPI / QR Payment (GPay, PhonePe, Paytm)",
+      netbanking: "Online Net Banking (SBI, HDFC, ICICI, Axis)",
+      card: "Credit / Debit Card",
+    };
+    const methodLabel = methodLabels[method] || method;
+
+    const itemsSummary =
+      cart.length > 0
+        ? cart
+            .map(
+              (i, idx) =>
+                `${idx + 1}. ${i.product.name} (Qty: ${i.quantity}) - ₹${(
+                  i.product.price * i.quantity
+                ).toLocaleString("en-IN")} [${i.selectedMetal || i.product.metal} ${
+                  i.product.purity
+                }]`
+            )
+            .join("\n")
+        : "(Cart is currently empty)";
+
+    const waText = `*NAMASTE AYOR JEWELLERY* 🙏
+Hello Team, I am selecting payment mode *${methodLabel}* for my cart:
+
+*Cart Items Added (${cart.length}):*
+${itemsSummary}
+
+*Total Order Value:* ₹${finalTotal.toLocaleString("en-IN")}${
+      discountAmount > 0
+        ? ` (Flat 10% Discount Applied: -₹${discountAmount.toLocaleString("en-IN")})`
+        : ""
+    }
+*Selected Payment Mode:* ${methodLabel}
+${form.fullName ? `*Customer Name:* ${form.fullName}\n` : ""}${form.phone ? `*Mobile:* ${form.phone}\n` : ""}${form.pincode ? `*Delivery PIN:* ${form.pincode} (${form.city || ""}, ${form.state || ""})\n` : ""}
+${
+  method === "cod"
+    ? "Mode of payment is Cash on Delivery. Please confirm delivery."
+    : "Please share payment link / boutique bank details. Once payment is done, I will share the 12-digit RRN / UTR number here to confirm the order."
+}`;
+
+    const waUrl = `https://wa.me/918808828646?text=${encodeURIComponent(waText)}`;
+    setWaRedirectMessage(`WhatsApp chat redirected for ${methodLabel}. Order details shared!`);
+
+    if (typeof window !== "undefined") {
+      window.open(waUrl, "_blank");
+    }
+  };
+
   // Build formatted WhatsApp message with complete cart and customer details
   const generateWhatsAppMessage = (orderNum: string, currentUtr?: string) => {
     const itemsList = cart
@@ -167,7 +221,7 @@ export default function CheckoutPage() {
       )
       .join("\n");
 
-    const text = `*NAMASTE AYOR ATELIER* 🙏
+    const text = `*NAMASTE AYOR JEWELLERY* 🙏
 I would like to place and confirm my Jewellery Order.
 
 *Order Reference:* ${orderNum}
@@ -458,7 +512,7 @@ Please verify the payment and confirm my dispatch!`;
       <Breadcrumbs items={[{ label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
 
       <div className="max-w-xl my-6 space-y-2">
-        <p className="eyebrow">Secure Indian Atelier Checkout</p>
+        <p className="eyebrow">Secure Indian Jewellery Checkout</p>
         <h1 className="font-serif text-3xl md:text-5xl text-[#111111]">Express Checkout</h1>
       </div>
 
@@ -630,8 +684,33 @@ Please verify the payment and confirm my dispatch!`;
               </span>
             </h2>
 
+            {/* Instant WhatsApp Redirect Notification */}
+            {waRedirectMessage && (
+              <div className="bg-[#EAF3DE] border border-[#C5DDA8] p-3 rounded-xl flex items-center justify-between gap-3 text-xs text-[#0E382B] animate-fadeIn">
+                <div className="flex items-center gap-2">
+                  <MessageCircle size={16} className="text-[#25D366] flex-shrink-0" />
+                  <div>
+                    <p className="font-bold">WhatsApp Chat Redirected!</p>
+                    <p className="text-[11px] text-[#2D5A47]">
+                      Order &amp; cart breakdown sent to WhatsApp (+91 8808828646). Share payment screenshot or UTR here.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleSelectPaymentMethod(form.paymentMethod)}
+                  className="bg-[#25D366] hover:bg-[#20ba59] text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md flex items-center gap-1 whitespace-nowrap cursor-pointer shadow-xs"
+                >
+                  <MessageCircle size={11} />
+                  <span>Reopen Chat</span>
+                </button>
+              </div>
+            )}
+
             <div className="space-y-3">
+              {/* Option 1: Cash on Delivery */}
               <label
+                onClick={() => handleSelectPaymentMethod("cod")}
                 className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
                   form.paymentMethod === "cod"
                     ? "border-[#0E382B] bg-[#F5F9F6]"
@@ -642,7 +721,7 @@ Please verify the payment and confirm my dispatch!`;
                   type="radio"
                   name="payment"
                   checked={form.paymentMethod === "cod"}
-                  onChange={() => setForm({ ...form, paymentMethod: "cod" })}
+                  onChange={() => handleSelectPaymentMethod("cod")}
                   className="accent-[#0E382B] mt-0.5"
                 />
                 <div className="flex-1">
@@ -656,12 +735,14 @@ Please verify the payment and confirm my dispatch!`;
                     </span>
                   </div>
                   <p className="text-[11px] text-[#666666] mt-0.5">
-                    Pay via cash or UPI directly to our trusted courier delivery partner at your doorstep.
+                    Pay via cash or UPI directly to our trusted courier delivery partner at your doorstep. Selecting this opens WhatsApp with cart details.
                   </p>
                 </div>
               </label>
 
+              {/* Option 2: Online UPI / QR */}
               <label
+                onClick={() => handleSelectPaymentMethod("upi")}
                 className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
                   form.paymentMethod === "upi"
                     ? "border-[#0E382B] bg-[#F5F9F6]"
@@ -672,7 +753,7 @@ Please verify the payment and confirm my dispatch!`;
                   type="radio"
                   name="payment"
                   checked={form.paymentMethod === "upi"}
-                  onChange={() => setForm({ ...form, paymentMethod: "upi" })}
+                  onChange={() => handleSelectPaymentMethod("upi")}
                   className="accent-[#0E382B] mt-0.5"
                 />
                 <div className="flex-1">
@@ -681,9 +762,44 @@ Please verify the payment and confirm my dispatch!`;
                     <span className="text-xs font-semibold text-[#111111]">
                       Online UPI / QR Payment (GPay, PhonePe, Paytm)
                     </span>
+                    <span className="text-[10px] bg-[#EAF3DE] text-[#0E382B] font-semibold px-2 py-0.2 rounded border border-[#C5DDA8]">
+                      Auto WhatsApp Redirect
+                    </span>
                   </div>
                   <p className="text-[11px] text-[#666666] mt-0.5">
-                    Scan boutique QR code or pay to UPI ID. Enter 12-digit UTR/RRN to confirm order.
+                    Scan boutique QR code or pay to UPI ID. Redirects to WhatsApp chat with cart breakdown; enter 12-digit UTR/RRN to confirm order.
+                  </p>
+                </div>
+              </label>
+
+              {/* Option 3: Net Banking / Credit & Debit Cards via WhatsApp Link */}
+              <label
+                onClick={() => handleSelectPaymentMethod("netbanking")}
+                className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${
+                  form.paymentMethod === "netbanking" || form.paymentMethod === "card"
+                    ? "border-[#0E382B] bg-[#F5F9F6]"
+                    : "border-[#DDD8D0] hover:bg-[#FAF7F2]"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  checked={form.paymentMethod === "netbanking" || form.paymentMethod === "card"}
+                  onChange={() => handleSelectPaymentMethod("netbanking")}
+                  className="accent-[#0E382B] mt-0.5"
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <CreditCard size={16} className="text-[#0E382B]" />
+                    <span className="text-xs font-semibold text-[#111111]">
+                      Net Banking / Credit &amp; Debit Card / Payment Link
+                    </span>
+                    <span className="text-[10px] bg-[#EAF3DE] text-[#0E382B] font-semibold px-2 py-0.2 rounded border border-[#C5DDA8]">
+                      WhatsApp Direct Link
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#666666] mt-0.5">
+                    Redirects directly to WhatsApp chat. Our boutique desk will share secure payment link or bank transfer coordinates. Enter UTR/RRN to confirm.
                   </p>
                 </div>
               </label>
@@ -695,7 +811,7 @@ Please verify the payment and confirm my dispatch!`;
                   <div className="space-y-1 text-xs">
                     <p className="font-semibold text-[#111111] flex items-center gap-1.5">
                       <QrCode size={15} className="text-[#C5A880]" />
-                      <span>Atelier Official UPI ID:</span>
+                      <span>Official UPI ID:</span>
                     </p>
                     <div className="flex items-center gap-2">
                       <code className="text-xs font-mono font-bold bg-[#FAF7F2] px-2 py-1 rounded text-[#0E382B] border border-[#DDD8D0]">
@@ -776,7 +892,7 @@ Please verify the payment and confirm my dispatch!`;
             }`}
           >
             {isPlacing ? (
-              "Securing Your Atelier Order..."
+              "Securing Your Order..."
             ) : isHighValue && !isPanCompliant ? (
               <>
                 <span>Upload PAN Card to Proceed (Order ≥ ₹2 Lakh)</span>
