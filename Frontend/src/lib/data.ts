@@ -34,6 +34,10 @@ export interface Product {
   isComingSoon?: boolean;
   availabilityNote?: string;
   makingCharges?: number;
+  mrp?: number;
+  image_source?: string;
+  isAntiTarnish?: boolean;
+  waterproof?: boolean;
 }
 
 export interface SiteConfig {
@@ -100,6 +104,18 @@ export function getProductsByCategory(category: string): Product[] {
   return (productsData as Product[]).filter(
     (p) => p.category.toLowerCase() === norm || p.subcategory.toLowerCase() === norm
   );
+}
+
+export function getAntiTarnishProducts(): Product[] {
+  return (productsData as Product[]).filter((p) => {
+    const isAnti =
+      p.isAntiTarnish ||
+      p.category?.toLowerCase() === "anti-tarnish" ||
+      p.subcategory?.toLowerCase() === "anti-tarnish" ||
+      p.tags?.some((t) => t.toLowerCase().includes("anti-tarnish") || t.toLowerCase().includes("waterproof")) ||
+      p.name?.toLowerCase().includes("anti-tarnish");
+    return isAnti;
+  });
 }
 
 export function getBestsellers(limit = 8): Product[] {

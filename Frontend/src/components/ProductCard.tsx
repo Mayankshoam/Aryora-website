@@ -203,12 +203,28 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         </div>
 
         {/* Pricing Block */}
-        <div className="pt-2 border-t border-[#F0EBE1] flex items-baseline justify-between">
-          <span className="font-serif text-sm font-semibold text-[#111111]">
-            {formatPriceINR(dynamicPrice)}
-          </span>
+        <div className="pt-2 border-t border-[#F0EBE1] flex items-baseline justify-between flex-wrap gap-1">
+          <div className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="font-serif text-sm font-semibold text-[#111111]">
+              {formatPriceINR(dynamicPrice)}
+            </span>
+            {product.mrp && product.mrp > dynamicPrice ? (
+              <>
+                <span className="line-through text-[11px] text-[#888888]">
+                  ₹{product.mrp.toLocaleString("en-IN")}
+                </span>
+                <span className="text-[10px] font-semibold text-[#B93826]">
+                  {Math.round(((product.mrp - dynamicPrice) / product.mrp) * 100)}% OFF
+                </span>
+              </>
+            ) : null}
+          </div>
           <span className="text-[10px] text-[#0E382B] font-medium tracking-wide">
-            {isComingSoon ? "Coming Soon" : "925 Pure Silver"}
+            {isComingSoon
+              ? "Coming Soon"
+              : product.isAntiTarnish || product.tags?.some((t) => t.toLowerCase().includes("anti-tarnish"))
+              ? "Anti-Tarnish"
+              : "925 Pure Silver"}
           </span>
         </div>
       </div>

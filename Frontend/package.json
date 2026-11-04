@@ -7,7 +7,7 @@
     "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "next lint",
-    "test": "node tests/customer-kyc.test.mjs",
+    "test": "node tests/customer-kyc.test.mjs && node tests/anti-tarnish.test.mjs",
     "import:products": "node scripts/import-products.js"
   },
   "dependencies": {
