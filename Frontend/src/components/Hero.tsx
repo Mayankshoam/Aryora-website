@@ -53,7 +53,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full min-h-[580px] md:min-h-[680px] lg:min-h-[760px] flex items-center bg-[#1A1A1A] overflow-hidden">
+    <section className="relative w-full min-h-[580px] md:min-h-[680px] lg:min-h-[760px] flex items-center bg-[#0A1E16] overflow-hidden">
       {/* Background Loop Video */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video
