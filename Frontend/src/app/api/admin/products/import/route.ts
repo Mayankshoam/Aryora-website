@@ -253,7 +253,7 @@ export async function POST(req: NextRequest) {
 
         praoProducts.forEach((item: any) => {
           const variant = item.variants?.[0] || {};
-          const sku = (variant.sku || `PRAO-${item.id}`).toUpperCase();
+          const sku = (variant.sku || `AYOR-${item.id}`).toUpperCase().replace(/PRAO/g, "AYOR");
           const rawPrice = parseFloat(variant.price) || 99;
           const rawMrp = parseFloat(variant.compare_at_price) || 1400;
 
@@ -264,15 +264,22 @@ export async function POST(req: NextRequest) {
 
           const cleanType = item.product_type || "Jewellery";
           const tags = Array.isArray(item.tags)
-            ? [...item.tags, "Anti-Tarnish", "Waterproof"]
-            : ["Anti-Tarnish", "Waterproof"];
+            ? [...item.tags, "Anti-Tarnish", "Waterproof", "AYOR"]
+            : ["Anti-Tarnish", "Waterproof", "AYOR"];
 
-          const productSlug = `anti-tarnish-${item.handle || sku.toLowerCase()}`;
+          const productSlug = `anti-tarnish-${item.handle ? item.handle.replace(/prao/gi, "ayor") : sku.toLowerCase()}`;
+
+          const brandedTitle = (item.title || "AYOR Anti-Tarnish Jewellery").replace(/\bPRAO\b/gi, "AYOR");
+          const brandedDescription = (item.body_html || "")
+            .replace(/<[^>]*>?/gm, " ")
+            .replace(/\bPRAO\b/gi, "AYOR")
+            .replace(/\s+/g, " ")
+            .trim() || `AYOR ${cleanType} Anti-Tarnish waterproof jewellery with lasting shine.`;
 
           const productRecord: Product = {
-            id: `prao-${item.id}`,
+            id: `ayor-at-${item.id}`,
             slug: productSlug,
-            name: item.title, // Exact name preserved
+            name: brandedTitle,
             category: "Anti-Tarnish Jewellery",
             subcategory: cleanType,
             metal: "316L Stainless Steel / PVD Gold",
@@ -293,9 +300,7 @@ export async function POST(req: NextRequest) {
             discountPercent: Math.round(((mrp - price) / mrp) * 100),
             stock: 99,
             images: images,
-            description:
-              item.body_html?.replace(/<[^>]+>/g, " ").trim() ||
-              "Waterproof anti-tarnish fine fashion jewellery crafted with multi-layer PVD vacuum coating. Sweat-proof, perfume-safe, and skin-friendly.",
+            description: brandedDescription,
             tags: tags,
             isBestseller: syncedCount % 5 === 0,
             isNew: true,

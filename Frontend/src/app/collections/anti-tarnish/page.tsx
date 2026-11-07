@@ -54,7 +54,7 @@ export default function AntiTarnishCollectionPage() {
             t.toLowerCase().includes("chain")
         ) ||
         p.name?.toLowerCase().includes("anti-tarnish") ||
-        p.name?.toLowerCase().includes("prao");
+        p.name?.toLowerCase().includes("ayor");
 
       // Also ensure price stays within anti-tarnish price guidelines if tagged
       return isAnti;
@@ -272,3 +272,4 @@ export default function AntiTarnishCollectionPage() {
     </div>
   );
 }
+

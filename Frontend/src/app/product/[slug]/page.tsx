@@ -46,11 +46,13 @@ export default function ProductDetailPage() {
     .slice(0, 4);
 
   const isSilver =
-    product.metal.toLowerCase().includes("silver") ||
-    product.purity.toLowerCase().includes("silver") ||
-    product.category.toLowerCase().includes("silver") ||
-    product.name.toLowerCase().includes("silver") ||
-    product.name.toLowerCase().includes("payal");
+    (product.metal && product.metal.toLowerCase().includes("silver")) ||
+    (product.purity && (product.purity.toLowerCase().includes("silver") || product.purity.includes("925"))) ||
+    (product.category && (product.category.toLowerCase().includes("silver") || product.category.toLowerCase().includes("anklet") || product.category.toLowerCase().includes("payal"))) ||
+    (product.subcategory && (product.subcategory.toLowerCase().includes("silver") || product.subcategory.toLowerCase().includes("payal"))) ||
+    (product.name && (product.name.toLowerCase().includes("silver") || product.name.toLowerCase().includes("payal"))) ||
+    Boolean(product.isAntiTarnish) ||
+    (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("silver") || t.toLowerCase().includes("payal"))));
 
   // Multi-image list (guaranteed 4 images)
   const productImages = useMemo(() => {
@@ -67,28 +69,28 @@ export default function ProductDetailPage() {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Platings options (Miss Jo style: GOLD, RHODIUM, ROSE GOLD for Silver/CZ)
+  // Platings options (Only for Gold / Fine Jewellery; completely omitted for Silver/Payal/Anti-Tarnish)
   const platings = useMemo(() => {
+    if (isSilver) return [];
     if (product.platings && product.platings.length > 0) {
       return product.platings;
     }
-    return isSilver
-      ? ["GOLD", "RHODIUM", "ROSE GOLD"]
-      : ["18K YELLOW GOLD", "18K ROSE GOLD", "18K WHITE GOLD"];
+    return ["18K YELLOW GOLD", "18K ROSE GOLD", "18K WHITE GOLD"];
   }, [product.platings, isSilver]);
 
-  const [selectedPlating, setSelectedPlating] = useState<string>(platings[0]);
+  const [selectedPlating, setSelectedPlating] = useState<string>(platings[0] || "");
 
-  // Carat size options (Miss Jo style: 0.84 CT, 1.5 CT, 2 CT, 3.87 CT)
+  // Carat size options (Only for Gold / Diamond Solitaires with multiple carat options; completely omitted for Silver)
   const caratOptions = useMemo(() => {
-    if (product.caratOptions && product.caratOptions.length > 0) {
+    if (isSilver) return [];
+    if (product.caratOptions && product.caratOptions.length > 1) {
       return product.caratOptions;
     }
-    return [product.carat || 1];
-  }, [product.caratOptions, product.carat]);
+    return [];
+  }, [product.caratOptions, isSilver]);
 
   const [selectedCarat, setSelectedCarat] = useState<number>(
-    caratOptions[0] || product.carat || 1
+    caratOptions[0] || product.carat || 0
   );
 
   const [rates, setRates] = useState<MetalRates>(getDailyMetalRates());
