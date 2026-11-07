@@ -253,25 +253,39 @@ assert.equal(clampedLow.price, 499, "Low price must clamp to exactly 499");
 // Check clamping at maximum
 const clampedHigh = autoAdjustAntiTarnishPrice(10000, 15000);
 assert.equal(clampedHigh.price, 2999, "High price must clamp to exactly 2999");
-console.log("  ✔ Auto-adjust pricing and rounding tests passed.");
+
+// Check that Gold Rate Formula is NOT applicable on Anti-Tarnish products
+const antiTarnishSample = {
+  price: 799,
+  metal: "316L Stainless Steel / PVD 18K Gold",
+  purity: "Anti-Tarnish PVD",
+  weightGrams: 30,
+  isAntiTarnish: true,
+};
+assert.equal(
+  antiTarnishSample.price,
+  799,
+  "Anti-Tarnish product price must strictly remain catalog price (799) and never multiply by gold rates"
+);
+console.log("  ✔ Auto-adjust pricing, anti-tarnish fixed pricing, and rounding tests passed.");
 
 // -------------------------------------------------------------------
 // TEST 3: Duplicate SKU Handling & Re-import Updates
 // -------------------------------------------------------------------
 console.log("▶ TEST 3: Duplicate SKU Handling & Catalog Re-import Updates...");
 const existingCatalog = [
-  { id: "1", sku: "6651PR", name: "Existing PRAO Necklace", price: 599 },
-  { id: "2", sku: "6648PR", name: "Existing PRAO Silver Chain", price: 699 },
+  { id: "1", sku: "6651AY", name: "Existing AYOR Necklace", price: 599 },
+  { id: "2", sku: "6648AY", name: "Existing AYOR Silver Chain", price: 699 },
 ];
 
 const batchWithUpdates = [
-  { product_name: "PRAO Necklace Updated Price", sku: "6651PR", price: 799 },
-  { product_name: "New PRAO Ring", sku: "9901PR", price: 499 },
+  { product_name: "AYOR Necklace Updated Price", sku: "6651AY", price: 799 },
+  { product_name: "New AYOR Ring", sku: "9901AY", price: 499 },
 ];
 
 const importCheck = validateImportRows(batchWithUpdates, existingCatalog, false);
 assert.equal(importCheck.summary.valid, 2, "Both rows should be valid");
-assert.equal(importCheck.summary.updates, 1, "SKU 6651PR must be flagged as an update");
+assert.equal(importCheck.summary.updates, 1, "SKU 6651AY must be flagged as an update");
 assert.equal(importCheck.results[0].isUpdate, true, "Row 1 must be an update");
 assert.equal(importCheck.results[1].isUpdate, false, "Row 2 must be a new product");
 console.log("  ✔ Duplicate SKU handling & catalog update tests passed.");

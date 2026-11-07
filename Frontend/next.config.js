@@ -6,6 +6,15 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/ring-builder",
+        destination: "/customize",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

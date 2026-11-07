@@ -46,11 +46,23 @@ export default function ProductDetailPage() {
     .slice(0, 4);
 
   const isSilver =
-    product.metal.toLowerCase().includes("silver") ||
-    product.purity.toLowerCase().includes("silver") ||
-    product.category.toLowerCase().includes("silver") ||
-    product.name.toLowerCase().includes("silver") ||
-    product.name.toLowerCase().includes("payal");
+    (product.metal && product.metal.toLowerCase().includes("silver")) ||
+    (product.purity && (product.purity.toLowerCase().includes("silver") || product.purity.includes("925"))) ||
+    (product.category && (product.category.toLowerCase().includes("silver") || product.category.toLowerCase().includes("anklet") || product.category.toLowerCase().includes("payal"))) ||
+    (product.subcategory && (product.subcategory.toLowerCase().includes("silver") || product.subcategory.toLowerCase().includes("payal"))) ||
+    (product.name && (product.name.toLowerCase().includes("silver") || product.name.toLowerCase().includes("payal"))) ||
+    Boolean(product.isAntiTarnish) ||
+    (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("silver") || t.toLowerCase().includes("payal"))));
+
+  const isAntiTarnish = Boolean(
+    product.isAntiTarnish ||
+    product.waterproof ||
+    (product.category && product.category.toLowerCase().includes("anti-tarnish")) ||
+    (product.subcategory && product.subcategory.toLowerCase().includes("anti-tarnish")) ||
+    (product.purity && product.purity.toLowerCase().includes("pvd")) ||
+    (product.metal && (product.metal.toLowerCase().includes("stainless") || product.metal.toLowerCase().includes("steel"))) ||
+    (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("anti-tarnish") || t.toLowerCase().includes("waterproof"))))
+  );
 
   // Multi-image list (guaranteed 4 images)
   const productImages = useMemo(() => {
@@ -67,28 +79,28 @@ export default function ProductDetailPage() {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Platings options (Miss Jo style: GOLD, RHODIUM, ROSE GOLD for Silver/CZ)
+  // Platings options (Only for Gold / Fine Jewellery; completely omitted for Silver/Payal/Anti-Tarnish)
   const platings = useMemo(() => {
+    if (isSilver) return [];
     if (product.platings && product.platings.length > 0) {
       return product.platings;
     }
-    return isSilver
-      ? ["GOLD", "RHODIUM", "ROSE GOLD"]
-      : ["18K YELLOW GOLD", "18K ROSE GOLD", "18K WHITE GOLD"];
+    return ["18K YELLOW GOLD", "18K ROSE GOLD", "18K WHITE GOLD"];
   }, [product.platings, isSilver]);
 
-  const [selectedPlating, setSelectedPlating] = useState<string>(platings[0]);
+  const [selectedPlating, setSelectedPlating] = useState<string>(platings[0] || "");
 
-  // Carat size options (Miss Jo style: 0.84 CT, 1.5 CT, 2 CT, 3.87 CT)
+  // Carat size options (Only for Gold / Diamond Solitaires with multiple carat options; completely omitted for Silver)
   const caratOptions = useMemo(() => {
-    if (product.caratOptions && product.caratOptions.length > 0) {
+    if (isSilver) return [];
+    if (product.caratOptions && product.caratOptions.length > 1) {
       return product.caratOptions;
     }
-    return [product.carat || 1];
-  }, [product.caratOptions, product.carat]);
+    return [];
+  }, [product.caratOptions, isSilver]);
 
   const [selectedCarat, setSelectedCarat] = useState<number>(
-    caratOptions[0] || product.carat || 1
+    caratOptions[0] || product.carat || 0
   );
 
   const [rates, setRates] = useState<MetalRates>(getDailyMetalRates());
@@ -384,7 +396,7 @@ export default function ProductDetailPage() {
               </span>
 
               <h1 className="font-serif text-2xl md:text-3xl text-[#1A1A1A] font-light leading-snug">
-                {product.name}
+                {product.name ? product.name.replace(/\bPRAO\b/gi, "AYOR") : "AYOR Jewellery"}
               </h1>
 
               <div className="text-xs text-[#7A7A7A] tracking-wider pt-0.5">
@@ -393,10 +405,20 @@ export default function ProductDetailPage() {
 
               {/* Price Block */}
               <div className="pt-3 space-y-1">
-                <div className="flex items-baseline space-x-3">
+                <div className="flex items-baseline space-x-3 flex-wrap">
                   <span className="font-serif text-2xl md:text-3xl font-normal text-[#111111]">
                     {formatPriceINR(currentPrice)}
                   </span>
+                  {product.mrp && product.mrp > currentPrice ? (
+                    <>
+                      <span className="line-through text-base text-[#888888]">
+                        ₹{product.mrp.toLocaleString("en-IN")}
+                      </span>
+                      <span className="text-xs font-semibold text-[#B93826] bg-red-50 px-2 py-0.5 rounded">
+                        {Math.round(((product.mrp - currentPrice) / product.mrp) * 100)}% OFF
+                      </span>
+                    </>
+                  ) : null}
                 </div>
                 <p className="text-xs text-[#7A7A7A] font-light">
                   Price inclusive of all taxes · Complimentary insured delivery
@@ -704,48 +726,73 @@ export default function ProductDetailPage() {
                 </button>
                 {activeAccordion === "price-breakup" && (
                   <div className="pb-4 space-y-2 text-xs text-[#7A7A7A]">
-                    <table className="w-full text-xs">
-                      <tbody className="divide-y divide-[#DDD8D0]/50">
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            {priceBreakup.metalLabel} ({product.purity} · {priceBreakup.metalWeight}g)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.metalValue)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            {priceBreakup.stoneLabel} ({selectedCarat} CT)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.stoneValue)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            Artisan Crafting & Finish Charges
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.makingCharges)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            Applicable GST (3%)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.gst)}
-                          </td>
-                        </tr>
-                        <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
-                          <td className="py-2.5">Total Amount Payable</td>
-                          <td className="py-2.5 text-right font-serif text-sm">
-                            {formatPriceINR(priceBreakup.total)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    {isAntiTarnish ? (
+                      <table className="w-full text-xs">
+                        <tbody className="divide-y divide-[#DDD8D0]/50">
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Base Product Value (316L Surgical Steel &amp; PVD)</td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(Math.round(currentPrice / 1.03))}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Applicable GST (3% Included)</td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(currentPrice - Math.round(currentPrice / 1.03))}
+                            </td>
+                          </tr>
+                          <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
+                            <td className="py-2.5">Total Amount Payable</td>
+                            <td className="py-2.5 text-right font-serif text-sm">
+                              {formatPriceINR(currentPrice)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ) : (
+                      <table className="w-full text-xs">
+                        <tbody className="divide-y divide-[#DDD8D0]/50">
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              {priceBreakup.metalLabel} ({product.purity} · {priceBreakup.metalWeight}g)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.metalValue)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              {priceBreakup.stoneLabel} ({selectedCarat} CT)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.stoneValue)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              Artisan Crafting &amp; Finish Charges
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.makingCharges)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              Applicable GST (3%)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.gst)}
+                            </td>
+                          </tr>
+                          <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
+                            <td className="py-2.5">Total Amount Payable</td>
+                            <td className="py-2.5 text-right font-serif text-sm">
+                              {formatPriceINR(priceBreakup.total)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 )}
               </div>
@@ -819,12 +866,14 @@ export default function ProductDetailPage() {
                             {product.certificate}
                           </td>
                         </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
-                          <td className="py-2 text-right font-medium text-[#111111]">
-                            {product.weightGrams}g
-                          </td>
-                        </tr>
+                        {product.weightGrams && product.weightGrams > 0 ? (
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
+                            <td className="py-2 text-right font-medium text-[#111111]">
+                              {product.weightGrams}g
+                            </td>
+                          </tr>
+                        ) : null}
                       </tbody>
                     </table>
                   </div>

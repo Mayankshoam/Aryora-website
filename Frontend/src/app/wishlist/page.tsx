@@ -325,7 +325,7 @@ export default function WishlistPage() {
                       href={`/product/${product.slug}`}
                       className="font-serif text-sm font-medium text-[#111111] hover:text-[#0E382B] transition-colors line-clamp-1"
                     >
-                      {product.name}
+                      {product.name ? product.name.replace(/\bPRAO\b/gi, "AYOR") : "AYOR Jewellery"}
                     </Link>
                     <div className="flex items-baseline gap-2 pt-0.5">
                       <span className="text-sm font-bold text-[#111111]">

@@ -181,7 +181,7 @@ export default function CheckoutPage() {
             .join("\n")
         : "(Cart is currently empty)";
 
-    const waText = `*NAMASTE AYOR JEWELLERY* 🙏
+    const waText = `*AYOR FINE JEWELLERY - ORDER INQUIRY*
 Hello Team, I am selecting payment mode *${methodLabel}* for my cart:
 
 *Cart Items Added (${cart.length}):*
@@ -221,7 +221,7 @@ ${
       )
       .join("\n");
 
-    const text = `*NAMASTE AYOR JEWELLERY* 🙏
+    const text = `*AYOR FINE JEWELLERY - ORDER CONFIRMATION*
 I would like to place and confirm my Jewellery Order.
 
 *Order Reference:* ${orderNum}

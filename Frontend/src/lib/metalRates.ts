@@ -95,12 +95,57 @@ export function saveDailyMetalRates(rates: Partial<MetalRates>): MetalRates {
 }
 
 /**
+ * Checks whether a product belongs to Anti-Tarnish / Fashion Jewellery category
+ * where gold rate formulas do NOT apply.
+ */
+export function isAntiTarnishProduct(product: {
+  metal?: string;
+  purity?: string;
+  category?: string;
+  subcategory?: string;
+  isAntiTarnish?: boolean;
+  waterproof?: boolean;
+  tags?: string[];
+}): boolean {
+  if (!product) return false;
+  if (product.isAntiTarnish || product.waterproof) return true;
+  const cat = (product.category || "").toLowerCase();
+  if (cat.includes("anti-tarnish") || cat.includes("antitarnish")) return true;
+  const subcat = (product.subcategory || "").toLowerCase();
+  if (subcat.includes("anti-tarnish") || subcat.includes("antitarnish")) return true;
+  const purity = (product.purity || "").toLowerCase();
+  if (purity.includes("pvd") || purity.includes("anti-tarnish")) return true;
+  const metal = (product.metal || "").toLowerCase();
+  if (
+    metal.includes("stainless") ||
+    metal.includes("steel") ||
+    metal.includes("pvd") ||
+    metal.includes("brass") ||
+    metal.includes("alloy")
+  ) {
+    return true;
+  }
+  if (
+    Array.isArray(product.tags) &&
+    product.tags.some(
+      (t) =>
+        typeof t === "string" &&
+        (t.toLowerCase().includes("anti-tarnish") || t.toLowerCase().includes("waterproof"))
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Dynamically computes a product's price based on:
  * - Metal weight (grams) × Daily metal rate for purity
  * - Diamond carat × Diamond rate
  * - Making charges
  * - 3% GST
  * Falls back to base price if weight is not specified.
+ * NOTE: Anti-Tarnish and Fashion Jewellery items NEVER use this formula.
  */
 export function calculateDynamicPrice(
   product: {
@@ -110,6 +155,11 @@ export function calculateDynamicPrice(
     weightGrams?: number;
     carat?: number;
     makingCharges?: number;
+    isAntiTarnish?: boolean;
+    waterproof?: boolean;
+    category?: string;
+    subcategory?: string;
+    tags?: string[];
   },
   rates: MetalRates = getDailyMetalRates()
 ): {
@@ -122,6 +172,25 @@ export function calculateDynamicPrice(
     gst: number;
   };
 } {
+  // 1. Anti-Tarnish / Fashion Jewellery Rule: Gold rate formula NEVER applies!
+  if (isAntiTarnishProduct(product)) {
+    const fixedPrice =
+      product.price && product.price >= 499 && product.price <= 2999
+        ? product.price
+        : Math.max(499, Math.min(2999, product.price || 599));
+    const gst = Math.round(fixedPrice * 0.03);
+    return {
+      finalPrice: fixedPrice,
+      breakdown: {
+        metalValue: Math.round(fixedPrice * 0.65),
+        diamondValue: 0,
+        makingCharges: Math.round(fixedPrice * 0.32),
+        subtotal: fixedPrice - gst,
+        gst,
+      },
+    };
+  }
+
   const metalStr = (product.metal || "").toLowerCase();
   const purityStr = (product.purity || "").toUpperCase();
 
@@ -129,7 +198,12 @@ export function calculateDynamicPrice(
   let metalRate = 0;
   if (metalStr.includes("silver") || purityStr.includes("925")) {
     metalRate = rates.silver925PerGram;
-  } else if (metalStr.includes("gold") || metalStr.includes("sona")) {
+  } else if (
+    (metalStr.includes("gold") || metalStr.includes("sona")) &&
+    !metalStr.includes("stainless") &&
+    !metalStr.includes("steel") &&
+    !purityStr.includes("pvd")
+  ) {
     if (purityStr.includes("24K") || purityStr.includes("999")) {
       metalRate = rates.gold24kPerGram;
     } else if (purityStr.includes("22K") || purityStr.includes("916")) {
