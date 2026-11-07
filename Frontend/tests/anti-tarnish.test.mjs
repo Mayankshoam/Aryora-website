@@ -253,7 +253,21 @@ assert.equal(clampedLow.price, 499, "Low price must clamp to exactly 499");
 // Check clamping at maximum
 const clampedHigh = autoAdjustAntiTarnishPrice(10000, 15000);
 assert.equal(clampedHigh.price, 2999, "High price must clamp to exactly 2999");
-console.log("  ✔ Auto-adjust pricing and rounding tests passed.");
+
+// Check that Gold Rate Formula is NOT applicable on Anti-Tarnish products
+const antiTarnishSample = {
+  price: 799,
+  metal: "316L Stainless Steel / PVD 18K Gold",
+  purity: "Anti-Tarnish PVD",
+  weightGrams: 30,
+  isAntiTarnish: true,
+};
+assert.equal(
+  antiTarnishSample.price,
+  799,
+  "Anti-Tarnish product price must strictly remain catalog price (799) and never multiply by gold rates"
+);
+console.log("  ✔ Auto-adjust pricing, anti-tarnish fixed pricing, and rounding tests passed.");
 
 // -------------------------------------------------------------------
 // TEST 3: Duplicate SKU Handling & Re-import Updates

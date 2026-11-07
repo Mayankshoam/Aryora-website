@@ -54,6 +54,16 @@ export default function ProductDetailPage() {
     Boolean(product.isAntiTarnish) ||
     (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("silver") || t.toLowerCase().includes("payal"))));
 
+  const isAntiTarnish = Boolean(
+    product.isAntiTarnish ||
+    product.waterproof ||
+    (product.category && product.category.toLowerCase().includes("anti-tarnish")) ||
+    (product.subcategory && product.subcategory.toLowerCase().includes("anti-tarnish")) ||
+    (product.purity && product.purity.toLowerCase().includes("pvd")) ||
+    (product.metal && (product.metal.toLowerCase().includes("stainless") || product.metal.toLowerCase().includes("steel"))) ||
+    (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("anti-tarnish") || t.toLowerCase().includes("waterproof"))))
+  );
+
   // Multi-image list (guaranteed 4 images)
   const productImages = useMemo(() => {
     if (product.images && product.images.length > 0) {
@@ -386,7 +396,7 @@ export default function ProductDetailPage() {
               </span>
 
               <h1 className="font-serif text-2xl md:text-3xl text-[#1A1A1A] font-light leading-snug">
-                {product.name}
+                {product.name ? product.name.replace(/\bPRAO\b/gi, "AYOR") : "AYOR Jewellery"}
               </h1>
 
               <div className="text-xs text-[#7A7A7A] tracking-wider pt-0.5">
@@ -395,10 +405,20 @@ export default function ProductDetailPage() {
 
               {/* Price Block */}
               <div className="pt-3 space-y-1">
-                <div className="flex items-baseline space-x-3">
+                <div className="flex items-baseline space-x-3 flex-wrap">
                   <span className="font-serif text-2xl md:text-3xl font-normal text-[#111111]">
                     {formatPriceINR(currentPrice)}
                   </span>
+                  {product.mrp && product.mrp > currentPrice ? (
+                    <>
+                      <span className="line-through text-base text-[#888888]">
+                        ₹{product.mrp.toLocaleString("en-IN")}
+                      </span>
+                      <span className="text-xs font-semibold text-[#B93826] bg-red-50 px-2 py-0.5 rounded">
+                        {Math.round(((product.mrp - currentPrice) / product.mrp) * 100)}% OFF
+                      </span>
+                    </>
+                  ) : null}
                 </div>
                 <p className="text-xs text-[#7A7A7A] font-light">
                   Price inclusive of all taxes · Complimentary insured delivery
@@ -706,48 +726,73 @@ export default function ProductDetailPage() {
                 </button>
                 {activeAccordion === "price-breakup" && (
                   <div className="pb-4 space-y-2 text-xs text-[#7A7A7A]">
-                    <table className="w-full text-xs">
-                      <tbody className="divide-y divide-[#DDD8D0]/50">
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            {priceBreakup.metalLabel} ({product.purity} · {priceBreakup.metalWeight}g)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.metalValue)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            {priceBreakup.stoneLabel} ({selectedCarat} CT)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.stoneValue)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            Artisan Crafting & Finish Charges
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.makingCharges)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">
-                            Applicable GST (3%)
-                          </td>
-                          <td className="py-2 text-right font-medium text-[#1A1A1A]">
-                            {formatPriceINR(priceBreakup.gst)}
-                          </td>
-                        </tr>
-                        <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
-                          <td className="py-2.5">Total Amount Payable</td>
-                          <td className="py-2.5 text-right font-serif text-sm">
-                            {formatPriceINR(priceBreakup.total)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    {isAntiTarnish ? (
+                      <table className="w-full text-xs">
+                        <tbody className="divide-y divide-[#DDD8D0]/50">
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Base Product Value (316L Surgical Steel &amp; PVD)</td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(Math.round(currentPrice / 1.03))}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Applicable GST (3% Included)</td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(currentPrice - Math.round(currentPrice / 1.03))}
+                            </td>
+                          </tr>
+                          <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
+                            <td className="py-2.5">Total Amount Payable</td>
+                            <td className="py-2.5 text-right font-serif text-sm">
+                              {formatPriceINR(currentPrice)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ) : (
+                      <table className="w-full text-xs">
+                        <tbody className="divide-y divide-[#DDD8D0]/50">
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              {priceBreakup.metalLabel} ({product.purity} · {priceBreakup.metalWeight}g)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.metalValue)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              {priceBreakup.stoneLabel} ({selectedCarat} CT)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.stoneValue)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              Artisan Crafting &amp; Finish Charges
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.makingCharges)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">
+                              Applicable GST (3%)
+                            </td>
+                            <td className="py-2 text-right font-medium text-[#1A1A1A]">
+                              {formatPriceINR(priceBreakup.gst)}
+                            </td>
+                          </tr>
+                          <tr className="border-t border-[#1A1A1A]/20 font-semibold text-[#1A1A1A]">
+                            <td className="py-2.5">Total Amount Payable</td>
+                            <td className="py-2.5 text-right font-serif text-sm">
+                              {formatPriceINR(priceBreakup.total)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 )}
               </div>
@@ -821,12 +866,14 @@ export default function ProductDetailPage() {
                             {product.certificate}
                           </td>
                         </tr>
-                        <tr>
-                          <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
-                          <td className="py-2 text-right font-medium text-[#111111]">
-                            {product.weightGrams}g
-                          </td>
-                        </tr>
+                        {product.weightGrams && product.weightGrams > 0 ? (
+                          <tr>
+                            <td className="py-2 text-[#7A7A7A]">Approx Weight</td>
+                            <td className="py-2 text-right font-medium text-[#111111]">
+                              {product.weightGrams}g
+                            </td>
+                          </tr>
+                        ) : null}
                       </tbody>
                     </table>
                   </div>

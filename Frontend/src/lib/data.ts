@@ -140,13 +140,43 @@ export function formatPriceINR(amount: number): string {
   }).format(amount);
 }
 
-/** Transparent Price Breakup calculator matching Indian Gold & Silver standards */
+/** Transparent Price Breakup calculator matching Indian Gold, Silver, and Anti-Tarnish standards */
 export function calculatePriceBreakup(product: Product, overridePrice?: number) {
   const total = overridePrice || product.price;
   // 3% GST is included in the final price
   const baseBeforeGst = Math.round(total / 1.03);
   const gst = total - baseBeforeGst;
-  
+
+  const isAntiTarnish = Boolean(
+    product.isAntiTarnish ||
+    product.waterproof ||
+    (product.category && product.category.toLowerCase().includes("anti-tarnish")) ||
+    (product.subcategory && product.subcategory.toLowerCase().includes("anti-tarnish")) ||
+    (product.purity && product.purity.toLowerCase().includes("pvd")) ||
+    (product.metal && (product.metal.toLowerCase().includes("stainless") || product.metal.toLowerCase().includes("steel"))) ||
+    (Array.isArray(product.tags) && product.tags.some(t => typeof t === "string" && (t.toLowerCase().includes("anti-tarnish") || t.toLowerCase().includes("waterproof"))))
+  );
+
+  if (isAntiTarnish) {
+    return {
+      metalLabel: "316L Surgical Stainless Steel",
+      metalValue: Math.round(baseBeforeGst * 0.65),
+      metalWeight: 0,
+      stoneLabel: "Austrian Crystals / Waterproof Enamel",
+      stoneValue: 0,
+      stoneCarat: 0,
+      goldValue: 0,
+      goldWeight: 0,
+      goldRatePerGram: 0,
+      diamondValue: 0,
+      diamondCarat: 0,
+      makingCharges: Math.round(baseBeforeGst * 0.35),
+      gst,
+      total,
+      isAntiTarnish: true,
+    };
+  }
+
   const isSilver = product.metal.toLowerCase().includes("silver") || product.purity.toLowerCase().includes("silver");
 
   let metalLabel = isSilver ? "925 Sterling Silver" : "18K Gold";

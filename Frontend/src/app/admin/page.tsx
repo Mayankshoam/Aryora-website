@@ -846,7 +846,7 @@ export default function MasterAdminPage() {
                           </div>
                           <div>
                             <p className="font-semibold text-[#111111] line-clamp-1 max-w-[240px]">
-                              {p.name}
+                              {p.name ? p.name.replace(/\bPRAO\b/gi, "AYOR") : "AYOR Product"}
                             </p>
                             <p className="text-[10px] text-[#888888] font-mono">{p.sku || p.id}</p>
                           </div>

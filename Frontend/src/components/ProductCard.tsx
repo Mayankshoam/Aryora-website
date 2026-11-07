@@ -23,15 +23,32 @@ const METAL_SWATCH_COLORS: Record<string, { bg: string; label: string }> = {
 };
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const [selectedMetal, setSelectedMetal] = useState<string>(product.metal || "925 Sterling Silver");
+  const isAntiTarnish = Boolean(
+    product.isAntiTarnish ||
+    product.waterproof ||
+    product.category?.toLowerCase().includes("anti-tarnish") ||
+    product.subcategory?.toLowerCase().includes("anti-tarnish") ||
+    product.purity?.toLowerCase().includes("pvd") ||
+    product.metal?.toLowerCase().includes("stainless") ||
+    product.tags?.some((t) => typeof t === "string" && t.toLowerCase().includes("anti-tarnish"))
+  );
+
+  const [selectedMetal, setSelectedMetal] = useState<string>(
+    isAntiTarnish ? "Anti-Tarnish PVD" : product.metal || "925 Sterling Silver"
+  );
   const [isHovered, setIsHovered] = useState(false);
   const [dynamicPrice, setDynamicPrice] = useState<number>(product.price);
   const { toggleWishlist, isInWishlist, addToCart } = useAryoraStore();
 
   const wishlisted = isInWishlist(product.slug);
 
-  // Recalculate dynamic price when daily rates change or mount
+  // Recalculate dynamic price for fine jewellery, BUT Anti-Tarnish items NEVER use gold rate formula!
   useEffect(() => {
+    if (isAntiTarnish) {
+      setDynamicPrice(product.price);
+      return;
+    }
+
     const rates = getDailyMetalRates();
     const calculated = calculateDynamicPrice(product, rates);
     setDynamicPrice(calculated.finalPrice);
@@ -44,7 +61,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
     window.addEventListener("ayor_metal_rates_updated", handleRatesUpdate);
     return () => window.removeEventListener("ayor_metal_rates_updated", handleRatesUpdate);
-  }, [product]);
+  }, [product, isAntiTarnish]);
 
   const primaryImage = product.images?.[0] || "/products/ring-01-a.svg";
   const hoverImage = product.images?.[1] || primaryImage;
@@ -167,38 +184,54 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       {/* 2. Product Details */}
       <div className="p-4 flex flex-col flex-1 justify-between space-y-2.5">
         <div className="space-y-1.5">
-          {/* Metal Swatches */}
-          <div className="flex items-center space-x-1.5 pb-0.5">
-            {["925 Sterling Silver", "Yellow Gold", "Rose Gold"].map((metal) => {
-              const meta = METAL_SWATCH_COLORS[metal] || { bg: "#E6E8EA", label: metal };
-              const isSelected = selectedMetal === metal;
-              return (
-                <button
-                  key={metal}
-                  type="button"
-                  onClick={() => setSelectedMetal(metal)}
-                  title={meta.label}
-                  aria-label={`Select ${meta.label}`}
-                  className={`w-3.5 h-3.5 rounded-full transition-transform ${
-                    isSelected ? "ring-2 ring-ink ring-offset-1 scale-110" : "opacity-80 hover:opacity-100"
-                  }`}
-                  style={{ backgroundColor: meta.bg }}
-                />
-              );
-            })}
-            <span className="text-[10px] text-ink-subtle pl-1 font-medium">{product.purity}</span>
-          </div>
+          {/* Metal Swatches or Anti-Tarnish Badge */}
+          {isAntiTarnish ? (
+            <div className="flex items-center gap-1.5 pb-0.5">
+              <span className="text-[10px] text-[#0E382B] font-semibold bg-[#EAF3DE] px-2.5 py-0.5 rounded-full border border-[#C5DDA8]">
+                100% Waterproof · Never Fades
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-1.5 pb-0.5">
+              {["925 Sterling Silver", "Yellow Gold", "Rose Gold"].map((metal) => {
+                const meta = METAL_SWATCH_COLORS[metal] || { bg: "#E6E8EA", label: metal };
+                const isSelected = selectedMetal === metal;
+                return (
+                  <button
+                    key={metal}
+                    type="button"
+                    onClick={() => setSelectedMetal(metal)}
+                    title={meta.label}
+                    aria-label={`Select ${meta.label}`}
+                    className={`w-3.5 h-3.5 rounded-full transition-transform ${
+                      isSelected ? "ring-2 ring-ink ring-offset-1 scale-110" : "opacity-80 hover:opacity-100"
+                    }`}
+                    style={{ backgroundColor: meta.bg }}
+                  />
+                );
+              })}
+              <span className="text-[10px] text-ink-subtle pl-1 font-medium">{product.purity}</span>
+            </div>
+          )}
 
           {/* Product Name */}
           <h3 className="font-serif text-sm text-[#1A1A1A] leading-snug line-clamp-1 group-hover:text-[#C09981] transition-colors">
-            <Link href={`/product/${product.slug}`}>{product.name}</Link>
+            <Link href={`/product/${product.slug}`}>
+              {product.name ? product.name.replace(/\bPRAO\b/gi, "AYOR") : "AYOR Jewellery"}
+            </Link>
           </h3>
 
           {/* Specs Subtitle */}
           <p className="text-[11px] text-[#666666] line-clamp-1">
-            {product.weightGrams ? `${product.weightGrams}g ` : ""}
-            {product.metal}
-            {product.stone && product.stone !== "None" ? ` · ${product.stone}` : ""}
+            {isAntiTarnish ? (
+              <span>316L Surgical Stainless Steel · Anti-Tarnish PVD</span>
+            ) : (
+              <>
+                {product.weightGrams ? `${product.weightGrams}g ` : ""}
+                {product.metal}
+                {product.stone && product.stone !== "None" ? ` · ${product.stone}` : ""}
+              </>
+            )}
           </p>
         </div>
 
