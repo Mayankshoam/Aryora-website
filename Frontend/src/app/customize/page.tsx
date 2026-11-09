@@ -2,19 +2,17 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { CARAT_SCALES, METAL_PROPERTIES } from "@/components/RingPreview";
-import { RingConfig, RingStyle, SideSetting, DiamondShape, Halo, Metal } from "@/components/ring3d/types";
-
-const Ring3DViewer = dynamic(() => import("@/components/ring3d/Ring3DViewer"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full aspect-square min-h-[460px] sm:min-h-[560px] lg:min-h-[620px] bg-[#FAF8F5] rounded-3xl flex flex-col items-center justify-center border border-[#E8E2D8] gap-3">
-      <div className="w-8 h-8 border-2 border-[#0E382B] border-t-transparent rounded-full animate-spin" />
-      <span className="text-xs text-[#666666] tracking-wide font-medium">Loading 3D Solitaire Atelier...</span>
-    </div>
-  ),
-});
+import Ring3DViewer from "@/components/ring3d/Ring3DViewer";
+import {
+  DEFAULT_CONFIG,
+  RingConfig,
+  RingStyle,
+  SideSetting,
+  DiamondShape,
+  Halo,
+  Metal,
+  INDIAN_RING_SIZES,
+} from "@/components/ring3d/types";
 import { useAryoraStore } from "@/lib/store";
 import { Product } from "@/lib/data";
 import {
@@ -83,7 +81,7 @@ const RING_STYLES = [
     ),
   },
   {
-    id: "two-row",
+    id: "twoRowSplit",
     label: "Two Row Split",
     desc: "Parallel modern double band architecture",
     icon: (
@@ -167,9 +165,9 @@ const SIDE_SETTINGS = [
 ];
 
 // 3. DIAMOND SHAPES
-const DIAMOND_SHAPES = [
+const DIAMOND_SHAPES: { id: DiamondShape; label: string; ratio: string; icon: React.ReactNode }[] = [
   {
-    id: "Round Brilliant",
+    id: "round",
     label: "Round",
     ratio: "1.00",
     icon: (
@@ -180,7 +178,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Princess",
+    id: "princess",
     label: "Princess",
     ratio: "1.00",
     icon: (
@@ -192,7 +190,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Oval",
+    id: "oval",
     label: "Oval",
     ratio: "1.35",
     icon: (
@@ -203,7 +201,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Emerald Cut",
+    id: "emerald",
     label: "Emerald",
     ratio: "1.40",
     icon: (
@@ -214,7 +212,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Cushion",
+    id: "cushion",
     label: "Cushion",
     ratio: "1.05",
     icon: (
@@ -225,7 +223,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Pear (Teardrop)",
+    id: "pear",
     label: "Pear",
     ratio: "1.50",
     icon: (
@@ -235,7 +233,7 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Radiant",
+    id: "radiant",
     label: "Radiant",
     ratio: "1.25",
     icon: (
@@ -247,7 +245,19 @@ const DIAMOND_SHAPES = [
     ),
   },
   {
-    id: "Marquise",
+    id: "asscher",
+    label: "Asscher",
+    ratio: "1.00",
+    icon: (
+      <svg viewBox="0 0 32 32" className="w-7 h-7 stroke-current fill-none stroke-[1.3]">
+        <polygon points="9,5 23,5 27,9 27,23 23,27 9,27 5,23 5,9" />
+        <line x1="6" y1="6" x2="26" y2="26" />
+        <line x1="26" y1="6" x2="6" y2="26" />
+      </svg>
+    ),
+  },
+  {
+    id: "marquise",
     label: "Marquise",
     ratio: "1.80",
     icon: (
@@ -259,10 +269,18 @@ const DIAMOND_SHAPES = [
 ];
 
 // 4. CARAT STEPS
-const CARAT_STEPS = ["0.50 Carat", "0.75 Carat", "1.00 Carat", "1.50 Carat", "2.00 Carat", "3.00 Carat"];
+const CARAT_STEPS = [0.5, 0.75, 1.0, 1.5, 2.0, 3.0];
+const CARAT_MM: Record<number, string> = {
+  0.5: "5.1 × 5.1 mm",
+  0.75: "5.8 × 5.8 mm",
+  1.0: "6.5 × 6.5 mm",
+  1.5: "7.4 × 7.4 mm",
+  2.0: "8.1 × 8.1 mm",
+  3.0: "9.2 × 9.2 mm",
+};
 
 // 5. CROWN SETTING (Halo)
-const CROWN_SETTINGS = [
+const CROWN_SETTINGS: { id: Halo; label: string; desc: string; icon: React.ReactNode }[] = [
   {
     id: "none",
     label: "No Halo",
@@ -274,7 +292,7 @@ const CROWN_SETTINGS = [
     ),
   },
   {
-    id: "hidden-halo",
+    id: "hidden",
     label: "Hidden Halo",
     desc: "Micro-diamonds under basket collar",
     icon: (
@@ -285,7 +303,7 @@ const CROWN_SETTINGS = [
     ),
   },
   {
-    id: "single-halo",
+    id: "single",
     label: "Single Halo",
     desc: "Full halo framing center diamond",
     icon: (
@@ -298,11 +316,11 @@ const CROWN_SETTINGS = [
 ];
 
 // 6. METALS
-const METALS_LIST = [
-  { id: "YELLOW_GOLD", label: "Yellow Gold", color: "#E5C158", ringImg: "bg-[#E5C158]" },
-  { id: "WHITE_GOLD", label: "White Gold", color: "#F0F2F5", ringImg: "bg-[#E2E6EA]" },
-  { id: "ROSE_GOLD", label: "Rose Gold", color: "#E8AD96", ringImg: "bg-[#E8AD96]" },
-  { id: "SILVER_925", label: "925 Silver", color: "#DDE1E5", ringImg: "bg-[#DDE1E5]" },
+const METALS_LIST: { id: Metal; label: string; color: string }[] = [
+  { id: "yellow", label: "Yellow Gold", color: "#F2C26B" },
+  { id: "white", label: "White Gold", color: "#F0F0F2" },
+  { id: "rose", label: "Rose Gold", color: "#EDA490" },
+  { id: "silver", label: "925 Silver", color: "#E3E4E6" },
 ];
 
 // 7. INDIAN RING SIZES
@@ -327,15 +345,8 @@ const RING_SIZES = [
 export default function CustomizePage() {
   const addToCart = useAryoraStore((state) => state.addToCart);
 
-  // Configuration States
-  const [ringStyle, setRingStyle] = useState("classic");
-  const [sideSetting, setSideSetting] = useState("plain");
-  const [shape, setShape] = useState("Round Brilliant");
-  const [carat, setCarat] = useState("1.50 Carat");
-  const [crownSetting, setCrownSetting] = useState("none");
-  const [metal, setMetal] = useState("YELLOW_GOLD");
-  const [karat, setKarat] = useState("18KT");
-  const [ringSize, setRingSize] = useState("Size 12 (16.5 mm)");
+  // Configuration State matching Part 3 specification
+  const [ringConfig, setRingConfig] = useState<RingConfig>(DEFAULT_CONFIG);
   const [engraving, setEngraving] = useState("");
 
   // Modals
@@ -345,40 +356,40 @@ export default function CustomizePage() {
   const [consultSent, setConsultSent] = useState(false);
   const [addedNotice, setAddedNotice] = useState(false);
 
-  // Dynamic Price Engine
+  // Dynamic Price Engine based on ringConfig
   const priceBreakup = useMemo(() => {
     // 1. Metal Base (4.2g approx)
     let goldRatePerGram = 6780;
-    if (karat === "14KT") goldRatePerGram = 5420;
-    if (metal === "SILVER_925") goldRatePerGram = 1200;
+    if (ringConfig.karat === 14) goldRatePerGram = 5420;
+    if (ringConfig.metal === "silver") goldRatePerGram = 1200;
 
     let metalWeight = 4.2;
-    if (ringStyle === "cathedral" || ringStyle === "split") metalWeight += 0.6;
-    if (ringStyle === "two-row") metalWeight += 0.9;
+    if (ringConfig.style === "cathedral" || ringConfig.style === "split") metalWeight += 0.6;
+    if (ringConfig.style === "twoRowSplit") metalWeight += 0.9;
 
     const metalTotal = Math.round(metalWeight * goldRatePerGram);
 
     // 2. Diamond Carat Base
-    const caratValues: Record<string, number> = {
-      "0.50 Carat": 24500,
-      "0.75 Carat": 36800,
-      "1.00 Carat": 52400,
-      "1.50 Carat": 78900,
-      "2.00 Carat": 112000,
-      "3.00 Carat": 178000,
+    const caratValues: Record<number, number> = {
+      0.5: 24500,
+      0.75: 36800,
+      1.0: 52400,
+      1.5: 78900,
+      2.0: 112000,
+      3.0: 178000,
     };
-    const diamondTotal = caratValues[carat] ?? 78900;
+    const diamondTotal = caratValues[ringConfig.carat] ?? 78900;
 
     // 3. Side Stones
     let sideStonesTotal = 0;
-    if (sideSetting === "pave") sideStonesTotal = 8500;
-    if (sideSetting === "prong") sideStonesTotal = 9200;
-    if (sideSetting === "channel") sideStonesTotal = 10500;
+    if (ringConfig.side === "pave") sideStonesTotal = 8500;
+    if (ringConfig.side === "prong") sideStonesTotal = 9200;
+    if (ringConfig.side === "channel") sideStonesTotal = 10500;
 
     // 4. Crown Halo
     let haloTotal = 0;
-    if (crownSetting === "hidden-halo") haloTotal = 4800;
-    if (crownSetting === "single-halo") haloTotal = 8900;
+    if (ringConfig.halo === "hidden") haloTotal = 4800;
+    if (ringConfig.halo === "single") haloTotal = 8900;
 
     // 5. Making Charges
     const makingCharges = 4200;
@@ -399,117 +410,64 @@ export default function CustomizePage() {
       gst3Percent,
       finalTotal,
     };
-  }, [metal, karat, ringStyle, carat, sideSetting, crownSetting]);
+  }, [ringConfig]);
 
   // Dynamic Ring Title matching Origem India
   const ringTitle = useMemo(() => {
-    const styleObj = RING_STYLES.find((s) => s.id === ringStyle);
-    const shapeObj = DIAMOND_SHAPES.find((s) => s.id === shape);
-    const haloStr = crownSetting === "hidden-halo" ? "Hidden Halo " : crownSetting === "single-halo" ? "Halo " : "";
-    const sideStr = sideSetting !== "plain" ? ` with ${sideSetting.toUpperCase()} Diamonds` : "";
-    return `Solitaire ${carat.replace(" Carat", "ct")} ${shapeObj?.label || shape} ${haloStr}${styleObj?.label || ""} Ring${sideStr}`;
-  }, [ringStyle, shape, carat, crownSetting, sideSetting]);
-
-  // Dynamic 3D Config for Ring3DViewer
-  const ring3dConfig: RingConfig = useMemo(() => {
-    let style: RingStyle = 'classic';
-    if (ringStyle === 'cathedral') style = 'cathedral';
-    else if (ringStyle === 'twist') style = 'twist';
-    else if (ringStyle === 'split') style = 'split';
-    else if (ringStyle === 'two-row') style = 'twoRowSplit';
-    else if (ringStyle === 'pinch') style = 'pinch';
-
-    let side: SideSetting = 'plain';
-    if (sideSetting === 'pave') side = 'pave';
-    else if (sideSetting === 'prong') side = 'prong';
-    else if (sideSetting === 'channel') side = 'channel';
-
-    let shapeKey: DiamondShape = 'round';
-    const s = shape.toLowerCase();
-    if (s.includes('princess')) shapeKey = 'princess';
-    else if (s.includes('oval')) shapeKey = 'oval';
-    else if (s.includes('emerald')) shapeKey = 'emerald';
-    else if (s.includes('cushion')) shapeKey = 'cushion';
-    else if (s.includes('pear')) shapeKey = 'pear';
-    else if (s.includes('radiant')) shapeKey = 'radiant';
-    else if (s.includes('asscher')) shapeKey = 'asscher';
-    else if (s.includes('marquise')) shapeKey = 'marquise';
-
-    const caratNum = parseFloat(carat) || 1.5;
-
-    let halo: Halo = 'none';
-    if (crownSetting === 'hidden-halo') halo = 'hidden';
-    else if (crownSetting === 'single-halo' || crownSetting === 'halo') halo = 'single';
-
-    let metalKey: Metal = 'yellow';
-    if (metal.includes('WHITE')) metalKey = 'white';
-    else if (metal.includes('ROSE')) metalKey = 'rose';
-    else if (metal.includes('SILVER')) metalKey = 'silver';
-
-    const karatNum: 14 | 18 = karat.includes('14') ? 14 : 18;
-
-    const sizeMatch = ringSize.match(/\d+/);
-    const indianSize = sizeMatch ? parseInt(sizeMatch[0], 10) : 12;
-
-    return {
-      style,
-      side,
-      shape: shapeKey,
-      carat: caratNum,
-      halo,
-      metal: metalKey,
-      karat: karatNum,
-      indianSize,
-    };
-  }, [ringStyle, sideSetting, shape, carat, crownSetting, metal, karat, ringSize]);
+    const styleObj = RING_STYLES.find((s) => s.id === ringConfig.style);
+    const shapeObj = DIAMOND_SHAPES.find((s) => s.id === ringConfig.shape);
+    const haloStr = ringConfig.halo === "hidden" ? "Hidden Halo " : ringConfig.halo === "single" ? "Halo " : "";
+    const sideStr = ringConfig.side !== "plain" ? ` with ${ringConfig.side.toUpperCase()} Diamonds` : "";
+    const metalLabel = ringConfig.metal === "silver"
+      ? "925 Sterling Silver"
+      : `${ringConfig.karat}KT ${ringConfig.metal.charAt(0).toUpperCase() + ringConfig.metal.slice(1)} Gold`;
+    return `Solitaire ${ringConfig.carat.toFixed(2)}ct ${shapeObj?.label || ringConfig.shape} ${haloStr}${styleObj?.label || ""} Ring (${metalLabel})${sideStr}`;
+  }, [ringConfig]);
 
   // Handle Add to Cart
   const handleAddToCart = () => {
-    const metalLabel = METAL_PROPERTIES[metal]?.label || "18K Gold";
+    const metalLabel = ringConfig.metal === "silver"
+      ? "925 Sterling Silver"
+      : `${ringConfig.karat}KT ${ringConfig.metal.charAt(0).toUpperCase() + ringConfig.metal.slice(1)} Gold`;
+    const ringSizeLabel = `Size ${ringConfig.indianSize} (${INDIAN_RING_SIZES[ringConfig.indianSize] || 16.6} mm)`;
+
     const customProduct: Product = {
       id: `custom-ring-${Date.now()}`,
       slug: `custom-ring-${Date.now()}`,
       name: ringTitle,
       category: "Rings",
       subcategory: "Custom Engagement Rings",
-      metal: `${karat} ${metalLabel}`,
-      purity: karat,
+      metal: metalLabel,
+      purity: `${ringConfig.karat}KT`,
       stone: "IGI Certified Lab Diamond",
-      carat: CARAT_SCALES[carat]?.num ?? 1.5,
-      shape: shape,
+      carat: ringConfig.carat,
+      shape: ringConfig.shape,
       color: "E-F Colorless",
       clarity: "VVS-VS",
       certificate: "IGI Certified",
       weightGrams: priceBreakup.metalWeight,
-      sizes: [ringSize],
+      sizes: [ringSizeLabel],
       occasion: "Engagement & Daily Fine Luxury",
       gender: "Women",
-      style: `${ringStyle} / ${sideSetting} / ${crownSetting}`,
+      style: `${ringConfig.style} / ${ringConfig.side} / ${ringConfig.halo}`,
       price: priceBreakup.finalTotal,
       discountPercent: 0,
       stock: 50,
       images: ["/site/hero-poster.svg"],
-      description: `Bespoke custom solitaire ring configured online: ${ringTitle}. Crafted in ${karat} ${metalLabel} (${priceBreakup.metalWeight}g). Ring Size: ${ringSize}${engraving ? `. Inscription: "${engraving}"` : ""}. Includes physical IGI Solitaire Report & BIS Hallmarking Certificate.`,
+      description: `Bespoke custom solitaire ring configured online: ${ringTitle}. Crafted in ${metalLabel} (${priceBreakup.metalWeight}g). Ring Size: ${ringSizeLabel}${engraving ? `. Inscription: "${engraving}"` : ""}. Includes physical IGI Solitaire Report & BIS Hallmarking Certificate.`,
       tags: ["Custom", "Solitaire", "Bespoke", "Ring Builder", "Lab Grown"],
       isBestseller: false,
       isNew: true,
     };
 
-    addToCart(customProduct, 1, ringSize, `${karat} ${metalLabel}`);
+    addToCart(customProduct, 1, ringSizeLabel, metalLabel);
     setAddedNotice(true);
     setTimeout(() => setAddedNotice(false), 3000);
   };
 
   // Reset defaults
   const handleReset = () => {
-    setRingStyle("classic");
-    setSideSetting("plain");
-    setShape("Round Brilliant");
-    setCarat("1.50 Carat");
-    setCrownSetting("none");
-    setMetal("YELLOW_GOLD");
-    setKarat("18KT");
-    setRingSize("Size 12 (16.5 mm)");
+    setRingConfig(DEFAULT_CONFIG);
     setEngraving("");
   };
 
@@ -554,7 +512,7 @@ export default function CustomizePage() {
         <section className="lg:col-span-7 p-4 sm:p-6 lg:p-8 flex flex-col justify-between relative bg-[#FAF8F5]">
           <div className="w-full flex-1 flex flex-col justify-center items-center">
             <div className="w-full max-w-[640px] w-full relative">
-              <Ring3DViewer config={ring3dConfig} />
+              <Ring3DViewer config={ringConfig} />
             </div>
           </div>
 
@@ -587,7 +545,7 @@ export default function CustomizePage() {
                 {ringTitle}
               </h1>
               <p className="text-xs text-[#666666]">
-                IGI Certified · {karat} Gold · Handcrafted in Lucknow · Ready in 10-14 days
+                IGI Certified · {ringConfig.karat}KT Gold · Handcrafted in Lucknow · Ready in 10-14 days
               </p>
             </div>
 
@@ -598,21 +556,22 @@ export default function CustomizePage() {
                   Ring Style
                 </span>
                 <span className="text-xs text-[#0E382B] font-medium">
-                  {RING_STYLES.find((s) => s.id === ringStyle)?.label}
+                  {RING_STYLES.find((s) => s.id === ringConfig.style)?.label}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2.5">
                 {RING_STYLES.map((s) => {
-                  const active = ringStyle === s.id;
+                  const active = ringConfig.style === s.id;
                   return (
                     <button
                       type="button"
                       key={s.id}
-                      onClick={() => setRingStyle(s.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
+                      onClick={() => setRingConfig((prev) => ({ ...prev, style: s.id as RingStyle }))}
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
+                        active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                        }`}
+                      }`}
                     >
                       <div className="mb-1.5 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -629,21 +588,22 @@ export default function CustomizePage() {
                   Side Setting
                 </span>
                 <span className="text-xs text-[#0E382B] font-medium">
-                  {SIDE_SETTINGS.find((s) => s.id === sideSetting)?.label}
+                  {SIDE_SETTINGS.find((s) => s.id === ringConfig.side)?.label}
                 </span>
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {SIDE_SETTINGS.map((s) => {
-                  const active = sideSetting === s.id;
+                  const active = ringConfig.side === s.id;
                   return (
                     <button
                       type="button"
                       key={s.id}
-                      onClick={() => setSideSetting(s.id)}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
+                      onClick={() => setRingConfig((prev) => ({ ...prev, side: s.id as SideSetting }))}
+                      className={`p-2.5 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
+                        active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                        }`}
+                      }`}
                     >
                       <div className="mb-1 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -659,20 +619,23 @@ export default function CustomizePage() {
                 <span className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                   Diamond Shape
                 </span>
-                <span className="text-xs text-[#0E382B] font-medium">{shape}</span>
+                <span className="text-xs text-[#0E382B] font-medium">
+                  {DIAMOND_SHAPES.find((s) => s.id === ringConfig.shape)?.label || ringConfig.shape}
+                </span>
               </div>
               <div className="grid grid-cols-4 gap-2.5">
                 {DIAMOND_SHAPES.map((s) => {
-                  const active = shape === s.id;
+                  const active = ringConfig.shape === s.id;
                   return (
                     <button
                       type="button"
                       key={s.id}
-                      onClick={() => setShape(s.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
+                      onClick={() => setRingConfig((prev) => ({ ...prev, shape: s.id }))}
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
+                        active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                        }`}
+                      }`}
                     >
                       <div className="mb-1 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -689,7 +652,7 @@ export default function CustomizePage() {
                   Center Diamond Size
                 </span>
                 <span className="text-xs font-semibold text-[#0E382B]">
-                  {carat} ({CARAT_SCALES[carat]?.mm})
+                  {ringConfig.carat.toFixed(2)} CT ({CARAT_MM[ringConfig.carat] || `${(ringConfig.carat * 5).toFixed(1)} mm`})
                 </span>
               </div>
 
@@ -700,19 +663,25 @@ export default function CustomizePage() {
                   min="0"
                   max={CARAT_STEPS.length - 1}
                   step="1"
-                  value={CARAT_STEPS.indexOf(carat)}
-                  onChange={(e) => setCarat(CARAT_STEPS[parseInt(e.target.value)])}
+                  value={CARAT_STEPS.indexOf(ringConfig.carat) !== -1 ? CARAT_STEPS.indexOf(ringConfig.carat) : 3}
+                  onChange={(e) =>
+                    setRingConfig((prev) => ({
+                      ...prev,
+                      carat: CARAT_STEPS[parseInt(e.target.value)] || 1.5,
+                    }))
+                  }
                   className="w-full h-1.5 bg-[#E5E0D8] rounded-lg appearance-none cursor-pointer accent-[#0E382B]"
                 />
                 <div className="flex justify-between text-[10px] text-[#777777] font-medium px-1">
                   {CARAT_STEPS.map((c) => (
                     <span
                       key={c}
-                      onClick={() => setCarat(c)}
-                      className={`cursor-pointer transition-colors ${carat === c ? "text-[#0E382B] font-bold" : "hover:text-[#111111]"
-                        }`}
+                      onClick={() => setRingConfig((prev) => ({ ...prev, carat: c }))}
+                      className={`cursor-pointer transition-colors ${
+                        ringConfig.carat === c ? "text-[#0E382B] font-bold" : "hover:text-[#111111]"
+                      }`}
                     >
-                      {c.replace(" Carat", " CT")}
+                      {c.toFixed(2)} CT
                     </span>
                   ))}
                 </div>
@@ -726,21 +695,22 @@ export default function CustomizePage() {
                   Crown Setting
                 </span>
                 <span className="text-xs text-[#0E382B] font-medium">
-                  {CROWN_SETTINGS.find((c) => c.id === crownSetting)?.label}
+                  {CROWN_SETTINGS.find((c) => c.id === ringConfig.halo)?.label}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2.5">
                 {CROWN_SETTINGS.map((c) => {
-                  const active = crownSetting === c.id;
+                  const active = ringConfig.halo === c.id;
                   return (
                     <button
                       type="button"
                       key={c.id}
-                      onClick={() => setCrownSetting(c.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
+                      onClick={() => setRingConfig((prev) => ({ ...prev, halo: c.id }))}
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
+                        active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                        }`}
+                      }`}
                     >
                       <div className="mb-1 text-[#111111]">{c.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{c.label}</span>
@@ -757,21 +727,22 @@ export default function CustomizePage() {
                   Precious Metal
                 </span>
                 <span className="text-xs text-[#0E382B] font-medium">
-                  {METALS_LIST.find((m) => m.id === metal)?.label}
+                  {METALS_LIST.find((m) => m.id === ringConfig.metal)?.label}
                 </span>
               </div>
               <div className="grid grid-cols-4 gap-2.5">
                 {METALS_LIST.map((m) => {
-                  const active = metal === m.id;
+                  const active = ringConfig.metal === m.id;
                   return (
                     <button
                       type="button"
                       key={m.id}
-                      onClick={() => setMetal(m.id)}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${active
+                      onClick={() => setRingConfig((prev) => ({ ...prev, metal: m.id }))}
+                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
+                        active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs"
                           : "border-[#E5E0D8] bg-white hover:border-[#0E382B]/60"
-                        }`}
+                      }`}
                     >
                       <span
                         className="w-5 h-5 rounded-full border border-black/10 shadow-2xs"
@@ -793,13 +764,18 @@ export default function CustomizePage() {
                   Metal Karat
                 </label>
                 <select
-                  value={karat}
-                  onChange={(e) => setKarat(e.target.value)}
+                  value={ringConfig.karat}
+                  onChange={(e) =>
+                    setRingConfig((prev) => ({
+                      ...prev,
+                      karat: Number(e.target.value) as 14 | 18,
+                    }))
+                  }
                   className="w-full px-3 py-2.5 text-xs bg-white border border-[#E5E0D8] rounded-xl text-[#111111] focus:outline-none focus:border-[#0E382B] cursor-pointer"
                 >
-                  <option value="18KT">18KT Gold (Standard)</option>
-                  <option value="14KT">14KT Gold</option>
-                  {metal === "SILVER_925" && <option value="925">925 Sterling Silver</option>}
+                  <option value={18}>18KT Gold (Standard)</option>
+                  <option value={14}>14KT Gold</option>
+                  {ringConfig.metal === "silver" && <option value={18}>925 Sterling Silver</option>}
                 </select>
               </div>
 
@@ -808,13 +784,18 @@ export default function CustomizePage() {
                   Indian Ring Size
                 </label>
                 <select
-                  value={ringSize}
-                  onChange={(e) => setRingSize(e.target.value)}
+                  value={ringConfig.indianSize}
+                  onChange={(e) =>
+                    setRingConfig((prev) => ({
+                      ...prev,
+                      indianSize: Number(e.target.value),
+                    }))
+                  }
                   className="w-full px-3 py-2.5 text-xs bg-white border border-[#E5E0D8] rounded-xl text-[#111111] focus:outline-none focus:border-[#0E382B] cursor-pointer"
                 >
-                  {RING_SIZES.map((sz) => (
+                  {Object.entries(INDIAN_RING_SIZES).map(([sz, mm]) => (
                     <option key={sz} value={sz}>
-                      {sz}
+                      Size {sz} ({mm} mm)
                     </option>
                   ))}
                 </select>
@@ -913,7 +894,7 @@ export default function CustomizePage() {
             <div className="space-y-3 text-xs border-y border-[#E5E0D8] py-4 text-[#333333]">
               <div className="flex justify-between items-center">
                 <span>
-                  Gold Value ({karat} · ~{priceBreakup.metalWeight}g @ ₹{priceBreakup.goldRatePerGram}/g)
+                  Gold Value ({ringConfig.karat}KT · ~{priceBreakup.metalWeight}g @ ₹{priceBreakup.goldRatePerGram}/g)
                 </span>
                 <span className="font-semibold text-[#111111]">
                   ₹{priceBreakup.metalTotal.toLocaleString("en-IN")}
@@ -921,7 +902,7 @@ export default function CustomizePage() {
               </div>
               <div className="flex justify-between items-center">
                 <span>
-                  Center Solitaire ({carat} {shape} · IGI Certified VVS-VS)
+                  Center Solitaire ({ringConfig.carat.toFixed(2)} CT {ringConfig.shape.toUpperCase()} · IGI Certified VVS-VS)
                 </span>
                 <span className="font-semibold text-[#111111]">
                   ₹{priceBreakup.diamondTotal.toLocaleString("en-IN")}
@@ -929,7 +910,7 @@ export default function CustomizePage() {
               </div>
               {priceBreakup.sideStonesTotal > 0 && (
                 <div className="flex justify-between items-center">
-                  <span>Side Stones ({sideSetting.toUpperCase()} Lab Diamonds)</span>
+                  <span>Side Stones ({ringConfig.side.toUpperCase()} Lab Diamonds)</span>
                   <span className="font-semibold text-[#111111]">
                     ₹{priceBreakup.sideStonesTotal.toLocaleString("en-IN")}
                   </span>
@@ -937,7 +918,7 @@ export default function CustomizePage() {
               )}
               {priceBreakup.haloTotal > 0 && (
                 <div className="flex justify-between items-center">
-                  <span>Crown Setting ({crownSetting.replace("-", " ").toUpperCase()})</span>
+                  <span>Crown Setting ({ringConfig.halo.toUpperCase()})</span>
                   <span className="font-semibold text-[#111111]">
                     ₹{priceBreakup.haloTotal.toLocaleString("en-IN")}
                   </span>
