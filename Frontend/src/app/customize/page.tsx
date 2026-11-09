@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { CARAT_SCALES, METAL_PROPERTIES } from "@/components/RingPreview";
+import { RingConfig, RingStyle, SideSetting, DiamondShape, Halo, Metal } from "@/components/ring3d/types";
 
 const Ring3DViewer = dynamic(() => import("@/components/ring3d/Ring3DViewer"), {
   ssr: false,
@@ -409,6 +410,59 @@ export default function CustomizePage() {
     return `Solitaire ${carat.replace(" Carat", "ct")} ${shapeObj?.label || shape} ${haloStr}${styleObj?.label || ""} Ring${sideStr}`;
   }, [ringStyle, shape, carat, crownSetting, sideSetting]);
 
+  // Dynamic 3D Config for Ring3DViewer
+  const ring3dConfig: RingConfig = useMemo(() => {
+    let style: RingStyle = 'classic';
+    if (ringStyle === 'cathedral') style = 'cathedral';
+    else if (ringStyle === 'twist') style = 'twist';
+    else if (ringStyle === 'split') style = 'split';
+    else if (ringStyle === 'two-row') style = 'twoRowSplit';
+    else if (ringStyle === 'pinch') style = 'pinch';
+
+    let side: SideSetting = 'plain';
+    if (sideSetting === 'pave') side = 'pave';
+    else if (sideSetting === 'prong') side = 'prong';
+    else if (sideSetting === 'channel') side = 'channel';
+
+    let shapeKey: DiamondShape = 'round';
+    const s = shape.toLowerCase();
+    if (s.includes('princess')) shapeKey = 'princess';
+    else if (s.includes('oval')) shapeKey = 'oval';
+    else if (s.includes('emerald')) shapeKey = 'emerald';
+    else if (s.includes('cushion')) shapeKey = 'cushion';
+    else if (s.includes('pear')) shapeKey = 'pear';
+    else if (s.includes('radiant')) shapeKey = 'radiant';
+    else if (s.includes('asscher')) shapeKey = 'asscher';
+    else if (s.includes('marquise')) shapeKey = 'marquise';
+
+    const caratNum = parseFloat(carat) || 1.5;
+
+    let halo: Halo = 'none';
+    if (crownSetting === 'hidden-halo') halo = 'hidden';
+    else if (crownSetting === 'single-halo' || crownSetting === 'halo') halo = 'single';
+
+    let metalKey: Metal = 'yellow';
+    if (metal.includes('WHITE')) metalKey = 'white';
+    else if (metal.includes('ROSE')) metalKey = 'rose';
+    else if (metal.includes('SILVER')) metalKey = 'silver';
+
+    const karatNum: 14 | 18 = karat.includes('14') ? 14 : 18;
+
+    const sizeMatch = ringSize.match(/\d+/);
+    const indianSize = sizeMatch ? parseInt(sizeMatch[0], 10) : 12;
+
+    return {
+      style,
+      side,
+      shape: shapeKey,
+      carat: caratNum,
+      halo,
+      metal: metalKey,
+      karat: karatNum,
+      indianSize,
+    };
+  }, [ringStyle, sideSetting, shape, carat, crownSetting, metal, karat, ringSize]);
+
   // Handle Add to Cart
   const handleAddToCart = () => {
     const metalLabel = METAL_PROPERTIES[metal]?.label || "18K Gold";
@@ -500,16 +554,7 @@ export default function CustomizePage() {
         <section className="lg:col-span-7 p-4 sm:p-6 lg:p-8 flex flex-col justify-between relative bg-[#FAF8F5]">
           <div className="w-full flex-1 flex flex-col justify-center items-center">
             <div className="w-full max-w-[640px] w-full relative">
-              <Ring3DViewer
-                metal={metal}
-                karat={karat}
-                carat={carat}
-                shape={shape}
-                ringStyle={ringStyle}
-                sideSetting={sideSetting}
-                crownSetting={crownSetting}
-                ringSize={ringSize}
-              />
+              <Ring3DViewer config={ring3dConfig} />
             </div>
           </div>
 
@@ -564,11 +609,10 @@ export default function CustomizePage() {
                       type="button"
                       key={s.id}
                       onClick={() => setRingStyle(s.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
-                        active
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                      }`}
+                        }`}
                     >
                       <div className="mb-1.5 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -596,11 +640,10 @@ export default function CustomizePage() {
                       type="button"
                       key={s.id}
                       onClick={() => setSideSetting(s.id)}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
-                        active
+                      className={`p-2.5 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                      }`}
+                        }`}
                     >
                       <div className="mb-1 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -626,11 +669,10 @@ export default function CustomizePage() {
                       type="button"
                       key={s.id}
                       onClick={() => setShape(s.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
-                        active
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                      }`}
+                        }`}
                     >
                       <div className="mb-1 text-[#111111]">{s.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{s.label}</span>
@@ -667,9 +709,8 @@ export default function CustomizePage() {
                     <span
                       key={c}
                       onClick={() => setCarat(c)}
-                      className={`cursor-pointer transition-colors ${
-                        carat === c ? "text-[#0E382B] font-bold" : "hover:text-[#111111]"
-                      }`}
+                      className={`cursor-pointer transition-colors ${carat === c ? "text-[#0E382B] font-bold" : "hover:text-[#111111]"
+                        }`}
                     >
                       {c.replace(" Carat", " CT")}
                     </span>
@@ -696,11 +737,10 @@ export default function CustomizePage() {
                       type="button"
                       key={c.id}
                       onClick={() => setCrownSetting(c.id)}
-                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${
-                        active
+                      className={`p-3 rounded-xl border flex flex-col items-center text-center transition-all cursor-pointer ${active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs text-[#0E382B]"
                           : "border-[#E5E0D8] bg-white text-[#666666] hover:border-[#0E382B]/60"
-                      }`}
+                        }`}
                     >
                       <div className="mb-1 text-[#111111]">{c.icon}</div>
                       <span className="text-[11px] font-medium leading-tight">{c.label}</span>
@@ -728,11 +768,10 @@ export default function CustomizePage() {
                       type="button"
                       key={m.id}
                       onClick={() => setMetal(m.id)}
-                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                        active
+                      className={`p-2.5 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${active
                           ? "border-[#0E382B] bg-[#FAF7F2] ring-1 ring-[#0E382B] shadow-xs"
                           : "border-[#E5E0D8] bg-white hover:border-[#0E382B]/60"
-                      }`}
+                        }`}
                     >
                       <span
                         className="w-5 h-5 rounded-full border border-black/10 shadow-2xs"
