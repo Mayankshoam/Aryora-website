@@ -1,140 +1,53 @@
-/**
- * Zero-Network Procedural Studio Environment Generator
- * Produces crisp studio lighting with overhead softboxes, lateral strip lights,
- * and high-contrast specular reflections that ignite diamond dispersion fire and
- * render pristine polished metal shanks without any external network asset downloads.
- */
-
-import * as THREE from "three";
-
-let cachedStudioTexture: THREE.Texture | null = null;
-let cachedRenderer: THREE.WebGLRenderer | null = null;
+import * as THREE from 'three';
 
 /**
- * Creates or retrieves a cached equirectangular studio environment texture.
+ * Procedural Equirectangular HDR studio texture
+ * Emits zero-network high-contrast softbox reflections for diamond fire and metal sheen.
  */
-export function getProceduralStudioEnv(renderer: THREE.WebGLRenderer): THREE.Texture {
-  if (cachedStudioTexture && cachedRenderer === renderer) {
-    return cachedStudioTexture;
-  }
+export function makeStudioEnvTexture(w = 512, h = 256): THREE.DataTexture {
+  const data = new Float32Array(w * h * 4);
 
-  const canvas = document.createElement("canvas");
-  canvas.width = 1024;
-  canvas.height = 512;
-  const ctx = canvas.getContext("2d");
-
-  if (!ctx) {
-    return new THREE.Texture();
-  }
-
-  // 1. Studio ambient base (deep charcoal-graphite tone)
-  const bgGrad = ctx.createLinearGradient(0, 0, 0, 512);
-  bgGrad.addColorStop(0, "#22252a");
-  bgGrad.addColorStop(0.5, "#121417");
-  bgGrad.addColorStop(1, "#0a0c0e");
-  ctx.fillStyle = bgGrad;
-  ctx.fillRect(0, 0, 1024, 512);
-
-  // 2. Main Key Overhead Softbox (Bright diffused white-gold glow)
-  const topSoftbox = ctx.createRadialGradient(512, 110, 15, 512, 110, 240);
-  topSoftbox.addColorStop(0, "rgba(255, 255, 255, 1.0)");
-  topSoftbox.addColorStop(0.3, "rgba(255, 252, 245, 0.95)");
-  topSoftbox.addColorStop(0.7, "rgba(255, 240, 220, 0.4)");
-  topSoftbox.addColorStop(1, "rgba(34, 37, 42, 0)");
-  ctx.fillStyle = topSoftbox;
-  ctx.fillRect(0, 0, 1024, 320);
-
-  // 3. Left Specular Vertical Strip Softbox (produces razor-sharp metal rim reflections)
-  const leftStrip = ctx.createLinearGradient(130, 0, 260, 0);
-  leftStrip.addColorStop(0, "rgba(255, 255, 255, 0)");
-  leftStrip.addColorStop(0.5, "rgba(255, 255, 255, 0.95)");
-  leftStrip.addColorStop(1, "rgba(255, 255, 255, 0)");
-  ctx.fillStyle = leftStrip;
-  ctx.fillRect(130, 60, 130, 360);
-
-  // 4. Right Specular Vertical Strip Softbox (secondary cool-white rim reflection)
-  const rightStrip = ctx.createLinearGradient(760, 0, 890, 0);
-  rightStrip.addColorStop(0, "rgba(255, 255, 255, 0)");
-  rightStrip.addColorStop(0.5, "rgba(242, 246, 252, 0.9)");
-  rightStrip.addColorStop(1, "rgba(255, 255, 255, 0)");
-  ctx.fillStyle = rightStrip;
-  ctx.fillRect(760, 60, 130, 360);
-
-  // 5. Crown Sparkle Pinpoints (stimulates micro-facet dispersion flashes in diamonds)
-  const pinpoints = [
-    { x: 380, y: 140, r: 24, alpha: 0.9 },
-    { x: 640, y: 140, r: 24, alpha: 0.9 },
-    { x: 512, y: 60, r: 35, alpha: 1.0 },
-    { x: 300, y: 90, r: 18, alpha: 0.75 },
-    { x: 720, y: 90, r: 18, alpha: 0.75 },
+  // Studio lighting panels [uCenter, vCenter, uHalf, vHalf, intensity, r, g, b]
+  const boxes = [
+    [0.00, 0.28, 0.10, 0.10, 9, 1, 1, 1],
+    [0.25, 0.30, 0.07, 0.16, 6, 1, 0.97, 0.92],
+    [0.50, 0.25, 0.12, 0.08, 8, 1, 1, 1],
+    [0.75, 0.30, 0.07, 0.16, 6, 0.92, 0.96, 1],
+    [0.125, 0.12, 0.08, 0.06, 5, 1, 1, 1],
+    [0.625, 0.12, 0.08, 0.06, 5, 1, 1, 1],
+    [0.375, 0.50, 0.14, 0.04, 3, 1, 0.95, 0.9],
+    [0.875, 0.50, 0.14, 0.04, 3, 0.95, 0.9, 1],
+    [0.50, 0.07, 0.50, 0.07, 3.5, 1, 1, 1], // overhead ceiling strip
   ];
 
-  pinpoints.forEach((p) => {
-    const pinGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-    pinGrad.addColorStop(0, `rgba(255, 255, 255, ${p.alpha})`);
-    pinGrad.addColorStop(0.5, `rgba(255, 250, 240, ${p.alpha * 0.6})`);
-    pinGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
-    ctx.fillStyle = pinGrad;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
+  for (let y = 0; y < h; y++) {
+    const v = (y + 0.5) / h;
+    for (let x = 0; x < w; x++) {
+      const u = (x + 0.5) / w;
+      let r = 0.05 + 0.22 * (1 - v);
+      let g = r;
+      let b = r * 1.04;
 
-  // 6. Ground Warm Bounce Gradient (subtle luxury velvet reflection from below)
-  const floorBounce = ctx.createLinearGradient(0, 400, 0, 512);
-  floorBounce.addColorStop(0, "rgba(0, 0, 0, 0)");
-  floorBounce.addColorStop(0.6, "rgba(245, 235, 220, 0.35)");
-  floorBounce.addColorStop(1, "rgba(240, 225, 205, 0.6)");
-  ctx.fillStyle = floorBounce;
-  ctx.fillRect(0, 400, 1024, 112);
+      for (const [cu, cv, hu, hv, I, cr, cg, cb] of boxes) {
+        let du = Math.abs(u - cu);
+        du = Math.min(du, 1 - du);
+        const dv = Math.abs(v - cv);
+        const em = Math.max(0, Math.min(1, 1.6 - 1.6 * Math.max(du / hu, dv / hv)));
+        r += I * em * cr;
+        g += I * em * cg;
+        b += I * em * cb;
+      }
 
-  // Generate Three.js Equirectangular PMREM Texture
-  const canvasTexture = new THREE.CanvasTexture(canvas);
-  canvasTexture.mapping = THREE.EquirectangularReflectionMapping;
+      const i = (y * w + x) * 4;
+      data[i] = r;
+      data[i + 1] = g;
+      data[i + 2] = b;
+      data[i + 3] = 1;
+    }
+  }
 
-  const pmremGenerator = new THREE.PMREMGenerator(renderer);
-  pmremGenerator.compileEquirectangularShader();
-  const renderTarget = pmremGenerator.fromEquirectangular(canvasTexture);
-
-  canvasTexture.dispose();
-  pmremGenerator.dispose();
-
-  cachedStudioTexture = renderTarget.texture;
-  cachedRenderer = renderer;
-
-  return cachedStudioTexture;
-}
-
-/**
- * Creates directional and ambient light cluster to complement the procedural studio HDR.
- */
-export function createStudioLighting(scene: THREE.Scene) {
-  // Main Key Soft Light (Warm White)
-  const keyLight = new THREE.DirectionalLight(0xfff8f0, 3.4);
-  keyLight.position.set(4, 7, 5);
-  keyLight.castShadow = true;
-  keyLight.shadow.mapSize.width = 1024;
-  keyLight.shadow.mapSize.height = 1024;
-  keyLight.shadow.bias = -0.0005;
-  scene.add(keyLight);
-
-  // Fill Light (Subtle Cool Ambient for Silver/Platinum contrast)
-  const fillLight = new THREE.DirectionalLight(0xedf4ff, 2.0);
-  fillLight.position.set(-4.5, 3.5, 3.5);
-  scene.add(fillLight);
-
-  // Diamond Table Sparkle Spotlight (Pointed directly at top crown)
-  const sparkleSpot = new THREE.SpotLight(0xffffff, 4.8, 14, Math.PI / 6, 0.25);
-  sparkleSpot.position.set(0, 6, 1.2);
-  sparkleSpot.target.position.set(0, 1.2, 0);
-  scene.add(sparkleSpot);
-  scene.add(sparkleSpot.target);
-
-  // Back Rim Light (Edges of ring band)
-  const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
-  rimLight.position.set(0, -1, -4.5);
-  scene.add(rimLight);
-
-  // General Ambient
-  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+  const texture = new THREE.DataTexture(data, w, h, THREE.RGBAFormat, THREE.FloatType);
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  texture.needsUpdate = true;
+  return texture;
 }
