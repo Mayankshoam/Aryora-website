@@ -2,7 +2,18 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import RingPreview, { CARAT_SCALES, METAL_PROPERTIES } from "@/components/RingPreview";
+import dynamic from "next/dynamic";
+import { CARAT_SCALES, METAL_PROPERTIES } from "@/components/RingPreview";
+
+const Ring3DViewer = dynamic(() => import("@/components/ring3d/Ring3DViewer"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full aspect-square min-h-[460px] sm:min-h-[560px] lg:min-h-[620px] bg-[#FAF8F5] rounded-3xl flex flex-col items-center justify-center border border-[#E8E2D8] gap-3">
+      <div className="w-8 h-8 border-2 border-[#0E382B] border-t-transparent rounded-full animate-spin" />
+      <span className="text-xs text-[#666666] tracking-wide font-medium">Loading 3D Solitaire Atelier...</span>
+    </div>
+  ),
+});
 import { useAryoraStore } from "@/lib/store";
 import { Product } from "@/lib/data";
 import {
@@ -488,14 +499,16 @@ export default function CustomizePage() {
         {/* Left Column: 3D Stage */}
         <section className="lg:col-span-7 p-4 sm:p-6 lg:p-8 flex flex-col justify-between relative bg-[#FAF8F5]">
           <div className="w-full flex-1 flex flex-col justify-center items-center">
-            <div className="w-full max-w-[620px] aspect-square relative shadow-xs">
-              <RingPreview
+            <div className="w-full max-w-[640px] w-full relative">
+              <Ring3DViewer
                 metal={metal}
+                karat={karat}
                 carat={carat}
                 shape={shape}
                 ringStyle={ringStyle}
                 sideSetting={sideSetting}
                 crownSetting={crownSetting}
+                ringSize={ringSize}
               />
             </div>
           </div>
