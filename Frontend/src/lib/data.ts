@@ -181,7 +181,7 @@ export function calculatePriceBreakup(product: Product, overridePrice?: number) 
 
   let metalLabel = isSilver ? "925 Sterling Silver" : "18K Gold";
   let stoneLabel = isSilver ? "AAA+ Swiss Cubic Zirconia" : "IGI Lab Diamond";
-  
+
   // Silver breakdown: silver weight ~35%, stone ~30%, artisan making ~35%
   // Gold breakdown: 18kt ~52%, diamond ~36%, making ~12%
   const metalRatio = isSilver ? 0.35 : 0.52;
