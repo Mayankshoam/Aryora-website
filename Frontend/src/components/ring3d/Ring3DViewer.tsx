@@ -83,7 +83,7 @@ function SceneContent({
     <group>
       <primitive object={envTexture} attach="environment" />
 
-      <Center top>
+      <Center>
         <group>
           {/* Main Comfort-Fit D-Profile Band */}
           <mesh geometry={bandGeometry} castShadow receiveShadow>
@@ -93,6 +93,7 @@ function SceneContent({
               roughness={metalData.roughness}
               clearcoat={0.35}
               clearcoatRoughness={0.08}
+              side={THREE.DoubleSide}
               envMap={envTexture}
               envMapIntensity={isDark ? 2.6 : 2.2}
             />
@@ -106,6 +107,7 @@ function SceneContent({
               roughness={metalData.roughness}
               clearcoat={0.35}
               clearcoatRoughness={0.08}
+              side={THREE.DoubleSide}
               envMap={envTexture}
               envMapIntensity={isDark ? 2.6 : 2.2}
             />
@@ -119,6 +121,7 @@ function SceneContent({
               roughness={metalData.roughness}
               clearcoat={0.35}
               clearcoatRoughness={0.08}
+              side={THREE.DoubleSide}
               envMap={envTexture}
               envMapIntensity={isDark ? 2.6 : 2.2}
             />
@@ -212,11 +215,11 @@ function SceneContent({
 
       {/* Ground Pedestal Contact Shadow */}
       <ContactShadows
-        position={[0, -0.06, 0]}
+        position={[0, -1.22, 0]}
         opacity={isDark ? 0.45 : 0.28}
         scale={6.5}
-        blur={2.2}
-        far={3.8}
+        blur={2.4}
+        far={3.5}
       />
     </group>
   );
@@ -237,20 +240,20 @@ export default function Ring3DViewer({
     const ctrl = controlsRef.current;
     switch (view) {
       case 'top':
-        ctrl.object.position.set(0, 4.3, 0.01);
+        ctrl.object.position.set(0, 4.4, 0.001);
         break;
       case 'front':
-        ctrl.object.position.set(0, 0.5, 3.8);
+        ctrl.object.position.set(0, 0, 4.4);
         break;
       case 'profile':
-        ctrl.object.position.set(3.8, 0.5, 0);
+        ctrl.object.position.set(4.4, 0, 0);
         break;
       case 'angle':
       default:
-        ctrl.object.position.set(2.6, 2.2, 2.6);
+        ctrl.object.position.set(2.7, 2.0, 2.7);
         break;
     }
-    ctrl.target.set(0, 0.6, 0);
+    ctrl.target.set(0, 0, 0);
     ctrl.update();
   };
 
@@ -270,7 +273,7 @@ export default function Ring3DViewer({
       } ${className}`}
     >
       <Canvas
-        camera={{ position: [2.6, 2.2, 2.6], fov: 40 }}
+        camera={{ position: [2.7, 2.0, 2.7], fov: 38 }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -285,6 +288,7 @@ export default function Ring3DViewer({
         <SceneContent config={config} isDark={isDarkTheme} />
         <OrbitControls
           ref={controlsRef}
+          target={[0, 0, 0]}
           enablePan={false}
           minDistance={1.8}
           maxDistance={6.0}
