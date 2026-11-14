@@ -5,12 +5,13 @@ import { RingStyle, SideSetting, DiamondShape, Halo, getGemDimensionsMm } from '
  * Jewelcraft-calibrated Fine Jewelry CAD Ring Shank & Setting Generator
  *
  * Implements:
- * 1. HeadLayout calculation for CAD precision alignment
- * 2. Comfort-Fit D-Profile Band Extrusions (Classic, Cathedral, Twist, Split, Two-Row, Pinch)
+ * 1. HeadLayout calculation for seamless, gap-free CAD fitting
+ * 2. Integrated Saddle Bridge & Collet Basket (Zero-gap connection to band)
  * 3. Jewelcraft Tapered Claws with Domed Spherical Caps (_dome) & Girdle Overlap
- * 4. Under-Bezel Gallery Rail & Open Collet Basket Wires
- * 5. Halo Settings (Hidden Halo & Single Halo)
- * 6. Shoulder Settings (Plain, Pavé, Prong, Channel)
+ * 4. Under-Bezel Gallery Rail & Open Collet Basket Struts
+ * 5. Comfort-Fit D-Profile Band Extrusions (Classic, Cathedral, Twist, Split, Two-Row, Pinch)
+ * 6. Halo Settings (Hidden Halo & Single Halo)
+ * 7. Shoulder Settings (Plain, Pavé, Prong, Channel)
  */
 
 type Vec3 = [number, number, number];
@@ -24,9 +25,9 @@ export interface HeadLayout {
   crestY: number; // top outer crest of the ring band
   girdleY: number; // exact Y where diamond girdle sits
   galleryY: number; // under-bezel rail
-  colletY: number; // collet base wire
+  colletY: number; // collet base wire (sits on the band bridge)
   clawTopY: number; // tip of prongs
-  clawBaseY: number; // base of prongs
+  clawBaseY: number; // base of prongs (anchored inside band)
 }
 
 export function getHeadLayout(
@@ -43,17 +44,19 @@ export function getHeadLayout(
   const bandThickness = 0.085;
   const crestY = innerRadius + bandThickness;
 
-  // Culet clearance above the band bridge
-  const culetClearance = 0.035;
+  // Culet rests comfortably inside the basket bridge
   const pavilionDepth = d * 0.65;
-  const girdleY = crestY + culetClearance + pavilionDepth;
+  const girdleY = crestY + 0.02 + pavilionDepth;
 
   // Gallery rail sits 22% of diamond depth beneath girdle
   const galleryY = girdleY - d * 0.22;
-  const colletY = crestY + 0.02;
 
-  const clawBaseY = colletY;
-  const clawTopY = girdleY + d * 0.14;
+  // Collet base ring rests directly on the band crest surface
+  const colletY = crestY;
+
+  // Claws anchor into the band bridge to eliminate floating gaps
+  const clawBaseY = crestY - 0.02;
+  const clawTopY = girdleY + d * 0.12;
 
   return {
     dims,
@@ -107,14 +110,16 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
 
     switch (style) {
       case 'cathedral': {
+        // High sweeping arches meeting gallery rail
         if (absTheta < 0.65) {
           const arch = Math.cos((absTheta / 0.65) * (Math.PI / 2));
-          rOffset = arch * 0.065;
-          wScale = 1.0 - arch * 0.22;
+          rOffset = arch * 0.075;
+          wScale = 1.0 - arch * 0.20;
         }
         break;
       }
       case 'pinch': {
+        // Narrow shoulder taper at head
         if (absTheta < 0.45) {
           const pinch = Math.cos((absTheta / 0.45) * (Math.PI / 2));
           wScale = 1.0 - pinch * 0.45;
@@ -124,6 +129,7 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
       }
       case 'split':
       case 'twoRowSplit': {
+        // Flared split shoulders
         if (absTheta < 0.7) {
           const flare = Math.cos((absTheta / 0.7) * (Math.PI / 2));
           wScale = 1.0 + flare * 0.55;
@@ -136,6 +142,7 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
       }
       case 'classic':
       default:
+        // Gentle taper at shoulders
         if (absTheta < 0.5) {
           const taper = Math.cos((absTheta / 0.5) * (Math.PI / 2));
           wScale = 1.0 - taper * 0.12;
@@ -179,6 +186,7 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
 
 /**
  * 2. PRONG GEOMETRY: Jewelcraft Tapered Claws with Domed Caps (_dome)
+ * Anchored directly into the band bridge to eliminate all floating gaps.
  */
 export function createProngsGeometry(
   shape: DiamondShape,
@@ -255,6 +263,7 @@ export function createProngsGeometry(
       addQuad(baseLoop[i], tipLoop[i], tipLoop[next], baseLoop[next]);
     }
 
+    // Base cap
     for (let i = 0; i < segs; i++) {
       const next = (i + 1) % segs;
       addTriangle(baseCenter, baseLoop[next], baseLoop[i]);
@@ -272,7 +281,7 @@ export function createProngsGeometry(
     }
   }
 
-  const baseRad = 0.036 * Math.cbrt(carat);
+  const baseRad = 0.038 * Math.cbrt(carat);
   const tipRad = 0.024 * Math.cbrt(carat);
 
   let prongs: { tip: [number, number]; base: [number, number] }[] = [];
@@ -283,63 +292,58 @@ export function createProngsGeometry(
   switch (shape) {
     case 'princess':
     case 'asscher': {
-      // 4 Corner V-Prongs on corners
       const cx = hx * 0.96;
       const cz = hz * 0.96;
       prongs = [
-        { tip: [cx, cz], base: [cx * 0.5, cz * 0.5] },
-        { tip: [-cx, cz], base: [-cx * 0.5, cz * 0.5] },
-        { tip: [-cx, -cz], base: [-cx * 0.5, -cz * 0.5] },
-        { tip: [cx, -cz], base: [cx * 0.5, -cz * 0.5] },
+        { tip: [cx, cz], base: [cx * 0.45, cz * 0.45] },
+        { tip: [-cx, cz], base: [-cx * 0.45, cz * 0.45] },
+        { tip: [-cx, -cz], base: [-cx * 0.45, -cz * 0.45] },
+        { tip: [cx, -cz], base: [cx * 0.45, -cz * 0.45] },
       ];
       break;
     }
     case 'emerald':
     case 'radiant': {
-      // 4 Corner Claws on beveled chamfers
       const cx = hx * 0.92;
       const cz = hz * 0.92;
       prongs = [
-        { tip: [cx, cz], base: [cx * 0.5, cz * 0.5] },
-        { tip: [-cx, cz], base: [-cx * 0.5, cz * 0.5] },
-        { tip: [-cx, -cz], base: [-cx * 0.5, -cz * 0.5] },
-        { tip: [cx, -cz], base: [cx * 0.5, -cz * 0.5] },
+        { tip: [cx, cz], base: [cx * 0.45, cz * 0.45] },
+        { tip: [-cx, cz], base: [-cx * 0.45, cz * 0.45] },
+        { tip: [-cx, -cz], base: [-cx * 0.45, -cz * 0.45] },
+        { tip: [cx, -cz], base: [cx * 0.45, -cz * 0.45] },
       ];
       break;
     }
     case 'oval': {
-      // 4 Claws placed along elliptical curve
       const angle = Math.PI / 4;
       const px = Math.sin(angle) * hx * 0.95;
       const pz = Math.cos(angle) * hz * 0.95;
       prongs = [
-        { tip: [px, pz], base: [px * 0.5, pz * 0.5] },
-        { tip: [-px, pz], base: [-px * 0.5, pz * 0.5] },
-        { tip: [-px, -pz], base: [-px * 0.5, -pz * 0.5] },
-        { tip: [px, -pz], base: [px * 0.5, -pz * 0.5] },
+        { tip: [px, pz], base: [px * 0.45, pz * 0.45] },
+        { tip: [-px, pz], base: [-px * 0.45, pz * 0.45] },
+        { tip: [-px, -pz], base: [-px * 0.45, -pz * 0.45] },
+        { tip: [px, -pz], base: [px * 0.45, -pz * 0.45] },
       ];
       break;
     }
     case 'pear': {
-      // 5 Claws: 1 V-tip at apex (+z), 2 on sides, 2 on rounded base
       prongs = [
-        { tip: [0, hz * 1.02], base: [0, hz * 0.5] }, // Apex
-        { tip: [hx * 0.95, hz * 0.1], base: [hx * 0.5, hz * 0.05] },
-        { tip: [-hx * 0.95, hz * 0.1], base: [-hx * 0.5, hz * 0.05] },
-        { tip: [hx * 0.65, -hz * 0.85], base: [hx * 0.35, -hz * 0.45] },
-        { tip: [-hx * 0.65, -hz * 0.85], base: [-hx * 0.35, -hz * 0.45] },
+        { tip: [0, hz * 1.02], base: [0, hz * 0.45] },
+        { tip: [hx * 0.95, hz * 0.1], base: [hx * 0.45, hz * 0.05] },
+        { tip: [-hx * 0.95, hz * 0.1], base: [-hx * 0.45, hz * 0.05] },
+        { tip: [hx * 0.65, -hz * 0.85], base: [hx * 0.32, -hz * 0.42] },
+        { tip: [-hx * 0.65, -hz * 0.85], base: [-hx * 0.32, -hz * 0.42] },
       ];
       break;
     }
     case 'marquise': {
-      // 6 Claws: 2 V-tips at ends, 4 flank claws
       prongs = [
-        { tip: [0, hz * 1.02], base: [0, hz * 0.5] },
-        { tip: [0, -hz * 1.02], base: [0, -hz * 0.5] },
-        { tip: [hx * 0.98, hz * 0.32], base: [hx * 0.5, hz * 0.16] },
-        { tip: [-hx * 0.98, hz * 0.32], base: [-hx * 0.5, hz * 0.16] },
-        { tip: [hx * 0.98, -hz * 0.32], base: [hx * 0.5, -hz * 0.16] },
-        { tip: [-hx * 0.98, -hz * 0.32], base: [-hx * 0.5, -hz * 0.16] },
+        { tip: [0, hz * 1.02], base: [0, hz * 0.45] },
+        { tip: [0, -hz * 1.02], base: [0, -hz * 0.45] },
+        { tip: [hx * 0.98, hz * 0.32], base: [hx * 0.45, hz * 0.15] },
+        { tip: [-hx * 0.98, hz * 0.32], base: [-hx * 0.45, hz * 0.15] },
+        { tip: [hx * 0.98, -hz * 0.32], base: [hx * 0.45, -hz * 0.15] },
+        { tip: [-hx * 0.98, -hz * 0.32], base: [-hx * 0.45, -hz * 0.15] },
       ];
       break;
     }
@@ -348,10 +352,10 @@ export function createProngsGeometry(
     default: {
       const cr = hx * 0.96;
       prongs = [
-        { tip: [cr * 0.707, cr * 0.707], base: [cr * 0.36, cr * 0.36] },
-        { tip: [-cr * 0.707, cr * 0.707], base: [-cr * 0.36, cr * 0.36] },
-        { tip: [-cr * 0.707, -cr * 0.707], base: [-cr * 0.36, -cr * 0.36] },
-        { tip: [cr * 0.707, -cr * 0.707], base: [cr * 0.36, -cr * 0.36] },
+        { tip: [cr * 0.707, cr * 0.707], base: [cr * 0.32, cr * 0.32] },
+        { tip: [-cr * 0.707, cr * 0.707], base: [-cr * 0.32, cr * 0.32] },
+        { tip: [-cr * 0.707, -cr * 0.707], base: [-cr * 0.32, -cr * 0.32] },
+        { tip: [cr * 0.707, -cr * 0.707], base: [cr * 0.32, -cr * 0.32] },
       ];
       break;
     }
@@ -370,17 +374,24 @@ export function createProngsGeometry(
 }
 
 /**
- * 3. GALLERY RAIL & COLLET BASKET: Under-bezel structural wire ring
+ * 3. GALLERY RAIL & COLLET BASKET WITH INTEGRATED SADDLE BRIDGE
+ * Connects under-bezel rail, collet base ring, vertical basket struts,
+ * and solid bridge pedestals that seamlessly fuse the head to the band shank.
+ * Completely eliminates floating gaps and provides authentic jewelry CAD topology.
  */
 export function createGalleryRailGeometry(
   shape: DiamondShape,
   carat: number,
   layout: HeadLayout
 ): THREE.BufferGeometry {
-  const { l, w, galleryY, colletY } = layout;
+  const { l, w, crestY, galleryY, colletY } = layout;
 
-  const wireRad = 0.020 * Math.cbrt(carat);
+  const wireRad = 0.022 * Math.cbrt(carat);
   const positions: number[] = [];
+
+  function addTriangle(p1: Vec3, p2: Vec3, p3: Vec3) {
+    positions.push(...p1, ...p2, ...p3);
+  }
 
   function addQuad(p1: Vec3, p2: Vec3, p3: Vec3, p4: Vec3) {
     positions.push(...p1, ...p2, ...p3);
@@ -416,11 +427,95 @@ export function createGalleryRailGeometry(
     }
   }
 
-  // 1. Gallery Rail right under girdle
-  buildWireLoop(galleryY, (w * 0.5) * 0.86, (l * 0.5) * 0.86);
+  function buildStrut(fromPt: Vec3, toPt: Vec3, rad: number) {
+    const segs = 6;
+    const dx = toPt[0] - fromPt[0];
+    const dy = toPt[1] - fromPt[1];
+    const dz = toPt[2] - fromPt[2];
+    const len = Math.hypot(dx, dy, dz) || 1;
+    const ux = dx / len;
+    const uy = dy / len;
+    const uz = dz / len;
 
-  // 2. Collet Base Wire at band junction
-  buildWireLoop(colletY, (w * 0.5) * 0.50, (l * 0.5) * 0.50);
+    let rx = 0;
+    let ry = -uz;
+    let rz = uy;
+    const rLen = Math.hypot(rx, ry, rz) || 1;
+    rx /= rLen;
+    ry /= rLen;
+    rz /= rLen;
+
+    const fx = uy * rz - uz * ry;
+    const fy = uz * rx - ux * rz;
+    const fz = ux * ry - uy * rx;
+
+    for (let i = 0; i < segs; i++) {
+      const next = (i + 1) % segs;
+      const a1 = (i * Math.PI * 2) / segs;
+      const a2 = (next * Math.PI * 2) / segs;
+
+      const p1: Vec3 = [fromPt[0] + (rx * Math.cos(a1) + fx * Math.sin(a1)) * rad, fromPt[1] + (ry * Math.cos(a1) + fy * Math.sin(a1)) * rad, fromPt[2] + (rz * Math.cos(a1) + fz * Math.sin(a1)) * rad];
+      const p2: Vec3 = [fromPt[0] + (rx * Math.cos(a2) + fx * Math.sin(a2)) * rad, fromPt[1] + (ry * Math.cos(a2) + fy * Math.sin(a2)) * rad, fromPt[2] + (rz * Math.cos(a2) + fz * Math.sin(a2)) * rad];
+      const p3: Vec3 = [toPt[0] + (rx * Math.cos(a2) + fx * Math.sin(a2)) * rad, toPt[1] + (ry * Math.cos(a2) + fy * Math.sin(a2)) * rad, toPt[2] + (rz * Math.cos(a2) + fz * Math.sin(a2)) * rad];
+      const p4: Vec3 = [toPt[0] + (rx * Math.cos(a1) + fx * Math.sin(a1)) * rad, toPt[1] + (ry * Math.cos(a1) + fy * Math.sin(a1)) * rad, toPt[2] + (rz * Math.cos(a1) + fz * Math.sin(a1)) * rad];
+
+      addQuad(p1, p2, p3, p4);
+    }
+  }
+
+  const railRx = (w * 0.5) * 0.88;
+  const railRz = (l * 0.5) * 0.88;
+  const colletRx = (w * 0.5) * 0.48;
+  const colletRz = (l * 0.5) * 0.48;
+
+  // 1. Upper Under-Bezel Gallery Rail
+  buildWireLoop(galleryY, railRx, railRz);
+
+  // 2. Collet Base Ring resting flush on the band bridge
+  buildWireLoop(colletY, colletRx, colletRz);
+
+  // 3. Four Basket Strut Pillars connecting collet base to gallery rail
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 2 + Math.PI / 4;
+    const fromPt: Vec3 = [Math.sin(a) * colletRx, colletY, Math.cos(a) * colletRz];
+    const toPt: Vec3 = [Math.sin(a) * railRx, galleryY, Math.cos(a) * railRz];
+    buildStrut(fromPt, toPt, wireRad * 0.85);
+  }
+
+  // 4. Solid Saddle Bridge: Integrates the band shoulders to the collet basket
+  // Eliminates the gap seen from the front view by filling the saddle mount
+  const bridgeWidth = 0.055;
+  const saddleSteps = 10;
+  for (const sign of [-1, 1]) {
+    for (let i = 0; i < saddleSteps; i++) {
+      const frac1 = i / saddleSteps;
+      const frac2 = (i + 1) / saddleSteps;
+
+      // Curve from band shoulder (x = ±0.20, y = crestY - 0.04) up into collet (x = ±colletRx, y = colletY)
+      const x1 = sign * (0.22 - frac1 * (0.22 - colletRx));
+      const x2 = sign * (0.22 - frac2 * (0.22 - colletRx));
+
+      const y1 = (crestY - 0.04) + Math.sin(frac1 * (Math.PI / 2)) * (colletY - (crestY - 0.04));
+      const y2 = (crestY - 0.04) + Math.sin(frac2 * (Math.PI / 2)) * (colletY - (crestY - 0.04));
+
+      const p1: Vec3 = [x1, y1, -bridgeWidth];
+      const p2: Vec3 = [x2, y2, -bridgeWidth];
+      const p3: Vec3 = [x2, y2, bridgeWidth];
+      const p4: Vec3 = [x1, y1, bridgeWidth];
+
+      addQuad(p1, p2, p3, p4);
+
+      // Bottom under-saddle contour
+      const pB1: Vec3 = [x1, y1 - 0.025, -bridgeWidth * 0.7];
+      const pB2: Vec3 = [x2, y2 - 0.025, -bridgeWidth * 0.7];
+      const pB3: Vec3 = [x2, y2 - 0.025, bridgeWidth * 0.7];
+      const pB4: Vec3 = [x1, y1 - 0.025, bridgeWidth * 0.7];
+
+      addQuad(pB1, pB4, pB3, pB2);
+      addQuad(p1, pB1, pB2, p2);
+      addQuad(p4, p3, pB3, pB4);
+    }
+  }
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
@@ -475,17 +570,16 @@ export function createHaloGeometry(
       mPositions.push(
         cx, cy + bRad, cz,
         cx + Math.sin(a1) * bRad, cy, cz + Math.cos(a1) * bRad,
-        cx + Math.sin(a2) * bRad, cy, cz + Math.cos(a2) * bRad
+        cx + Math.cos(a2) * bRad, cy, cz + Math.cos(a2) * bRad
       );
     }
   }
 
   if (halo === 'hidden') {
-    // Hidden Halo: Collar of micro-diamonds around the gallery rail facing outward
     const numStones = 16;
     const stoneRad = 0.016;
-    const rx = (w * 0.5) * 0.88;
-    const rz = (l * 0.5) * 0.88;
+    const rx = (w * 0.5) * 0.90;
+    const rz = (l * 0.5) * 0.90;
 
     for (let i = 0; i < numStones; i++) {
       const a = (i * Math.PI * 2) / numStones;
@@ -495,7 +589,6 @@ export function createHaloGeometry(
       addBead([px * 1.05, galleryY + stoneRad * 0.8, pz * 1.05], 0.007);
     }
   } else if (halo === 'single') {
-    // Single Halo: Full perimeter framing the diamond girdle
     const numStones = 22;
     const stoneRad = 0.022;
     const rx = (w * 0.5) + stoneRad * 1.8;
@@ -570,7 +663,7 @@ export function createShoulderPaveGeometry(
       bPositions.push(
         cx, cy + beadRad, cz,
         cx + Math.sin(a1) * beadRad, cy, cz + Math.cos(a1) * beadRad,
-        cx + Math.sin(a2) * beadRad, cy, cz + Math.cos(a2) * beadRad
+        cx + Math.cos(a2) * beadRad, cy, cz + Math.cos(a2) * beadRad
       );
     }
   }
