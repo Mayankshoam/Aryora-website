@@ -1,53 +1,105 @@
 import * as THREE from 'three';
-import { RingStyle, SideSetting, DiamondShape, getGemDimensionsMm } from './types';
+import { RingStyle, SideSetting, DiamondShape, Halo, getGemDimensionsMm } from './types';
 
 /**
  * Jewelcraft-calibrated Fine Jewelry CAD Ring Shank & Setting Generator
  *
  * Implements:
- * 1. Comfort-Fit D-Profile Band Extrusions (Classic, Cathedral, Twist, Split, Two-Row, Pinch)
- * 2. Jewelcraft Tapered Claws with Domed Spherical Caps (_dome) & Girdle Overlap
- * 3. Under-Bezel Gallery Rail & Open Collet Basket Wires
- * 4. Shoulder Pavé Micro-Diamond Accent Settings with Bead Prongs
+ * 1. HeadLayout calculation for CAD precision alignment
+ * 2. Comfort-Fit D-Profile Band Extrusions (Classic, Cathedral, Twist, Split, Two-Row, Pinch)
+ * 3. Jewelcraft Tapered Claws with Domed Spherical Caps (_dome) & Girdle Overlap
+ * 4. Under-Bezel Gallery Rail & Open Collet Basket Wires
+ * 5. Halo Settings (Hidden Halo & Single Halo)
+ * 6. Shoulder Settings (Plain, Pavé, Prong, Channel)
  */
 
 type Vec3 = [number, number, number];
+
+export interface HeadLayout {
+  dims: { lengthMm: number; widthMm: number; depthMm: number };
+  l: number; // scene units (Z-axis, along the finger)
+  w: number; // scene units (X-axis, across the finger)
+  d: number; // scene units (Y-axis, vertical depth)
+  innerRadius: number;
+  crestY: number; // top outer crest of the ring band
+  girdleY: number; // exact Y where diamond girdle sits
+  galleryY: number; // under-bezel rail
+  colletY: number; // collet base wire
+  clawTopY: number; // tip of prongs
+  clawBaseY: number; // base of prongs
+}
+
+export function getHeadLayout(
+  shape: DiamondShape,
+  carat: number,
+  diameterMm: number
+): HeadLayout {
+  const dims = getGemDimensionsMm(shape, carat);
+  const l = dims.lengthMm * 0.1;
+  const w = dims.widthMm * 0.1;
+  const d = dims.depthMm * 0.1;
+
+  const innerRadius = (diameterMm / 2) * 0.1;
+  const bandThickness = 0.085;
+  const crestY = innerRadius + bandThickness;
+
+  // Culet clearance above the band bridge
+  const culetClearance = 0.035;
+  const pavilionDepth = d * 0.65;
+  const girdleY = crestY + culetClearance + pavilionDepth;
+
+  // Gallery rail sits 22% of diamond depth beneath girdle
+  const galleryY = girdleY - d * 0.22;
+  const colletY = crestY + 0.02;
+
+  const clawBaseY = colletY;
+  const clawTopY = girdleY + d * 0.14;
+
+  return {
+    dims,
+    l,
+    w,
+    d,
+    innerRadius,
+    crestY,
+    girdleY,
+    galleryY,
+    colletY,
+    clawTopY,
+    clawBaseY,
+  };
+}
 
 /**
  * 1. BAND GEOMETRY: Parametric Comfort-Fit D-Profile Ring Shank
  */
 export function createRingBandGeometry(style: RingStyle, diameterMm: number): THREE.BufferGeometry {
-  const innerRadius = (diameterMm / 2) * 0.1; // Three.js units (1mm = 0.1 units)
-  const bandThickness = 0.085; // Radial height (from finger to outer crest)
-  const bandWidth = 0.11; // Lateral width across the finger
+  const innerRadius = (diameterMm / 2) * 0.1;
+  const bandThickness = 0.085;
+  const bandWidth = 0.11;
 
-  // Radial resolution along the ring circle and profile resolution around D-shape
   const ringSteps = 72;
   const profileSteps = 12;
 
   const positions: number[] = [];
   const indices: number[] = [];
 
-  // Generate D-profile cross section points relative to local center
   function getProfilePt(pIdx: number, wScale = 1.0, tScale = 1.0): [number, number] {
     const u = (pIdx / profileSteps) * Math.PI * 2;
-    // D-profile: flat inner finger contact (y <= 0), convex smooth dome on outer side (y > 0)
     let x = Math.sin(u) * (bandWidth * 0.5 * wScale);
     let y = Math.cos(u) * (bandThickness * 0.5 * tScale);
 
     if (y < 0) {
-      y = y * 0.35; // Flatten inside contact for comfort-fit
+      y = y * 0.35; // Comfort-fit inner flattening
     }
     return [x, y];
   }
 
-  // Iterate along the ring path (theta = -PI to +PI, head at theta = 0)
   for (let i = 0; i <= ringSteps; i++) {
     const frac = i / ringSteps;
-    const theta = (frac - 0.5) * Math.PI * 2; // -PI to PI
+    const theta = (frac - 0.5) * Math.PI * 2;
     const absTheta = Math.abs(theta);
 
-    // Style-specific modulation along the ring circumference
     let wScale = 1.0;
     let tScale = 1.0;
     let rOffset = 0.0;
@@ -55,26 +107,23 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
 
     switch (style) {
       case 'cathedral': {
-        // High arched shoulders that sweep upward to meet the setting
         if (absTheta < 0.65) {
           const arch = Math.cos((absTheta / 0.65) * (Math.PI / 2));
           rOffset = arch * 0.065;
-          wScale = 1.0 - arch * 0.25;
+          wScale = 1.0 - arch * 0.22;
         }
         break;
       }
       case 'pinch': {
-        // Pinch narrow right before meeting the center stone
         if (absTheta < 0.45) {
           const pinch = Math.cos((absTheta / 0.45) * (Math.PI / 2));
           wScale = 1.0 - pinch * 0.45;
-          tScale = 1.0 + pinch * 0.2;
+          tScale = 1.0 + pinch * 0.18;
         }
         break;
       }
       case 'split':
       case 'twoRowSplit': {
-        // Band flares wider towards the top head
         if (absTheta < 0.7) {
           const flare = Math.cos((absTheta / 0.7) * (Math.PI / 2));
           wScale = 1.0 + flare * 0.55;
@@ -82,16 +131,14 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
         break;
       }
       case 'twist': {
-        // Subtle helical twist along shoulders
-        twistOffset = Math.sin(theta * 6) * 0.018;
+        twistOffset = Math.sin(theta * 6) * 0.016;
         break;
       }
       case 'classic':
       default:
-        // Gentle taper towards the head
         if (absTheta < 0.5) {
           const taper = Math.cos((absTheta / 0.5) * (Math.PI / 2));
-          wScale = 1.0 - taper * 0.15;
+          wScale = 1.0 - taper * 0.12;
         }
         break;
     }
@@ -108,7 +155,6 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
     }
   }
 
-  // Connect adjacent rings with quad faces
   for (let i = 0; i < ringSteps; i++) {
     for (let j = 0; j < profileSteps; j++) {
       const row1 = i * (profileSteps + 1);
@@ -132,17 +178,14 @@ export function createRingBandGeometry(style: RingStyle, diameterMm: number): TH
 }
 
 /**
- * 2. PRONG GEOMETRY: Jewelcraft Tapered Claws with Domed Spherical Caps (_dome)
+ * 2. PRONG GEOMETRY: Jewelcraft Tapered Claws with Domed Caps (_dome)
  */
 export function createProngsGeometry(
   shape: DiamondShape,
   carat: number,
-  headBaseY: number
+  layout: HeadLayout
 ): THREE.BufferGeometry {
-  const dims = getGemDimensionsMm(shape, carat);
-  const l = dims.lengthMm * 0.1;
-  const w = dims.widthMm * 0.1;
-  const d = dims.depthMm * 0.1;
+  const { l, w, d, girdleY, clawTopY, clawBaseY } = layout;
 
   const positions: number[] = [];
 
@@ -155,9 +198,6 @@ export function createProngsGeometry(
     positions.push(...p1, ...p3, ...p4);
   }
 
-  /**
-   * Builds single Jewelcraft tapered claw with spherical domed tip cap (_dome)
-   */
   function buildSingleClaw(
     baseCenter: Vec3,
     tipCenter: Vec3,
@@ -168,7 +208,6 @@ export function createProngsGeometry(
     const baseLoop: Vec3[] = [];
     const tipLoop: Vec3[] = [];
 
-    // Direction vector from base to tip
     const dx = tipCenter[0] - baseCenter[0];
     const dy = tipCenter[1] - baseCenter[1];
     const dz = tipCenter[2] - baseCenter[2];
@@ -177,7 +216,6 @@ export function createProngsGeometry(
     const uy = dy / len;
     const uz = dz / len;
 
-    // Orthogonal frame
     let rx = 0;
     let ry = -uz;
     let rz = uy;
@@ -186,7 +224,6 @@ export function createProngsGeometry(
     ry /= rLen;
     rz /= rLen;
 
-    // Cross product
     const fx = uy * rz - uz * ry;
     const fy = uz * rx - ux * rz;
     const fz = ux * ry - uy * rx;
@@ -213,13 +250,11 @@ export function createProngsGeometry(
       ]);
     }
 
-    // Tapered shaft cylinder
     for (let i = 0; i < segs; i++) {
       const next = (i + 1) % segs;
       addQuad(baseLoop[i], tipLoop[i], tipLoop[next], baseLoop[next]);
     }
 
-    // Base cap
     for (let i = 0; i < segs; i++) {
       const next = (i + 1) % segs;
       addTriangle(baseCenter, baseLoop[next], baseLoop[i]);
@@ -237,110 +272,94 @@ export function createProngsGeometry(
     }
   }
 
-  // Prong placement based on gemstone cut
-  const gemCenterY = headBaseY + d * 0.65;
-  const girdleY = gemCenterY;
-  const clawTopY = girdleY + d * 0.18; // Overlaps crown facet
-  const clawBaseY = headBaseY + 0.02;
+  const baseRad = 0.036 * Math.cbrt(carat);
+  const tipRad = 0.024 * Math.cbrt(carat);
 
-  const baseRad = 0.038 * Math.cbrt(carat);
-  const tipRad = 0.026 * Math.cbrt(carat);
+  let prongs: { tip: [number, number]; base: [number, number] }[] = [];
 
-  let prongAngles: { angle: number; r: number }[] = [];
+  const hx = (w * 0.5) * 0.98;
+  const hz = (l * 0.5) * 0.98;
 
   switch (shape) {
     case 'princess':
     case 'asscher': {
-      // 4 Corner V-Prongs / Chevron Claws
-      const cr = (w * 0.5) * 1.05;
-      prongAngles = [
-        { angle: Math.PI / 4, r: cr * Math.SQRT2 },
-        { angle: (3 * Math.PI) / 4, r: cr * Math.SQRT2 },
-        { angle: (5 * Math.PI) / 4, r: cr * Math.SQRT2 },
-        { angle: (7 * Math.PI) / 4, r: cr * Math.SQRT2 },
+      // 4 Corner V-Prongs on corners
+      const cx = hx * 0.96;
+      const cz = hz * 0.96;
+      prongs = [
+        { tip: [cx, cz], base: [cx * 0.5, cz * 0.5] },
+        { tip: [-cx, cz], base: [-cx * 0.5, cz * 0.5] },
+        { tip: [-cx, -cz], base: [-cx * 0.5, -cz * 0.5] },
+        { tip: [cx, -cz], base: [cx * 0.5, -cz * 0.5] },
       ];
       break;
     }
     case 'emerald':
     case 'radiant': {
-      // 4 Corner Claws on beveled corners
-      const hx = (l * 0.5) * 0.95;
-      const hz = (w * 0.5) * 0.95;
-      prongAngles = [
-        { angle: Math.atan2(hz, hx), r: Math.hypot(hx, hz) },
-        { angle: Math.atan2(hz, -hx), r: Math.hypot(hx, hz) },
-        { angle: Math.atan2(-hz, -hx), r: Math.hypot(hx, hz) },
-        { angle: Math.atan2(-hz, hx), r: Math.hypot(hx, hz) },
+      // 4 Corner Claws on beveled chamfers
+      const cx = hx * 0.92;
+      const cz = hz * 0.92;
+      prongs = [
+        { tip: [cx, cz], base: [cx * 0.5, cz * 0.5] },
+        { tip: [-cx, cz], base: [-cx * 0.5, cz * 0.5] },
+        { tip: [-cx, -cz], base: [-cx * 0.5, -cz * 0.5] },
+        { tip: [cx, -cz], base: [cx * 0.5, -cz * 0.5] },
       ];
       break;
     }
     case 'oval': {
       // 4 Claws placed along elliptical curve
-      const crx = (l * 0.5) * 0.88;
-      const crz = (w * 0.5) * 0.88;
-      prongAngles = [
-        { angle: Math.PI / 5, r: Math.hypot(Math.cos(Math.PI / 5) * crx, Math.sin(Math.PI / 5) * crz) },
-        { angle: (4 * Math.PI) / 5, r: Math.hypot(Math.cos((4 * Math.PI) / 5) * crx, Math.sin((4 * Math.PI) / 5) * crz) },
-        { angle: (6 * Math.PI) / 5, r: Math.hypot(Math.cos((6 * Math.PI) / 5) * crx, Math.sin((6 * Math.PI) / 5) * crz) },
-        { angle: (9 * Math.PI) / 5, r: Math.hypot(Math.cos((9 * Math.PI) / 5) * crx, Math.sin((9 * Math.PI) / 5) * crz) },
+      const angle = Math.PI / 4;
+      const px = Math.sin(angle) * hx * 0.95;
+      const pz = Math.cos(angle) * hz * 0.95;
+      prongs = [
+        { tip: [px, pz], base: [px * 0.5, pz * 0.5] },
+        { tip: [-px, pz], base: [-px * 0.5, pz * 0.5] },
+        { tip: [-px, -pz], base: [-px * 0.5, -pz * 0.5] },
+        { tip: [px, -pz], base: [px * 0.5, -pz * 0.5] },
       ];
       break;
     }
     case 'pear': {
-      // 5 Claws: 1 V-tip + 4 perimeter
-      const cr = (w * 0.5) * 0.95;
-      prongAngles = [
-        { angle: Math.PI / 2, r: (l * 0.5) * 1.05 }, // Tip
-        { angle: Math.PI / 7, r: cr },
-        { angle: (6 * Math.PI) / 7, r: cr },
-        { angle: (9 * Math.PI) / 7, r: cr },
-        { angle: (12 * Math.PI) / 7, r: cr },
+      // 5 Claws: 1 V-tip at apex (+z), 2 on sides, 2 on rounded base
+      prongs = [
+        { tip: [0, hz * 1.02], base: [0, hz * 0.5] }, // Apex
+        { tip: [hx * 0.95, hz * 0.1], base: [hx * 0.5, hz * 0.05] },
+        { tip: [-hx * 0.95, hz * 0.1], base: [-hx * 0.5, hz * 0.05] },
+        { tip: [hx * 0.65, -hz * 0.85], base: [hx * 0.35, -hz * 0.45] },
+        { tip: [-hx * 0.65, -hz * 0.85], base: [-hx * 0.35, -hz * 0.45] },
       ];
       break;
     }
     case 'marquise': {
-      // 6 Claws: 2 V-tips + 4 flank claws
-      const hl = (l * 0.5) * 1.04;
-      const hw = (w * 0.5) * 0.92;
-      prongAngles = [
-        { angle: Math.PI / 2, r: hl },
-        { angle: (3 * Math.PI) / 2, r: hl },
-        { angle: Math.PI / 6, r: hw * 1.1 },
-        { angle: (5 * Math.PI) / 6, r: hw * 1.1 },
-        { angle: (7 * Math.PI) / 6, r: hw * 1.1 },
-        { angle: (11 * Math.PI) / 6, r: hw * 1.1 },
+      // 6 Claws: 2 V-tips at ends, 4 flank claws
+      prongs = [
+        { tip: [0, hz * 1.02], base: [0, hz * 0.5] },
+        { tip: [0, -hz * 1.02], base: [0, -hz * 0.5] },
+        { tip: [hx * 0.98, hz * 0.32], base: [hx * 0.5, hz * 0.16] },
+        { tip: [-hx * 0.98, hz * 0.32], base: [-hx * 0.5, hz * 0.16] },
+        { tip: [hx * 0.98, -hz * 0.32], base: [hx * 0.5, -hz * 0.16] },
+        { tip: [-hx * 0.98, -hz * 0.32], base: [-hx * 0.5, -hz * 0.16] },
       ];
       break;
     }
     case 'round':
     case 'cushion':
     default: {
-      // Classic 4-prong setting at 45 degree corners
-      const cr = (w * 0.5) * 0.96;
-      prongAngles = [
-        { angle: Math.PI / 4, r: cr },
-        { angle: (3 * Math.PI) / 4, r: cr },
-        { angle: (5 * Math.PI) / 4, r: cr },
-        { angle: (7 * Math.PI) / 4, r: cr },
+      const cr = hx * 0.96;
+      prongs = [
+        { tip: [cr * 0.707, cr * 0.707], base: [cr * 0.36, cr * 0.36] },
+        { tip: [-cr * 0.707, cr * 0.707], base: [-cr * 0.36, cr * 0.36] },
+        { tip: [-cr * 0.707, -cr * 0.707], base: [-cr * 0.36, -cr * 0.36] },
+        { tip: [cr * 0.707, -cr * 0.707], base: [cr * 0.36, -cr * 0.36] },
       ];
       break;
     }
   }
 
-  for (const p of prongAngles) {
-    const cosA = Math.cos(p.angle);
-    const sinA = Math.sin(p.angle);
-
-    // Tip grasps inward over the girdle
-    const tipX = cosA * (p.r * 0.94);
-    const tipZ = sinA * (p.r * 0.94);
-    const tipCenter: Vec3 = [tipX, clawTopY, tipZ];
-
-    // Base converges down to the collet base ring
-    const baseX = cosA * (p.r * 0.55);
-    const baseZ = sinA * (p.r * 0.55);
-    const baseCenter: Vec3 = [baseX, clawBaseY, baseZ];
-
+  for (const p of prongs) {
+    const tipCenter: Vec3 = [p.tip[0], clawTopY, p.tip[1]];
+    const baseCenter: Vec3 = [p.base[0], clawBaseY, p.base[1]];
     buildSingleClaw(baseCenter, tipCenter, baseRad, tipRad);
   }
 
@@ -356,27 +375,18 @@ export function createProngsGeometry(
 export function createGalleryRailGeometry(
   shape: DiamondShape,
   carat: number,
-  headBaseY: number
+  layout: HeadLayout
 ): THREE.BufferGeometry {
-  const dims = getGemDimensionsMm(shape, carat);
-  const l = dims.lengthMm * 0.1;
-  const w = dims.widthMm * 0.1;
-  const d = dims.depthMm * 0.1;
+  const { l, w, galleryY, colletY } = layout;
 
-  const railY = headBaseY + d * 0.42; // Right beneath the girdle
-  const colletY = headBaseY + 0.04; // Base connection ring
-  const wireRad = 0.022 * Math.cbrt(carat);
-
+  const wireRad = 0.020 * Math.cbrt(carat);
   const positions: number[] = [];
-  function addTriangle(p1: Vec3, p2: Vec3, p3: Vec3) {
-    positions.push(...p1, ...p2, ...p3);
-  }
+
   function addQuad(p1: Vec3, p2: Vec3, p3: Vec3, p4: Vec3) {
     positions.push(...p1, ...p2, ...p3);
     positions.push(...p1, ...p3, ...p4);
   }
 
-  // Generate toroidal wire loop at given Y with Rx and Rz
   function buildWireLoop(y: number, rx: number, rz: number) {
     const loopSteps = 24;
     const tubeSteps = 8;
@@ -386,31 +396,31 @@ export function createGalleryRailGeometry(
       const a1 = (i * Math.PI * 2) / loopSteps;
       const a2 = (nextI * Math.PI * 2) / loopSteps;
 
-      const cx1 = Math.cos(a1) * rx;
-      const cz1 = Math.sin(a1) * rz;
-      const cx2 = Math.cos(a2) * rx;
-      const cz2 = Math.sin(a2) * rz;
+      const cx1 = Math.sin(a1) * rx;
+      const cz1 = Math.cos(a1) * rz;
+      const cx2 = Math.sin(a2) * rx;
+      const cz2 = Math.cos(a2) * rz;
 
       for (let j = 0; j < tubeSteps; j++) {
         const nextJ = (j + 1) % tubeSteps;
         const ta1 = (j * Math.PI * 2) / tubeSteps;
         const ta2 = (nextJ * Math.PI * 2) / tubeSteps;
 
-        const p1: Vec3 = [cx1 + Math.cos(a1) * Math.sin(ta1) * wireRad, y + Math.cos(ta1) * wireRad, cz1 + Math.sin(a1) * Math.sin(ta1) * wireRad];
-        const p2: Vec3 = [cx2 + Math.cos(a2) * Math.sin(ta1) * wireRad, y + Math.cos(ta1) * wireRad, cz2 + Math.sin(a2) * Math.sin(ta1) * wireRad];
-        const p3: Vec3 = [cx2 + Math.cos(a2) * Math.sin(ta2) * wireRad, y + Math.cos(ta2) * wireRad, cz2 + Math.sin(a2) * Math.sin(ta2) * wireRad];
-        const p4: Vec3 = [cx1 + Math.cos(a1) * Math.sin(ta2) * wireRad, y + Math.cos(ta1) * wireRad, cz1 + Math.sin(a1) * Math.sin(ta2) * wireRad];
+        const p1: Vec3 = [cx1 + Math.sin(a1) * Math.sin(ta1) * wireRad, y + Math.cos(ta1) * wireRad, cz1 + Math.cos(a1) * Math.sin(ta1) * wireRad];
+        const p2: Vec3 = [cx2 + Math.sin(a2) * Math.sin(ta1) * wireRad, y + Math.cos(ta1) * wireRad, cz2 + Math.cos(a2) * Math.sin(ta1) * wireRad];
+        const p3: Vec3 = [cx2 + Math.sin(a2) * Math.sin(ta2) * wireRad, y + Math.cos(ta2) * wireRad, cz2 + Math.cos(a2) * Math.sin(ta2) * wireRad];
+        const p4: Vec3 = [cx1 + Math.sin(a1) * Math.sin(ta2) * wireRad, y + Math.cos(ta2) * wireRad, cz1 + Math.cos(a1) * Math.sin(ta2) * wireRad];
 
         addQuad(p1, p2, p3, p4);
       }
     }
   }
 
-  // 1. Gallery Rail (Upper under-bezel ring)
-  buildWireLoop(railY, (l * 0.5) * 0.85, (w * 0.5) * 0.85);
+  // 1. Gallery Rail right under girdle
+  buildWireLoop(galleryY, (w * 0.5) * 0.86, (l * 0.5) * 0.86);
 
-  // 2. Collet Base Ring (Lower convergence ring)
-  buildWireLoop(colletY, (l * 0.5) * 0.48, (w * 0.5) * 0.48);
+  // 2. Collet Base Wire at band junction
+  buildWireLoop(colletY, (w * 0.5) * 0.50, (l * 0.5) * 0.50);
 
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
@@ -419,8 +429,100 @@ export function createGalleryRailGeometry(
 }
 
 /**
- * 4. SHOULDER PAVÉ ACCENT STONES & BEADS
- * Generates rows of micro-diamonds and micropave beads along the band shoulders.
+ * 4. HALO GEOMETRY: Hidden Halo or Single Framing Halo
+ */
+export function createHaloGeometry(
+  shape: DiamondShape,
+  carat: number,
+  halo: Halo,
+  layout: HeadLayout
+): { diamondGeo: THREE.BufferGeometry; metalGeo: THREE.BufferGeometry } | null {
+  if (halo === 'none') return null;
+
+  const { l, w, girdleY, galleryY } = layout;
+
+  const dPositions: number[] = [];
+  const mPositions: number[] = [];
+
+  function addMicroStone(center: Vec3, rad: number) {
+    const [cx, cy, cz] = center;
+    const tableY = cy + rad * 0.35;
+    const culetY = cy - rad * 0.65;
+    const n = 8;
+    const girdleVerts: Vec3[] = [];
+
+    for (let i = 0; i < n; i++) {
+      const a = (i * Math.PI * 2) / n;
+      girdleVerts.push([cx + Math.sin(a) * rad, cy, cz + Math.cos(a) * rad]);
+    }
+
+    const tableCenter: Vec3 = [cx, tableY, cz];
+    const culet: Vec3 = [cx, culetY, cz];
+
+    for (let i = 0; i < n; i++) {
+      const next = (i + 1) % n;
+      dPositions.push(...tableCenter, ...girdleVerts[i], ...girdleVerts[next]);
+      dPositions.push(...culet, ...girdleVerts[next], ...girdleVerts[i]);
+    }
+  }
+
+  function addBead(center: Vec3, bRad: number) {
+    const [cx, cy, cz] = center;
+    const n = 6;
+    for (let i = 0; i < n; i++) {
+      const a1 = (i * Math.PI * 2) / n;
+      const a2 = ((i + 1) * Math.PI * 2) / n;
+      mPositions.push(
+        cx, cy + bRad, cz,
+        cx + Math.sin(a1) * bRad, cy, cz + Math.cos(a1) * bRad,
+        cx + Math.sin(a2) * bRad, cy, cz + Math.cos(a2) * bRad
+      );
+    }
+  }
+
+  if (halo === 'hidden') {
+    // Hidden Halo: Collar of micro-diamonds around the gallery rail facing outward
+    const numStones = 16;
+    const stoneRad = 0.016;
+    const rx = (w * 0.5) * 0.88;
+    const rz = (l * 0.5) * 0.88;
+
+    for (let i = 0; i < numStones; i++) {
+      const a = (i * Math.PI * 2) / numStones;
+      const px = Math.sin(a) * rx;
+      const pz = Math.cos(a) * rz;
+      addMicroStone([px, galleryY, pz], stoneRad);
+      addBead([px * 1.05, galleryY + stoneRad * 0.8, pz * 1.05], 0.007);
+    }
+  } else if (halo === 'single') {
+    // Single Halo: Full perimeter framing the diamond girdle
+    const numStones = 22;
+    const stoneRad = 0.022;
+    const rx = (w * 0.5) + stoneRad * 1.8;
+    const rz = (l * 0.5) + stoneRad * 1.8;
+
+    for (let i = 0; i < numStones; i++) {
+      const a = (i * Math.PI * 2) / numStones;
+      const px = Math.sin(a) * rx;
+      const pz = Math.cos(a) * rz;
+      addMicroStone([px, girdleY - 0.01, pz], stoneRad);
+      addBead([px + Math.sin(a) * 0.012, girdleY + 0.01, pz + Math.cos(a) * 0.012], 0.008);
+    }
+  }
+
+  const dGeo = new THREE.BufferGeometry();
+  dGeo.setAttribute('position', new THREE.Float32BufferAttribute(dPositions, 3));
+  dGeo.computeVertexNormals();
+
+  const mGeo = new THREE.BufferGeometry();
+  mGeo.setAttribute('position', new THREE.Float32BufferAttribute(mPositions, 3));
+  mGeo.computeVertexNormals();
+
+  return { diamondGeo: dGeo, metalGeo: mGeo };
+}
+
+/**
+ * 5. SHOULDER ACCENTS: Plain, Pavé, Prong, Channel
  */
 export function createShoulderPaveGeometry(
   side: SideSetting,
@@ -430,15 +532,14 @@ export function createShoulderPaveGeometry(
 
   const innerRadius = (diameterMm / 2) * 0.1;
   const crestRadius = innerRadius + 0.085;
-  const stonesPerShoulder = 6;
-  const diamondRad = 0.028;
-  const beadRad = 0.012;
+  const stonesPerShoulder = side === 'prong' ? 5 : 6;
+  const diamondRad = side === 'prong' ? 0.032 : 0.026;
+  const beadRad = 0.011;
 
   const dPositions: number[] = [];
   const bPositions: number[] = [];
 
   function addDiamond(center: Vec3) {
-    // 8-facet micro-brilliant
     const [cx, cy, cz] = center;
     const tableY = cy + diamondRad * 0.35;
     const culetY = cy - diamondRad * 0.65;
@@ -447,7 +548,7 @@ export function createShoulderPaveGeometry(
 
     for (let i = 0; i < n; i++) {
       const a = (i * Math.PI * 2) / n;
-      girdleVerts.push([cx + Math.cos(a) * diamondRad, cy, cz + Math.sin(a) * diamondRad]);
+      girdleVerts.push([cx + Math.sin(a) * diamondRad, cy, cz + Math.cos(a) * diamondRad]);
     }
 
     const tableCenter: Vec3 = [cx, tableY, cz];
@@ -455,41 +556,40 @@ export function createShoulderPaveGeometry(
 
     for (let i = 0; i < n; i++) {
       const next = (i + 1) % n;
-      // Crown
       dPositions.push(...tableCenter, ...girdleVerts[i], ...girdleVerts[next]);
-      // Pavilion
       dPositions.push(...culet, ...girdleVerts[next], ...girdleVerts[i]);
     }
   }
 
   function addBead(center: Vec3) {
     const [cx, cy, cz] = center;
-    // Micro sphere bead
     const n = 6;
     for (let i = 0; i < n; i++) {
       const a1 = (i * Math.PI * 2) / n;
       const a2 = ((i + 1) * Math.PI * 2) / n;
       bPositions.push(
         cx, cy + beadRad, cz,
-        cx + Math.cos(a1) * beadRad, cy, cz + Math.sin(a1) * beadRad,
-        cx + Math.cos(a2) * beadRad, cy, cz + Math.sin(a2) * beadRad
+        cx + Math.sin(a1) * beadRad, cy, cz + Math.cos(a1) * beadRad,
+        cx + Math.sin(a2) * beadRad, cy, cz + Math.cos(a2) * beadRad
       );
     }
   }
 
-  // Place along left and right shoulders
   for (const sign of [-1, 1]) {
     for (let i = 0; i < stonesPerShoulder; i++) {
-      const angle = (0.20 + (i * 0.08)) * sign; // Shoulder arc radians
+      const angle = (0.22 + (i * 0.075)) * sign;
       const px = Math.sin(angle) * crestRadius;
       const py = Math.cos(angle) * crestRadius;
       const pz = 0;
 
       addDiamond([px, py, pz]);
 
-      // Micro beads flanking the stone
-      addBead([px, py + 0.005, pz + diamondRad * 1.1]);
-      addBead([px, py + 0.005, pz - diamondRad * 1.1]);
+      if (side === 'pave') {
+        addBead([px, py + 0.005, pz + diamondRad * 1.1]);
+        addBead([px, py + 0.005, pz - diamondRad * 1.1]);
+      } else if (side === 'prong') {
+        addBead([px + Math.sin(angle) * 0.01, py + 0.015, pz]);
+      }
     }
   }
 
